@@ -1,0 +1,155 @@
+let fs = require('fs')
+let express = require('express');
+const models = require('../models/models');
+var ObjectId = require('mongoose').Types.ObjectId;
+
+let router = express.Router();
+
+//
+//	Stream the movie
+//
+router.get('/:_id', function (req, res, next) {
+
+
+	const { _id } = req.params;
+	models.moviemodel.findById(_id, function (err, movie) {
+		if (err) return res.status(500).send({ message: 'Error making request: ' + err });
+		if (!movie) return res.status(404).send({ message: 'The movie does not exist ' })
+
+		//
+		//	1.	Path to the movie to stream
+		//
+		let file = movie.url;
+
+		//
+		//	2.	Get meta information from the file. In this case we are interested
+		//		in its size.
+		//
+		fs.stat(file, function (err, stats) {
+
+			//
+			//	1.	If there was an error reading the file stats we inform the
+			//		browser of what actual happened
+			//
+			if (err) {
+				//
+				//	1.	Check if the file exists
+				//
+				if (err.code === 'ENOENT') {
+					//
+					// 	->	404 Error if file not found
+					//
+					return res.sendStatus(404);
+				}
+
+				//
+				//	2.	IN any other case, just output the full error
+				//
+				return next(err)
+			}
+
+			//
+			//	2.	Save the range the browser is asking for in a clear and
+			//		reusable variable
+			//
+			//		The range tells us what part of the file the browser wants
+			//		in bytes.
+			//
+			//		EXAMPLE: bytes=65534-33357823
+			//
+			let range = req.headers.range;
+
+			//
+			//	3.	Make sure the browser ask for a range to be sent.
+			//
+			if (!range) {
+				range = "0-"
+			}
+
+			//
+			//	4.	Convert the string range in to an array for easy use.
+			//
+			let positions = range.replace(/bytes=/, '').split('-');
+
+			//
+			//	5.	Convert the start value in to an integer
+			//
+			let start = parseInt(positions[0], 10);
+
+			//
+			//	6.	Save the total file size in to a clear variable
+			//
+			let file_size = stats.size;
+
+			//
+			//	7.	IF 		the end parameter is present we convert it in to an
+			//				integer, the same way we did the start position
+			//
+			//		ELSE 	We use the file_size variable as the last part to be
+			//				sent.
+			//
+			console.log(positions);
+			
+			let end = positions[1] ? parseInt(positions[1], 10) : file_size - 1;
+
+			//
+			//	8.	Calculate the amount of bits will be sent back to the
+			//		browser.
+			//
+			let chunksize = (end - start) + 1;
+
+			//
+			//	9.	Create the header for the movie tag so it knows what is
+			//		receiving.
+			//
+			let head = {
+				'Content-Range': 'bytes ' + start + '-' + end + '/' + file_size,
+				'Accept-Ranges': 'bytes',
+				'Content-Length': chunksize,
+				'Content-Type': 'movie/mp4'
+			}
+
+			//
+			//	10.	Send the custom header
+			//
+			res.writeHead(206, head);
+
+			//
+			//	11.	Create the createReadStream option object so createReadStream
+			//		knows how much data it should be read from the file.
+			//
+			let stream_position = {
+				start: start,
+				end: end
+			}
+
+			//
+			//	12.	Create a stream chunk based on what the browser asked us for
+			//
+			let stream = fs.createReadStream(file, stream_position)
+
+			//
+			//	13.	Once the stream is open, we pipe the data through the response
+			//		object.
+			//
+			stream.on('open', function () {
+
+				stream.pipe(res);
+
+			})
+
+			//
+			//	->	If there was an error while opening a stream we stop the
+			//		request and display it.
+			//
+			stream.on('error', function (err) {
+
+				return next(err);
+
+			});
+
+		});
+	});
+});
+
+module.exports = router;

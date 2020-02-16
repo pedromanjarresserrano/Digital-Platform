@@ -1,0 +1,13 @@
+.filter-checkbox-group {
+    list-style-type: none;
+}
+
+.pagination li {
+    display: flex;
+    flex-direction: row;
+}
+
+.pagination>.active>a {
+    background-color: white;
+    color: black;
+}

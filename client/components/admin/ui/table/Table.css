@@ -1,0 +1,13 @@
+.crud-table {
+  min-height: 500px;
+  background-color: rgb(240,240,240);
+  width: 100%;
+}
+
+.crud-table tr{
+  width: 100%;
+}
+
+.crud-table td {
+  padding: 0 .625rem 0 !important;
+}
