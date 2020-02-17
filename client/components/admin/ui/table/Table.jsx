@@ -29,8 +29,8 @@ class Table extends React.Component {
                             this.props.headers.map(h => <td key={h.name + "-" + data._id}>{data[h.name]}</td>)
                         }
                         <td key={Math.random() + "-id-td-commands"}>
-                            <button type="button" class="btn btn-primary" onClick={() => this.props.editClick(data)}>Edit</button>
-                            <button type="button" class="btn btn-danger" onClick={() => this.props.deleteClick(data)}>Delete</button>
+                            <button type="button" className="btn btn-primary" onClick={() => this.props.editClick(data)}>Edit</button>
+                            <button type="button" className="btn btn-danger" onClick={() => this.props.deleteClick(data)}>Delete</button>
                         </td>
                     </tr>
                 );

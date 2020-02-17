@@ -127,10 +127,10 @@ class Catalog extends React.Component {
                             <div className="display align-right" isExpanded >
                                 <div className="col-12 col-md-3">
 
-                                    <div class="input-group">
-                                        <input type="text" class="input-group-field" onKeyDown={this._handleKeyDown} value={this.state.search} onChange={this.handleChange} />
-                                        <div class="input-group-button">
-                                            <input type="button" class="button" onClick={() => this.loadPage(1)} value="Buscar" />
+                                    <div className="input-group">
+                                        <input type="text" className="input-group-field" onKeyDown={this._handleKeyDown} value={this.state.search} onChange={this.handleChange} />
+                                        <div className="input-group-button">
+                                            <input type="button" className="button" onClick={() => this.loadPage(1)} value="Buscar" />
                                         </div>
                                     </div>
                                 </div>

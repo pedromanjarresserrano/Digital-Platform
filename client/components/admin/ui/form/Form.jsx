@@ -78,13 +78,14 @@ class Form extends React.Component {
     }
 
     inputChangedHandler = (event, inputIdentifier, elementType) => {
+        debugger
         const updateddataForm = {
             ...this.state.dataForm
         };
         const updatedFormElement = {
             ...updateddataForm[inputIdentifier]
         };
-        if (updatedFormElement.optConfig.multiple) {
+        if (updatedFormElement.optConfig && updatedFormElement.optConfig.multiple) {
             updatedFormElement.value = event.target.value;
 
             //this.addOrRemove(updatedFormElement.value, event.target.value);
@@ -93,6 +94,7 @@ class Form extends React.Component {
                 updatedFormElement.value = event.target.files[0];
             else
                 updatedFormElement.value = event.target.value;
+        debugger
         updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
         updatedFormElement.touched = true;
         updateddataForm[inputIdentifier] = updatedFormElement;
@@ -138,7 +140,7 @@ class Form extends React.Component {
 
     mapToInput(formElement) {
         return (<Input
-            key={formElement.id}
+            keyId={formElement.id}
             elementType={formElement.config.elementType}
             elementConfig={formElement.config.elementConfig}
             value={formElement.config.value}

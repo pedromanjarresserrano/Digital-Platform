@@ -151,7 +151,7 @@ class Paginator extends React.Component {
 
         return (
             <nav aria-label="w-100">
-                <ul class="pagination justify-content-center">
+                <ul className="pagination justify-content-center">
                     {pages.map((page, index) => {
 
                         if (page === LEFT_PAGE) return (

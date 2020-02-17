@@ -31,7 +31,7 @@ class Breadcrumb extends React.Component {
         return (
             <div className="p-1">
                 <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
+                    <ol className="breadcrumb">
                         {
                             routes.map((route, index) => {
                                 return (

@@ -13,6 +13,7 @@ const readMany = async (req, res) => {
     if (query.duration)
         query.duration = { $gte: parseInt(query.duration[0]) * 60, $lte: parseInt(query.duration[1]) * 60 }
     console.log(query);
+    console.log(options);
     if (options.page == -1) {
         let result = await Collection.find(query).sort({ updated: -1 });/*, (e, result) => {
             if (e) {

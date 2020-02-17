@@ -102,11 +102,16 @@ class Input extends React.Component {
                     </Select>
                 );
             case ('file-image'):
+                debugger
                 return (
-                    <div className="form-field-image flex-container flex-dir-column ">
-                        <img className="thumbnail" src={this.props.value instanceof File ? URL.createObjectURL(this.props.value) : this.props.value} {...this.props.elementConfig} />
-                        <label htmlFor={"file-" + this.props.key} className="button">Upload File</label>
-                        <input type="file" id={"file-" + this.props.key} onChange={this.props.changed} className="show-for-sr" />
+                    <div className="w-100">
+                        <img className="img-fluid" src={this.props.value instanceof File ? URL.createObjectURL(this.props.value) : this.props.value} {...this.props.elementConfig} />
+                        <div className="input-group mb-3 mt-3" >
+                            <div className="custom-file">
+                                <input type="file" id={"file-" + this.props.keyId} className="custom-file-input" onChange={this.props.changed} />
+                                <label htmlFor={"file-" + this.props.keyId} className="custom-file-input">Upload File</label>
+                            </div>
+                        </div>
                     </div>
                 );
             default:
