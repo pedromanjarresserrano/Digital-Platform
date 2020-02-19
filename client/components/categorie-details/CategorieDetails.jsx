@@ -42,7 +42,7 @@ class CategorieDetails extends React.Component {
   }
 
   loadPage(page) {
-    Axios.get("/api/videos/all/" + page + "?categorias=" + (this.props.location.state ? this.props.location.state.item._id : this.state.item._id)).then(function (response) {
+    Axios.get("/api/movies/all/" + page + "?categorias=" + (this.props.location.state ? this.props.location.state.item._id : this.state.item._id)).then(function (response) {
       this.setState({
         items: response.data.itemsList,
         paginator: response.data.paginator,

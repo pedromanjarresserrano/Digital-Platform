@@ -78,7 +78,6 @@ class Form extends React.Component {
     }
 
     inputChangedHandler = (event, inputIdentifier, elementType) => {
-        debugger
         const updateddataForm = {
             ...this.state.dataForm
         };

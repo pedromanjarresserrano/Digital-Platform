@@ -22,6 +22,7 @@ class Movie extends React.Component {
         <div title={this.props.item.name} className="p-1" onClick={() => this.props.vermasonclick(this.props.item)}>
 
           <LazyLoadImage
+            wrapperClassName="img-fluid"
             effect="blur"
             src={this.props.item.portada} />
         </div>

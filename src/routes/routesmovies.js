@@ -4,6 +4,9 @@ let ObjectID = require('mongodb').ObjectID;
 let Collection = require('../models/models').moviemodel;
 let config = require("../config/index")
 let options = config.options;
+var path = require('path')
+var util = require('util')
+let fs = require('fs')
 
 
 const readMany = async (req, res) => {
@@ -13,7 +16,6 @@ const readMany = async (req, res) => {
     if (query.duration)
         query.duration = { $gte: parseInt(query.duration[0]) * 60, $lte: parseInt(query.duration[1]) * 60 }
     console.log(query);
-    console.log(options);
     if (options.page == -1) {
         let result = await Collection.find(query).sort({ updated: -1 });/*, (e, result) => {
             if (e) {
@@ -87,12 +89,13 @@ var attrname = "portada";
 router.post('/', config.multer.single(attrname), async function (req, res) {
     const find = {};
     find["name"] = req.body["name"];
-    var doc = await Collection.findOne(find);
-    let changedEntry = req.body;
+    var doc = await Collection.findOne({ "_id": req.body["_id"] });
+    if (!doc)
+        doc = await Collection.findOne(find);
 
-    if (doc) {
-        changedEntry._id = new ObjectID(doc._id);
-    }
+    let changedEntry = req.body;
+    console.log(doc);
+
 
     if (changedEntry.categorias) {
         changedEntry.categorias = Array.isArray(changedEntry.categorias) ? changedEntry.categorias.map(e => new ObjectID(e)) : [new ObjectID(changedEntry.categorias)];
@@ -104,21 +107,29 @@ router.post('/', config.multer.single(attrname), async function (req, res) {
     } else {
         changedEntry.reparto = [];
     }
+    if (doc) {
+        changedEntry._id = new ObjectID(doc._id);
+        changedEntry = await Collection.findOneAndUpdate({ _id: changedEntry._id }, { $set: changedEntry },
+            { upsert: true, new: true, setDefaultsOnInsert: true, fields: '-__v' }).exec();
+    } else {
+        changedEntry = await Collection.create(changedEntry);
+    }
+
+
 
     saveFile(req, changedEntry, res);
-
-
-
 
 });
 
 
 function saveFile(req, doc, res) {
-    if (req.file)
+    if (req.file) {
+        console.log(doc);
         storeWithName(req.file, doc._id.toString()).then(e => {
             doc[attrname] = '/uploads/' + doc._id;
             updateDoc(doc, res);
         });
+    }
     else
         updateDoc(doc, res);
 

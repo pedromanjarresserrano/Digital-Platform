@@ -18,7 +18,7 @@ class Catalog extends React.Component {
             categorias: [],
             activePage: 0,
             search: '',
-            timerange: [0, 120]
+            timerange: [0, 5000]
         }
         this.handleChange = this.handleChange.bind(this);
 
@@ -124,7 +124,7 @@ class Catalog extends React.Component {
                 <div className="grid-container p-1">
                     <div className="row display" >
                         <div className="col-12">
-                            <div className="display align-right" isExpanded >
+                            <div className="display align-right"  >
                                 <div className="col-12 col-md-3">
 
                                     <div className="input-group">
@@ -135,15 +135,6 @@ class Catalog extends React.Component {
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="offset-2 col-10">
-
-                            <Pagination
-                                activePage={this.state.activePage}
-                                totalItemsCount={this.state.itemCount}
-                                itemsCountPerPage={this.state.pageSize}
-                                pageRangeDisplayed={9}
-                                onChange={this.onPageChanged} />
                         </div>
                         {/* <div className="col-2">
                             <ul className="filter-checkbox-group">
@@ -156,11 +147,17 @@ class Catalog extends React.Component {
                         </div> */}
 
                         <div className="col-12">
+                            <Pagination
+                                activePage={this.state.activePage}
+                                totalItemsCount={this.state.itemCount}
+                                itemsCountPerPage={this.state.pageSize}
+                                pageRangeDisplayed={9}
+                                onChange={this.onPageChanged} />
                             <div className="filter-list">
                                 <div className="row">                                    {
                                     this.state.items.map(function (item) {
                                         return (
-                                            <div className="col-sm-12 col-md-3" key={item._id} >
+                                            <div className="col-sm-12 col-md-2  col-lg-1" key={item._id} >
                                                 <Movie item={item} vermasonclick={this.vermas} />
                                             </div>
                                         );

@@ -24,7 +24,7 @@ class MovieDetails extends React.Component {
   //--------------------------------------------------------------
   componentWillMount() {
     var id = (this.props.location.state) ? this.props.location.state.item.id : this.props.match.params.id;
-    Axios.get("/api/videos/" + id).then(function (response) {
+    Axios.get("/api/movies/" + id).then(function (response) {
       this.setState({
         item: response.data
       })
@@ -55,7 +55,7 @@ class MovieDetails extends React.Component {
           <div className="row">
             <div className="col-sm-12">
               <Player loop={false}>
-                <source src={"/api/video/" + this.state.item._id} />
+                <source src={"/api/movie/" + this.state.item._id} />
                 <BigPlayButton position="center" />
                 <ControlBar autoHide={true}>
                   <CurrentTimeDisplay order={4.1} />
@@ -66,8 +66,8 @@ class MovieDetails extends React.Component {
             </div>
           </div>
           <div className="row content padding-top-1">
-            <div className="poster col-sm-12 col-md-3 col-lg-3" small={12} medium={3} large={3}>
-              <img className="imgentada"
+            <div className="poster col-sm-12 col-md-3 col-lg-3" >
+              <img className="img-fluid"
                 src={this.state.item.portada} />
             </div>
             <div className="movie-body col-sm-12 col-md-9 col-lg-9">

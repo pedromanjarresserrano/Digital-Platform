@@ -128,3 +128,7 @@
 .w-100 {
 	width: 100%;
 }
+
+.lazy-load-image-background>img {
+	width: 100%;
+}

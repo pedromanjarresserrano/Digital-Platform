@@ -20,7 +20,8 @@ router.get('/:_id', function (req, res, next) {
 		//	1.	Path to the movie to stream
 		//
 		let file = movie.url;
-
+		console.log(file);
+		
 		//
 		//	2.	Get meta information from the file. In this case we are interested
 		//		in its size.

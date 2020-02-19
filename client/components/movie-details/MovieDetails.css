@@ -2,6 +2,16 @@
 	max-height: 480px;
 }
 
+.video-react:fullscreen {
+	max-height: 100% !important;
+	padding-top: 0% !important;
+}
+
+.video-react.video-react-fullscreen, .video-react.video-react-fullscreen>video {
+	max-height: 100% !important;
+	padding-top: 0% !important;
+}
+
 @media (min-width:768px) {
 	.video-react .video-react-play-progress::before {
 		top: -0.333em !important;

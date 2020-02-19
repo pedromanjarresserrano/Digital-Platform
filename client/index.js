@@ -293,7 +293,23 @@ const Admin = ({ match }) => (
                             },
                             valid: false,
                             touched: false,
-                            label: 'Name',
+                            label: 'Visual Name',
+                            inline: true
+                        },
+                        url: {
+                            elementType: 'input',
+                            elementConfig: {
+                                type: 'text',
+                                placeholder: 'url of file'
+                            },
+                            optConfig: {},
+                            value: '',
+                            validation: {
+                                required: true
+                            },
+                            valid: false,
+                            touched: false,
+                            label: 'File URL',
                             inline: true
                         },
                         duration: {
