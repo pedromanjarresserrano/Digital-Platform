@@ -45,30 +45,26 @@ const getVideoInfo = (inputPath) => {
 async function createVideo(files, paths, res) {
     console.log("Length -----------" + files.length);
     for (let i = 0; i < files.length; i++) {
-
-
         let file = files[i];
         let n = file.split("/");
         let nameFile = n[n.length - 1].split(".mp4")[0];
         let movie = await models.moviemodel.findOne({ name: nameFile });
-        let metadata = await getVideoInfo(file);
-
         if (!movie) {
+            let metadata = await getVideoInfo(file);
+            metadata = metadata.streams[0];
             movie = await models
                 .moviemodel
                 .create({
                     name: nameFile,
-                    url: file
+                    url: file,
+                    quality: metadata.height,
+                    size: (metadata.bit_rate * metadata.duration) / 8192,
+                    duration: metadata.duration,
                 });
         }
-        metadata = metadata.streams[0];
-        movie.quality = metadata.height;
-        movie.size = (metadata.bit_rate * metadata.duration) / 8192;
-        movie.duration = metadata.duration;
-        models.moviemodel.updateOne({ _id: movie._id }, movie);
         res.write(JSON.stringify(i));
     }
-
     res.end();
+
 }
 
