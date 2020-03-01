@@ -15,26 +15,14 @@ const readMany = async (req, res) => {
     options.page = parseInt(req.params.page);
     if (query.duration)
         query.duration = { $gte: parseInt(query.duration[0]) * 60, $lte: parseInt(query.duration[1]) * 60 }
-    console.log(query);
     if (options.page == -1) {
-        let result = await Collection.find(query).sort({ updated: -1 });/*, (e, result) => {
-            if (e) {
-                res.status(500).send(e);
-                console.log(e.message);
-            } else {*/
+        let result = await Collection.find(query).sort({ updated: -1 });
         res.send(result);
-        /*}
-    });*/
     } else {
         options.sort = { updated: -1 };
-        let result = await Collection.paginate(query, options);/*, (e, result) => {
-            if (e) {
-                res.status(500).send(e);
-                console.log(e.message);
-            } else { */
+        let result = await Collection.paginate(query, options);
         res.send(result);
-        /*}
-    });*/
+
     }
 
 
@@ -94,7 +82,6 @@ router.post('/', config.multer.single(attrname), async function (req, res) {
         doc = await Collection.findOne(find);
 
     let changedEntry = req.body;
-    console.log(doc);
 
 
     if (changedEntry.categorias) {
@@ -124,7 +111,6 @@ router.post('/', config.multer.single(attrname), async function (req, res) {
 
 function saveFile(req, doc, res) {
     if (req.file) {
-        console.log(doc);
         storeWithName(req.file, doc._id.toString()).then(e => {
             doc[attrname] = '/uploads/' + doc._id;
             updateDoc(doc, res);

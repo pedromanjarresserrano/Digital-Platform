@@ -20,14 +20,14 @@ class Movie extends React.Component {
     return (
       <Link to={"/catalog/movie/" + this.props.item._id} className="w-100">
         <div title={this.props.item.name} className="p-1" onClick={() => this.props.vermasonclick(this.props.item)}>
-
-          <LazyLoadImage
-            wrapperClassName="img-fluid"
+          <img
+            className="img-fluid"
             effect="blur"
             src={this.props.item.portada} />
+          <p className="text-white time-stamp margin-0 padding-0 padding-right-1" >{this.getTime(this.props.item.duration)}</p>
+          <p className="text-white text-center text-truncate" >{this.props.item.visualname ? this.props.item.visualname : this.props.item.name}</p>
         </div>
-        <p className="text-white time-stamp margin-0 padding-0 padding-right-1" >{this.getTime(this.props.item.duration)}</p>
-        <p className="text-white text-truncate" >{this.props.item.name}</p>
+
       </Link>
     );
   }

@@ -5,9 +5,13 @@ let studioSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
+        default: ""
     },
     updated: { type: Date, default: Date.now },
-    image: String
+    image: {
+        type: String,
+        default: ""
+    }
 }, { autoCreate: true })
 
 studioSchema.plugin(require('mongoose-autopopulate'));

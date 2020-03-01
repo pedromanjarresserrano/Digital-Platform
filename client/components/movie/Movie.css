@@ -91,6 +91,7 @@
 	display: block !important;
 	margin: auto;
 	max-width: 100%;
+	width: unset;
 }
 
 .figure {

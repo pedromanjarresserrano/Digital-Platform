@@ -29,19 +29,17 @@ class Breadcrumb extends React.Component {
     render() {
         const { routes } = this.state;
         return (
-            <div className="p-1">
-                <nav aria-label="breadcrumb">
-                    <ol className="breadcrumb">
-                        {
-                            routes.map((route, index) => {
-                                return (
-                                    <li className="breadcrumb-item active" key={index}><a>{route}</a></li>
-                                );
-                            })
-                        }
-                    </ol>
-                </nav>
-            </div>
+            <nav aria-label="breadcrumb  ">
+                <ol className="breadcrumb my-2 bg-dark text-white border-0">
+                    {
+                        routes.map((route, index) => {
+                            return (
+                                <li className=" text-capitalize breadcrumb-item active text-white" key={index}><a>{route}</a></li>
+                            );
+                        })
+                    }
+                </ol>
+            </nav>
 
         );
     }

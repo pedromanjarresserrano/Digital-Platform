@@ -5,11 +5,19 @@ let actorSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
+        default: ""
+
     },
     updated: { type: Date, default: Date.now },
-    aka: String,
+    aka: {
+        type: String,
+        default: ""
+    },
     edad: Number,
-    imageAvatar: String
+    imageAvatar: {
+        type: String,
+        default: ""
+    }
 }, { autoCreate: true })
 
 actorSchema.plugin(require('mongoose-autopopulate'));

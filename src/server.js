@@ -1,7 +1,7 @@
 
 var express = require("express");
 var app = new express();
-const db = require('./models/database.js');
+const db = require('./utils/db');
 var port = process.env.port || 3000;
 const path = require('path');
 const bodyParser = require('body-parser');

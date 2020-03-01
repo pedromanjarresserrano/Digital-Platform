@@ -5,9 +5,13 @@ let locationSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
+        default: ""
     },
     updated: { type: Date, default: Date.now },
-    url: String
+    url: {
+        type: String,
+        default: ""
+    }
 }, { autoCreate: true })
 
 locationSchema.plugin(mongoosePaginate);

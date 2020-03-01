@@ -75,7 +75,7 @@ class MovieDetails extends React.Component {
                 <div className="title grid-container">
                   <div className="row">
                     <div className="col-sm-12 col-md-9 col-lg-10">
-                      <h4>{this.state.item.visualname ? this.state.item.visualname : this.state.item.name}</h4>
+                      <h4 style={{ wordWrap: 'break-word' }}>{this.state.item.visualname ? this.state.item.visualname : this.state.item.name}</h4>
                     </div>
                     <div className="col-sm-12 col-md-9 col-lg-2">
                       <i className="fab fa-facebook-square fa-2x padding-left-1"></i>

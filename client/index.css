@@ -51,6 +51,11 @@ body {
   color: #c7c7c8;
 }
 
+.item-footer {
+  padding: 20px 40px;
+  
+}
+
 .suscribe-title, .copyright, .item-footer, .item-footer ul li a {
   font-size: 1rem;
   color: #fff;

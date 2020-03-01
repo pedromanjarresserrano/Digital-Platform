@@ -1,8 +1,6 @@
 let fs = require('fs')
 let express = require('express');
 const models = require('../models/models');
-var ObjectId = require('mongoose').Types.ObjectId;
-
 let router = express.Router();
 
 //
@@ -20,7 +18,6 @@ router.get('/:_id', function (req, res, next) {
 		//	1.	Path to the movie to stream
 		//
 		let file = movie.url;
-		console.log(file);
 		
 		//
 		//	2.	Get meta information from the file. In this case we are interested
@@ -89,7 +86,6 @@ router.get('/:_id', function (req, res, next) {
 			//		ELSE 	We use the file_size variable as the last part to be
 			//				sent.
 			//
-			console.log(positions);
 			
 			let end = positions[1] ? parseInt(positions[1], 10) : file_size - 1;
 

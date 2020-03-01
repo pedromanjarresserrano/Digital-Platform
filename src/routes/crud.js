@@ -12,43 +12,33 @@ module.exports = (Collection) => {
     // ======
     const create = async (req, res) => {
         let newEntry = req.body;
-        newEntry = await Collection.create(newEntry)/*, (e, newEntry) => {
-            if (e) {
-                console.log(e);
-                res.sendStatus(500);
-            } else {*/
-        res.send(newEntry);/*
-            }
-        });*/
+        try {
+            newEntry = await Collection.create(newEntry)
+            res.send(newEntry);
+        } catch (error) {
+            res.status(502).send(error);
+        }
     };
 
     // =========
     // Read many
     // =========
     const readMany = async (req, res) => {
-        let query = req.body || {};
-        query = Object.keys(query).length === 0 ? req.query : query;
-        options.page = parseInt(req.params.page);
-        debugger;
-        if (options.page == -1) {
-            let result = await Collection.find(query);/*, (e, result) => {
-                if (e) {
-                    res.status(500).send(e);
-                    console.log(e.message);
-                } else {*/
-            res.send(result);
-            /*}
-        });*/
-        } else {
-            let result = await Collection.paginate(query, options)/*, (e, result) => {
-                if (e) {
-                    res.status(500).send(e);
-                    console.log(e.message);
-                } else { */
-            res.send(result);
-            /*}
-        });*/
+        try {
+            let query = req.body || {};
+            query = Object.keys(query).length === 0 ? req.query : query;
+            options.page = parseInt(req.params.page);
+            if (options.page == -1) {
+                let result = await Collection.find(query);
+                res.send(result);
+            } else {
+                let result = await Collection.paginate(query, options)
+                res.send(result);
+            }
+        } catch (error) {
+            res.status(502).send(error);
         }
+
     };
 
     // ========
@@ -56,30 +46,25 @@ module.exports = (Collection) => {
     // ========
     const readOne = async (req, res) => {
         const { _id } = req.params;
-
-        Collection.findById(_id, (e, result) => {
-            if (e) {
-                res.status(500).send(e);
-                console.log(e.message);
-            } else {
-                res.send(result);
-            }
-        });
+        try {
+            var doc = await Collection.findById(_id);
+            res.send(doc);
+            res.send(doc);
+        } catch (error) {
+            res.status(502).send(error);
+        }
     };
     // ========
     // Read Find one
     // ========
-    const readFindOne = (req, res) => {
+    const readFindOne = async (req, res) => {
         let query = req.body || {};
-
-        Collection.findOne(query, (e, result) => {
-            if (e) {
-                res.status(500).send(e);
-                console.log(e.message);
-            } else {
-                res.send(result);
-            }
-        });
+        try {
+            var doc = await Collection.findOne(query);
+            res.send(doc);
+        } catch (error) {
+            res.status(502).send(error);
+        }
     };
 
     // ======
@@ -87,24 +72,27 @@ module.exports = (Collection) => {
     // ======
     const update = async (req, res) => {
         let changedEntry = req.body;
-        changedEntry = await Collection.updateOne({ _id: changedEntry._id }, { $set: changedEntry })/*, (e) => {
-            if (e)
-                res.sendStatus(500);
-            else*/
-        res.sendStatus(200);
-        /*});*/
+        try {
+            changedEntry = await Collection.updateOne({ _id: changedEntry._id }, { $set: changedEntry })
+            res.sendStatus(200);
+        } catch (error) {
+            res.status(502).send(error);
+        }
     };
 
     // ======
     // Remove
     // ======
-    const remove = (req, res) => {
-        Collection.deleteOne({ _id: req.params._id }, (e) => {
-            if (e)
-                res.status(500).send(e);
-            else
-                res.sendStatus(200);
-        });
+    const remove = async (req, res) => {
+        try {
+            await Collection.deleteOne({ _id: req.params._id })
+            res.sendStatus(200);
+        } catch (error) {
+            res.status(502).send(error);
+        }
+
+
+
     };
 
     // ======

@@ -48,7 +48,6 @@ async function createVideo(files, paths, res) {
 
 
         let file = files[i];
-        console.log(file);
         let n = file.split("/");
         let nameFile = n[n.length - 1].split(".mp4")[0];
         let movie = await models.moviemodel.findOne({ name: nameFile });
@@ -62,12 +61,12 @@ async function createVideo(files, paths, res) {
                     url: file
                 });
         }
-        movie.quality = metadata.streams[0].height;
-        movie.size = (metadata.streams[0].bit_rate * metadata.streams[0].duration) / 8192;
-        movie.duration = metadata.streams[0].duration;
-        models.moviemodel.updateOne({ _id: newmovie._id }, newmovie);
+        metadata = metadata.streams[0];
+        movie.quality = metadata.height;
+        movie.size = (metadata.bit_rate * metadata.duration) / 8192;
+        movie.duration = metadata.duration;
+        models.moviemodel.updateOne({ _id: movie._id }, movie);
         res.write(JSON.stringify(i));
-
     }
 
     res.end();

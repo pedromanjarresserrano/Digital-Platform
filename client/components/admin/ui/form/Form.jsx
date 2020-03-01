@@ -93,7 +93,6 @@ class Form extends React.Component {
                 updatedFormElement.value = event.target.files[0];
             else
                 updatedFormElement.value = event.target.value;
-        debugger
         updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
         updatedFormElement.touched = true;
         updateddataForm[inputIdentifier] = updatedFormElement;

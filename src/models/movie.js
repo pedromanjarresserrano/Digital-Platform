@@ -2,27 +2,62 @@ let mongoose = require('mongoose')
 const mongoosePaginate = require('mongoose-paginate-v2');
 
 let movieSchema = new mongoose.Schema({
-    visualname: String,
+    visualname: {
+        type: String,
+        default: ""
+    },
     name: {
         type: String,
         required: true,
+        default: ""
     },
     updated: { type: Date, default: Date.now },
-    url: String,
-    duration: Number,
-    description: String,
-    like: Number,
-    view: Number,
-    size: Number,
-    year: Number,
-    quality: String,
+    url: {
+        type: String,
+        default: ""
+    },
+    duration: {
+        type: Number,
+        default: 0
+    },
+    description: {
+        type: String,
+        default: ""
+    },
+    like: {
+        type: Number,
+        default: 0
+    },
+    view: {
+        type: Number,
+        default: 0
+    },
+    size: {
+        type: Number,
+        default: 0
+    },
+    year: {
+        type: Number,
+        default: 0
+    },
+    quality: {
+        type: String,
+        default: ""
+    },
     processed: Boolean,
-    director: String,
-    guion: String,
+    director: {
+        type: String,
+        default: ""
+    },
+    guion: {
+        type: String,
+        default: ""
+    },
     reparto: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Actor',
-        autopopulate: true
+        autopopulate: true,
+        default: []
     }],
     studio: {
         type: mongoose.Schema.Types.ObjectId,
@@ -32,9 +67,13 @@ let movieSchema = new mongoose.Schema({
     categorias: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Categoria',
-        autopopulate: true
+        autopopulate: true,
+        default: []
     }],
-    portada: String
+    portada: {
+        type: String,
+        default: ""
+    }
 }, { autoCreate: true })
 
 movieSchema.plugin(require('mongoose-autopopulate'));

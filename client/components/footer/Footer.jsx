@@ -7,9 +7,9 @@ class Footer extends React.Component {
 
     render() {
         return (
-            <footer>
-                <div className="grid-container grid-x padding-top-2 padding-bottom-2">
-                    <div className="cell small-6 medium-6 item-footer">
+            <footer className="container-fluid" >
+                <div className="row">
+                    <div className="col-12 col-md-6 item-footer">
                         <h4>Información util</h4>
                         <ul className="no-bullet">
                             <li><a href="#" target="_blank">Películas de Estreno 2019!</a></li>
@@ -19,7 +19,7 @@ class Footer extends React.Component {
 
                         </ul>
                     </div>
-                    <div className="cell small-6 medium-3 item-footer">
+                    <div className="col-12 col-md-3 item-footer">
                         <h4>Servicios</h4>
                         <ul className="no-bullet">
                             <li><a href="https://www.facebook.com/PelisPlay" target="_blank">Facebook</a></li>
@@ -28,7 +28,7 @@ class Footer extends React.Component {
 
                         </ul>
                     </div>
-                    <div className="cell small-12 medium-3 suscribe-footer">
+                    <div className="col-12 col-md-3 suscribe-footer">
                         <div className="footer-suscribe-content">
                             <div className="suscribe-title">
                                 <h5>
@@ -49,14 +49,14 @@ class Footer extends React.Component {
                             </div>
                         </div>
                     </div>
-                </div>
-                <div className="copyright">
-                    <div className="content grid-x secondary">
-                        <div className="cell small-12 medium-6 copyright-content">
-                            © 2019 | Todos los derechos son reservados
+                    <div className="col-12 copyright">
+                        <div className="content grid-x secondary">
+                            <div className="cell small-12 medium-6 copyright-content">
+                                © 2019 | Todos los derechos son reservados
                            </div>
-                        <div className="cell small-12 medium-6  copyright-design text-right">
-                            <span>Desarrollado por: </span>
+                            <div className="cell small-12 medium-6  copyright-design text-right">
+                                <span>Desarrollado por: </span>
+                            </div>
                         </div>
                     </div>
                 </div>

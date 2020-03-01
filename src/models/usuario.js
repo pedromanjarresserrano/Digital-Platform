@@ -8,7 +8,11 @@ let usuarioSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    password: String,
+    password: {
+        type: String,
+        required: true,
+        default: ""
+    },
     email: {
         type: String,
         required: true,
@@ -19,7 +23,10 @@ let usuarioSchema = new mongoose.Schema({
         }
     },
     updated: { type: Date, default: Date.now },
-    imageAvatar: String
+    imageAvatar: {
+        type: String,
+        default: ""
+    }
 }, { autoCreate: true })
 
 usuarioSchema.plugin(require('mongoose-autopopulate'));

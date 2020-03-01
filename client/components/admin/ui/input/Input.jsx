@@ -102,7 +102,6 @@ class Input extends React.Component {
                     </Select>
                 );
             case ('file-image'):
-                debugger
                 return (
                     <div className="w-100">
                         <img className="img-fluid" src={this.props.value instanceof File ? URL.createObjectURL(this.props.value) : this.props.value} {...this.props.elementConfig} />
