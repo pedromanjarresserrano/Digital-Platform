@@ -1,9 +1,10 @@
 import React from 'react';
 import axios from 'axios';
-import Paginator from '../admin/ui/paginator/Paginator';
+import Paginator from '../../admin/ui/paginator/Paginator';
 import Categorie from '../categorie/Categorie';
 
 class Categories extends React.Component {
+    
     constructor(props) {
         super(props)
         this.state = {
@@ -14,6 +15,7 @@ class Categories extends React.Component {
         }
 
     }
+
     filtrarLista = (event) => {
         var updatedList = this.state.initialItems;
         updatedList = updatedList.filter(function (item) {

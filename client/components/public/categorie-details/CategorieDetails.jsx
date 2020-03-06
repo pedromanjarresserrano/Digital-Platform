@@ -2,7 +2,7 @@ import React from 'react';
 import './CategorieDetails.css';
 import Axios from 'axios';
 import { Link } from 'react-router-dom'
-import Paginator from '../admin/ui/paginator/Paginator';
+import Paginator from '../../admin/ui/paginator/Paginator';
 import Movie from '../movie/Movie'
 
 class CategorieDetails extends React.Component {

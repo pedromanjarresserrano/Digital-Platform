@@ -6,18 +6,17 @@ import 'video-react/dist/video-react.css';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
-import Catalog from './components/catalog/Catalog.jsx';
-import Header from './components/header/Header';
-import Home from './components/home/home';
-import NotFound from './components/notfound/NotFound';
-import MovieDetails from './components/movie-details/MovieDetails';
-import Breadcrumb from './components/breadcrumb/Breadcrumb';
-import Footer from './components/footer/Footer';
+import Catalog from './components/public/catalog/Catalog.jsx';
+import Header from './components/public/header/Header';
+import Home from './components/public/home/home';
+import MovieDetails from './components/public/movie-details/MovieDetails';
+import Breadcrumb from './components/public/breadcrumb/Breadcrumb';
+import Footer from './components/public/footer/Footer';
 import Form from './components/admin/ui/form/Form';
 import CrudView from './components/admin/ui/crudview/CrudView';
 import HeaderAdmin from './components/admin/header/HeaderAdmin';
-import Categories from './components/categories/Categories';
-import CategorieDetails from './components/categorie-details/CategorieDetails';
+import Categories from './components/public/categories/Categories';
+import CategorieDetails from './components/public/categorie-details/CategorieDetails';
 
 const Admin = ({ match }) => (
     <React.Fragment>

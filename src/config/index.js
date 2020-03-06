@@ -11,7 +11,7 @@ const myCustomLabels = {
 };
 const options = {
     page: 1,
-    limit: 32,
+    limit: 36,
     customLabels: myCustomLabels
 };
 

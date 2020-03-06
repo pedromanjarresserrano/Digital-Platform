@@ -44,12 +44,8 @@ const update = async (req, res) => {
     }
 
 
-    changedEntry = await Collection.updateOne({ _id: req.params._id }, { $set: changedEntry })/*, (e) => {
-        if (e)
-            res.sendStatus(500);
-        else*/
+    changedEntry = await Collection.updateOne({ _id: req.params._id }, { $set: changedEntry })
     res.sendStatus(200).send(changedEntry);
-    /*});*/
 };
 
 

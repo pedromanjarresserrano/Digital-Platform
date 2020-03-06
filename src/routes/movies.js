@@ -10,7 +10,7 @@ router.post('/', async function (req, res) {
     let paths = req.body.path;
     let files = getFiles(path.join(paths));
     files = files.filter(e => e.endsWith(".mp4"));
-    await createVideo(files, paths, res);
+    await createMovie(files, paths, res);
 })
 
 function getFiles(dir, files_) {
@@ -31,7 +31,7 @@ function getFiles(dir, files_) {
 module.exports = router;
 
 
-const getVideoInfo = (inputPath) => {
+const getMovieInfo = (inputPath) => {
     return new Promise((resolve, reject) => {
         return ffmpeg.ffprobe(inputPath, (error, movieInfo) => {
             if (error) {
@@ -42,7 +42,7 @@ const getVideoInfo = (inputPath) => {
     });
 };
 
-async function createVideo(files, paths, res) {
+async function createMovie(files, paths, res) {
     console.log("Length -----------" + files.length);
     for (let i = 0; i < files.length; i++) {
         let file = files[i];
@@ -50,7 +50,7 @@ async function createVideo(files, paths, res) {
         let nameFile = n[n.length - 1].split(".mp4")[0];
         let movie = await models.moviemodel.findOne({ name: nameFile });
         if (!movie) {
-            let metadata = await getVideoInfo(file);
+            let metadata = await getMovieInfo(file);
             metadata = metadata.streams[0];
             movie = await models
                 .moviemodel

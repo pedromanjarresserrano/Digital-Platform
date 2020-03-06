@@ -12,7 +12,7 @@ class Viewer extends React.Component {
         return (
             <div className="flex-video-example">
                 <Player>
-                    <source src={"/api/video/" + this.props.item._id} />
+                    <source src={"/api/movie/" + this.props.item._id} />
                 </Player>
             </div>
         );

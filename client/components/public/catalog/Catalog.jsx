@@ -77,12 +77,17 @@ class Catalog extends React.Component {
     }
 
     loadPage(page) {
-        axios.post('/api/movies/all/' + page,
-            {
-                categorias: this.state.categorias.filter(e => e.isChecked).map(e => e._id),
-                name: { "$regex": ".*" + this.state.search + ".*", $options: 'i' },
-                duration: this.state.timerange
-            })
+
+        let find = {
+            name: { "$regex": ".*" + this.state.search + ".*", $options: 'i' },
+            duration: this.state.timerange
+
+        }
+        let cats = this.state.categorias.filter(e => e.isChecked);
+        if (cats.length > 0)
+            find.categorias = cats.map(e => e._id);
+
+        axios.post('/api/movies/all/' + page, find)
             .then(response => {
                 this.setState({
                     items: response.data.itemsList,
