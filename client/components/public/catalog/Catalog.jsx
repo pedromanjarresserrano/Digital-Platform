@@ -47,7 +47,7 @@ class Catalog extends React.Component {
     componentWillMount() {
         let page = this.props.match.params.page;
 
-        page = page ? page : 1;
+        page = page ? parseInt(page) : 1;
         this.setState({ activePage: page });
         this.loadPage(page);
 
@@ -55,7 +55,7 @@ class Catalog extends React.Component {
     }
 
     onPageChanged = pageNumber => {
-
+        pageNumber = parseInt(pageNumber)
         this.setState({ activePage: pageNumber });
         this.loadPage(pageNumber);
         this.props.history.push({
