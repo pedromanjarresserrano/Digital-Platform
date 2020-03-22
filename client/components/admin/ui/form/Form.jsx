@@ -133,7 +133,8 @@ class Form extends React.Component {
     }
 
     cancelClick = (event) => {
-        this.props.history.goBack();
+        this.props.history.go(-1);
+
     }
 
     mapToInput(formElement) {
@@ -163,27 +164,33 @@ class Form extends React.Component {
 
         let form = (
             <form onSubmit={this.formHandler}>
-                <div className="row">
-                    <div className="col-sm-12 col-md-4">
-                        {formElementsArray.filter(e => e.config.elementType == 'file-image').map(formElement => this.mapToInput(formElement))}
+                <div class="card-body">
+                    <div className="row">
+                        <div className="col-sm-12 col-md-4">
+                            {formElementsArray.filter(e => e.config.elementType == 'file-image').map(formElement => this.mapToInput(formElement))}
+                        </div>
+                        <div className="col-sm-12 col-md-8">
+                            {formElementsArray.filter(e => e.config.elementType != 'file-image').map(formElement => this.mapToInput(formElement))}
+                        </div>
+
                     </div>
-                    <div className="col-sm-12 col-md-8">
-                        {formElementsArray.filter(e => e.config.elementType != 'file-image').map(formElement => this.mapToInput(formElement))}
-                    </div>
-                    <div className="col-sm-12">
-                        <button className="btn btn-danger" onClick={this.cancelClick}>Cancel</button>
-                        <button className="btn btn-success" disabled={!this.state.formIsValid}>Save</button>
-                    </div>
+
                 </div>
-
-
+                <div className="card-footer">
+                    <button type="button" className="btn btn-danger mr-1" onClick={this.cancelClick}>Cancel</button>
+                    <button type="submit" className="btn btn-success" >Save</button>
+                </div>
             </form>
         );
 
         return (
-            <div className="row-content">
-                <div className="text-white grid-container">
-                    <h4 className="text-white">{this.props.formTitle}</h4>
+            <div className="container-fluid">
+                <div className="card card-default">
+                    <div className="card-header">
+                        <h4 className="card-title" >{this.props.formTitle}</h4>
+
+
+                    </div>
                     {form}
                 </div>
             </div>

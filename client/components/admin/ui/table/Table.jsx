@@ -26,11 +26,11 @@ class Table extends React.Component {
                 return (
                     <tr key={Math.random() + "-id-tr-" + data._id}>
                         {
-                            this.props.headers.map(h => <td key={h.name + "-" + data._id}>{data[h.name]}</td>)
+                            this.props.headers.map(h => <td key={h.name + "-" + data._id} className="text-truncate">{data[h.name]}</td>)
                         }
-                        <td key={Math.random() + "-id-td-commands"}>
-                            <button type="button" className="btn btn-primary" onClick={() => this.props.editClick(data)}>Edit</button>
-                            <button type="button" className="btn btn-danger" onClick={() => this.props.deleteClick(data)}>Delete</button>
+                        <td key={Math.random() + "-id-td-commands"} className="d-flex flex-row">
+                            <button type="button" className="btn btn-sm btn-primary" onClick={() => this.props.editClick(data)}>Edit</button>
+                            <button type="button" className="btn btn-sm btn-danger" onClick={() => this.props.deleteClick(data)}>Delete</button>
                         </td>
                     </tr>
                 );
@@ -44,12 +44,15 @@ class Table extends React.Component {
     render() {
         return (
             <table key={Math.random() + "-id-table"} className="table crud-table  table-bordered table-hover table-sm">
-                <thead>
+                <thead className="thead-dark">
                     {this.getHeaders()}
                 </thead>
                 <tbody>
                     {this.getRows()}
                 </tbody>
+                <tfoot className="thead-dark">
+                    {this.getHeaders()}
+                </tfoot>
             </table>
         );
     }

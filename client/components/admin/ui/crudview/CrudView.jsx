@@ -66,10 +66,10 @@ class CrudView extends React.Component {
     render() {
         const { pageSize, itemCount } = this.state;
         return (
-            <div className="container">
-                <div className="row">
-                    <div className="col-12">
-                        <button onClick={this.newClick}>Nuevo</button>
+            <div className="container-fluid ">
+                <div className="row m-2 shadow-sm">
+                    <div className="col-12 py-1 bg-secondary">
+                        <button onClick={this.newClick} className="btn btn-sm btn-primary">Nuevo</button>
                     </div>
                     <div className="table-responsive">
                         <Table

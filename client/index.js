@@ -19,17 +19,16 @@ import HeaderAdmin from './components/admin/header/HeaderAdmin';
 import Categories from './components/public/categories/Categories';
 import CategorieDetails from './components/public/categorie-details/CategorieDetails';
 import SidebarAdmin from './components/admin/sidebar/SidebarAdmin';
-
+import BreadcrumbAdmin from './components/admin/breadcrumb/BreadcrumbAdmin';
+import LoginAdmin from './components/admin/login/LoginAdmin';
 const Admin = ({ match }) => (
     <React.Fragment>
         <div className="wrapper">
             <nav className="main-header navbar navbar-expand navbar-white navbar-light"> <HeaderAdmin />
             </nav>
-            <aside className="main-sidebar sidebar-dark-primary elevation-4">
-                <SidebarAdmin />
-            </aside>
+            <SidebarAdmin />
             <div className="content-wrapper">
-                <Breadcrumb />
+                <BreadcrumbAdmin />
                 <Switch>
                     <Route exact path={`${match.path}`} component={Home} />
 
@@ -502,6 +501,8 @@ const Public = ({ match }) => (
 
 ReactDOM.render(<BrowserRouter>
     <Switch>
+        <Route exact path="/admin/login" component={LoginAdmin} />
+
         <Route path="/admin" component={Admin} />
         <Route path="/" component={Public} />
     </Switch>

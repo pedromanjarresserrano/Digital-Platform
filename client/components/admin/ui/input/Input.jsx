@@ -127,7 +127,7 @@ class Input extends React.Component {
             return (
                 <div className="row">
                     <div className="col-sm-12 col-md-3 label-field">
-                        <label className=" label-field  text-white">{this.props.label}</label>
+                        <label className=" label-field  ">{this.props.label}</label>
                     </div>
                     <div className="col-sm-12 col-md-9">
                         {this.getInput()}
