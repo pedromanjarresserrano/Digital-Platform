@@ -1,6 +1,7 @@
 let mongoose = require('mongoose')
 let validator = require('validator')
 const mongoosePaginate = require('mongoose-paginate-v2');
+const Bcrypt = require("bcryptjs");
 
 let usuarioSchema = new mongoose.Schema({
     name: String,
@@ -32,5 +33,17 @@ let usuarioSchema = new mongoose.Schema({
 usuarioSchema.plugin(require('mongoose-autopopulate'));
 
 usuarioSchema.plugin(mongoosePaginate);
+
+usuarioSchema.pre("save", function (next) {
+    if (!this.isModified("password")) {
+        return next();
+    }
+    this.password = Bcrypt.hashSync(this.password, 10);
+    next();
+});
+
+usuarioSchema.methods.comparePassword = async function (plaintext) {
+    return await Bcrypt.compareSync(plaintext, this.password);
+};
 
 module.exports = mongoose.model('Usuario', usuarioSchema)
