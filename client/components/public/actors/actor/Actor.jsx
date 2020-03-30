@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
 
-class Categorie extends React.Component {
+class Actor extends React.Component {
 
     componentWillMount() {
         console.log(this)
@@ -10,12 +10,12 @@ class Categorie extends React.Component {
     render() {
         return (
             <Link to={{
-                pathname: "/categories/categorie/" + this.props.item.name,
+                pathname: "/actors/actor/" + this.props.item.name,
                 state: { item: this.props.item }
             }}>
                 <div className="p-1" >
                     {
-                        <img className="img-fluid"src={this.props.item.image} />
+                        <img className="img-fluid" src={this.props.item.imageAvatar} />
                     }
                     <p className="text-white text-center">{this.props.item.name}</p>
                 </div>
@@ -25,4 +25,4 @@ class Categorie extends React.Component {
 
 
 }
-export default Categorie;
+export default Actor;

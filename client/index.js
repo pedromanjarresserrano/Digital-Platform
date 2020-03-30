@@ -21,6 +21,8 @@ import CategorieDetails from './components/public/categorie-details/CategorieDet
 import SidebarAdmin from './components/admin/sidebar/SidebarAdmin';
 import BreadcrumbAdmin from './components/admin/breadcrumb/BreadcrumbAdmin';
 import LoginAdmin from './components/admin/login/LoginAdmin';
+import ActorDetails from './components/public/actors/actor-details/ActorDetails';
+import Actors from './components/public/actors/actors/Actors';
 const Admin = ({ match }) => (
     <React.Fragment>
         <div className="wrapper">
@@ -493,6 +495,9 @@ const Public = ({ match }) => (
             <Route key="list-categories" exact path="/categories" component={Categories} />
             <Route key="categoriecategorie" exact path="/categories/categorie" render={(props) => (<Redirect to="/categories"  {...props} />)} />
             <Route key="categorie" exact path="/categories/categorie/:name" component={CategorieDetails} />
+            <Route key="list-actors" exact path="/actors" component={Actors} />
+            <Route key="actor" exact path="/actors/actor" render={(props) => (<Redirect to="/actors"  {...props} />)} />
+            <Route key="actorn" exact path="/actors/actor/:name" component={ActorDetails} />
             <Route exact path="/index" component={Home} />
         </Switch>
         <Footer />

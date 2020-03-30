@@ -73,7 +73,9 @@ let movieSchema = new mongoose.Schema({
     portada: {
         type: String,
         default: ""
-    }
+    },
+    files: [String]
+
 }, { autoCreate: true })
 
 movieSchema.plugin(require('mongoose-autopopulate'));

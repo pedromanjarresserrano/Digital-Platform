@@ -4,6 +4,7 @@ let path = require('path');
 let fs = require('fs');
 const models = require('../models/models');
 var ffmpeg = require('fluent-ffmpeg');
+const service = require('../services/movie');
 
 
 router.post('/', async function (req, res) {
@@ -49,8 +50,8 @@ async function createMovie(files, paths, res) {
         let n = file.split("/");
         let nameFile = n[n.length - 1].split(".mp4")[0];
         let movie = await models.moviemodel.findOne({ name: nameFile });
+        let metadata = await getMovieInfo(file);
         if (!movie) {
-            let metadata = await getMovieInfo(file);
             metadata = metadata.streams[0];
             movie = await models
                 .moviemodel
@@ -62,9 +63,23 @@ async function createMovie(files, paths, res) {
                     duration: metadata.duration,
                 });
         }
+        await generatefiles(movie, files, paths, [metadata.width, metadata.height]);
+
         res.write(JSON.stringify(i));
     }
     res.end();
 
 }
 
+
+
+async function generatefiles(newvideo, files, paths, ratio) {
+    if (newvideo.files.length < 10) {
+        var list = await service.generatePreviews({
+            name: newvideo._id, url: newvideo.url, ratio: ratio
+        })
+        list.map(e => "/thumbnail/" + e).forEach(i => newvideo.files.push(i));
+        await models.moviemodel.updateOne({ _id: newvideo._id }, newvideo);
+
+    }
+}

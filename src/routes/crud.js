@@ -49,7 +49,6 @@ module.exports = (Collection) => {
         try {
             var doc = await Collection.findById(_id);
             res.send(doc);
-            res.send(doc);
         } catch (error) {
             res.status(502).send(error);
         }

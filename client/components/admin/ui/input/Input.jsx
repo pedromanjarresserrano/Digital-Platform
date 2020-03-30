@@ -108,7 +108,7 @@ class Input extends React.Component {
                         <div className="input-group mb-3 mt-3" >
                             <div className="custom-file">
                                 <input type="file" id={"file-" + this.props.keyId} className="custom-file-input" onChange={this.props.changed} />
-                                <label htmlFor={"file-" + this.props.keyId} className="custom-file-input">Upload File</label>
+                                <label htmlFor={"file-" + this.props.keyId} className="custom-file-label">Upload File</label>
                             </div>
                         </div>
                     </div>
