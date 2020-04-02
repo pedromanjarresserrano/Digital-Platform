@@ -58,7 +58,6 @@ class Actors extends React.Component {
 
     render() {
         const { pageSize, itemCount } = this.state;
-
         if (pageSize === 0) return null;
         return (
             <div className="container-fluid">
