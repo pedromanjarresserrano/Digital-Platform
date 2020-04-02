@@ -17,6 +17,10 @@ let actorSchema = new mongoose.Schema({
     imageAvatar: {
         type: String,
         default: ""
+    },
+    bio: {
+        type: String,
+        default: ""
     }
 }, { autoCreate: true })
 

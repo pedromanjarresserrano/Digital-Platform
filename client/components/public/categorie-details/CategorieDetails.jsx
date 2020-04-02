@@ -55,7 +55,7 @@ class CategorieDetails extends React.Component {
 
   onPageChanged = data => {
     const { currentPage } = data;
-    this.loadPage(currentPage);
+    this.loadPage(currentPage || 1);
   }
 
   vermas = (item) => {
@@ -72,21 +72,19 @@ class CategorieDetails extends React.Component {
     const { pageSize, itemCount } = this.state;
 
     return (
-      <div className="row-content">
-        <div className="grid-container  p-1">
+      <div className="container-fluid">
+        <div className="d-block">
           <h1 className="text-white">{this.state.item.name}</h1>
-          <div className="filter-list">
-            <div className="display row" >
-              {
-                this.state.items.map(function (item) {
-                  return (
-                    <div className="col-3" key={item._id} >
-                      <Movie item={item} vermasonclick={this.vermas} />
-                    </div>
-                  );
-                }, this)
-              }
-            </div>
+          <div className="display row" >
+            {
+              this.state.items.map(function (item) {
+                return (
+                  <div className="col-3" key={item._id} >
+                    <Movie item={item} vermasonclick={this.vermas} />
+                  </div>
+                );
+              }, this)
+            }
           </div>
           <Paginator totalRecords={itemCount} pageLimit={pageSize} pageNeighbours={3} onPageChanged={this.onPageChanged} />
 

@@ -23,6 +23,7 @@ import BreadcrumbAdmin from './components/admin/breadcrumb/BreadcrumbAdmin';
 import LoginAdmin from './components/admin/login/LoginAdmin';
 import ActorDetails from './components/public/actors/actor-details/ActorDetails';
 import Actors from './components/public/actors/actors/Actors';
+import NotFound from './components/public/notfound/NotFound';
 const Admin = ({ match }) => (
     <React.Fragment>
         <div className="wrapper">
@@ -217,6 +218,22 @@ const Admin = ({ match }) => (
                                     label: 'Genero',
                                     inline: true
                                 },
+                                bio: {
+                                    elementType: 'input',
+                                    elementConfig: {
+                                        type: 'text',
+                                        placeholder: 'Aka'
+                                    },
+                                    optConfig: {},
+                                    value: '',
+                                    validation: {
+                                        required: false
+                                    },
+                                    valid: false,
+                                    touched: false,
+                                    label: 'Biography',
+                                    inline: true
+                                },
                                 imageAvatar: {
                                     elementType: 'file-image',
                                     elementConfig: {
@@ -297,7 +314,7 @@ const Admin = ({ match }) => (
                                     optConfig: {},
                                     value: '',
                                     validation: {
-                                        required: true
+                                        required: false
                                     },
                                     valid: false,
                                     touched: false,
@@ -473,6 +490,8 @@ const Admin = ({ match }) => (
                             baseUrl={'/api/movies'}
                             formTitle={'Video data'}
                         />)} />
+
+                    <Route key="form-movies" exact path={`${match.path}/*`} component={NotFound} />
                 </Switch>
             </div>
         </div>
@@ -506,10 +525,11 @@ const Public = ({ match }) => (
 
 ReactDOM.render(<BrowserRouter>
     <Switch>
-        <Route exact path="/admin/login" component={LoginAdmin} />
+        <Route path="/admin/login" component={LoginAdmin} />
 
         <Route path="/admin" component={Admin} />
         <Route path="/" component={Public} />
+        <Route component={NotFound} />
     </Switch>
 </BrowserRouter>, document.getElementById('root'));
 

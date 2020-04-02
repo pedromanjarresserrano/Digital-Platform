@@ -68,7 +68,7 @@ class Categories extends React.Component {
                             {
                                 this.state.items.map(function (item) {
                                     return (
-                                        <div className="col-3" key={item._id} >
+                                        <div className="col-2" key={item._id} >
                                             <Categorie item={item} vermasonclick={this.vermas} />
                                         </div>
                                     );

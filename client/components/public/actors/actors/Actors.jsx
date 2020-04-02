@@ -4,7 +4,7 @@ import Paginator from '../../../admin/ui/paginator/Paginator';
 import Actor from '../actor/Actor';
 
 class Actors extends React.Component {
-    
+
     constructor(props) {
         super(props)
         this.state = {
@@ -61,23 +61,25 @@ class Actors extends React.Component {
 
         if (pageSize === 0) return null;
         return (
-            <div className="row p-1" >
-                <div className="col-12">
-                    <div className="filter-list">
-                        <div className="display row" >
-                            {
-                                this.state.items.map(function (item) {
-                                    return (
-                                        <div className="col-3" key={item._id} >
-                                            <Actor item={item} vermasonclick={this.vermas} />
-                                        </div>
-                                    );
-                                }, this)
-                            }
+            <div className="container-fluid">
+                <div className="row" >
+                    <div className="col-12">
+                        <div className="filter-list">
+                            <div className="display row" >
+                                {
+                                    this.state.items.map(function (item) {
+                                        return (
+                                            <div className="col-2" key={item._id} >
+                                                <Actor item={item} vermasonclick={this.vermas} />
+                                            </div>
+                                        );
+                                    }, this)
+                                }
+                            </div>
                         </div>
-                    </div>
-                    <Paginator totalRecords={itemCount} pageLimit={pageSize} pageNeighbours={3} onPageChanged={this.onPageChanged} />
+                        <Paginator totalRecords={itemCount} pageLimit={pageSize} pageNeighbours={3} onPageChanged={this.onPageChanged} />
 
+                    </div>
                 </div>
             </div>
         );
