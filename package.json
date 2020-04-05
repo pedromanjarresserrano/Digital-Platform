@@ -11,8 +11,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "npx nodemon --inspect src/server "
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Pedrioko",
+  "license": "MIT",
   "dependencies": {
     "@babel/runtime": "^7.8.7",
     "@material-ui/core": "^4.9.5",
