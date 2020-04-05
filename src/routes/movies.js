@@ -5,13 +5,23 @@ let fs = require('fs');
 const models = require('../models/models');
 var ffmpeg = require('fluent-ffmpeg');
 const service = require('../services/movie');
-
+var process = 0;
 
 router.post('/', async function (req, res) {
     let paths = req.body.path;
-    let files = getFiles(path.join(paths));
-    files = files.filter(e => e.endsWith(".mp4"));
-    await createMovie(files, paths, res);
+    if (process == 0) {
+        process++;
+        let files = getFiles(path.join(paths));
+        files = files.filter(e => e.endsWith(".mp4"));
+        await createMovie(files, paths, res);
+    } else {
+        res.send({ msg: "Already running" })
+    }
+
+})
+
+router.get("/progress", (req, res) => {
+    res.status(200).send({ process });
 })
 
 function getFiles(dir, files_) {
@@ -46,6 +56,7 @@ const getMovieInfo = (inputPath) => {
 async function createMovie(files, paths, res) {
     console.log("Length -----------" + files.length);
     for (let i = 0; i < files.length; i++) {
+        process = Math.floor((i + 1) * 100 / files.length, 0)
         let file = files[i];
         let n = file.split("/");
         let nameFile = n[n.length - 1].split(".mp4")[0];
@@ -64,11 +75,10 @@ async function createMovie(files, paths, res) {
                 });
         }
         await generatefiles(movie, files, paths, [metadata.width, metadata.height]);
-
         res.write(JSON.stringify(i));
     }
     res.end();
-
+    process = 0;
 }
 
 
