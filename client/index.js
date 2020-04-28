@@ -4,7 +4,6 @@ import ReactDOM from 'react-dom';
 import 'video-react/dist/video-react.css';
 import './index.css';
 
-
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
 import Catalog from './components/public/catalog/Catalog.jsx';
@@ -24,6 +23,8 @@ import LoginAdmin from './components/admin/login/LoginAdmin';
 import ActorDetails from './components/public/actors/actor-details/ActorDetails';
 import Actors from './components/public/actors/actors/Actors';
 import NotFound from './components/public/notfound/NotFound';
+
+
 const Admin = ({ match }) => (
     <React.Fragment>
         <div className="wrapper">
@@ -34,15 +35,75 @@ const Admin = ({ match }) => (
                 <BreadcrumbAdmin />
                 <Switch>
                     <Route exact path={`${match.path}`} component={Home} />
+                    <Route key="crud-locations" exact path={`${match.path}/locations`} render={(props) => (<CrudView {...props}
+                        headers={[{
+                            name: "name",
+                            label: "Nombre"
+                        }, {
+                            name: "url",
+                            label: "Location"
+                        }]}
+                        baseRoute={`${match.path}/locations/location`}
+                        baseUrl={'/api/location'}
+
+                    />)} />
+                    <Route key="form-locations" exact path={`${match.path}/locations/location/:action/:id`} render={(props) => (
+                        <Form {...props}
+                            formField={{
+                                name: {
+                                    elementType: 'input',
+                                    elementConfig: {
+                                        type: 'text',
+                                        placeholder: 'Nombre'
+                                    },
+                                    optConfig: {},
+                                    value: '',
+                                    validation: {
+                                        required: true
+                                    },
+                                    valid: false,
+                                    touched: false,
+                                    label: 'Nombre',
+                                    inline: true
+                                },
+                                url: {
+                                    elementType: 'input',
+                                    elementConfig: {
+                                        type: 'text',
+                                        placeholder: 'Location'
+                                    },
+                                    optConfig: {},
+                                    value: '',
+                                    validation: {
+                                        required: true
+                                    },
+                                    valid: false,
+                                    touched: false,
+                                    label: 'Location',
+                                    inline: true
+                                }
+                            }
+                            }
+                            baseUrl={'/api/location'}
+                            formTitle={'Location data'}
+                        />)} />
 
                     <Route key="crud-genders" exact path={`${match.path}/genders`} render={(props) => (<CrudView {...props}
                         headers={[{
                             name: "name",
                             label: "Nombre"
                         }]}
-                        baseRoute={`${match.path}"/genders/gender`}
+                        baseRoute={`${match.path}/genders/gender`}
                         baseUrl={'/api/generos'}
-
+                        extraAcciones={[
+                            {
+                                name: "Procesar",
+                                onClick: function (data) {
+                                    console.log(data);
+                                    
+                                }
+                            }
+                        ]}
                     />)} />
                     <Route key="form-genders" exact path={`${match.path}/genders/gender/:action/:id`} render={(props) => (
                         <Form {...props}
@@ -522,6 +583,7 @@ const Public = ({ match }) => (
         <Footer />
     </React.Fragment>
 );
+
 
 ReactDOM.render(<BrowserRouter>
     <Switch>

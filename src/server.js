@@ -19,6 +19,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static(__dirname + "/../public"));
 require('./routes')(app);
+require('./services/socket').init(app);
 
 
 app.get('*', function (req, res) {

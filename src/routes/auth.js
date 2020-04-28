@@ -10,7 +10,7 @@ router.post("/signin", async (req, res) => {
     try {
         const { email, password } = req.body;
         const user = await users.findOne({ email });
-        if (!user) return res.status(400).send("The data send not macth with any user")
+        if (!user) return res.status(400).send("The data send not macth with any user");
         const match = user.comparePassword(password);
         if (!match) {
             return res.status(400).send({ message: "The data send not macth with any user" });
@@ -22,7 +22,7 @@ router.post("/signin", async (req, res) => {
 
         res.status(500).send(error);
     }
-})
+});
 
 
 

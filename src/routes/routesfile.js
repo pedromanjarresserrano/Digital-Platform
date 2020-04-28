@@ -1,8 +1,8 @@
 const express = require('express');
-var path = require('path')
-var util = require('util')
-let fs = require('fs')
-let config = require('../config/index')
+const path = require('path');
+const util = require('util');
+let fs = require('fs');
+let config = require('../config/index');
 
 
 module.exports = (Collection, attrname, uniqueattrname) => {

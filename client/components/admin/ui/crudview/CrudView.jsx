@@ -14,7 +14,8 @@ class CrudView extends React.Component {
             items: [],
             itemCount: 0,
             pageSize: 0,
-            headers: this.props.headers
+            headers: this.props.headers,
+            extraAcciones: []
         }
     }
     componentWillMount() {
@@ -77,6 +78,8 @@ class CrudView extends React.Component {
                             data={this.state.items}
                             editClick={this.editClick}
                             deleteClick={this.deleteClick}
+                            extraAcciones={this.props.extraAcciones}
+
                         />
                     </div>
                     <div className="col-12" >

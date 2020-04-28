@@ -17,7 +17,13 @@ class Movie extends React.Component {
   }
 
   getPreview() {
-    if (this.props.item.files) {
+    if (this.props.item.portada && this.props.item.portada.length > 0) {
+      return <img
+        className="img-fluid"
+        effect="blur"
+        src={this.props.item.portada} />
+    }
+    else {
       return <div className="slider-carousel">
         <div className="figure">
           {
@@ -33,12 +39,6 @@ class Movie extends React.Component {
           }
         </div>
       </div>
-    }
-    else {
-      return <img
-        className="img-fluid"
-        effect="blur"
-        src={this.props.item.portada} />
     }
   }
 

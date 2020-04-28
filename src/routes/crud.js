@@ -1,8 +1,6 @@
 
 const express = require('express');
-var ObjectId = require('mongoose').Types.ObjectId;
-var mongoose = require('mongoose')
-let config = require('../config/index')
+let config = require('../config/index');
 let options = config.options;
 
 module.exports = (Collection) => {
@@ -11,9 +9,9 @@ module.exports = (Collection) => {
     // Create
     // ======
     const create = async (req, res) => {
-        let newEntry = req.body;
+        let newEntry = req.body;      
         try {
-            newEntry = await Collection.create(newEntry)
+            newEntry = await Collection.create(newEntry);
             res.send(newEntry);
         } catch (error) {
             res.status(502).send(error);
@@ -28,11 +26,11 @@ module.exports = (Collection) => {
             let query = req.body || {};
             query = Object.keys(query).length === 0 ? req.query : query;
             options.page = parseInt(req.params.page);
-            if (options.page == -1) {
+            if (options.page === -1) {
                 let result = await Collection.find(query);
                 res.send(result);
             } else {
-                let result = await Collection.paginate(query, options)
+                let result = await Collection.paginate(query, options);
                 res.send(result);
             }
         } catch (error) {
@@ -47,7 +45,7 @@ module.exports = (Collection) => {
     const readOne = async (req, res) => {
         const { _id } = req.params;
         try {
-            var doc = await Collection.findById(_id);
+            let doc = await Collection.findById(_id);
             res.send(doc);
         } catch (error) {
             res.status(502).send(error);
@@ -59,7 +57,7 @@ module.exports = (Collection) => {
     const readFindOne = async (req, res) => {
         let query = req.body || {};
         try {
-            var doc = await Collection.findOne(query);
+            let doc = await Collection.findOne(query);
             res.send(doc);
         } catch (error) {
             res.status(502).send(error);
@@ -72,7 +70,7 @@ module.exports = (Collection) => {
     const update = async (req, res) => {
         let changedEntry = req.body;
         try {
-            changedEntry = await Collection.updateOne({ _id: changedEntry._id }, { $set: changedEntry })
+            await Collection.updateOne({_id: changedEntry._id}, {$set: changedEntry});
             res.sendStatus(200);
         } catch (error) {
             res.status(502).send(error);
@@ -84,7 +82,7 @@ module.exports = (Collection) => {
     // ======
     const remove = async (req, res) => {
         try {
-            await Collection.deleteOne({ _id: req.params._id })
+            await Collection.deleteOne({ _id: req.params._id });
             res.sendStatus(200);
         } catch (error) {
             res.status(502).send(error);
@@ -110,4 +108,4 @@ module.exports = (Collection) => {
 
     return router;
 
-}
+};

@@ -31,6 +31,10 @@ class Table extends React.Component {
                         <td key={Math.random() + "-id-td-commands"} className="d-flex flex-row">
                             <button type="button" className="btn btn-sm btn-primary" onClick={() => this.props.editClick(data)}>Edit</button>
                             <button type="button" className="btn btn-sm btn-danger" onClick={() => this.props.deleteClick(data)}>Delete</button>
+
+                            {this.props.extraAcciones ? this.props.extraAcciones.map(accion => {
+                                <button type="button" className="btn btn-sm btn-danger" onClick={() => accion.onClick(data)}>{accion.name}</button>
+                            }) : ""}
                         </td>
                     </tr>
                 );

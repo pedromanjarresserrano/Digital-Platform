@@ -6,7 +6,7 @@ const models = require('../models/models');
 var ffmpeg = require('fluent-ffmpeg');
 const service = require('../services/movie');
 var process = 0;
-
+var socketServer = require("../services/socket").socketServer
 router.post('/', async function (req, res) {
     let paths = req.body.path;
     if (process == 0) {
@@ -27,6 +27,8 @@ router.get("/progress", (req, res) => {
 function getFiles(dir, files_) {
     files_ = files_ || [];
     var files = fs.readdirSync(dir);
+    console.log(files);
+
     for (var i in files) {
         var name = dir + '/' + files[i];
 
@@ -56,28 +58,33 @@ const getMovieInfo = (inputPath) => {
 async function createMovie(files, paths, res) {
     console.log("Length -----------" + files.length);
     for (let i = 0; i < files.length; i++) {
-        process = Math.floor((i + 1) * 100 / files.length, 0)
-        let file = files[i];
-        let n = file.split("/");
-        let nameFile = n[n.length - 1].split(".mp4")[0];
-        let movie = await models.moviemodel.findOne({ name: nameFile });
-        let metadata = await getMovieInfo(file);
-        if (!movie) {
-            metadata = metadata.streams[0];
-            movie = await models
-                .moviemodel
-                .create({
-                    name: nameFile,
-                    url: file,
-                    quality: metadata.height,
-                    size: (metadata.bit_rate * metadata.duration) / 8192,
-                    duration: metadata.duration,
-                });
+        try {
+            process = Math.floor((i + 1) * 100 / files.length, 0)
+            socketServer.socket.emit("RMF", process)
+            let file = files[i];
+            let n = file.split("/");
+            let nameFile = n[n.length - 1].split(".mp4")[0];
+            let movie = await models.moviemodel.findOne({ name: nameFile });
+            let metadata = await getMovieInfo(file);
+            if (!movie) {
+                metadata = metadata.streams[0];
+                movie = await models
+                    .moviemodel
+                    .create({
+                        name: nameFile,
+                        url: file,
+                        quality: metadata.height,
+                        size: (metadata.bit_rate * metadata.duration) / 8192,
+                        duration: metadata.duration,
+                    });
+            }
+            await generatefiles(movie, files, paths, [metadata.width, metadata.height]);
+        } catch (error) {
+            console.log(error);
+            continue
         }
-        await generatefiles(movie, files, paths, [metadata.width, metadata.height]);
-        res.write(JSON.stringify(i));
     }
-    res.end();
+    res.send({ length: files.length });
     process = 0;
 }
 

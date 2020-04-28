@@ -108,16 +108,21 @@ class Form extends React.Component {
         event.preventDefault();
         this.setState({ loading: true });
         let data = new FormData();
+        let headers = {}
         for (let formElementIdentifier in this.state.dataForm) {
             if (this.state.dataForm[formElementIdentifier].value instanceof File) {
                 data.append(formElementIdentifier, this.state.dataForm[formElementIdentifier].value, formElementIdentifier);
-            } else
+                headers["Content-Type"] = 'multipart/form-data';
+            } else {
                 data.append(formElementIdentifier, this.state.dataForm[formElementIdentifier].value);
-        }
-        Axios.post(this.props.baseUrl, data, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
+                headers["Content-Type"] = 'application/json';
             }
+        }
+        console.log(data);
+
+        debugger
+        Axios.post(this.props.baseUrl, data, {
+            headers: headers
         })
             .then(response => {
                 //this.setState({ loading: false });

@@ -13,7 +13,6 @@ module.exports = (app) => {
     app.use('/api/actores', require('./crud')(models.actormodel));
     app.use('/api/categorias', require('./routesfile')(models.categoriamodel, 'image', 'name'));
     app.use('/api/categorias', require('./crud')(models.categoriamodel));
-    app.use('/api/imageset', require('./crud')(models.imagesetmodel));
     app.use('/api/usuario', require('./crud')(models.usuariomodel));
     app.use('/api/location', require('./crud')(models.locationmodel));
     app.use('/api/movies/read', require('./movies'));

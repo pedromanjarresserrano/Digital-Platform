@@ -15,7 +15,7 @@ const readMany = async (req, res) => {
     options.page = parseInt(req.params.page);
     if (query.duration)
         query.duration = { $gte: parseInt(query.duration[0]) * 60, $lte: parseInt(query.duration[1]) * 60 }
-    if (options.page == -1) {
+    if (options.page === -1) {
         let result = await Collection.find(query).sort({ updated: -1 });
         res.send(result);
     } else {
@@ -30,20 +30,9 @@ const readMany = async (req, res) => {
 
 const update = async (req, res) => {
     let changedEntry = req.body;
-
     changedEntry._id = new ObjectID(changedEntry._id);
-    if (changedEntry.categorias) {
-        changedEntry.categorias = Array.isArray(changedEntry.categorias) ? changedEntry.categorias.map(e => new ObjectID(e)) : [new ObjectID(changedEntry.categorias)];
-    } else {
-        changedEntry.categorias = [];
-    }
-    if (changedEntry.reparto) {
-        changedEntry.reparto = Array.isArray(changedEntry.reparto) ? changedEntry.reparto.map(e => new ObjectID(e)) : [new ObjectID(changedEntry.reparto)];
-    } else {
-        changedEntry.reparto = [];
-    }
-
-
+    changedEntry.categorias = changedEntry.categorias ? Array.isArray(changedEntry.categorias) ? changedEntry.categorias.map(e => new ObjectID(e)) : [new ObjectID(changedEntry.categorias)] : [];
+    changedEntry.reparto = changedEntry.reparto ? Array.isArray(changedEntry.reparto) ? changedEntry.reparto.map(e => new ObjectID(e)) : [new ObjectID(changedEntry.reparto)] : [];
     changedEntry = await Collection.updateOne({ _id: req.params._id }, { $set: changedEntry })
     res.sendStatus(200).send(changedEntry);
 };
@@ -58,7 +47,7 @@ const readOne = async (req, res) => {
     result.view = result.view ? result.view + 1 : 1;
     await Collection.updateOne({ _id: _id }, { $set: { view: result.view } });
     res.send(result);
-}
+};
 
 const likedOne = async (req, res) => {
     const { _id } = req.params;
@@ -80,16 +69,12 @@ router.post('/', config.multer.single(attrname), async function (req, res) {
     let changedEntry = req.body;
 
 
-    if (changedEntry.categorias) {
-        changedEntry.categorias = Array.isArray(changedEntry.categorias) ? changedEntry.categorias.map(e => new ObjectID(e)) : [new ObjectID(changedEntry.categorias)];
+    if (Array.isArray(changedEntry.categorias)) {
+        changedEntry.categorias = changedEntry.categorias ? changedEntry.categorias.map(e => new ObjectID(e)) : [];
     } else {
-        changedEntry.categorias = [];
+        changedEntry.categorias = changedEntry.categorias ? [new ObjectID(changedEntry.categorias)] : [];
     }
-    if (changedEntry.reparto) {
-        changedEntry.reparto = Array.isArray(changedEntry.reparto) ? changedEntry.reparto.map(e => new ObjectID(e)) : [new ObjectID(changedEntry.reparto)];
-    } else {
-        changedEntry.reparto = [];
-    }
+    changedEntry.reparto = changedEntry.reparto ? Array.isArray(changedEntry.reparto) ? changedEntry.reparto.map(e => new ObjectID(e)) : [new ObjectID(changedEntry.reparto)] : [];
     if (doc) {
         changedEntry._id = new ObjectID(doc._id);
         changedEntry = await Collection.findOneAndUpdate({ _id: changedEntry._id }, { $set: changedEntry },
@@ -119,7 +104,7 @@ function saveFile(req, doc, res) {
 function updateDoc(doc, res) {
     Collection.updateOne({ _id: doc._id }, { $set: doc }, { upsert: true, 'new': true }, (err, doc) => {
         if (err) {
-            if (err.ok == 1) {
+            if (err.ok === 1) {
                 res.send({ message: "Ok" });
             }
             else
@@ -130,8 +115,8 @@ function updateDoc(doc, res) {
 }
 
 function storeWithName(file, name) {
-    var fullNewPath = path.join(file.destination, name)
-    var rename = util.promisify(fs.rename)
+    let fullNewPath = path.join(file.destination, name)
+    let rename = util.promisify(fs.rename)
 
     return rename(file.path, fullNewPath)
         .then(() => {

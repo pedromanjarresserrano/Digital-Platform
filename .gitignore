@@ -89,3 +89,6 @@ typings/
 public/thumbnail/
 
 public/uploads/
+.idea/
+.vscode/
+client/.vscode/

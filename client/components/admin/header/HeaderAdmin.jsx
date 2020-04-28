@@ -1,11 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
+import socketIOClient from "socket.io-client";
+const ENDPOINT = "http://localhost:3001";
 
 class HeaderAdmin extends React.Component {
     componentWillMount() {
         //console.log(this)
     }
-
+    componentDidMount() {
+        const socket = socketIOClient(ENDPOINT);
+        socket.on("RMF", data => {
+            console.log(data);
+        });
+    }
     render() {
         return (
             <>
