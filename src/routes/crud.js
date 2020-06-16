@@ -9,6 +9,8 @@ module.exports = (Collection) => {
     // Create
     // ======
     const create = async (req, res) => {
+        console.log(req.body);
+        
         let newEntry = req.body;      
         try {
             newEntry = await Collection.create(newEntry);

@@ -60,7 +60,11 @@ async function createMovie(files, paths, res) {
     for (let i = 0; i < files.length; i++) {
         try {
             process = Math.floor((i + 1) * 100 / files.length, 0)
-            socketServer.socket.emit("RMF", process)
+            try {
+                socketServer.socket.emit("RMF", process)
+            } catch (error) {
+                console.log(error);
+            }
             let file = files[i];
             let n = file.split("/");
             let nameFile = n[n.length - 1].split(".mp4")[0];
