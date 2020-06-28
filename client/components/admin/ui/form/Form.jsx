@@ -103,18 +103,31 @@ class Form extends React.Component {
         }
         this.setState({ dataForm: updateddataForm, formIsValid: formIsValid });
     }
+    haveFile() {
+        for (let formElementIdentifier in this.state.dataForm) {
+            return this.state.dataForm[formElementIdentifier].value instanceof File ? true : false;
+        }
+    }
 
     formHandler = (event) => {
         event.preventDefault();
         this.setState({ loading: true });
-        let data = new FormData();
         let headers = {}
-        for (let formElementIdentifier in this.state.dataForm) {
-            if (this.state.dataForm[formElementIdentifier].value instanceof File) {
-                data.append(formElementIdentifier, this.state.dataForm[formElementIdentifier].value, formElementIdentifier);
-                headers["Content-Type"] = 'multipart/form-data';
-            } else {
-                data.append(formElementIdentifier, this.state.dataForm[formElementIdentifier].value);
+        let data = new FormData();
+        if (this.haveFile()) {
+            for (let formElementIdentifier in this.state.dataForm) {
+                if (this.state.dataForm[formElementIdentifier].value instanceof File) {
+                    data.append(formElementIdentifier, this.state.dataForm[formElementIdentifier].value, formElementIdentifier);
+                    headers["Content-Type"] = 'multipart/form-data';
+                } else {
+                    data.append(formElementIdentifier, this.state.dataForm[formElementIdentifier].value);
+                    headers["Content-Type"] = 'application/json';
+                }
+            }
+        } else {
+            data = {};
+            for (let formElementIdentifier in this.state.dataForm) {
+                data[formElementIdentifier] = this.state.dataForm[formElementIdentifier].value;
                 headers["Content-Type"] = 'application/json';
             }
         }
