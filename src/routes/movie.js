@@ -1,6 +1,7 @@
 let fs = require('fs')
 let express = require('express');
 const models = require('../models/models');
+const { log } = require('console');
 let router = express.Router();
 
 //
@@ -18,7 +19,7 @@ router.get('/:_id', function (req, res, next) {
 		//	1.	Path to the movie to stream
 		//
 		let file = movie.url;
-		
+
 		//
 		//	2.	Get meta information from the file. In this case we are interested
 		//		in its size.
@@ -86,7 +87,7 @@ router.get('/:_id', function (req, res, next) {
 			//		ELSE 	We use the file_size variable as the last part to be
 			//				sent.
 			//
-			
+
 			let end = positions[1] ? parseInt(positions[1], 10) : file_size - 1;
 
 			//
@@ -140,6 +141,7 @@ router.get('/:_id', function (req, res, next) {
 			//		request and display it.
 			//
 			stream.on('error', function (err) {
+				console.log(err);
 
 				return next(err);
 

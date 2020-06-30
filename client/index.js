@@ -23,6 +23,7 @@ import LoginAdmin from './components/admin/login/LoginAdmin';
 import ActorDetails from './components/public/actors/actor-details/ActorDetails';
 import Actors from './components/public/actors/actors/Actors';
 import NotFound from './components/public/notfound/NotFound';
+import Axios from 'axios';
 
 
 const Admin = ({ match }) => (
@@ -45,7 +46,25 @@ const Admin = ({ match }) => (
                         }]}
                         baseRoute={`${match.path}/locations/location`}
                         baseUrl={'/api/location'}
+                        extraAcciones={[
+                            {
+                                name: "Procesar",
+                                className: "btn btn-sm btn-warning",
+                                onClick: function (data) {
+                                    Axios.post("/api/movies/read", { path: data.url })
+                                        .then(response => {
+                                            //this.setState({ loading: false });
+                                            //this.props.history.push('/');
+                                        })
+                                        .catch(error => {
+                                            console.log(error);
 
+                                        });
+                                    alert("Loading")
+
+                                }
+                            }
+                        ]}
                     />)} />
                     <Route key="form-locations" exact path={`${match.path}/locations/location/:action/:id`} render={(props) => (
                         <Form {...props}
@@ -95,15 +114,7 @@ const Admin = ({ match }) => (
                         }]}
                         baseRoute={`${match.path}/genders/gender`}
                         baseUrl={'/api/generos'}
-                        extraAcciones={[
-                            {
-                                name: "Procesar",
-                                onClick: function (data) {
-                                    console.log(data);
-                                    
-                                }
-                            }
-                        ]}
+
                     />)} />
                     <Route key="form-genders" exact path={`${match.path}/genders/gender/:action/:id`} render={(props) => (
                         <Form {...props}
@@ -261,6 +272,22 @@ const Admin = ({ match }) => (
                                     valid: false,
                                     touched: false,
                                     label: 'Age',
+                                    inline: true
+                                },
+                                altura: {
+                                    elementType: 'input',
+                                    elementConfig: {
+                                        type: 'number',
+                                        placeholder: 'Height'
+                                    },
+                                    optConfig: {},
+                                    value: '',
+                                    validation: {
+                                        required: false
+                                    },
+                                    valid: false,
+                                    touched: false,
+                                    label: 'Height',
                                     inline: true
                                 },
                                 genero: {

@@ -105,7 +105,10 @@ class Form extends React.Component {
     }
     haveFile() {
         for (let formElementIdentifier in this.state.dataForm) {
-            return this.state.dataForm[formElementIdentifier].value instanceof File ? true : false;
+            if (this.state.dataForm[formElementIdentifier].value instanceof File) {
+                return true
+            }
+
         }
     }
 
@@ -114,7 +117,8 @@ class Form extends React.Component {
         this.setState({ loading: true });
         let headers = {}
         let data = new FormData();
-        if (this.haveFile()) {
+        let bool = this.haveFile();
+        if (bool) {
             for (let formElementIdentifier in this.state.dataForm) {
                 if (this.state.dataForm[formElementIdentifier].value instanceof File) {
                     data.append(formElementIdentifier, this.state.dataForm[formElementIdentifier].value, formElementIdentifier);

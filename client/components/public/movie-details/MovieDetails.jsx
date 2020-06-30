@@ -28,6 +28,8 @@ class MovieDetails extends React.Component {
       this.setState({
         item: response.data
       })
+
+      document.title = "Movie " + (this.state.item.visualname ? this.state.item.visualname : this.state.item.name);
     }.bind(this));
   }
 
@@ -54,7 +56,7 @@ class MovieDetails extends React.Component {
         <div className="grid-container ">
           <div className="row">
             <div className="col-sm-12">
-              <Player loop={false}>
+              <Player loop={false} poster={this.state.item.files[1]}>
                 <source src={"/api/movie/" + this.state.item._id} />
                 <BigPlayButton position="center" />
                 <ControlBar autoHide={true}>

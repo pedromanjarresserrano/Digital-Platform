@@ -18,6 +18,10 @@ let actorSchema = new mongoose.Schema({
         type: String,
         default: ""
     },
+    altura: {
+        type: Number,
+        default: 18
+    },
     bio: {
         type: String,
         default: ""

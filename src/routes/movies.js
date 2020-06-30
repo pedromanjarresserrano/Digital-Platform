@@ -7,6 +7,7 @@ var ffmpeg = require('fluent-ffmpeg');
 const service = require('../services/movie');
 var process = 0;
 var socketServer = require("../services/socket").socketServer
+
 router.post('/', async function (req, res) {
     let paths = req.body.path;
     if (process == 0) {
@@ -27,8 +28,6 @@ router.get("/progress", (req, res) => {
 function getFiles(dir, files_) {
     files_ = files_ || [];
     var files = fs.readdirSync(dir);
-    console.log(files);
-
     for (var i in files) {
         var name = dir + '/' + files[i];
 
@@ -57,18 +56,20 @@ const getMovieInfo = (inputPath) => {
 
 async function createMovie(files, paths, res) {
     console.log("Length -----------" + files.length);
+    res.send({ length: files.length });
     for (let i = 0; i < files.length; i++) {
         try {
             process = Math.floor((i + 1) * 100 / files.length, 0)
-            try {
-                socketServer.socket.emit("RMF", process)
-            } catch (error) {
-                console.log(error);
-            }
+
             let file = files[i];
             let n = file.split("/");
             let nameFile = n[n.length - 1].split(".mp4")[0];
             let movie = await models.moviemodel.findOne({ name: nameFile });
+            try {
+                socketServer.socket.emit("RMF", { process, name: nameFile })
+            } catch (error) {
+                console.log(error);
+            }
             let metadata = await getMovieInfo(file);
             if (!movie) {
                 metadata = metadata.streams[0];
@@ -88,7 +89,6 @@ async function createMovie(files, paths, res) {
             continue
         }
     }
-    res.send({ length: files.length });
     process = 0;
 }
 
