@@ -17,21 +17,38 @@ class MovieDetails extends React.Component {
 
   constructor(props) {
     super(props)
+    let vol = parseFloat(localStorage.getItem("volumen"))
+
     this.state = {
-      item: {}
+      item: {},
+      muted: vol == 0,
+      vol: vol
     }
   }
   //--------------------------------------------------------------
   componentWillMount() {
-    var id = (this.props.location.state) ? this.props.location.state.item.id : this.props.match.params.id;
+    let id = (this.props.location.state) ? this.props.location.state.item.id : this.props.match.params.id;
     Axios.get("/api/movies/" + id).then(function (response) {
       this.setState({
         item: response.data
       })
+      this.video = this.player.video.video;
+      this.video.addEventListener("volumechange", e => {
+        if (e.srcElement.muted)
+          localStorage.setItem("volumen", 0)
+        else
+          localStorage.setItem("volumen", e.srcElement.volume)
+      })
+      this.video.muted = this.state.muted
+      this.video.volume = parseFloat(this.state.vol)
 
       document.title = "Movie " + (this.state.item.visualname ? this.state.item.visualname : this.state.item.name);
+
+
     }.bind(this));
+
   }
+
 
   regresar = () => {
     this.props.history.goBack();
@@ -56,7 +73,7 @@ class MovieDetails extends React.Component {
         <div className="grid-container ">
           <div className="row">
             <div className="col-sm-12">
-              <Player loop={false} poster={this.state.item.files[1]}>
+              <Player loop={false} poster={this.state.item.files[1]} ref={(player) => { this.player = player }}>
                 <source src={"/api/movie/" + this.state.item._id} />
                 <BigPlayButton position="center" />
                 <ControlBar autoHide={true}>
