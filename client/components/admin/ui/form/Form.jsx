@@ -13,6 +13,14 @@ class Form extends React.Component {
         };
     }
 
+    componentWillMount() {
+        var user = localStorage.getItem("userInfo");
+        if (!user) {
+            this.props.history.push('./login');
+
+        }
+    }
+
     componentDidMount() {
         if (this.props.match.params.action === "edit") {
             Axios.get(this.props.baseUrl + '/' + this.props.match.params.id).then(response => {

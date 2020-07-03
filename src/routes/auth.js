@@ -16,7 +16,7 @@ router.post("/signin", async (req, res) => {
             return res.status(400).send({ message: "The data send not macth with any user" });
         }
 
-        res.send({ message: "The username and password combination is correct!" });
+        res.send({ user, message: "The username and password combination is correct!" });
     } catch (error) {
         console.log(error);
 

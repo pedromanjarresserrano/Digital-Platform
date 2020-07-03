@@ -29,11 +29,11 @@ class Table extends React.Component {
                             this.props.headers.map(h => <td key={h.name + "-" + data._id} className="text-truncate">{data[h.name]}</td>)
                         }
                         <td key={Math.random() + "-id-td-commands"} className="d-flex flex-row">
-                            <button type="button" className="btn btn-sm btn-primary" onClick={() => this.props.editClick(data)}>Edit</button>
-                            <button type="button" className="btn btn-sm btn-danger" onClick={() => this.props.deleteClick(data)}>Delete</button>
+                            <button key={Math.random() + "-id-button-commands"} type="button" className="btn btn-sm btn-primary" onClick={() => this.props.editClick(data)}>Edit</button>
+                            <button key={Math.random() + "-id-button-commands"} type="button" className="btn btn-sm btn-danger" onClick={() => this.props.deleteClick(data)}>Delete</button>
 
                             {this.props.extraAcciones && this.props.extraAcciones.length > 0 ? this.props.extraAcciones.map(accion =>
-                                <button type="button" className={accion.className} onClick={() => accion.onClick(data)}>{accion.name}</button>
+                                <button key={Math.random() + "-id-button-commands"} type="button" className={accion.className} onClick={() => accion.onClick(data)}>{accion.name}</button>
                             ) : ""}
                         </td>
                     </tr>
@@ -48,13 +48,13 @@ class Table extends React.Component {
     render() {
         return (
             <table key={Math.random() + "-id-table"} className="table crud-table  table-bordered table-hover table-sm">
-                <thead className="thead-dark">
+                <thead key={Math.random() + "-id-button-commands"} className="thead-dark">
                     {this.getHeaders()}
                 </thead>
-                <tbody>
+                <tbody key={Math.random() + "-id-button-commands"} >
                     {this.getRows()}
                 </tbody>
-                <tfoot className="thead-dark">
+                <tfoot key={Math.random() + "-id-button-commands"} className="thead-dark">
                     {this.getHeaders()}
                 </tfoot>
             </table>

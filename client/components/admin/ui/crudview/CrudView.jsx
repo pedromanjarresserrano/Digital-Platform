@@ -1,6 +1,5 @@
 import React from 'react';
 import Table from '../table/Table';
-import Paginator from '../paginator/Paginator';
 import axios from 'axios';
 import Pagination from "react-js-pagination";
 
@@ -19,6 +18,12 @@ class CrudView extends React.Component {
         }
     }
     componentWillMount() {
+        var user = localStorage.getItem("userInfo");
+        if (!user) {
+            this.props.history.push('./login');
+
+        }
+
         this.loadPage(1);
     }
 
@@ -83,8 +88,6 @@ class CrudView extends React.Component {
                         />
                     </div>
                     <div className="col-12" >
-                        <Paginator totalRecords={itemCount} pageLimit={pageSize} pageNeighbours={3} onPageChanged={this.onPageChanged} />
-
                         <Pagination
                             activePage={this.state.activePage}
                             totalItemsCount={this.state.itemCount}

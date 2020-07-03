@@ -24,7 +24,7 @@ import ActorDetails from './components/public/actors/actor-details/ActorDetails'
 import Actors from './components/public/actors/actors/Actors';
 import NotFound from './components/public/notfound/NotFound';
 import Axios from 'axios';
-
+import HomeAdmin from './components/admin/home/HomeAdmin';
 
 const Admin = ({ match }) => (
     <React.Fragment>
@@ -35,7 +35,7 @@ const Admin = ({ match }) => (
             <div className="content-wrapper">
                 <BreadcrumbAdmin />
                 <Switch>
-                    <Route exact path={`${match.path}`} component={Home} />
+                    <Route exact path={`${match.path}`} component={HomeAdmin} />
                     <Route key="crud-locations" exact path={`${match.path}/locations`} render={(props) => (<CrudView {...props}
                         headers={[{
                             name: "name",
