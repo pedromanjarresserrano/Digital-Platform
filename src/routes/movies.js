@@ -66,7 +66,8 @@ async function createMovie(files, paths, res) {
             let nameFile = n[n.length - 1].split(".mp4")[0];
             let movie = await models.moviemodel.findOne({ name: nameFile });
             try {
-                socketServer.socket.emit("RMF", { process, name: nameFile })
+                if (socketServer.socket)
+                    socketServer.socket.emit("RMF", { process, name: nameFile })
             } catch (error) {
                 console.log(error);
             }
