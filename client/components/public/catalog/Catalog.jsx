@@ -6,6 +6,7 @@ import CheckBox from '../ui/Checkbox';
 import './Catalog.css';
 import Pagination from "react-js-pagination";
 
+import queryString from 'query-string'
 
 class Catalog extends React.Component {
     constructor(props) {
@@ -21,6 +22,7 @@ class Catalog extends React.Component {
             timerange: [0, 5000]
         }
         this.handleChange = this.handleChange.bind(this);
+        this.handleSearch = this.handleSearch.bind(this);
 
     }
     filtrarLista = (event) => {
@@ -33,6 +35,7 @@ class Catalog extends React.Component {
 
     handleChange(event) {
         this.setState({ search: event.target.value });
+
     }
 
     vermas = (item) => {
@@ -45,13 +48,20 @@ class Catalog extends React.Component {
     }
 
     componentWillMount() {
+        const values = queryString.parse(this.props.location.search)
+
         let page = this.props.match.params.page;
 
         page = page ? parseInt(page) : 1;
-        this.setState({ activePage: page });
+
+        var statesVal = { activePage: page }
+        if (values && values.search)
+            statesVal["search"] = values.search
+        this.setState(statesVal);
         this.loadPage(page);
 
         this.loadCate();
+
     }
 
     onPageChanged = pageNumber => {
@@ -124,7 +134,15 @@ class Catalog extends React.Component {
 
     }
 
+    handleSearch() {
+        alert("es")
+        this.props.history.push({
+            pathname: this.props.location.pathname,
+            search: '?search=' + this.state.search,
 
+        })
+
+    }
 
     render() {
 
@@ -140,7 +158,7 @@ class Catalog extends React.Component {
                                     <div className="input-group">
                                         <input type="text" className="form-control" onKeyDown={this._handleKeyDown} value={this.state.search} onChange={this.handleChange} />
                                         <div className="input-group-append">
-                                            <button className="btn btn-danger " onClick={() => this.loadPage(1)} >Buscar </button>
+                                            <button className="btn btn-danger " onClick={this.handleSearch} >Buscar </button>
 
                                         </div>
                                     </div>
