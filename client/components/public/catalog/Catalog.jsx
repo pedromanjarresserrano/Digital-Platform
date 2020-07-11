@@ -123,7 +123,9 @@ class Catalog extends React.Component {
     }
     _handleKeyDown = (e) => {
         if (e.key === 'Enter') {
-            this.loadPage(1)
+            this.handleSearch();
+            this.loadPage(1);
+
         }
     }
     addRange = (e) => {
@@ -135,7 +137,6 @@ class Catalog extends React.Component {
     }
 
     handleSearch() {
-        alert("es")
         this.props.history.push({
             pathname: this.props.location.pathname,
             search: '?search=' + this.state.search,
