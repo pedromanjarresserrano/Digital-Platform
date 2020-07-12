@@ -23,19 +23,21 @@ class Input extends React.Component {
             Axios.get(this.props.apiUrlModel)
                 .then(function (response) {
                     const items = response.data;
-                    this.setState({
-                        items: items
-                    });
-                    var options = items.map(function (item) {
-                        return (
-                            <MenuItem key={item._id} value={item._id}>
-                                <ListItemText primary={item.name} />
-                            </MenuItem>
-                        );
-                    }, this);
-                    this.setState({
-                        opts: options
-                    });
+                    if (items) {
+                        this.setState({
+                            items: items
+                        });
+                        var options = items.map(function (item) {
+                            return (
+                                <MenuItem key={item._id} value={item._id}>
+                                    <ListItemText primary={item.name} />
+                                </MenuItem>
+                            );
+                        }, this);
+                        this.setState({
+                            opts: options
+                        });
+                    }
                 }.bind(this));
     }
 

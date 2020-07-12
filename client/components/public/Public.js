@@ -22,12 +22,12 @@ export const Public = ({ match }) => (
         <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/home" component={Home} />
-            <Route key="list-movies" exact path="/catalog" component={Catalog} />
+            <Route key="list-movies" exact path="/catalog" render={(props) => (<Redirect to="/catalog/1"  {...props} />)} />
             <Route key="list-movies" exact path="/catalog/:page" component={Catalog} />
-            <Route key="catalogmovie" exact path="/catalog/movie" render={(props) => (<Redirect to="/catalog"  {...props} />)} />
+            <Route key="catalogmovie" exact path="/catalog/movie" render={(props) => (<Redirect to="/catalog/1"  {...props} />)} />
             <Route key="movie" exact path="/catalog/movie/:id" component={MovieDetails} />
             <Route key="list-categories" exact path="/categories" component={Categories} />
-            <Route key="categoriecategorie" exact path="/categories/categorie" render={(props) => (<Redirect to="/categories"  {...props} />)} />
+            <Route key="categoriecategorie" exact path="/categories/categorie" render={(props) => (<Redirect to="/categories/1"  {...props} />)} />
             <Route key="categorie" exact path="/categories/categorie/:name" component={CategorieDetails} />
             <Route key="list-actors" exact path="/actors" component={Actors} />
             <Route key="actor" exact path="/actors/actor" render={(props) => (<Redirect to="/actors"  {...props} />)} />

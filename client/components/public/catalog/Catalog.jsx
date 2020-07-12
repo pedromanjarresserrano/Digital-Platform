@@ -47,7 +47,7 @@ class Catalog extends React.Component {
         })
     }
 
-    componentWillMount() {
+    async componentDidMount() {
         const values = queryString.parse(this.props.location.search)
 
         let page = this.props.match.params.page;
@@ -56,11 +56,13 @@ class Catalog extends React.Component {
 
         var statesVal = { activePage: page }
         if (values && values.search)
-            statesVal["search"] = values.search
-        this.setState(statesVal);
+            statesVal.search = values.search
+
+        debugger
+        await this.setState(statesVal);
+        this.loadCate();
         this.loadPage(page);
 
-        this.loadCate();
 
     }
 
@@ -69,7 +71,9 @@ class Catalog extends React.Component {
         this.setState({ activePage: pageNumber });
         this.loadPage(pageNumber);
         this.props.history.push({
-            pathname: generatePath(this.props.match.path, { page: pageNumber })
+            pathname: generatePath(this.props.match.path, { page: pageNumber }),
+            search: this.props.location.search ? this.props.location.search : "",
+
         });
     }
 

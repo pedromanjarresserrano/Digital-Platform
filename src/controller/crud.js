@@ -67,7 +67,7 @@ const readFindOne = async (req, res, Collection) => {
 const update = async (req, res, Collection) => {
     let changedEntry = req.body;
     try {
-        await Collection.updateOne({ _id: changedEntry._id }, { $set: changedEntry });
+        await Collection.findByIdAndUpdate({ _id: changedEntry._id }, { $set: changedEntry });
         res.sendStatus(200);
     } catch (error) {
         res.status(502).send(error);

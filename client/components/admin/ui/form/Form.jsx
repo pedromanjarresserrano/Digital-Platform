@@ -126,6 +126,7 @@ class Form extends React.Component {
         let headers = {}
         let data = new FormData();
         let bool = this.haveFile();
+        headers["Content-Type"] = 'application/json';
         if (bool) {
             for (let formElementIdentifier in this.state.dataForm) {
                 if (this.state.dataForm[formElementIdentifier].value instanceof File) {
@@ -133,14 +134,12 @@ class Form extends React.Component {
                     headers["Content-Type"] = 'multipart/form-data';
                 } else {
                     data.append(formElementIdentifier, this.state.dataForm[formElementIdentifier].value);
-                    headers["Content-Type"] = 'application/json';
                 }
             }
         } else {
             data = {};
             for (let formElementIdentifier in this.state.dataForm) {
                 data[formElementIdentifier] = this.state.dataForm[formElementIdentifier].value;
-                headers["Content-Type"] = 'application/json';
             }
         }
         console.log(data);
@@ -194,7 +193,7 @@ class Form extends React.Component {
 
         let form = (
             <form onSubmit={this.formHandler}>
-                <div class="card-body">
+                <div className="card-body">
                     <div className="row">
                         <div className="col-sm-12 col-md-4">
                             {formElementsArray.filter(e => e.config.elementType == 'file-image').map(formElement => this.mapToInput(formElement))}

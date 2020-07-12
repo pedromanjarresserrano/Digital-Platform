@@ -275,7 +275,7 @@ export const Admin = ({ match }) => {
                                         label: 'Height',
                                         inline: true
                                     },
-                                    genero: {
+                                   /* genero: {
                                         elementType: 'select-model',
                                         elementConfig: {},
                                         apiUrlModel: '/api/generos/all/-1',
@@ -290,7 +290,7 @@ export const Admin = ({ match }) => {
                                         labelField: 'name',
                                         label: 'Genero',
                                         inline: true
-                                    },
+                                    },*/
                                     bio: {
                                         elementType: 'input',
                                         elementConfig: {

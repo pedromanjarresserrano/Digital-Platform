@@ -2,11 +2,8 @@ import React from 'react';
 import './MovieDetails.css';
 import {
   Player, ControlBar,
-  ReplayControl,
-  ForwardControl,
   CurrentTimeDisplay,
   TimeDivider,
-  PlaybackRateMenuButton,
   VolumeMenuButton,
   BigPlayButton
 } from 'video-react';

@@ -41,13 +41,13 @@ module.exports = (Collection, attrname, uniqueattrname) => {
 
     }
     function updateDoc(doc, res) {
-        Collection.updateOne({ _id: doc._id }, { $set: doc }, { upsert: true, 'new': true }, (err, doc) => {
+        Collection.findByIdAndUpdate({ _id: doc._id }, { $set: doc }, { upsert: true, 'new': true }, (err, doc) => {
             if (err) {
                 if (err.ok == 1) {
                     res.send({ message: "Ok" });
                 }
                 else
-                    return res.status(500).send({ message: 'Error making requestCollection.updateOne:  ' + err + "\n" + JSON.stringify(doc) });
+                    return res.status(500).send({ message: 'Error making requestCollection.findByIdAndUpdate:  ' + err + "\n" + JSON.stringify(doc) });
             }
             res.status(200).send({ message: "Ok" });
         });
