@@ -23,6 +23,7 @@ class Catalog extends React.Component {
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSearch = this.handleSearch.bind(this);
+        this.load = this.load.bind(this);
 
     }
     filtrarLista = (event) => {
@@ -47,7 +48,8 @@ class Catalog extends React.Component {
         })
     }
 
-    async componentDidMount() {
+    load = async () => {
+
         const values = queryString.parse(this.props.location.search)
 
         let page = this.props.match.params.page;
@@ -62,8 +64,15 @@ class Catalog extends React.Component {
         await this.setState(statesVal);
         this.loadCate();
         this.loadPage(page);
+    }
+    async componentDidMount() {
+        this.load();
+    }
 
-
+    async componentDidUpdate() {
+        window.onpopstate = () => {
+            this.load();
+        }
     }
 
     onPageChanged = pageNumber => {
