@@ -8,7 +8,7 @@ class CrudView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            activePage: 0,
+            activePage: 1,
             initialItems: [],
             items: [],
             itemCount: 0,
