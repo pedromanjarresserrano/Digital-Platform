@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
+import {  Route, Switch } from 'react-router-dom'
 
 import Axios from 'axios';
 import HomeAdmin from './home/HomeAdmin';
@@ -8,6 +8,7 @@ import BreadcrumbAdmin from './breadcrumb/BreadcrumbAdmin';
 import Form from './ui/form/Form';
 import CrudView from './ui/crudview/CrudView';
 import HeaderAdmin from './header/HeaderAdmin';
+import NotFound from '../public/notfound/NotFound';
 
 export const Admin = ({ match }) => {
     return (

@@ -7,7 +7,7 @@ let router = express.Router();
 //
 //	Stream the movie
 //
-router.get('/:_id', function (req, res, next) {
+router.get('/:_id', function (req, res) {
 
 
 	const { _id } = req.params;
