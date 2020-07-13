@@ -2,6 +2,7 @@ import React from 'react';
 import Table from '../table/Table';
 import axios from 'axios';
 import Pagination from "react-js-pagination";
+import Modal from '../modal/Modal';
 
 class CrudView extends React.Component {
 
@@ -14,7 +15,8 @@ class CrudView extends React.Component {
             itemCount: 0,
             pageSize: 0,
             headers: this.props.headers,
-            extraAcciones: []
+            extraAcciones: [],
+            modal: true
         }
     }
     componentWillMount() {
@@ -38,11 +40,13 @@ class CrudView extends React.Component {
 
 
     deleteClick = (item) => {
+        this.setState({ modal: true })
+        /*
         axios
             .delete(this.props.baseUrl + '/' + item._id)
             .then(res => {
                 this.loadPage(1);
-            });
+            });*/
     }
 
     onPageChanged = data => {
@@ -70,9 +74,10 @@ class CrudView extends React.Component {
     }
 
     render() {
-        const { pageSize, itemCount } = this.state;
+
         return (
             <div className="container-fluid ">
+                <Modal show={this.state.modal} />
                 <div className="row m-2 shadow-sm">
                     <div className="col-12 py-1 bg-secondary">
                         <button onClick={this.newClick} className="btn btn-sm btn-primary">Nuevo</button>
