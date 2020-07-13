@@ -90,7 +90,7 @@ router.post('/', config.multer.single(attrname), async function (req, res) {
 
     } catch (error) {
         console.log(error)
-        return res.status(500).send({ message: 'Error making post ' + error });
+        res.status(500).send({ message: 'Error making post ' + error });
     }
 
 });

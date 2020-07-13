@@ -22,8 +22,19 @@ function storeWithName(file, name) {
     rename(file.path, fullNewPath)
 }
 
+function storeWithOriginalName(file) {
+    let fullNewPath = path.join(file.destination, file.originalname);
+    let rename = util.promisify(fs.rename);
+
+    return rename(file.path, fullNewPath)
+        .then(() => {
+            return file.originalname
+        })
+}
+
 module.exports = {
     saveFile,
     updateDoc,
-    storeWithName
+    storeWithName,
+    storeWithOriginalName
 }
