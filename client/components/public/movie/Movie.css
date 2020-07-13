@@ -71,7 +71,7 @@
 }
 
 .slider-carousel .figure:hover {
-	animation: 10s slider-carousel infinite;
+	animation: 7s slider-carousel infinite;
 }
 
 .slider-carousel .figure:hover {
@@ -121,9 +121,23 @@
 }
 
 .time-stamp {
-	width: 100%;
-	text-align: right;
 	font-size: .6em;
+	position: absolute;
+	left: 24px;
+	bottom: 71px;
+	background: rgba(0, 0, 0, 0.7);
+	border-radius: 2px;
+	padding: 2px;
+}
+
+.quality-stamp {
+	font-size: .6em;
+	position: absolute;
+	right: 9px;
+	bottom: 71px;
+	background: rgba(0, 0, 0, 0.7);
+	border-radius: 2px;
+	padding: 2px;
 }
 
 .w-100 {

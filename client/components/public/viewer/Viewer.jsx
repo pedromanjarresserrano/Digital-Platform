@@ -6,7 +6,6 @@ class Viewer extends React.Component {
     componentWillMount() {
         console.log(this)
     }
-    componentDidUpdate() { debugger }
 
     render() {
         return (

@@ -144,7 +144,6 @@ class Form extends React.Component {
         }
         console.log(data);
 
-        debugger
         Axios.post(this.props.baseUrl, data, {
             headers: headers
         })

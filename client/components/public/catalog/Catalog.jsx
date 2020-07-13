@@ -60,7 +60,6 @@ class Catalog extends React.Component {
         if (values && values.search)
             statesVal.search = values.search
 
-        debugger
         await this.setState(statesVal);
         this.loadCate();
         this.loadPage(page);
@@ -180,7 +179,7 @@ class Catalog extends React.Component {
                                 </div>
                             </div>
 
-                            <div className="col-12 col-md-3 offset-md-5 mb-2">
+                            <div className="col-12 col-md-3 offset-md-5 mb-2  ">
                                 <select className="form-control w-100" onChange={this.handleCheckChieldElement}  >
                                     <option value="Disabled" >Categorie</option>
                                     {
@@ -204,13 +203,9 @@ class Catalog extends React.Component {
                             onChange={this.onPageChanged} />
                         <div className="filter-list">
                             <div className="row">                                    {
-                                this.state.items.map(function (item) {
-                                    return (
-                                        <div className="col-sm-12 col-md-2" key={item._id} >
-                                            <Movie item={item} vermasonclick={this.vermas} />
-                                        </div>
-                                    );
-                                }, this)
+                                this.state.items.map((item, index) =>
+                                    <Movie item={item} index={index} vermasonclick={this.vermas} />
+                                    , this)
                             }
                             </div>
                         </div>
