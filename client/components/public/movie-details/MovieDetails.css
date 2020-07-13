@@ -15,7 +15,6 @@
 @media (min-width:768px) {
 	.video-react .video-react-play-progress::before {
 		top: -0.333em !important;
-		font-size: 2.9em !important;
 	}
 	.video-react .video-react-progress-holder {
 		height: 1.3em;

@@ -51,8 +51,8 @@ class Movie extends React.Component {
 
   render() {
     return (
-      <div className={(this.props.index % 5 == 0 ? "offset-1" : "") + "  col-sm-12 col-md-2"} key={this.props.item._id} >
-        <div className=" border rounded bg-dark border-dark w-100 m-2" >
+      <div className="w-100 w-m-20 card-m" key={this.props.item._id} >
+        <div className=" border rounded bg-dark border-dark w-100 m-2 " >
           <Link to={"/catalog/movie/" + this.props.item._id} className="w-100">
             <div title={this.props.item.name} className="p-1" onClick={() => this.props.vermasonclick(this.props.item)}>
               {

@@ -101,15 +101,6 @@
 	height: 140px;
 }
 
-@media only screen and (max-width: 771px) {
-	.slider-carousel .figure .img-span {
-		width: 10%;
-		height: 100%;
-		float: left;
-		max-height: 300px;
-	}
-}
-
 .carousel-right-bottom {
 	position: absolute !important;
 	z-index: 3000;
@@ -123,18 +114,15 @@
 .time-stamp {
 	font-size: .6em;
 	position: absolute;
-	left: 24px;
-	bottom: 71px;
 	background: rgba(0, 0, 0, 0.7);
 	border-radius: 2px;
 	padding: 2px;
+	margin: -45px 0px auto 2px;
 }
 
 .quality-stamp {
 	font-size: .6em;
 	position: absolute;
-	right: 9px;
-	bottom: 71px;
 	background: rgba(0, 0, 0, 0.7);
 	border-radius: 2px;
 	padding: 2px;
@@ -146,4 +134,50 @@
 
 .lazy-load-image-background>img {
 	width: 100%;
+}
+
+@media (max-width: 771px) {
+	.slider-carousel .figure .img-span {
+		width: 10%;
+		height: 100%;
+		float: left;
+		max-height: 300px;
+	}
+	
+}
+
+@media (min-width: 768px) {
+	.figure {
+		height: 100px;
+	}
+	.card-m {
+		min-width: 187px !important;
+		max-width: 200px !important;
+	}
+	.figure {
+		height: 120px;
+	}
+	.quality-stamp {
+		
+	}
+}
+
+@media (min-width: 992px) {
+	.card-m {
+		min-width: 220px !important;
+		max-width: 220px !important;
+	}
+	.figure {
+		height: 130px;
+	}
+}
+
+@media (min-width: 1200px) {
+	.card-m {
+		min-width: 220px !important;
+		max-width: 220px !important;
+	}
+	.figure {
+		height: 150px;
+	}
 }

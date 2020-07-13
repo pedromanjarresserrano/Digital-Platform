@@ -161,9 +161,9 @@ class Catalog extends React.Component {
 
         if (this.state.pageSize === 0) return null;
         return (
-            <div className="w-100  p-5" >
+            <div className="w-100 " >
                 <div className="row display" >
-                    <div className="col-12" >
+                    <div className="col-12  p-5" >
                         <div className="row">
 
                             <div className="col-12 col-md-4  mb-2">
@@ -193,7 +193,7 @@ class Catalog extends React.Component {
                     </div>
 
 
-                    <div className="col-12">
+                    <div className="col-12 ">
                         <Pagination
                             className="mb-2"
                             activePage={this.state.activePage}
@@ -202,20 +202,23 @@ class Catalog extends React.Component {
                             pageRangeDisplayed={9}
                             onChange={this.onPageChanged} />
                         <div className="filter-list">
-                            <div className="row">                                    {
+                            <div className="d-flex justify-content-between flex-row flex-wrap p-1 mw-1200  mx-auto">                                    {
                                 this.state.items.map((item, index) =>
                                     <Movie item={item} index={index} vermasonclick={this.vermas} />
                                     , this)
                             }
                             </div>
                         </div>
-                        <Pagination
-                            className="mt-2"
-                            activePage={this.state.activePage}
-                            totalItemsCount={this.state.itemCount}
-                            itemsCountPerPage={this.state.pageSize}
-                            pageRangeDisplayed={9}
-                            onChange={this.onPageChanged} />
+                        <div className="mt-2 mb-2">
+
+                            <Pagination
+
+                                activePage={this.state.activePage}
+                                totalItemsCount={this.state.itemCount}
+                                itemsCountPerPage={this.state.pageSize}
+                                pageRangeDisplayed={9}
+                                onChange={this.onPageChanged} />
+                        </div>
                     </div>
                 </div>
             </div >
