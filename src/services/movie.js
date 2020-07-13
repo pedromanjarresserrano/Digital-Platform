@@ -3,7 +3,7 @@ const fs = require('fs')
 var ffmpeg = require('fluent-ffmpeg');
 
 
-module.exports.generatePreviews = async function (params) {
+async function generatePreviews(params) {
     let images = new Array();
     let ratio = params.ratio[0] / params.ratio[1]
     let height = 240;
@@ -28,6 +28,7 @@ module.exports.generatePreviews = async function (params) {
 
 }
 
+
 const getScreenShot = (url, nameFile, porcent, width, height) => {
     return new Promise((resolve, reject) => {
         return ffmpeg({ source: url, nolog: true })
@@ -47,4 +48,9 @@ const getScreenShot = (url, nameFile, porcent, width, height) => {
                 return resolve(filenames)
             });
     });
-};
+}
+
+
+module.exports = {
+    generatePreviews
+}

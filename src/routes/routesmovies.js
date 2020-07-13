@@ -1,12 +1,14 @@
-let express = require('express');
-let router = express.Router();
-let ObjectID = require('mongodb').ObjectID;
-let Collection = require('../models/models').moviemodel;
-let config = require("../config/index")
-let options = config.options;
-var path = require('path')
-var util = require('util')
-let fs = require('fs')
+const express = require('express');
+const router = express.Router();
+const ObjectID = require('mongodb').ObjectID;
+const Collection = require('../models/models').moviemodel;
+const config = require("../config/index")
+const options = config.options;
+const path = require('path')
+const util = require('util')
+const fs = require('fs')
+const attrname = "portada";
+const { saveFile } = require('../services/files');
 
 
 const readMany = async (req, res) => {
@@ -57,72 +59,41 @@ const likedOne = async (req, res) => {
     res.send(result);
 };
 
-var attrname = "portada";
 
 router.post('/', config.multer.single(attrname), async function (req, res) {
-    const find = {};
-    find["name"] = req.body["name"];
-    var doc = await Collection.findOne({ "_id": req.body["_id"] });
-    if (!doc)
-        doc = await Collection.findOne(find);
+    try {
+        const find = {};
+        find["name"] = req.body["name"];
+        var doc = await Collection.findOne({ "_id": req.body["_id"] });
+        if (!doc)
+            doc = await Collection.findOne(find);
 
-    let changedEntry = req.body;
+        let changedEntry = req.body;
 
 
-    if (Array.isArray(changedEntry.categorias)) {
-        changedEntry.categorias = changedEntry.categorias ? changedEntry.categorias.map(e => new ObjectID(e)) : [];
-    } else {
-        changedEntry.categorias = changedEntry.categorias ? [new ObjectID(changedEntry.categorias)] : [];
+        if (Array.isArray(changedEntry.categorias)) {
+            changedEntry.categorias = changedEntry.categorias ? changedEntry.categorias.map(e => new ObjectID(e)) : [];
+        } else {
+            changedEntry.categorias = changedEntry.categorias ? [new ObjectID(changedEntry.categorias)] : [];
+        }
+        changedEntry.reparto = changedEntry.reparto ? Array.isArray(changedEntry.reparto) ? changedEntry.reparto.map(e => new ObjectID(e)) : [new ObjectID(changedEntry.reparto)] : [];
+        if (doc) {
+            changedEntry._id = new ObjectID(doc._id);
+            changedEntry = await Collection.findOneAndUpdate({ _id: changedEntry._id }, { $set: changedEntry },
+                { upsert: true, new: true, setDefaultsOnInsert: true, fields: '-__v' }).exec();
+        } else {
+            changedEntry = await Collection.create(changedEntry);
+        }
+
+        saveFile(req.file, changedEntry, Collection);
+        res.status(200).send({ message: "Ok", doc });
+
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send({ message: 'Error making post ' + error });
     }
-    changedEntry.reparto = changedEntry.reparto ? Array.isArray(changedEntry.reparto) ? changedEntry.reparto.map(e => new ObjectID(e)) : [new ObjectID(changedEntry.reparto)] : [];
-    if (doc) {
-        changedEntry._id = new ObjectID(doc._id);
-        changedEntry = await Collection.findOneAndUpdate({ _id: changedEntry._id }, { $set: changedEntry },
-            { upsert: true, new: true, setDefaultsOnInsert: true, fields: '-__v' }).exec();
-    } else {
-        changedEntry = await Collection.create(changedEntry);
-    }
-
-
-
-    saveFile(req, changedEntry, res);
 
 });
-
-
-function saveFile(req, doc, res) {
-    if (req.file) {
-        storeWithName(req.file, doc._id.toString()).then(e => {
-            doc[attrname] = '/uploads/' + doc._id;
-            updateDoc(doc, res);
-        });
-    }
-    else
-        updateDoc(doc, res);
-
-}
-function updateDoc(doc, res) {
-    Collection.updateOne({ _id: doc._id }, { $set: doc }, { upsert: true, 'new': true }, (err, doc) => {
-        if (err) {
-            if (err.ok === 1) {
-                res.send({ message: "Ok" });
-            }
-            else
-                return res.status(500).send({ message: 'Error making requestCollection.updateOne:  ' + err + "\n" + JSON.stringify(doc) });
-        }
-        res.status(200).send({ message: "Ok" });
-    });
-}
-
-function storeWithName(file, name) {
-    let fullNewPath = path.join(file.destination, name)
-    let rename = util.promisify(fs.rename)
-
-    return rename(file.path, fullNewPath)
-        .then(() => {
-            return name
-        })
-}
 
 
 router.get('/:_id', readOne);
