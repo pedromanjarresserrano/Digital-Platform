@@ -5,7 +5,7 @@ import { generatePath } from "react-router";
 import CheckBox from '../ui/Checkbox';
 import './Catalog.css';
 import Pagination from "react-js-pagination";
-
+import { RotateCircleLoading } from 'react-loadingg';
 import queryString from 'query-string'
 
 class Catalog extends React.Component {
@@ -19,7 +19,8 @@ class Catalog extends React.Component {
             categorias: [],
             activePage: 0,
             search: '',
-            timerange: [0, 5000]
+            timerange: [0, 5000],
+            loading: true
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSearch = this.handleSearch.bind(this);
@@ -98,8 +99,10 @@ class Catalog extends React.Component {
             });
     }
 
-    loadPage(page) {
-
+    async loadPage(page) {
+        await this.setState({
+            loading: true
+        })
         let find = {
             name: { "$regex": ".*" + this.state.search + ".*", $options: 'i' },
             duration: this.state.timerange
@@ -115,7 +118,8 @@ class Catalog extends React.Component {
                     items: response.data.itemsList,
                     paginator: response.data.paginator,
                     itemCount: response.data.paginator.itemCount,
-                    pageSize: response.data.paginator.perPage
+                    pageSize: response.data.paginator.perPage,
+                    loading: false
                 });
             });
     }
@@ -202,14 +206,22 @@ class Catalog extends React.Component {
                             pageRangeDisplayed={9}
                             onChange={this.onPageChanged} />
                         <div className="filter-list">
-                            <div className="d-flex justify-content-between flex-row flex-wrap p-1 mw-1200  mx-auto">                                    {
-                                this.state.items.map((item, index) =>
-                                    <Movie item={item} index={index} vermasonclick={this.vermas} />
-                                    , this)
+                            {
+                                (this.state.loading) ?
+                                    <div className="m-5 pb-5">
+                                        <RotateCircleLoading size="large"/>
+                                    </div>
+                                    :
+                                    <div className="d-flex justify-content-between flex-row flex-wrap p-1 mw-1200  mx-auto">                                    {
+                                        this.state.items.map((item, index) =>
+                                            <Movie item={item} index={index} vermasonclick={this.vermas} />
+                                            , this)
+                                    }
+
+                                    </div>
                             }
-                            </div>
                         </div>
-                        <div className="mt-2 mb-2">
+                        <div className="pt-3 mb-2">
 
                             <Pagination
 
