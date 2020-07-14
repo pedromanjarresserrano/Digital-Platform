@@ -4,6 +4,7 @@ import axios from 'axios';
 import Pagination from "react-js-pagination";
 import Modal from '../modal/Modal';
 import './CrudView.css';
+import { CommonLoading } from 'react-loadingg';
 
 class CrudView extends React.Component {
 
@@ -18,7 +19,8 @@ class CrudView extends React.Component {
             headers: this.props.headers,
             extraAcciones: [],
             modal: false,
-            onOkClick: null
+            onOkClick: null,
+            loading: true
         }
         this.deleteClick = this.deleteClick.bind(this);
     }
@@ -69,14 +71,18 @@ class CrudView extends React.Component {
         })
     }
 
-    loadPage(page) {
+    async loadPage(page) {
+        await this.setState({
+            loading: true
+        })
         axios.get(this.props.baseUrl + '/all/' + page)
             .then(response => {
                 this.setState({
                     items: response.data.itemsList,
                     paginator: response.data.paginator,
                     itemCount: response.data.paginator.itemCount,
-                    pageSize: response.data.paginator.perPage
+                    pageSize: response.data.paginator.perPage,
+                    loading: false
                 });
             });
     }
@@ -109,14 +115,24 @@ class CrudView extends React.Component {
                         <button onClick={this.newClick} className="btn btn-sm btn-primary">Nuevo</button>
                     </div>
                     <div className="table-responsive">
-                        <Table
-                            headers={this.state.headers}
-                            data={this.state.items}
-                            editClick={this.editClick}
-                            deleteClick={this.deleteClick}
-                            extraAcciones={this.props.extraAcciones}
+                        {(this.state.loading) ?
+                            <div className="m-5 pb-5" style={{
+                                display: "block",
+                                position: "relative",
+                                width: "90%",
+                                "min-height": "800px"
+                            }}>
+                                <CommonLoading size="small" />
+                            </div>
+                            : <Table
+                                headers={this.state.headers}
+                                data={this.state.items}
+                                editClick={this.editClick}
+                                deleteClick={this.deleteClick}
+                                extraAcciones={this.props.extraAcciones}
 
-                        />
+                            />
+                        }
                     </div>
                     <div className="col-12" >
                         <Pagination

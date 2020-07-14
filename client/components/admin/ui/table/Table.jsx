@@ -10,7 +10,7 @@ class Table extends React.Component {
     getHeaders() {
         return (
             <tr key={Math.random() + "-id-tr-head"}>
-                <th/>
+                <th />
                 {
                     this.props.headers.map(e => <th key={Math.random() + "-id-th"}>{e.label}</th>)
                 }
@@ -27,7 +27,7 @@ class Table extends React.Component {
                 return (
                     <tr key={Math.random() + "-id-tr-" + data._id}>
                         <td>
-                            {i}
+                            {i + 1}
                         </td>
                         {
                             this.props.headers.map(h => <td key={h.name + "-" + data._id} className="text-truncate">{data[h.name]}</td>)
