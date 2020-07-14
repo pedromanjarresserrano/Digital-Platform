@@ -3,6 +3,7 @@ import Table from '../table/Table';
 import axios from 'axios';
 import Pagination from "react-js-pagination";
 import Modal from '../modal/Modal';
+import './CrudView.css';
 
 class CrudView extends React.Component {
 
@@ -16,8 +17,10 @@ class CrudView extends React.Component {
             pageSize: 0,
             headers: this.props.headers,
             extraAcciones: [],
-            modal: true
+            modal: false,
+            onOkClick: null
         }
+        this.deleteClick = this.deleteClick.bind(this);
     }
     componentWillMount() {
         var user = localStorage.getItem("userInfo");
@@ -39,14 +42,24 @@ class CrudView extends React.Component {
     }
 
 
-    deleteClick = (item) => {
-        this.setState({ modal: true })
-        /*
-        axios
-            .delete(this.props.baseUrl + '/' + item._id)
-            .then(res => {
-                this.loadPage(1);
-            });*/
+    deleteClick = async (item) => {
+        await this.setState({
+            modal: true,
+            onOkClick: () =>
+                axios
+                    .delete(this.props.baseUrl + '/' + item._id)
+                    .then(res => {
+                        this.loadPage(1);
+                        this.setState({
+                            modal: false
+                        })
+                    }),
+            onClose: () =>
+                this.setState({
+                    modal: false
+                })
+
+        })
     }
 
     onPageChanged = data => {
@@ -77,7 +90,20 @@ class CrudView extends React.Component {
 
         return (
             <div className="container-fluid ">
-                <Modal show={this.state.modal} />
+                {
+                    (this.state.modal) ?
+                        <Modal show="true" okLabel="Delete" content="Are you sure?" title="Delete" onOkClick={this.state.onOkClick}
+                            onClose={this.state.onClose}
+                            style={
+                                {
+                                    buttonOk: "btn btn-danger",
+                                    buttonCancel: "btn btn-primary"
+                                }
+                            }
+                        />
+                        : ""
+
+                }
                 <div className="row m-2 shadow-sm">
                     <div className="col-12 py-1 bg-secondary">
                         <button onClick={this.newClick} className="btn btn-sm btn-primary">Nuevo</button>

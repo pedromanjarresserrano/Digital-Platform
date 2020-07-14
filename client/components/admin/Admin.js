@@ -9,6 +9,7 @@ import Form from './ui/form/Form';
 import CrudView from './ui/crudview/CrudView';
 import HeaderAdmin from './header/HeaderAdmin';
 import NotFound from '../public/notfound/NotFound';
+import ToastContainer from './ui/toastcontainer/ToastContainer';
 
 export const Admin = ({ match }) => {
     return (
@@ -567,6 +568,7 @@ export const Admin = ({ match }) => {
                         <Route key="form-movies" exact path={`${match.path}/*`} component={NotFound} />
                     </Switch>
                 </div>
+            <ToastContainer />
             </div>
         </React.Fragment>);
 };

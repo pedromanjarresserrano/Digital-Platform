@@ -2,6 +2,26 @@ import React from 'react';
 import Input from '../input/Input';
 import Axios from 'axios';
 
+
+
+toastr.options = {
+    "closeButton": false,
+    "debug": false,
+    "newestOnTop": false,
+    "progressBar": false,
+    "positionClass": "toast-bottom-right",
+    "preventDuplicates": false,
+    "onclick": null,
+    "showDuration": "300",
+    "hideDuration": "1000",
+    "timeOut": "5000",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "linear",
+    "showMethod": "fadeIn",
+    "hideMethod": "fadeOut"
+}
+
 class Form extends React.Component {
 
     constructor(props) {
@@ -150,10 +170,12 @@ class Form extends React.Component {
             .then(response => {
                 //this.setState({ loading: false });
                 //this.props.history.push('/');
-                alert("Saved")
+                toastr["success"]("Saved")
+
                 this.cancelClick();
             })
             .catch(error => {
+                toastr["error"]("Error on save")
                 console.log(error);
 
                 //this.setState({ loading: false });
