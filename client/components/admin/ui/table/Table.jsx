@@ -10,6 +10,7 @@ class Table extends React.Component {
     getHeaders() {
         return (
             <tr key={Math.random() + "-id-tr-head"}>
+                <th/>
                 {
                     this.props.headers.map(e => <th key={Math.random() + "-id-th"}>{e.label}</th>)
                 }
@@ -22,9 +23,12 @@ class Table extends React.Component {
     getRows() {
         return (
 
-            this.props.data.map(data => {
+            this.props.data.map((data, i) => {
                 return (
                     <tr key={Math.random() + "-id-tr-" + data._id}>
+                        <td>
+                            {i}
+                        </td>
                         {
                             this.props.headers.map(h => <td key={h.name + "-" + data._id} className="text-truncate">{data[h.name]}</td>)
                         }
