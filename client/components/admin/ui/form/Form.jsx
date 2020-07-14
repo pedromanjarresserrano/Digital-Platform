@@ -216,10 +216,10 @@ class Form extends React.Component {
             <form onSubmit={this.formHandler}>
                 <div className="card-body">
                     <div className="row">
-                        <div className="col-sm-12 col-md-4">
+                        <div className="col-sm-12 col-md-4 col-lg-3">
                             {formElementsArray.filter(e => e.config.elementType == 'file-image').map(formElement => this.mapToInput(formElement))}
                         </div>
-                        <div className="col-sm-12 col-md-8">
+                        <div className="col-sm-12 col-md-8 col-lg-9">
                             {formElementsArray.filter(e => e.config.elementType != 'file-image').map(formElement => this.mapToInput(formElement))}
                         </div>
 
