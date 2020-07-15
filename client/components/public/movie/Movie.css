@@ -71,7 +71,7 @@
 	position: relative;
 }
 
-.slider-carousel .figure:hover {
+.slider-carousel .figure:hover, .slider-carousel:hover~.sibling {
 	animation: 7s slider-carousel infinite;
 }
 
