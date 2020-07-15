@@ -5,7 +5,7 @@ class HomeAdmin extends React.Component {
 
     componentWillMount() {
         var user = localStorage.getItem("userInfo");
-        if (!user) {
+        if (!user || user == "null") {
             this.props.history.push('/admin/login');
 
         }

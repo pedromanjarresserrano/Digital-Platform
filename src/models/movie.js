@@ -81,5 +81,13 @@ let movieSchema = new mongoose.Schema({
 movieSchema.plugin(require('mongoose-autopopulate'));
 
 movieSchema.plugin(mongoosePaginate);
-
+movieSchema.pre("save", function (next) {
+    if (this.name)
+        this.name = this.name.trim();
+    if (this.visualname)
+        this.visualname = this.visualname.trim();
+    if (this.description)
+        this.description = this.description.trim();
+    next();
+});
 module.exports = mongoose.model('Movie', movieSchema)

@@ -18,19 +18,22 @@ const create = async (req, res, Collection) => {
 // =========
 // Read many
 // =========
-const readMany = async (req, res, Collection) => {
+const readMany = async (req, res, Collection, sortBy) => {
     try {
         let query = req.body || {};
         query = Object.keys(query).length === 0 ? req.query : query;
         options.page = parseInt(req.params.page);
         if (options.page === -1) {
-            let result = await Collection.find(query);
+            let result = await Collection.find(query).sort(sortBy);
             res.send(result);
         } else {
+            if (sortBy)
+                options.sort = sortBy;
             let result = await Collection.paginate(query, options);
             res.send(result);
         }
     } catch (error) {
+        console.log(error);
         res.status(502).send(error);
     }
 

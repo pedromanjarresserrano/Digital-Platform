@@ -120,7 +120,7 @@ class CrudView extends React.Component {
                                 display: "block",
                                 position: "relative",
                                 width: "90%",
-                                "min-height": "800px"
+                                minHeight: "800px"
                             }}>
                                 <CommonLoading size="small" />
                             </div>

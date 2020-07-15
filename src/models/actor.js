@@ -31,6 +31,10 @@ let actorSchema = new mongoose.Schema({
 actorSchema.plugin(require('mongoose-autopopulate'));
 
 actorSchema.plugin(mongoosePaginate);
-
+actorSchema.pre("save", function (next) {
+    if (this.name)
+        this.name = this.name.trim();
+    next();
+});
 
 module.exports = mongoose.model('Actor', actorSchema)

@@ -4,7 +4,11 @@ const mongoosePaginate = require('mongoose-paginate-v2');
 const Bcrypt = require("bcryptjs");
 
 let usuarioSchema = new mongoose.Schema({
-    name: String,
+    name: {
+        type: String,
+        required: true,
+        default: ""
+    },
     username: {
         type: String,
         required: true,
@@ -24,6 +28,7 @@ let usuarioSchema = new mongoose.Schema({
         }
     },
     updated: { type: Date, default: Date.now },
+    created: { type: Date, default: Date.now },
     imageAvatar: {
         type: String,
         default: ""
@@ -41,6 +46,7 @@ usuarioSchema.pre("save", function (next) {
     this.password = Bcrypt.hashSync(this.password, 10);
     next();
 });
+
 
 usuarioSchema.methods.comparePassword = async function (plaintext) {
     return await Bcrypt.compareSync(plaintext, this.password);

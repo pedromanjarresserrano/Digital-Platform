@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
 import socketIOClient from "socket.io-client";
+import TopMenu from '../ui/topmenu/TopMenu';
+
 const ENDPOINT = "http://localhost:3001";
 
 class HeaderAdmin extends React.Component {
@@ -43,9 +45,11 @@ class HeaderAdmin extends React.Component {
                         <Link className="nav-item nav-link " to="/admin">Home Admin</Link>      </li>
 
                 </ul>
-                <div id="Progress" className="w-75 text-right">
-                    {this.state.current} - {this.state.progress} %
+                <div id="Progress" className="w-25 text-right">
+                    <small> {this.state.current} - {this.state.progress} %</small>
                 </div>
+                <TopMenu />
+
             </>
         );
     }
