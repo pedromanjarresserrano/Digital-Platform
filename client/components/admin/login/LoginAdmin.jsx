@@ -50,7 +50,7 @@ export default class LoginAdmin extends Component {
             <div className="d-flex justify-content-center align-items-center vh-100 bg-light">
                 <div className="login-box">
                     <div className="login-logo">
-                        <a href="/index.html"><b>Admin</b>LTE</a>
+                        <a href="/index.html"><b>Movies</b>Platform</a>
                     </div>
                     <div className="card">
                         <div className="card-body login-card-body">

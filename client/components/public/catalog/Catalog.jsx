@@ -166,7 +166,7 @@ class Catalog extends React.Component {
         if (this.state.pageSize === 0) return null;
         return (
             <div className="w-100 " >
-                <div className="row display" >
+                <div className="display" >
                     <div className="col-12  p-5" >
                         <div className="row">
 

@@ -42,9 +42,11 @@ class Movie extends React.Component {
             }, this)
           }
         </div>
-        <span className="text-white time-stamp" >{this.getTime(this.props.item.duration)}</span>
+        <span className="row-stamp">
+          <span className="text-white time-stamp" >{this.getTime(this.props.item.duration)}</span>
 
-        <span className="text-white quality-stamp" >{this.props.item.quality}p</span>
+          <span className="text-white quality-stamp" >{this.props.item.quality}p</span>
+        </span>
       </div>
     }
   }
@@ -52,7 +54,7 @@ class Movie extends React.Component {
   render() {
     return (
       <div className="w-100 w-m-20 card-m" key={this.props.item._id} >
-        <div className=" border rounded bg-dark border-dark w-100 m-2 " >
+        <div className=" border rounded bg-dark border-dark w-100 mb-2 mt-2" >
           <Link to={"/catalog/movie/" + this.props.item._id} className="w-100">
             <div title={this.props.item.name} className="p-1" onClick={() => this.props.vermasonclick(this.props.item)}>
               {
