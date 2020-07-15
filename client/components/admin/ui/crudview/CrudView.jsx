@@ -112,7 +112,7 @@ class CrudView extends React.Component {
                 }
                 <div className="row m-2 shadow-sm">
                     <div className="col-12 py-1 bg-secondary">
-                        <button onClick={this.newClick} className="btn btn-sm btn-primary">Nuevo</button>
+                        <button title="New" onClick={this.newClick} className="btn btn-sm btn-primary"><i class="fas fa-plus-square"></i></button>
                     </div>
                     <div className="table-responsive">
                         {(this.state.loading) ?
