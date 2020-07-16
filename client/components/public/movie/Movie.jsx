@@ -1,7 +1,7 @@
 import React from 'react';
 import './Movie.css';
 import { Link } from 'react-router-dom'
-import Carousel from '../../admin/ui/carousel/Carousel';
+import Carousel from '../ui/carousel/Carousel';
 
 
 class Movie extends React.Component {
@@ -44,7 +44,7 @@ class Movie extends React.Component {
       <div className="w-100 w-m-20 card-m" key={this.props.item._id} >
         <div className=" border rounded bg-dark border-dark w-100 mb-2 mt-2" >
           <Link to={"/catalog/movie/" + this.props.item._id} className="w-100">
-            <div title={this.props.item.name} className="p-1" onClick={() => this.props.vermasonclick(this.props.item)}>
+            <div title={this.props.item.name} className="p-1" >
               {
                 this.getPreview()
               }
