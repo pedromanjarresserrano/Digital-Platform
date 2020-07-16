@@ -42,7 +42,7 @@ class Catalog extends React.Component {
 
     vermas = (item) => {
         this.props.history.push({
-            pathname: '/catalog/movie',
+            pathname: '/catalog/movie/' + item._id,
             state: {
                 item: item
             }
@@ -209,7 +209,7 @@ class Catalog extends React.Component {
                             {
                                 (this.state.loading) ?
                                     <div className="m-5 pb-5">
-                                        <RotateCircleLoading size="large"/>
+                                        <RotateCircleLoading size="large" />
                                     </div>
                                     :
                                     <div className="d-flex justify-content-between flex-row flex-wrap p-1 mw-1200  mx-auto">                                    {

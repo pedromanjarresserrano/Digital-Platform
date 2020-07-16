@@ -21,13 +21,11 @@ class Carousel extends React.Component {
             cycle: true,
             pause: "false"
         }).carousel(0);
-        console.log("Enter");
     }
 
 
     mouseLeave = () => {
         $("#" + this.state.id).carousel(0)
-        console.log("Leave");
         $("#" + this.state.id).carousel({
             pause: false,
             interval: "false"

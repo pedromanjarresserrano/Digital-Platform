@@ -40,7 +40,7 @@ class BreadcrumbAdmin extends React.Component {
                             {
                                 routes.map((route, index) => {
                                     return (
-                                        <li className=" text-capitalize breadcrumb-item" key={index}><a>{route}</a></li>
+                                        <li className=" text-capitalize breadcrumb-item" key={index}><a>{isNaN(route) ? route : "Page " + route}</a></li>
                                     );
                                 })
                             }

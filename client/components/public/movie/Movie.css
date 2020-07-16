@@ -66,7 +66,7 @@
 	}
 }
 
-.slider-carousel .figure {
+.preview,.slider-carousel .figure {
 	width: 1000%;
 	position: relative;
 }

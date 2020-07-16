@@ -1,5 +1,5 @@
 import React from 'react';
-import {  Route, Switch } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 
 import Axios from 'axios';
 import HomeAdmin from './home/HomeAdmin';
@@ -13,7 +13,7 @@ import ToastContainer from './ui/toastcontainer/ToastContainer';
 
 export const Admin = ({ match }) => {
     return (
-        <React.Fragment>
+        <>
             <div className="wrapper">
                 <nav className="main-header navbar navbar-expand navbar-white navbar-light"> <HeaderAdmin />
                 </nav>
@@ -276,22 +276,22 @@ export const Admin = ({ match }) => {
                                         label: 'Height',
                                         inline: true
                                     },
-                                   /* genero: {
-                                        elementType: 'select-model',
-                                        elementConfig: {},
-                                        apiUrlModel: '/api/generos/all/-1',
-                                        optConfig: {},
-                                        value: '',
-                                        uiValue: {},
-                                        validation: {
-                                            required: false
-                                        },
-                                        valid: false,
-                                        touched: false,
-                                        labelField: 'name',
-                                        label: 'Genero',
-                                        inline: true
-                                    },*/
+                                    /* genero: {
+                                         elementType: 'select-model',
+                                         elementConfig: {},
+                                         apiUrlModel: '/api/generos/all/-1',
+                                         optConfig: {},
+                                         value: '',
+                                         uiValue: {},
+                                         validation: {
+                                             required: false
+                                         },
+                                         valid: false,
+                                         touched: false,
+                                         labelField: 'name',
+                                         label: 'Genero',
+                                         inline: true
+                                     },*/
                                     bio: {
                                         elementType: 'input',
                                         elementConfig: {
@@ -568,8 +568,8 @@ export const Admin = ({ match }) => {
                         <Route key="form-movies" exact path={`${match.path}/*`} component={NotFound} />
                     </Switch>
                 </div>
-            <ToastContainer />
+                <ToastContainer />
             </div>
-        </React.Fragment>);
+        </>);
 };
 

@@ -24,7 +24,8 @@ class MovieDetails extends React.Component {
   }
   //--------------------------------------------------------------
   componentWillMount() {
-    let id = (this.props.location.state) ? this.props.location.state.item.id : this.props.match.params.id;
+    let id = (this.props.location.state) ? this.props.location.state.item._id : this.props.match.params.id;
+    debugger;
     Axios.get("/api/movies/" + id).then(function (response) {
       this.setState({
         item: response.data
@@ -42,7 +43,9 @@ class MovieDetails extends React.Component {
       document.title = "Movie " + (this.state.item.visualname ? this.state.item.visualname : this.state.item.name);
 
 
-    }.bind(this));
+    }.bind(this)).catch((error) => {
+      console.log(error);
+    });
 
   }
 
