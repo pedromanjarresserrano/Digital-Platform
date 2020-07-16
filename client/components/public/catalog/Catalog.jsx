@@ -66,10 +66,6 @@ class Catalog extends React.Component {
         this.loadPage(page);
     }
 
-    componentWillMount() {
-        document.title = "Movie Plaform - Catalog"
-    }
-
     async componentDidMount() {
         this.load();
     }
