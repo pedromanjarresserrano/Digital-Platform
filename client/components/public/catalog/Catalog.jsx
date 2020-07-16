@@ -65,6 +65,11 @@ class Catalog extends React.Component {
         this.loadCate();
         this.loadPage(page);
     }
+
+    componentWillMount() {
+        document.title = "Movie Plaform - Catalog"
+    }
+
     async componentDidMount() {
         this.load();
     }
@@ -214,7 +219,7 @@ class Catalog extends React.Component {
                                     :
                                     <div className="d-flex justify-content-between flex-row flex-wrap p-1 mw-1200  mx-auto">                                    {
                                         this.state.items.map((item, index) =>
-                                            <Movie item={item} index={index} vermasonclick={this.vermas} />
+                                            <Movie item={item} index={index} />
                                             , this)
                                     }
 
