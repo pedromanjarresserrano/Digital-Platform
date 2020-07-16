@@ -40,15 +40,6 @@ class Catalog extends React.Component {
 
     }
 
-    vermas = (item) => {
-        this.props.history.push({
-            pathname: '/catalog/movie/' + item._id,
-            state: {
-                item: item
-            }
-        })
-    }
-
     load = async () => {
 
         const values = queryString.parse(this.props.location.search)

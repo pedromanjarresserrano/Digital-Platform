@@ -61,10 +61,10 @@ class Categories extends React.Component {
 
         if (pageSize === 0) return null;
         return (
-            <div className="row p-1" >
+            <div className=" p-1" >
                 <div className="col-12">
                     <div className="filter-list">
-                        <div className="display row" >
+                        <div className="display " >
                             {
                                 this.state.items.map(function (item) {
                                     return (
