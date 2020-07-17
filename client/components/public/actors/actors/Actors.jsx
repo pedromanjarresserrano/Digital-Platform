@@ -69,7 +69,7 @@ class Actors extends React.Component {
                                 {
                                     this.state.items.map(function (item) {
                                         return (
-                                            <div className="col-2" key={item._id} >
+                                            <div className="col-12 col-sm-6 col-md-4 col-lg-2" key={item._id} >
                                                 <Actor item={item} vermasonclick={this.vermas} />
                                             </div>
                                         );

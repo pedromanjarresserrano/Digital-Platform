@@ -32,7 +32,7 @@ class Footer extends React.Component {
                         <div className="footer-suscribe-content">
                             <div className="suscribe-title">
                                 <h5>
-                                    <i className="fas fa-envelope padding-right-1"></i>
+                                    <i className="fas fa-envelope pr-2"></i>
                                     CONTACTANOS
                                 </h5>
                             </div>
