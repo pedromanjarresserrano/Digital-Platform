@@ -116,14 +116,9 @@ select.form-field {
   width: 20% !important;
 }
 
-
-
-
 .mw-1200 {
   max-width: 1200px !important;
 }
-
-
 
 
 @media (min-width: 768px) {
@@ -133,7 +128,7 @@ select.form-field {
 }
 
 @media (min-width: 992px) {
-	.w-l-20 {
+  .w-l-20 {
     width: 20% !important;
   }
 }
@@ -145,7 +140,7 @@ select.form-field {
 }
 
 @media (min-width: 1300px) {
-	.w-xl-20 {
+  .w-xl-20 {
     width: 20% !important;
   }
 }

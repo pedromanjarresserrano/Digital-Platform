@@ -64,7 +64,7 @@ class Categories extends React.Component {
             <div className=" p-1" >
                 <div className="col-12">
                     <div className="filter-list">
-                        <div className="display " >
+                        <div className="display  px-5" >
                             {
                                 this.state.items.map(function (item) {
                                     return (

@@ -13,11 +13,11 @@ class Actor extends React.Component {
                 pathname: "/actors/actor/" + this.props.item.name,
                 state: { item: this.props.item }
             }}>
-                <div className="p-1" >
+                <div className="m-1 bg-dark rounded" >
                     {
-                        <img className="img-fluid" src={this.props.item.imageAvatar} />
+                        <img className="img-fluid rounded-top" src={this.props.item.imageAvatar} />
                     }
-                    <p className="text-white text-center">{this.props.item.name}</p>
+                    <p className="text-white text-center py-1">{this.props.item.name}</p>
                 </div>
             </Link>
         );

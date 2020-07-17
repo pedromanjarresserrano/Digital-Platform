@@ -19,11 +19,13 @@ class Movie extends React.Component {
   getPreview() {
     if (this.props.item.portada && this.props.item.portada.length > 0) {
       return <>
-        <img
-          className="img-fluid"
-          effect="blur"
-          src={this.props.item.portada} />
-        <p className="text-white time-stamp margin-0 padding-0 padding-right-1" >{this.getTime(this.props.item.duration)}</p>
+        <div className="p-1" >
+          <img
+            className="img-fluid"
+            effect="blur"
+            src={this.props.item.portada} />
+          <p className="text-white time-stamp margin-0 padding-0 padding-right-1" >{this.getTime(this.props.item.duration)}</p>
+        </div>
       </>
 
     } else {
@@ -41,16 +43,14 @@ class Movie extends React.Component {
 
   render() {
     return (
-      <div className="w-100 w-m-20 card-m" key={this.props.item._id} >
+      <div className="w-100 w-m-20 card-m" key={this.props.item._id} title={this.props.item.name} >
         <div className=" border rounded bg-dark border-dark w-100 mb-2 mt-2" >
           <Link to={"/catalog/movie/" + this.props.item._id} className="w-100">
-            <div title={this.props.item.name} className="p-1" >
-              {
-                this.getPreview()
-              }
+            {
+              this.getPreview()
+            }
 
-              <p className="text-white text-center text-truncate" ><small>{this.props.item.visualname ? this.props.item.visualname : this.props.item.name} </small></p>
-            </div>
+            <p className="text-white text-center text-truncate" ><small>{this.props.item.visualname ? this.props.item.visualname : this.props.item.name} </small></p>
           </Link>
         </div>
 

@@ -1,7 +1,6 @@
 import React from 'react';
 import './ActorDetails.css';
 import Axios from 'axios';
-import { Link } from 'react-router-dom'
 import Paginator from '../../../admin/ui/paginator/Paginator';
 import Movie from '../../movie/Movie'
 
@@ -56,7 +55,7 @@ class ActorDetails extends React.Component {
 
   onPageChanged = data => {
     const { currentPage } = data;
-    this.loadPage(currentPage || 1);
+    this.loadPage(currentPage);
   }
 
   vermas = (item) => {
@@ -69,19 +68,31 @@ class ActorDetails extends React.Component {
   }
 
   render() {
-    /*    <button onClick={this.regresar}>Regresar </button>*/
     const { pageSize, itemCount } = this.state;
 
     return (
       <div className="container-fluid">
-        <div className="d-block">
-          <h1 className="text-white">{this.state.item.name}</h1>
+        <div className="d-block  px-5">
+          <div className="card flex-md-row mb-4 shadow-sm h-md-250 bg-dark" >
+            <img className="card-img-right flex-auto d-none d-lg-block rounded-left" alt="Thumbnail [170x250]" style={{ width: "170px", height: "250px" }} src={this.state.item.imageAvatar} data-holder-rendered="true" />
+
+            <div className="card-body d-flex flex-column align-items-start">
+
+              <h4 className="mb-0">
+                <span className="text-white" href="#">{this.state.item.name}</span>
+              </h4>
+              <h6 className="text-white">Aka: {this.state.item.aka}</h6>
+              <div className="mb-1 text-light">Edad {this.state.item.edad} </div>
+              <p className="card-text mb-auto">Biography <br />{this.state.item.bio}.</p>
+            </div>
+
+          </div>
           <div className="display row" >
             {
               this.state.items.map(function (item) {
                 return (
                   <div className="col-3" key={item._id} >
-                    <Movie item={item} vermasonclick={this.vermas} />
+                    <Movie item={item} />
                   </div>
                 );
               }, this)

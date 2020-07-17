@@ -63,8 +63,9 @@ class Actors extends React.Component {
             <div className="container-fluid">
                 <div className="row" >
                     <div className="col-12">
+                        <Paginator totalRecords={itemCount} pageLimit={pageSize} pageNeighbours={3} onPageChanged={this.onPageChanged} />
                         <div className="filter-list">
-                            <div className="display row" >
+                            <div className="display px-5 row" >
                                 {
                                     this.state.items.map(function (item) {
                                         return (

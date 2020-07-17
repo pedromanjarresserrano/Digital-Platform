@@ -42,12 +42,13 @@ class Carousel extends React.Component {
                 <div className="carousel-inner">
                     {
                         this.props.items.map(file => {
+                            let first = file.includes("-1.png");
                             return (
-                                <div className={(file.includes("-1.png") ? "active " : "") + "carousel-item"} key={Math.random()}>
+                                <div className={(first ? "active " : "") + "carousel-item"} key={Math.random()}>
                                     <LazyLoadImage
                                         effect="blur"
                                         alt={file}
-                                        visibleByDefault={file.includes("-1.png")}
+                                        visibleByDefault={first}
                                         src={file} />
                                 </div>);
                         }, this)

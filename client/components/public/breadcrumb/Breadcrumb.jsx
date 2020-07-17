@@ -29,8 +29,8 @@ class Breadcrumb extends React.Component {
     render() {
         const { routes } = this.state;
         return (
-            <nav aria-label="breadcrumb  ">
-                <ol className="breadcrumb my-2 bg-dark text-white border-0">
+            <nav aria-label="breadcrumb  border-0">
+                <ol className="breadcrumb my-2 bg-dark text-white rounded-0">
                     {
                         routes.map((route, index) => {
                             return (
