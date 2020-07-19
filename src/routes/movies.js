@@ -84,7 +84,8 @@ async function createMovie(files, paths, res) {
                         duration: metadata.duration,
                     });
             }
-            await generatefiles(movie, files, paths, [metadata.width, metadata.height]);
+            movie.url = file;
+            await generatefiles(movie, [metadata.width, metadata.height]);
         } catch (error) {
             console.log(error);
             continue
@@ -95,11 +96,12 @@ async function createMovie(files, paths, res) {
 
 
 
-async function generatefiles(newvideo, files, paths, ratio) {
+async function generatefiles(newvideo, ratio) {
     if (newvideo.files.length < 10) {
         var list = await service.generatePreviews({
             name: newvideo._id, url: newvideo.url, ratio: ratio
         })
+        newvideo.files = [];
         list.map(e => "/thumbnail/" + e).forEach(i => newvideo.files.push(i));
         await models.moviemodel.updateOne({ _id: newvideo._id }, newvideo);
 

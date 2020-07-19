@@ -40,7 +40,7 @@ class ToastContainer extends React.Component {
 
     render() {
         return (
-            <div id={this.state.id} class={this.state.position + " fixed"}></div >
+            <div id={this.state.id} className={this.state.position + " fixed"}></div >
         )
     }
 }

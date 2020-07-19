@@ -45,8 +45,8 @@ class HeaderAdmin extends React.Component {
                         <Link className="nav-item nav-link " to="/admin">Home Admin</Link>      </li>
 
                 </ul>
-                <div id="Progress" className="w-25 text-right">
-                    <small> {this.state.current} - {this.state.progress} %</small>
+                <div id="Progress" className="w-25 d-flex flex-row justify-content-end">
+                    <small className="d-flex flex-row w-100 justify-content-end"> <span className="d-block text-truncate w-75">{this.state.current}</span> - <span className="w-25 d-block">{this.state.progress} % </span></small>
                 </div>
                 <TopMenu />
 

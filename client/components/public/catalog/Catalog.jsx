@@ -2,13 +2,13 @@ import React from 'react';
 import Movie from '../movie/Movie'
 import axios from 'axios';
 import { generatePath } from "react-router";
-import CheckBox from '../ui/Checkbox';
 import './Catalog.css';
 import Pagination from "react-js-pagination";
 import { RotateCircleLoading } from 'react-loadingg';
 import queryString from 'query-string'
 
 class Catalog extends React.Component {
+
     constructor(props) {
         super(props)
         this.state = {
@@ -26,13 +26,6 @@ class Catalog extends React.Component {
         this.handleSearch = this.handleSearch.bind(this);
         this.load = this.load.bind(this);
 
-    }
-    filtrarLista = (event) => {
-        var updatedList = this.state.initialItems;
-        updatedList = updatedList.filter(function (item) {
-            return item.name.toLowerCase().search(event.target.value.toLowerCase()) !== -1;
-        });
-        this.setState({ items: updatedList });
     }
 
     handleChange(event) {
