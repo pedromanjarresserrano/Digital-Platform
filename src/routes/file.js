@@ -1,9 +1,9 @@
-let express = require('express');
-let router = express.Router();
+const express = require('express');
+const router = express.Router();
 
 const { storeWithOriginalName } = require('../services/files');
 
-var multer = require('multer')({
+const multer = require('multer')({
     dest: 'public/uploads'
 });
 

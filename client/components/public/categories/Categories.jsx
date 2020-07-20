@@ -4,7 +4,7 @@ import Paginator from '../../admin/ui/paginator/Paginator';
 import Categorie from '../categorie/Categorie';
 
 class Categories extends React.Component {
-    
+
     constructor(props) {
         super(props)
         this.state = {
@@ -64,16 +64,15 @@ class Categories extends React.Component {
             <div className=" p-1" >
                 <div className="col-12">
                     <div className="filter-list">
-                        <div className="display  px-5" >
-                            {
-                                this.state.items.map(function (item) {
-                                    return (
-                                        <div className="col-2" key={item._id} >
-                                            <Categorie item={item} vermasonclick={this.vermas} />
-                                        </div>
-                                    );
-                                }, this)
-                            }
+                        <div className="display d-flex flex-row  flex-warp px-5 row" >                            {
+                            this.state.items.map(function (item) {
+                                return (
+                                    <div className="w-100 w-m-20" key={item._id} >
+                                        <Categorie item={item} vermasonclick={this.vermas} />
+                                    </div>
+                                );
+                            }, this)
+                        }
                         </div>
                     </div>
                     <Paginator totalRecords={itemCount} pageLimit={pageSize} pageNeighbours={3} onPageChanged={this.onPageChanged} />

@@ -19,4 +19,5 @@ module.exports = (app) => {
     app.use('/api/admin', require('./auth'));
 
     app.use('/file', require('./file'));
+    app.use('/api/dashboard', require('./dashboard'));
 }

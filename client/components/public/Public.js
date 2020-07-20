@@ -4,7 +4,7 @@ import { Route, Switch, Redirect } from 'react-router-dom'
 
 import Catalog from './catalog/Catalog.jsx';
 import Header from './header/Header';
-import Home from './home/home';
+import Home from './home/home/Home';
 import MovieDetails from './movie-details/MovieDetails';
 import Breadcrumb from './breadcrumb/Breadcrumb';
 import Footer from './footer/Footer';
@@ -27,6 +27,7 @@ export const Public = ({ match }) => (
             <Route key="catalogmovie" exact path="/catalog/movie" render={(props) => (<Redirect to="/catalog/1"  {...props} />)} />
             <Route key="movie" exact path="/catalog/movie/:id" component={MovieDetails} />
             <Route key="list-categories" exact path="/categories" component={Categories} />
+            <Route key="list-categories" exact path="/categories/:id" component={Categories} />
             <Route key="categoriecategorie" exact path="/categories/categorie" render={(props) => (<Redirect to="/categories/1"  {...props} />)} />
             <Route key="categorie" exact path="/categories/categorie/:name" component={CategorieDetails} />
             <Route key="list-actors" exact path="/actors" component={Actors} />
