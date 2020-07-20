@@ -13,7 +13,7 @@ class Movie extends React.Component {
     totalSeconds %= 3600;
     let minutes = Math.floor(totalSeconds / 60);
     let seconds = Math.floor(totalSeconds % 60);
-    return (hours > 0 ? hours + " h " : '') + (minutes > 0 ? minutes + " min " : '') + seconds + " seg "
+    return (hours > 0 ? hours + " h " : '') + (minutes > 0 ? minutes + " min " : '') + (seconds > 0 ? seconds + " seg " : "")
   }
 
   getPreview() {
@@ -32,11 +32,10 @@ class Movie extends React.Component {
 
       return <div className="w-100 preview" >
         <Carousel items={this.props.item.files} />
-        <span className="row-stamp" >
-          <span className="text-white time-stamp" >{this.getTime(this.props.item.duration)}</span>
 
-          <span className="text-white quality-stamp" >{this.props.item.quality}p</span>
-        </span>
+        <span className="text-white time-stamp" >{this.getTime(this.props.item.duration)}</span>
+
+        <span className="text-white quality-stamp" >{this.props.item.quality}p</span>
       </div >
     }
   }

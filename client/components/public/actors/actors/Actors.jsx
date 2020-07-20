@@ -65,11 +65,11 @@ class Actors extends React.Component {
                     <div className="col-12">
                         <Paginator totalRecords={itemCount} pageLimit={pageSize} pageNeighbours={3} onPageChanged={this.onPageChanged} />
                         <div className="filter-list">
-                            <div className="display px-5 row" >
+                            <div className="display d-flex flex-row  flex-warp px-5 row" >
                                 {
                                     this.state.items.map(function (item) {
                                         return (
-                                            <div className="col-12 col-sm-6 col-md-4 col-lg-2" key={item._id} >
+                                            <div className="w-100 w-m-20" key={item._id} >
                                                 <Actor item={item} vermasonclick={this.vermas} />
                                             </div>
                                         );
