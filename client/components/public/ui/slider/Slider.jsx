@@ -10,49 +10,65 @@ class Slider extends React.Component {
         super(props)
         let list = []
         let aux = []
+        let couter = 1;
         for (let i = 0; i < this.props.items.length; i++) {
-            if ((i % 3) == 0 && i > 0) {
+            if (couter == 3 || i == (this.props.items.length - 1)) {
                 list.push(aux);
-                aux = [];
-            } else {
                 aux.push(this.props.items[i]);
+
+                aux = [];
+                couter = 1;
+
+
+            } else {
+
+                aux.push(this.props.items[i]);
+                couter++;
             }
 
         }
-        debugger;
+
+        console.log(list)
         this.state = {
             id: "id-cs-" + Math.floor((Math.random() * 100000)),
             items: list
         }
     }
 
+    componentDidMount() {
+        $("#" + this.state.id).carousel({
+            interval: false,
+            cycle: true,
+            pause: false
+        }).carousel(0);
+    }
 
     render() {
 
         return (
-            <div id={this.state.id} className="carousel slide" data-pause={this.props.pause ? this.props.pause : "false"}>
+            <div key={Math.random()} id={this.state.id} className="carousel slide" data-pause={this.props.pause ? this.props.pause : "hover"} data-ride="carousel" data-interval="false">
 
-                <ol className="carousel-indicators">
+                <ol key={Math.random()} className="carousel-indicators">
                     {
 
                         this.state.items.map((movie, index) => {
-                            <li data-target="#carouselExampleCaptions" data-slide-to={index} className={index == 0 ? "active " : ""}></li>
+                            return (<li key={Math.random()} data-target="#carouselExampleCaptions" data-slide-to={index} className={index == 0 ? "active " : ""}></li>)
                         })
                     }
 
                 </ol>
-                <div className="carousel-inner">
+                <div key={Math.random()} className="carousel-inner">
                     {
 
                         this.state.items.map((movie, index) => {
                             return (
-                                <div className={(index == 0 ? "active " : "") + "carousel-item"} key={Math.random()}>
-                                    <div className="d-flex">
+                                <div key={Math.random()} className={(index == 0 ? "active " : "") + "carousel-item"} key={Math.random()}>
+                                    <div key={Math.random()} className="d-flex">
                                         {
                                             movie.map((e, i) => {
                                                 return (
 
-                                                    <div className="w-100 w-md-20">
+                                                    <div key={Math.random()} className="w-100 w-md-20">
                                                         <Movie item={e} index={i} />
                                                     </div>
                                                 )

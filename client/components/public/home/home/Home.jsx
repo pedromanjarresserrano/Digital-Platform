@@ -31,7 +31,7 @@ class Home extends React.Component {
         return (
             <div>
                 {
-                    this.state.items.map((item) => <CategoriesHome item={item} />)
+                    this.state.items.map((item) => <CategoriesHome key={Math.random()} item={item} />)
                 }
             </div>
         );
