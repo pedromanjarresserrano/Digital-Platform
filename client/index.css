@@ -116,14 +116,20 @@ select.form-field {
   width: 20% !important;
 }
 
+.w-25 {
+  width: 25% !important;
+}
+
 .mw-1200 {
   max-width: 1200px !important;
 }
 
-
 @media (min-width: 768px) {
   .w-m-20 {
     width: 20% !important;
+  }
+  .w-m-25 {
+    width: 25% !important;
   }
 }
 
@@ -131,16 +137,25 @@ select.form-field {
   .w-l-20 {
     width: 20% !important;
   }
+  .w-l-25 {
+    width: 25% !important;
+  }
 }
 
 @media (min-width: 1200px) {
   .w-lg-20 {
     width: 20% !important;
   }
+  .w-lg-25 {
+    width: 25% !important;
+  }
 }
 
 @media (min-width: 1300px) {
   .w-xl-20 {
     width: 20% !important;
+  }
+  .w-xl-25 {
+    width: 25% !important;
   }
 }

@@ -42,7 +42,7 @@ class Slider extends React.Component {
                     this.state.items.map((movie) => {
                         return (
                             <div key={Math.random()} className="each-slide px-4" key={Math.random()}>
-                                <span key={Math.random()} className="d-flex justify-content-around flex-row  align-items-start ">
+                                <span key={Math.random()} className="container-slider">
                                     {
                                         movie.map((e, i) => {
                                             return (

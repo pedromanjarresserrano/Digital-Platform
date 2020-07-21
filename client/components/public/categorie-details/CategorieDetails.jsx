@@ -75,11 +75,11 @@ class CategorieDetails extends React.Component {
       <div className="container-fluid">
         <div className="d-block">
           <h1 className="text-white">{this.state.item.name}</h1>
-          <div className="display row" >
+          <div className="display d-flex flex-row  flex-warp px-5 row" >
             {
               this.state.items.map(function (item) {
                 return (
-                  <div className="col-3" key={item._id} >
+                  <div className="w-100 w-m-25" key={item._id} >
                     <Movie item={item} vermasonclick={this.vermas} />
                   </div>
                 );

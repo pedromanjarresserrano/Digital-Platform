@@ -24,8 +24,6 @@ const getDashMovieInfo = async (req, res) => {
             }
         ]);
         result = await models.categoriamodel.populate(result, { path: '_id' })
-
-        console.log(result);
         res.send({ msg: "ok", result })
     } catch (error) {
         res.send({ msg: "error", error })
@@ -55,7 +53,6 @@ const getDashActorsInfo = async (req, res) => {
         ]);
 
         result = await models.actormodel.populate(result, { path: '_id' })
-        console.log(result);
         res.send({ msg: "ok", result })
     } catch (error) {
         res.send({ msg: "error", error })

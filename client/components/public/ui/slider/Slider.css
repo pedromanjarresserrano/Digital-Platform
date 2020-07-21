@@ -8,3 +8,14 @@
     margin-bottom: 0 !important;
     bottom: -16px;
 }
+
+.container-slider {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.container-slider> div{
+    margin:0px 2.5% 0px 2.5%;
+}
