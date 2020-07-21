@@ -7,7 +7,7 @@ import { Admin } from './admin/Admin';
 
 import NotFound from './public/notfound/NotFound';
 import { Public } from './public/Public';
-
+import 'react-slideshow-image/dist/styles.css'
 
 
 export const App = () => (

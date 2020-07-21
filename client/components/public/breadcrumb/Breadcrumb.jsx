@@ -32,11 +32,14 @@ class Breadcrumb extends React.Component {
             <nav aria-label="breadcrumb  border-0">
                 <ol className="breadcrumb my-2 bg-dark text-white rounded-0">
                     {
-                        routes.map((route, index) => {
-                            return (
-                                <li className=" text-capitalize breadcrumb-item active text-white" key={index}><a>{isNaN(route) ? route : "Page " + route}</a></li>
-                            );
-                        })
+                        (routes && routes.length > 0 ?
+                            routes.map((route, index) => {
+                                return (
+                                    <li className=" text-capitalize breadcrumb-item active text-white" key={index}><a>{isNaN(route) ? route : "Page " + route}</a></li>
+                                );
+                            })
+                            :
+                            <li className=" text-capitalize breadcrumb-item active text-white" ><a>Home</a></li>)
                     }
                 </ol>
             </nav>
