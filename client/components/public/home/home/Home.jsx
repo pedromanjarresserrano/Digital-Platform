@@ -1,6 +1,7 @@
 import React from 'react';
 import CategoriesHome from '../categories/CategoriesHome';
 import Axios from 'axios';
+import ActorsHome from '../actors/ActorsHome';
 
 class Home extends React.Component {
 
@@ -8,7 +9,8 @@ class Home extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            items: []
+            items: [],
+            actors: []
         }
     }
 
@@ -24,6 +26,14 @@ class Home extends React.Component {
                     items: response.data.result
                 });
             });
+
+        Axios.get('/api/dashboard/actors')
+            .then(response => {
+                console.log(response);
+                this.setState({
+                    actors: response.data.result
+                });
+            });
     }
 
 
@@ -33,6 +43,7 @@ class Home extends React.Component {
                 {
                     this.state.items.map((item) => <CategoriesHome key={Math.random()} item={item} />)
                 }
+                <ActorsHome items={this.state.actors} />
             </div>
         );
     }
