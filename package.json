@@ -6,7 +6,7 @@
   "scripts": {
     "start": "npm-run-all --parallel watch:server watch:build",
     "watch:build": "webpack --watch client/",
-    "watch:server": "nodemon --inspect src/server.js",
+    "watch:server": "nodemon -r dotenv/config --inspect src/server.js",
     "build": "webpack --mode production",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "npx nodemon --inspect src/server "
@@ -19,6 +19,7 @@
     "axios": "^0.19.2",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-jwt": "^6.0.0",
     "express-session": "^1.17.1",
