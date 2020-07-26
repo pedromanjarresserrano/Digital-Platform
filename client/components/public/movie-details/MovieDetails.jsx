@@ -152,7 +152,7 @@ class MovieDetails extends React.Component {
                       </div>
                     </div>
                     <div className="category">
-                      {this.state.item.categorias ? this.state.item.categorias.map(item => (<Link key={item._id} to="/" className="button rounded  bordered primary">  {item.name}</Link>)) : ''}
+                      {this.state.item.categorias ? this.state.item.categorias.map(item => (<Link key={item._id} to={"/categories/categorie/" + item.name} className="button rounded  bordered primary">  {item.name}</Link>)) : ''}
                     </div>
                   </div>
                 </div>

@@ -19,12 +19,12 @@ class Movie extends React.Component {
   getPreview() {
     if (this.props.item.portada && this.props.item.portada.length > 0) {
       return <>
-        <div className="p-1" >
+        <div className="p-1 d-flex flex-column justify-content-center" >
           <img
-            className="img-fluid"
+            className="img-fluid h-100"
             effect="blur"
             src={this.props.item.portada} />
-          <p className="text-white time-stamp margin-0 padding-0 padding-right-1" >{this.getTime(this.props.item.duration)}</p>
+          <p className="text-white margin-0 padding-0 padding-right-1" >{this.getTime(this.props.item.duration)}</p>
         </div>
       </>
 
