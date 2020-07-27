@@ -62,7 +62,7 @@ class Catalog extends React.Component {
 
     onPageChanged = pageNumber => {
         pageNumber = parseInt(pageNumber)
-        this.setState({ activePage: pageNumber });
+        this.setState({ activePage: pageNumber, loading: true });
         this.loadPage(pageNumber);
         this.props.history.push({
             pathname: generatePath(this.props.match.path, { page: pageNumber }),

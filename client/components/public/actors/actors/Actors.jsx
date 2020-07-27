@@ -3,6 +3,7 @@ import axios from 'axios';
 import Actor from '../actor/Actor';
 import Pagination from 'react-js-pagination';
 import { generatePath } from "react-router";
+import RotateCircleLoading from 'react-loadingg/lib/RotateCircleLoading';
 
 class Actors extends React.Component {
 
@@ -13,7 +14,8 @@ class Actors extends React.Component {
             activePage: 1,
             items: [],
             itemCount: 0,
-            pageSize: 0
+            pageSize: 0,
+            loading: true
         }
         this.load = this.load.bind(this);
 
@@ -44,7 +46,7 @@ class Actors extends React.Component {
 
     onPageChanged = pageNumber => {
         pageNumber = parseInt(pageNumber)
-        this.setState({ activePage: pageNumber });
+        this.setState({ activePage: pageNumber, loading: true });
         this.loadPage(pageNumber);
         this.props.history.push({
             pathname: generatePath(this.props.match.path, { page: pageNumber })
@@ -59,7 +61,9 @@ class Actors extends React.Component {
                     items: response.data.itemsList,
                     paginator: response.data.paginator,
                     itemCount: response.data.paginator.itemCount,
-                    pageSize: response.data.paginator.perPage
+                    pageSize: response.data.paginator.perPage,
+                    loading: false
+
                 });
             });
     }
@@ -79,17 +83,23 @@ class Actors extends React.Component {
                             pageRangeDisplayed={9}
                             onChange={this.onPageChanged} />
                         <div className="filter-list d-flex flex-row justify-content-center">
-                            <div className="display d-flex flex-row  flex-warp px-5 row w-100 mw-1200" >
-                                {
-                                    this.state.items.map(function (item) {
-                                        return (
-                                            <div className="w-100 w-m-20" key={item._id} >
-                                                <Actor item={item} />
-                                            </div>
-                                        );
-                                    }, this)
-                                }
-                            </div>
+                            {
+                                (this.state.loading) ?
+                                    <div className="m-5 pb-5">
+                                        <RotateCircleLoading size="large" />
+                                    </div>
+                                    : <div className="display d-flex flex-row  flex-warp px-5 row w-100 mw-1200" >
+                                        {
+                                            this.state.items.map(function (item) {
+                                                return (
+                                                    <div className="w-100 w-m-20" key={item._id} >
+                                                        <Actor item={item} />
+                                                    </div>
+                                                );
+                                            }, this)
+                                        }
+                                    </div>
+                            }
                         </div>
                         <Pagination
                             activePage={this.state.activePage}
