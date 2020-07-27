@@ -1,7 +1,8 @@
 import React from 'react';
 import axios from 'axios';
-import Paginator from '../../../admin/ui/paginator/Paginator';
 import Actor from '../actor/Actor';
+import Pagination from 'react-js-pagination';
+import { generatePath } from "react-router";
 
 class Actors extends React.Component {
 
@@ -9,37 +10,45 @@ class Actors extends React.Component {
         super(props)
         this.state = {
             initialItems: [],
+            activePage: 1,
             items: [],
             itemCount: 0,
             pageSize: 0
         }
+        this.load = this.load.bind(this);
 
     }
 
-    filtrarLista = (event) => {
-        var updatedList = this.state.initialItems;
-        updatedList = updatedList.filter(function (item) {
-            return item.name.toLowerCase().search(event.target.value.toLowerCase()) !== -1;
-        });
-        this.setState({ items: updatedList });
+    load = async () => {
+
+        let page = this.props.match.params.page;
+
+        page = page ? parseInt(page) : 1;
+
+        var statesVal = { activePage: page }
+
+        await this.setState(statesVal);
+        this.loadPage(page);
     }
 
-    vermas = (item) => {
+    async componentDidMount() {
+        this.load();
+    }
+
+    async componentDidUpdate() {
+        window.onpopstate = () => {
+            this.load();
+        }
+
+    }
+
+    onPageChanged = pageNumber => {
+        pageNumber = parseInt(pageNumber)
+        this.setState({ activePage: pageNumber });
+        this.loadPage(pageNumber);
         this.props.history.push({
-            pathname: '/actors/actor',
-            state: {
-                item: item
-            }
-        })
-    }
-
-    componentWillMount() {
-        this.loadPage(1);
-    }
-
-    onPageChanged = data => {
-        const { currentPage } = data;
-        this.loadPage(currentPage);
+            pathname: generatePath(this.props.match.path, { page: pageNumber })
+        });
     }
 
     loadPage(page) {
@@ -63,21 +72,31 @@ class Actors extends React.Component {
             <div className="container-fluid">
                 <div className="row" >
                     <div className="col-12">
-                        <Paginator totalRecords={itemCount} pageLimit={pageSize} pageNeighbours={3} onPageChanged={this.onPageChanged} />
+                        <Pagination
+                            activePage={this.state.activePage}
+                            totalItemsCount={itemCount}
+                            itemsCountPerPage={pageSize}
+                            pageRangeDisplayed={9}
+                            onChange={this.onPageChanged} />
                         <div className="filter-list d-flex flex-row justify-content-center">
                             <div className="display d-flex flex-row  flex-warp px-5 row w-100 mw-1200" >
                                 {
                                     this.state.items.map(function (item) {
                                         return (
                                             <div className="w-100 w-m-20" key={item._id} >
-                                                <Actor item={item} vermasonclick={this.vermas} />
+                                                <Actor item={item} />
                                             </div>
                                         );
                                     }, this)
                                 }
                             </div>
                         </div>
-                        <Paginator totalRecords={itemCount} pageLimit={pageSize} pageNeighbours={3} onPageChanged={this.onPageChanged} />
+                        <Pagination
+                            activePage={this.state.activePage}
+                            totalItemsCount={itemCount}
+                            itemsCountPerPage={pageSize}
+                            pageRangeDisplayed={9}
+                            onChange={this.onPageChanged} />
 
                     </div>
                 </div>
