@@ -13,6 +13,7 @@ import Categories from './categories/Categories';
 import CategorieDetails from './categorie-details/CategorieDetails';
 import ActorDetails from './actors/actor-details/ActorDetails';
 import Actors from './actors/actors/Actors';
+import NotFound from './notfound/NotFound.jsx';
 
 export const Public = ({ match }) => (
     <React.Fragment>
@@ -34,6 +35,7 @@ export const Public = ({ match }) => (
             <Route key="actor" exact path="/actors/actor" render={(props) => (<Redirect to="/actors/1"  {...props} />)} />
             <Route key="actorn" exact path="/actors/actor/:name" component={ActorDetails} />
             <Route exact path="/index" component={Home} />
+            <Route exact path="*" component={NotFound} />
         </Switch>
         <Footer />
     </React.Fragment>

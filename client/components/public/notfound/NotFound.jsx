@@ -12,18 +12,20 @@ class NotFound extends React.Component {
   }
   render() {
     return (
-      <div className="error-page">
-        <h2 className="headline text-warning"> 404</h2>
+      <div className="d-flex flex-row justify-content-center">
+        <div className="error-page">
+          <h2 className="headline text-warning"> 404</h2>
 
-        <div className="error-content">
-          <h3><i className="fas fa-exclamation-triangle text-warning"></i> Oops! Page not found.</h3>
+          <div className="error-content">
+            <h3><i className="fas fa-exclamation-triangle text-warning"></i> Oops! Page not found.</h3>
 
-          <p className="text-white">
-            We could not find the page you were looking for.
-            Meanwhile, you may <a href="/">return to dashboard</a> or try using the search form.
+            <p className="text-white">
+              We could not find the page you were looking for.
+            Meanwhile, you may <a href="/">return to Home</a> or try using the search form.
           </p>
 
-         
+
+          </div>
         </div>
       </div>
     )
