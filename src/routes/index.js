@@ -1,5 +1,5 @@
 
-const models = require('../models/models');
+const models = require('../models');
 
 
 module.exports = (app) => {
@@ -20,4 +20,5 @@ module.exports = (app) => {
 
     app.use('/file', require('./file'));
     app.use('/api/dashboard', require('./dashboard'));
+    app.use('/api/fixes', require('./fixes'));
 }

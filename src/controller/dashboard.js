@@ -1,4 +1,4 @@
-const models = require('../models/models');
+const models = require('../models');
 const Movies = models.moviemodel;
 const Actors = models.actormodel;
 

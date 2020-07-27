@@ -20,11 +20,18 @@ class BreadcrumbAdmin extends React.Component {
     }
 
 
-    loadBreadcrumb() {
-        this.setState({
+    async loadBreadcrumb() {
+        await this.setState({
             routes: this.props.location.pathname.trim().split("/").filter(e => e !== "")
         });
+        $("p:contains('" + this.capitalizeFirstLetter(this.state.routes.slice(-1).pop()) + "')").parent().addClass("active")
+
     }
+
+    capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
 
     render() {
         const { routes } = this.state;

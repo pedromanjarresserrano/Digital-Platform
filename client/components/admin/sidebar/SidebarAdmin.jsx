@@ -10,7 +10,7 @@ class SidebarAdmin extends React.Component {
     }
 
     componentWillMount() {
-        //console.log(this)
+        console.log(this)
     }
 
     onClickHandler(event) {
@@ -40,7 +40,7 @@ class SidebarAdmin extends React.Component {
                     <nav className="mt-2">
                         <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                             <li className="nav-item">
-                                <Link className="nav-link " to="/admin" onClick={this.onClickHandler}>
+                                <Link className="nav-link" to="/admin" onClick={this.onClickHandler}>
                                     <i className="nav-icon fas fa-home"></i>
                                     <p>
                                         Home Admin
@@ -59,21 +59,21 @@ class SidebarAdmin extends React.Component {
                                     <li className="nav-item">
                                         <Link className="nav-item nav-link " to="/">
                                             <i className="far fa-circle nav-icon"></i>
-                                            <p>Home</p>
+                                            <p>Home P</p>
                                         </Link>
 
                                     </li>
                                     <li className="nav-item">
                                         <Link className="nav-item nav-link " to="/catalog">
                                             <i className="far fa-circle nav-icon"></i>
-                                            <p>Catalog</p>
+                                            <p>Catalog P</p>
                                         </Link>
 
                                     </li>
                                     <li className="nav-item">
                                         <Link className="nav-item nav-link " to="/categories">
                                             <i className="far fa-circle nav-icon"></i>
-                                            <p>Categories</p>
+                                            <p>Categories P</p>
                                         </Link>
 
                                     </li>
@@ -91,7 +91,7 @@ class SidebarAdmin extends React.Component {
                                 <Link className="nav-link " to="/admin/categories" onClick={this.onClickHandler}>
                                     <i className="nav-icon fas fa-list-ul"></i>
                                     <p>
-                                        Categorias
+                                        Categories
                                     </p>
                                 </Link>
                             </li>

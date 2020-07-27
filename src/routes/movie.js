@@ -1,6 +1,6 @@
 let fs = require('fs')
 let express = require('express');
-const models = require('../models/models');
+const models = require('../models');
 const { log } = require('console');
 let router = express.Router();
 
