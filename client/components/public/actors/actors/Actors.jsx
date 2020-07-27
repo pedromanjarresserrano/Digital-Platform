@@ -64,8 +64,8 @@ class Actors extends React.Component {
                 <div className="row" >
                     <div className="col-12">
                         <Paginator totalRecords={itemCount} pageLimit={pageSize} pageNeighbours={3} onPageChanged={this.onPageChanged} />
-                        <div className="filter-list">
-                            <div className="display d-flex flex-row  flex-warp px-5 row" >
+                        <div className="filter-list d-flex flex-row justify-content-center">
+                            <div className="display d-flex flex-row  flex-warp px-5 row w-100 mw-1200" >
                                 {
                                     this.state.items.map(function (item) {
                                         return (
