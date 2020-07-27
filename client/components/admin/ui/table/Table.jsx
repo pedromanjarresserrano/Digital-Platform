@@ -33,8 +33,8 @@ class Table extends React.Component {
                             this.props.headers.map(h => <td key={h.name + "-" + data._id} className="text-truncate">{data[h.name]}</td>)
                         }
                         <td key={Math.random() + "-id-td-commands"} className="d-flex flex-row">
-                            <button key={Math.random() + "-id-button-commands"} type="button" title="Edit" className="btn btn-sm btn-primary" onClick={() => this.props.editClick(data)}><i class="fas fa-edit"></i></button>
-                            <button key={Math.random() + "-id-button-commands"} type="button" title="Delete" className="btn btn-sm btn-danger" onClick={() => this.props.deleteClick(data)}><i class="fas fa-trash-alt"></i></button>
+                            <button key={Math.random() + "-id-button-commands"} type="button" title="Edit" className="btn btn-sm btn-primary" onClick={() => this.props.editClick(data)}><i className="fas fa-edit"></i></button>
+                            <button key={Math.random() + "-id-button-commands"} type="button" title="Delete" className="btn btn-sm btn-danger" onClick={() => this.props.deleteClick(data)}><i className="fas fa-trash-alt"></i></button>
 
                             {this.props.extraAcciones && this.props.extraAcciones.length > 0 ? this.props.extraAcciones.map(accion =>
                                 <button key={Math.random() + "-id-button-commands"} type="button" className={accion.className} onClick={() => accion.onClick(data)}>{accion.name}</button>

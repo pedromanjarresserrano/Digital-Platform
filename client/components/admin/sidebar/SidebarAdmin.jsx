@@ -2,8 +2,21 @@ import React from 'react';
 import { Link } from 'react-router-dom'
 
 class SidebarAdmin extends React.Component {
+
+    constructor(props) {
+        super(props)
+
+        this.onClickHandler = this.onClickHandler.bind(this);
+    }
+
     componentWillMount() {
         //console.log(this)
+    }
+
+    onClickHandler(event) {
+        console.log(event);
+        document.querySelectorAll(".nav-link").forEach(e => e.classList.remove("active"));
+        event.currentTarget.classList.add("active");
     }
 
     render() {
@@ -27,7 +40,7 @@ class SidebarAdmin extends React.Component {
                     <nav className="mt-2">
                         <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                             <li className="nav-item">
-                                <Link className="nav-link " to="/admin">
+                                <Link className="nav-link " to="/admin" onClick={this.onClickHandler}>
                                     <i className="nav-icon fas fa-home"></i>
                                     <p>
                                         Home Admin
@@ -75,7 +88,7 @@ class SidebarAdmin extends React.Component {
                                 </ul>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link " to="/admin/categories">
+                                <Link className="nav-link " to="/admin/categories" onClick={this.onClickHandler}>
                                     <i className="nav-icon fas fa-list-ul"></i>
                                     <p>
                                         Categorias
@@ -83,7 +96,7 @@ class SidebarAdmin extends React.Component {
                                 </Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link " to="/admin/genders">
+                                <Link className="nav-link " to="/admin/genders" onClick={this.onClickHandler}>
                                     <i className="nav-icon fas fa-th"></i>
                                     <p>
                                         Generos
@@ -91,7 +104,7 @@ class SidebarAdmin extends React.Component {
                                 </Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link " to="/admin/actores">
+                                <Link className="nav-link " to="/admin/actores" onClick={this.onClickHandler}>
                                     <i className="nav-icon fas fa-users"></i>
                                     <p>
                                         Actores
@@ -99,7 +112,7 @@ class SidebarAdmin extends React.Component {
                                 </Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link " to="/admin/movies">
+                                <Link className="nav-link " to="/admin/movies" onClick={this.onClickHandler}>
                                     <i className="nav-icon fas fa-film"></i>
                                     <p>
                                         Movies
@@ -107,7 +120,7 @@ class SidebarAdmin extends React.Component {
                                 </Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link " to="/admin/locations">
+                                <Link className="nav-link " to="/admin/locations" onClick={this.onClickHandler}>
                                     <i className="nav-icon fas fa-folder-open"></i>
                                     <p>
                                         Locations

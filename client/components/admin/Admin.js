@@ -11,9 +11,11 @@ import HeaderAdmin from './header/HeaderAdmin';
 import NotFound from '../public/notfound/NotFound';
 import ToastContainer from './ui/toastcontainer/ToastContainer';
 
+import FooterAdmin from './footer/FooterAdmin';
+
 export const Admin = ({ match }) => {
     return (
-        <>
+        <div className="sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
             <div className="wrapper">
                 <nav className="main-header navbar navbar-expand navbar-white navbar-light"> <HeaderAdmin />
                 </nav>
@@ -568,8 +570,9 @@ export const Admin = ({ match }) => {
                         <Route key="form-movies" exact path={`${match.path}/*`} component={NotFound} />
                     </Switch>
                 </div>
+                <FooterAdmin />
                 <ToastContainer />
             </div>
-        </>);
+        </div>);
 };
 
