@@ -9,6 +9,7 @@ import {
 } from 'video-react';
 import Axios from 'axios';
 import { Link } from 'react-router-dom'
+import Actor from '../actors/actor/Actor';
 
 class MovieDetails extends React.Component {
 
@@ -163,13 +164,10 @@ class MovieDetails extends React.Component {
         <h4 className="text-white">Reparto</h4>
         <div className="row ">
           {this.state.item.reparto ? this.state.item.reparto.map(item => (
-            <div className="movie-body col-sm-1 text-white align-center">
-              <Link to="/" key={item._id}>
-                <img className=" img-actor"
-                  src={item.imageAvatar} />
-                <p className="text-center">{item.name}</p>
-              </Link>
-            </div>)) : ''}
+            <div className="w-20">
+              <Actor item={item} />
+            </div>
+          )) : ''}
         </div>
       </div>
     );

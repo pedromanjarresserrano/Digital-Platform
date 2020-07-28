@@ -103,7 +103,7 @@ async function generatefiles(newvideo, ratio) {
         })
         newvideo.files = [];
         list.map(e => "/thumbnail/" + e).forEach(i => newvideo.files.push(i));
-        await models.moviemodel.updateOne({ _id: newvideo._id }, newvideo);
-
     }
+    await models.moviemodel.updateOne({ _id: newvideo._id }, newvideo);
+
 }

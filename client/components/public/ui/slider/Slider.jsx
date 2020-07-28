@@ -37,7 +37,7 @@ class Slider extends React.Component {
     render() {
 
         return (
-            <Slide autoplay="false" >
+            <Slide autoplay={false} >
                 {
                     this.state.items.map((movie) => {
                         return (

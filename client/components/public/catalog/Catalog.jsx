@@ -12,7 +12,6 @@ class Catalog extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            initialItems: [],
             items: [],
             itemCount: 0,
             pageSize: 0,

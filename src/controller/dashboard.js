@@ -1,36 +1,32 @@
 const models = require('../models');
 const Movies = models.moviemodel;
 const Actors = models.actormodel;
+const Categories = models.categoriamodel;
 
 const getDashMovieInfo = async (req, res) => {
 
     try {
 
-        let result = await Movies.aggregate([
-            { "$unwind": "$categorias" },
-            {
-                "$group": {
-                    "_id": '$categorias',
+        let listC = await Categories.find();
+        let result = [];
+        for (let i = 0; i < listC.length; i++) {
+            const c = listC[i];
+            let listM = await Movies.find({ categorias: { $all: [c] } }).limit(16);
+            if (listM.length > 0)
+                result.push({
+                    _id: c,
+                    movies: listM
+                })
+        }
 
-                    "movies": { $push: "$_id" }
-                }
-            },
-            {
-                "$lookup": {
-                    "from": Movies.collection.name,
-                    "localField": "movies",
-                    "foreignField": "_id",
-                    "as": "movies"
-                }
-            }
-        ]);
-        result = await models.categoriamodel.populate(result, { path: '_id' })
+
+
         res.send({ msg: "ok", result })
     } catch (error) {
+        console.log(error);
         res.send({ msg: "error", error })
     }
 }
-
 
 const getDashActorsInfo = async (req, res) => {
     try {

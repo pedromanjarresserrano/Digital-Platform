@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
 import './Actor.css';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 class Actor extends React.Component {
 
@@ -16,7 +17,9 @@ class Actor extends React.Component {
             }}>
                 <div className="m-1 bg-dark rounded h-100 d-flex flex-column justify-content-between" >
                     <div className="h-100 d-flex flex-row justify-content-center">
-                        <img className="img-fluid rounded-top" src={this.props.item.imageAvatar} />
+                        <LazyLoadImage effect="blur"
+                            wrapperClassName="img-fluid rounded-top"
+                            src={this.props.item.imageAvatar} />
                     </div>
                     <p className="text-white text-center">{this.props.item.name}</p>
                 </div>

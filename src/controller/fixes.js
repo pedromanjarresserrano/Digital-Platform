@@ -2,6 +2,7 @@ const models = require("../models");
 const { capitalizeFirstLetter } = require("../utils/text");
 const Actors = models.actormodel;
 const Movies = models.moviemodel;
+const Categories = models.categoriamodel;
 
 async function specialName(req, res) {
     let list = await Movies.find({});
@@ -78,8 +79,21 @@ async function specialNameReparto(req, res) {
             }
         })
     })
+    let listC = await Categories.find({});
 
+    listM = await Movies.find({});
 
+    listC.forEach(async (c) => {
+        listM.forEach(async (m) => {
+            const name = c.name.toLowerCase();
+            if ((m.visualname && m.visualname.toLowerCase().includes(name)) || m.name.toLowerCase().includes(name)) {
+                if (!findIf(m.categorias, c._id)) {
+                    m.categorias.push(c);
+                    await Movies.findByIdAndUpdate({ _id: m._id }, { $set: m });
+                }
+            }
+        })
+    })
     res.send({ msg: "ok" })
 }
 

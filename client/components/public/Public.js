@@ -23,17 +23,19 @@ export const Public = ({ match }) => (
             <Route exact path="/" component={Home} />
             <Route exact path="/home" component={Home} />
             <Route key="list-movies" exact path="/catalog" render={(props) => (<Redirect to="/catalog/1"  {...props} />)} />
-            <Route key="list-movies" exact path="/catalog/:page" component={Catalog} />
+            <Route key="list-movies-p" exact path="/catalog/:page" component={Catalog} />
             <Route key="catalogmovie" exact path="/catalog/movie" render={(props) => (<Redirect to="/catalog/1"  {...props} />)} />
             <Route key="movie" exact path="/catalog/movie/:id" component={MovieDetails} />
             <Route key="list-categories" exact path="/categories" component={Categories} />
-            <Route key="list-categories" exact path="/categories/:id" component={Categories} />
+            <Route key="list-categories-id" exact path="/categories/:id" component={Categories} />
             <Route key="categoriecategorie" exact path="/categories/categorie" render={(props) => (<Redirect to="/categories/1"  {...props} />)} />
-            <Route key="categorie" exact path="/categories/categorie/:name" component={CategorieDetails} />
+            <Route key="categoriesn" exact path="/categories/categorie/:name" render={(props) => (<Redirect to={"/categories/categorie/" + props.match.params.name + "/1"}  {...props} />)} />
+            <Route key="categoriesnp" exact path="/categories/categorie/:name/:page" component={CategorieDetails} />
             <Route key="list-actors" exact path="/actors/:page" component={Actors} />
-            <Route key="actor" exact path="/actors" render={(props) => (<Redirect to="/actors/1"  {...props} />)} />
+            <Route key="actors" exact path="/actors" render={(props) => (<Redirect to="/actors/1"  {...props} />)} />
             <Route key="actor" exact path="/actors/actor" render={(props) => (<Redirect to="/actors/1"  {...props} />)} />
-            <Route key="actorn" exact path="/actors/actor/:name" component={ActorDetails} />
+            <Route key="actorn" exact path="/actors/actor/:name" render={(props) => (<Redirect to={"/actors/actor/" + props.match.params.name + "/1"}  {...props} />)} />
+            <Route key="actornp" exact path="/actors/actor/:name/:page" component={ActorDetails} />
             <Route exact path="/index" component={Home} />
             <Route exact path="*" component={NotFound} />
         </Switch>

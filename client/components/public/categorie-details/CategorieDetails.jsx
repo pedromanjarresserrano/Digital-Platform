@@ -1,9 +1,9 @@
 import React from 'react';
 import './CategorieDetails.css';
 import Axios from 'axios';
-import { Link } from 'react-router-dom'
-import Paginator from '../../admin/ui/paginator/Paginator';
 import Movie from '../movie/Movie'
+import RotateCircleLoading from 'react-loadingg/lib/RotateCircleLoading';
+import Pagination from 'react-js-pagination';
 
 class CategorieDetails extends React.Component {
 
@@ -13,7 +13,9 @@ class CategorieDetails extends React.Component {
       item: {},
       items: [],
       itemCount: 0,
-      pageSize: 0
+      pageSize: 0,
+      activePage: 0,
+      loading: true
     }
   }
   //--------------------------------------------------------------
@@ -47,46 +49,54 @@ class CategorieDetails extends React.Component {
         items: response.data.itemsList,
         paginator: response.data.paginator,
         itemCount: response.data.paginator.itemCount,
-        pageSize: response.data.paginator.perPage
+        pageSize: response.data.paginator.perPage,
+        loading: false
+
       });
     }.bind(this));
   }
 
 
-  onPageChanged = data => {
-    const { currentPage } = data;
-    this.loadPage(currentPage || 1);
+  onPageChanged = pageNumber => {
+    pageNumber = parseInt(pageNumber)
+    this.setState({ activePage: pageNumber, loading: true });
+    this.loadPage(pageNumber);
+    this.props.history.push({
+      pathname: generatePath(this.props.match.path, { name: this.state.item.name, page: pageNumber })
+    });
   }
 
-  vermas = (item) => {
-    this.props.history.push({
-      pathname: '/catalog/movie',
-      state: {
-        item: item
-      }
-    })
-  }
 
   render() {
-    /*    <button onClick={this.regresar}>Regresar </button>*/
     const { pageSize, itemCount } = this.state;
 
     return (
       <div className="container-fluid">
         <div className="d-block">
           <h1 className="text-white">{this.state.item.name}</h1>
-          <div className="display d-flex flex-row  flex-warp px-5 row" >
-            {
-              this.state.items.map(function (item) {
-                return (
-                  <div className="w-100 w-m-25" key={item._id} >
-                    <Movie item={item} vermasonclick={this.vermas} />
+          <div className="d-flex flex-row justify-content-center   mx-auto w-100 mw-1200">
+            <div className="display d-flex flex-row  flex-wrap w-100" >
+              {
+                (this.state.loading) ?
+                  <div className="m-5 pb-5">
+                    <RotateCircleLoading size="large" />
                   </div>
-                );
-              }, this)
-            }
+                  : this.state.items.map(function (item) {
+                    return (
+                      <div className="w-100 w-m-20" key={item._id} >
+                        <Movie item={item} />
+                      </div>
+                    );
+                  }, this)
+              }
+            </div>
           </div>
-          <Paginator totalRecords={itemCount} pageLimit={pageSize} pageNeighbours={3} onPageChanged={this.onPageChanged} />
+          <Pagination
+            totalItemsCount={itemCount}
+            itemsCountPerPage={pageSize}
+            activePage={this.state.activePage}
+            pageRangeDisplayed={9}
+            onChange={this.onPageChanged} />
 
         </div>
       </div>

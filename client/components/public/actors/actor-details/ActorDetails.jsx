@@ -1,8 +1,10 @@
 import React from 'react';
 import './ActorDetails.css';
 import Axios from 'axios';
-import Paginator from '../../../admin/ui/paginator/Paginator';
 import Movie from '../../movie/Movie'
+import { generatePath } from "react-router";
+import RotateCircleLoading from 'react-loadingg/lib/RotateCircleLoading';
+import Pagination from 'react-js-pagination';
 
 class ActorDetails extends React.Component {
 
@@ -12,7 +14,10 @@ class ActorDetails extends React.Component {
       item: {},
       items: [],
       itemCount: 0,
-      pageSize: 0
+      pageSize: 0,
+      activePage: 0,
+      loading: true
+
     }
   }
   //--------------------------------------------------------------
@@ -47,58 +52,70 @@ class ActorDetails extends React.Component {
         items: response.data.itemsList,
         paginator: response.data.paginator,
         itemCount: response.data.paginator.itemCount,
-        pageSize: response.data.paginator.perPage
+        pageSize: response.data.paginator.perPage,
+        loading: false
+
       });
     }.bind(this));
   }
 
 
-  onPageChanged = data => {
-    const { currentPage } = data;
-    this.loadPage(currentPage);
+  onPageChanged = pageNumber => {
+    pageNumber = parseInt(pageNumber)
+    this.setState({ activePage: pageNumber, loading: true });
+    this.loadPage(pageNumber);
+    this.props.history.push({
+      pathname: generatePath(this.props.match.path, { name: this.state.item.name, page: pageNumber })
+    });
   }
 
-  vermas = (item) => {
-    this.props.history.push({
-      pathname: '/actor',
-      state: {
-        item: item
-      }
-    })
-  }
 
   render() {
     const { pageSize, itemCount } = this.state;
 
     return (
       <div className="container-fluid">
-        <div className="d-block  px-5">
-          <div className="card flex-md-row mb-4 shadow-sm h-md-250 bg-dark" >
-            <img className="card-img-right flex-auto d-none d-lg-block rounded-left" alt="Thumbnail [170x250]" style={{ width: "170px", height: "250px" }} src={this.state.item.imageAvatar} data-holder-rendered="true" />
+        <div className="d-block  px-5 ">
+          {
+            (this.state.loading) ?
+              <div className="m-5 pb-5">
+                <RotateCircleLoading size="large" />
+              </div>
+              : <> <div className="card flex-md-row mb-4 shadow-sm h-md-250 bg-dark" >
+                <img className="card-img-right flex-auto d-none d-lg-block rounded-left" alt="Thumbnail [170x250]" style={{ width: "170px", height: "250px" }} src={this.state.item.imageAvatar} data-holder-rendered="true" />
 
-            <div className="card-body d-flex flex-column align-items-start">
+                <div className="card-body d-flex flex-column align-items-start">
 
-              <h4 className="mb-0">
-                <span className="text-white" href="#">{this.state.item.name}</span>
-              </h4>
-              <h6 className="text-white">Aka: {this.state.item.aka}</h6>
-              <div className="mb-1 text-light">Edad {this.state.item.edad} </div>
-              <p className="card-text mb-auto">Biography <br />{this.state.item.bio}.</p>
-            </div>
+                  <h4 className="mb-0">
+                    <span className="text-white" href="#">{this.state.item.name}</span>
+                  </h4>
+                  <h6 className="text-white">Aka: {this.state.item.aka}</h6>
+                  <div className="mb-1 text-light">Edad {this.state.item.edad} </div>
+                  <p className="card-text mb-auto">Biography <br />{this.state.item.bio}.</p>
+                </div>
 
-          </div>
-          <div className="display row" >
-            {
-              this.state.items.map(function (item) {
-                return (
-                  <div className="col-3" key={item._id} >
-                    <Movie item={item} />
+              </div>
+                <div className="d-flex flex-row justify-content-center  w-100 mw-1200">
+                  <div className="display d-flex flex-row  flex-wrap w-100" >
+                    {
+                      this.state.items.map(function (item) {
+                        return (
+                          <div className="w-100 w-m-20" key={item._id} >
+                            <Movie item={item} />
+                          </div>
+                        );
+                      }, this)
+                    }
                   </div>
-                );
-              }, this)
-            }
-          </div>
-          <Paginator totalRecords={itemCount} pageLimit={pageSize} pageNeighbours={3} onPageChanged={this.onPageChanged} />
+                </div>
+              </>
+          }
+          <Pagination
+            totalItemsCount={itemCount}
+            itemsCountPerPage={pageSize}
+            activePage={this.state.activePage}
+            pageRangeDisplayed={9}
+            onChange={this.onPageChanged} />
 
         </div>
       </div>
