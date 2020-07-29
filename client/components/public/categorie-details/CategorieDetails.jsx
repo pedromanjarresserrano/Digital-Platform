@@ -83,7 +83,7 @@ class CategorieDetails extends React.Component {
                   </div>
                   : this.state.items.map(function (item) {
                     return (
-                      <div className="w-100 w-m-20" key={item._id} >
+                      <div className="w-100 w-m-20 d-flex flex-column align-items-center" key={item._id} >
                         <Movie item={item} />
                       </div>
                     );

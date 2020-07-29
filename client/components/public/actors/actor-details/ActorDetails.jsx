@@ -95,12 +95,12 @@ class ActorDetails extends React.Component {
                 </div>
 
               </div>
-                <div className="d-flex flex-row justify-content-center  w-100 mw-1200">
+                <div className="d-flex flex-row justify-content-center   mx-auto w-100 mw-1200">
                   <div className="display d-flex flex-row  flex-wrap w-100" >
                     {
                       this.state.items.map(function (item) {
                         return (
-                          <div className="w-100 w-m-20" key={item._id} >
+                          <div className="w-100 w-m-20 w-100 w-m-20 d-flex flex-column align-items-center" key={item._id} >
                             <Movie item={item} />
                           </div>
                         );
