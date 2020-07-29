@@ -8,6 +8,7 @@ let locationSchema = new mongoose.Schema({
         default: ""
     },
     updated: { type: Date, default: Date.now },
+    created: { type: Date, default: Date.now },
     url: {
         type: String,
         default: ""
@@ -15,5 +16,21 @@ let locationSchema = new mongoose.Schema({
 }, { autoCreate: true })
 
 locationSchema.plugin(mongoosePaginate);
+
+
+const updateDate = (next) => {
+    try {
+        this.updated = Date.now;
+        next();
+    } catch (error) {
+        return next(error);
+    }
+}
+
+locationSchema.pre("update", updateDate);
+locationSchema.pre("updateOne", updateDate);
+locationSchema.pre("findOneAndUpdate", updateDate);
+locationSchema.pre("save", updateDate);
+locationSchema.pre("findOneAndUpdate", updateDate);
 
 module.exports = mongoose.model('Location', locationSchema)

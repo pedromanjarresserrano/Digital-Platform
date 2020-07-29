@@ -37,4 +37,19 @@ actorSchema.pre("save", function (next) {
     next();
 });
 
+const updateDate = (next) => {
+    try {
+        this.updated = Date.now;
+        next();
+    } catch (error) {
+        return next(error);
+    }
+}
+
+actorSchema.pre("update", updateDate);
+actorSchema.pre("updateOne", updateDate);
+actorSchema.pre("findOneAndUpdate", updateDate);
+actorSchema.pre("save", updateDate);
+actorSchema.pre("findOneAndUpdate", updateDate);
+
 module.exports = mongoose.model('Actor', actorSchema)

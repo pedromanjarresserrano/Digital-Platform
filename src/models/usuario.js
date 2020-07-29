@@ -47,6 +47,21 @@ usuarioSchema.pre("save", function (next) {
     next();
 });
 
+const updateDate = (next) => {
+    try {
+        this.updated = Date.now;
+        next();
+    } catch (error) {
+        return next(error);
+    }
+}
+
+usuarioSchema.pre("update", updateDate);
+usuarioSchema.pre("updateOne", updateDate);
+usuarioSchema.pre("findOneAndUpdate", updateDate);
+usuarioSchema.pre("save", updateDate);
+usuarioSchema.pre("findOneAndUpdate", updateDate);
+
 
 usuarioSchema.methods.comparePassword = async function (plaintext) {
     return await Bcrypt.compareSync(plaintext, this.password);

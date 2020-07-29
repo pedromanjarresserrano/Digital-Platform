@@ -7,6 +7,7 @@ let categoriaSchema = new mongoose.Schema({
         required: true,
     },
     updated: { type: Date, default: Date.now },
+    created: { type: Date, default: Date.now },
     image: String,
     imagenes: [String]
 }, { autoCreate: true })
@@ -14,5 +15,21 @@ let categoriaSchema = new mongoose.Schema({
 categoriaSchema.plugin(require('mongoose-autopopulate'));
 
 categoriaSchema.plugin(mongoosePaginate);
+
+
+const updateDate = (next) => {
+    try {
+        this.updated = Date.now;
+        next();
+    } catch (error) {
+        return next(error);
+    }
+}
+
+categoriaSchema.pre("update", updateDate);
+categoriaSchema.pre("updateOne", updateDate);
+categoriaSchema.pre("findOneAndUpdate", updateDate);
+categoriaSchema.pre("save", updateDate);
+categoriaSchema.pre("findOneAndUpdate", updateDate);
 
 module.exports = mongoose.model('Categoria', categoriaSchema)
