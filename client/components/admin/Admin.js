@@ -192,6 +192,57 @@ export const Admin = ({ match }) => {
                                 baseUrl={'/api/categorias'}
                                 formTitle={'Categorie data'}
                             />)} />
+
+
+                        <Route key="crud-studios" exact path={`${match.path}/studios`} render={(props) => (<CrudView {...props}
+                            headers={[{
+                                name: "name",
+                                label: "Nombre"
+                            }]}
+                            baseRoute={`${match.path}/studios/studio`}
+                            baseUrl={'/api/studios'}
+
+                        />)} />
+                        <Route key="form-studios" exact path={`${match.path}/studios/studio/:action/:id`} render={(props) => (
+                            <Form {...props}
+                                formField={{
+                                    name: {
+                                        elementType: 'input',
+                                        elementConfig: {
+                                            type: 'text',
+                                            placeholder: 'Studio Name'
+                                        },
+                                        optConfig: {},
+                                        value: '',
+                                        validation: {
+                                            required: true
+                                        },
+                                        valid: false,
+                                        touched: false,
+                                        label: 'Name',
+                                        inline: true
+                                    },
+                                    image: {
+                                        elementType: 'file-image',
+                                        elementConfig: {
+                                            alt: 'Imagen studio'
+                                        },
+                                        optConfig: {},
+                                        value: '',
+                                        validation: {
+                                            required: false
+                                        },
+                                        valid: false,
+                                        touched: false,
+                                        label: '',
+                                        inline: false
+                                    }
+                                }
+                                }
+                                baseUrl={'/api/studios'}
+                                formTitle={'Studio data'}
+                            />)} />
+
                         <Route key="crud-actores"
                             exact path={`${match.path}/actores`} render={(props) => (<CrudView {...props}
                                 headers={[{

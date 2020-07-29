@@ -24,7 +24,16 @@ class BreadcrumbAdmin extends React.Component {
         await this.setState({
             routes: this.props.location.pathname.trim().split("/").filter(e => e !== "")
         });
-        $("p:contains('" + this.capitalizeFirstLetter(this.state.routes.slice(-1).pop()) + "')").parent().addClass("active")
+        //p:contains('" + this.capitalizeFirstLetter(this.state.routes.slice(-1).pop()) + "')
+        let array = $(".nav-link")
+
+        for (let i = 0; i < array.length; i++) {
+            if (array[i].html() == this.capitalizeFirstLetter(this.state.routes.slice(-1).pop)) {
+                array[i].parent().addClass("active")
+            }
+
+        }
+
 
     }
 

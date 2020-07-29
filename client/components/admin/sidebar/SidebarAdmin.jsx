@@ -120,6 +120,14 @@ class SidebarAdmin extends React.Component {
                                 </Link>
                             </li>
                             <li className="nav-item">
+                                <Link className="nav-link " to="/admin/studios" onClick={this.onClickHandler}>
+                                    <i class="nav-icon fas fa-dungeon"></i>
+                                    <p>
+                                        Studios
+                                    </p>
+                                </Link>
+                            </li>
+                            <li className="nav-item">
                                 <Link className="nav-link " to="/admin/locations" onClick={this.onClickHandler}>
                                     <i className="nav-icon fas fa-folder-open"></i>
                                     <p>
