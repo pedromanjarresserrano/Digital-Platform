@@ -3,6 +3,7 @@ const { capitalizeFirstLetter } = require("../utils/text");
 const Actors = models.actormodel;
 const Movies = models.moviemodel;
 const Categories = models.categoriamodel;
+const Studios = models.studioSchema;
 
 async function specialName(req, res) {
     let list = await Movies.find({});
@@ -94,6 +95,22 @@ async function specialNameReparto(req, res) {
             }
         })
     })
+
+    listM = await Movies.find({});
+
+    let listS = await Studios.find({});
+
+    listS.forEach(async (s) => {
+        listM.forEach(async (m) => {
+            const name = s.name.toLowerCase();
+            if ((m.visualname && m.visualname.toLowerCase().includes(name)) || m.name.toLowerCase().includes(name) || m.name.toLowerCase().includes(name.replace(" ", ""))) {
+                m.studio = s;
+                await Movies.findByIdAndUpdate({ _id: m._id }, { $set: m });
+
+            }
+        })
+    })
+
     res.send({ msg: "ok" })
 }
 

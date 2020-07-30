@@ -95,6 +95,7 @@ movieSchema.pre("save", function (next) {
 const updateDate = (next) => {
     try {
         this.updated = Date.now;
+        console.log("update field")
         next();
     } catch (error) {
         return next(error);

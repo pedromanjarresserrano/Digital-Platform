@@ -408,6 +408,12 @@ export const Admin = ({ match }) => {
                                 }, {
                                     name: "portada",
                                     label: "Imagen portada"
+                                },{
+                                    name: "created",
+                                    label: "Creado"
+                                },{
+                                    name: "updated",
+                                    label: "Actualizado"
                                 }]}
                                 baseRoute={`${match.path}/movies/movie`}
                                 baseUrl={'/api/movies'}
