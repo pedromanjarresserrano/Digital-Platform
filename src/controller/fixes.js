@@ -4,10 +4,13 @@ const Actors = models.actormodel;
 const Movies = models.moviemodel;
 const Categories = models.categoriamodel;
 const Studios = models.studioSchema;
+const socketServer = require("../services/socket").socketServer
 
 async function specialName(req, res) {
     let list = await Movies.find({});
-    list.forEach(async (e) => {
+    let process = 0;
+    const size = list.length;
+    list.forEach(async (e, i) => {
         if (e.name) {
             if (!e.visualname) {
                 let count = (e.name.match(/\./g) || []).length;
@@ -60,23 +63,66 @@ async function specialName(req, res) {
                 }
             }
         }
+        try {
+            process = Math.floor((i + 1) * 100 / (size), 0)
+            if (socketServer.socket)
+                socketServer.socket.emit("RMF", { process, name: e.name })
+        } catch (error) {
+            console.log(error);
+        }
     })
     res.send({ msg: "ok" })
 }
 
 async function specialNameReparto(req, res) {
-
     let listA = await Actors.find({});
 
     let listM = await Movies.find({});
+    /* let find = { "$or": [] }
+ 
+     listA.forEach(e => {
+         find["$or"].push({
+             "$name": {$regex : '.*' + e.name.toLowerCase() + '.*'}
+         })
+     })
+     console.log(find);
+     let listMTemp = await Movies.aggregate([
+         {
+             $project:
+             {
+                 name: { $toLower: "$name" },
+             }
+         }
+         ,
+         {
+             "$match": find
+         }
+     ]
+     );
+ 
+     res.send(listMTemp);
+     return;*/
+    var process = 0;
+
+
     listA.forEach(async (a) => {
-        listM.forEach(async (m) => {
+        listM.forEach(async (m, i) => {
+
             const name = a.name.toLowerCase();
             if ((m.visualname && m.visualname.toLowerCase().includes(name)) || m.name.toLowerCase().includes(name)) {
                 if (!findIf(m.reparto, a._id)) {
                     m.reparto.push(a);
                     await Movies.findByIdAndUpdate({ _id: m._id }, { $set: m });
                 }
+            }
+
+
+            try {
+                process = Math.floor((i + 1) * 100 / (listM.length * 3), 0)
+                if (socketServer.socket)
+                    socketServer.socket.emit("RMF", { process, name: m.name })
+            } catch (error) {
+                console.log(error);
             }
         })
     })

@@ -1,12 +1,12 @@
-let express = require('express');
-let router = express.Router();
-let path = require('path');
-let fs = require('fs');
+const express = require('express');
+const router = express.Router();
+const path = require('path');
+const fs = require('fs');
 const models = require('../models');
-var ffmpeg = require('fluent-ffmpeg');
+const ffmpeg = require('fluent-ffmpeg');
 const service = require('../services/movie');
 var process = 0;
-var socketServer = require("../services/socket").socketServer
+const socketServer = require("../services/socket").socketServer
 
 router.post('/', async function (req, res) {
     let paths = req.body.path;
@@ -59,7 +59,6 @@ async function createMovie(files, paths, res) {
     res.send({ length: files.length });
     for (let i = 0; i < files.length; i++) {
         try {
-            process = Math.floor((i + 1) * 100 / files.length, 0)
 
             let file = files[i];
             let n = file.split("/");

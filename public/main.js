@@ -3724,7 +3724,7 @@ eval("// Imports\nvar ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../.
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("// Imports\nvar ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../node_modules/css-loader/dist/runtime/api.js */ \"./node_modules/css-loader/dist/runtime/api.js\");\nexports = ___CSS_LOADER_API_IMPORT___(false);\n// Module\nexports.push([module.i, \".crud-table {\\n  min-height: 500px;\\n  background-color: rgb(240, 240, 240);\\n  width: 100%;\\n}\\n\\n.crud-table tr {\\n  width: 100%;\\n  font-size: 12px;\\n}\\n\\n.crud-table td, .crud-table th {\\n  padding: 0 .625rem 0 !important;\\n  font-size: 12px;\\n  max-width: 150px;\\n}\\n\\n.crud-table thead tr {}\", \"\"]);\n// Exports\nmodule.exports = exports;\n\n\n//# sourceURL=webpack:///./client/components/admin/ui/table/Table.css?./node_modules/css-loader/dist/cjs.js");
+eval("// Imports\nvar ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../node_modules/css-loader/dist/runtime/api.js */ \"./node_modules/css-loader/dist/runtime/api.js\");\nexports = ___CSS_LOADER_API_IMPORT___(false);\n// Module\nexports.push([module.i, \".crud-table {\\n /* min-height: 500px; */\\n  background-color: rgb(240, 240, 240);\\n  width: 100%;\\n}\\n\\n.crud-table tr {\\n  width: 100%;\\n  font-size: 12px;\\n}\\n\\n.crud-table td, .crud-table th {\\n  padding: 0 .625rem 0 !important;\\n  font-size: 12px;\\n  max-width: 150px;\\n}\\n\\n.crud-table thead tr {}\", \"\"]);\n// Exports\nmodule.exports = exports;\n\n\n//# sourceURL=webpack:///./client/components/admin/ui/table/Table.css?./node_modules/css-loader/dist/cjs.js");
 
 /***/ }),
 
