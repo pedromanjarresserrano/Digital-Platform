@@ -30,7 +30,7 @@ class Table extends React.Component {
                             {i + 1}
                         </td>
                         {
-                            this.props.headers.map(h => <td key={h.name + "-" + data._id} className="text-truncate">{data[h.name]}</td>)
+                            this.props.headers.map(h => <td key={h.name + "-" + data._id} className="text-truncate">{h.converter ? h.converter(data[h.name]) : data[h.name]}</td>)
                         }
                         <td key={Math.random() + "-id-td-commands"} className="d-flex flex-row">
                             <button key={Math.random() + "-id-button-commands"} type="button" title="Edit" className="btn btn-sm btn-primary" onClick={() => this.props.editClick(data)}><i className="fas fa-edit"></i></button>

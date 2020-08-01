@@ -1,6 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom'
 import './BreadcrumbAdmin.css'
+import { capitalizeFirstLetter } from '../../../../src/utils/text';
 class BreadcrumbAdmin extends React.Component {
     constructor(props) {
         super(props)
@@ -26,7 +27,7 @@ class BreadcrumbAdmin extends React.Component {
         });
         let array = $(".nav-link")
         for (let i = 0; i < array.length; i++) {
-            if (array[i].innerHTML == this.capitalizeFirstLetter(this.state.routes.slice(-1).pop)) {
+            if (array[i].innerHTML == capitalizeFirstLetter(this.state.routes.slice(-1).pop)) {
                 $(array[i]).parent().addClass("active")
             }
 
@@ -35,9 +36,7 @@ class BreadcrumbAdmin extends React.Component {
 
     }
 
-    capitalizeFirstLetter(string) {
-        return string.charAt(0).toUpperCase() + string.slice(1);
-    }
+
 
 
     render() {

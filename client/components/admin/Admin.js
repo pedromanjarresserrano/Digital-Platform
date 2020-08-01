@@ -12,6 +12,7 @@ import NotFound from '../public/notfound/NotFound';
 import ToastContainer from './ui/toastcontainer/ToastContainer';
 
 import FooterAdmin from './footer/FooterAdmin';
+import { kbToSize } from './utils/Utils';
 
 export const Admin = ({ match }) => {
     return (
@@ -401,7 +402,10 @@ export const Admin = ({ match }) => {
                                     label: "Views"
                                 }, {
                                     name: "size",
-                                    label: "Size file"
+                                    label: "Size file",
+                                    converter: function(value){
+                                        return kbToSize(value)
+                                    }
                                 }, {
                                     name: "year",
                                     label: "Year"
