@@ -16,7 +16,7 @@ class Catalog extends React.Component {
             itemCount: 0,
             pageSize: 0,
             categorias: [],
-            activePage: 0,
+            activePage: 1,
             search: '',
             timerange: [0, 5000],
             loading: true

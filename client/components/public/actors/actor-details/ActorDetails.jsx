@@ -15,7 +15,7 @@ class ActorDetails extends React.Component {
       items: [],
       itemCount: 0,
       pageSize: 0,
-      activePage: 0,
+      activePage: 1,
       loading: true
 
     }

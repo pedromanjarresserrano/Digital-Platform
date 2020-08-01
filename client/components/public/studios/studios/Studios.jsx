@@ -1,9 +1,9 @@
 import React from 'react';
 import axios from 'axios';
-import Paginator from '../../admin/ui/paginator/Paginator';
-import Categorie from '../categorie/Categorie';
+import Studio from '../Studio/Studio';
+import Pagination from 'react-js-pagination';
 
-class Categories extends React.Component {
+class Studios extends React.Component {
 
     constructor(props) {
         super(props)
@@ -24,17 +24,31 @@ class Categories extends React.Component {
         this.setState({ items: updatedList });
     }
 
+    vermas = (item) => {
+        this.props.history.push({
+            pathname: '/studios/studio',
+            state: {
+                item: item
+            }
+        })
+    }
+
     componentWillMount() {
         this.loadPage(1);
     }
 
-    onPageChanged = data => {
-        const { currentPage } = data;
-        this.loadPage(currentPage);
+    onPageChanged = pageNumber => {
+        pageNumber = parseInt(pageNumber)
+        this.setState({ activePage: pageNumber, loading: true });
+        this.loadPage(pageNumber);
+        this.props.history.push({
+            pathname: generatePath(this.props.match.path, { name: this.state.item.name, page: pageNumber })
+        });
     }
 
+
     loadPage(page) {
-        axios.get('/api/categorias/all/' + page)
+        axios.get('/api/studios/all/' + page)
             .then(response => {
                 console.log(response);
                 this.setState({
@@ -59,14 +73,19 @@ class Categories extends React.Component {
                             this.state.items.map(function (item) {
                                 return (
                                     <div className="w-100 w-m-20" key={item._id} >
-                                        <Categorie item={item} />
+                                        <Studio item={item} />
                                     </div>
                                 );
                             }, this)
                         }
                         </div>
                     </div>
-                    <Paginator totalRecords={itemCount} pageLimit={pageSize} pageNeighbours={3} onPageChanged={this.onPageChanged} />
+                    <Pagination
+                        totalItemsCount={itemCount}
+                        itemsCountPerPage={pageSize}
+                        activePage={this.state.activePage}
+                        pageRangeDisplayed={9}
+                        onChange={this.onPageChanged} />
 
                 </div>
             </div>
@@ -74,4 +93,4 @@ class Categories extends React.Component {
     }
 }
 
-export default Categories;
+export default Studios;

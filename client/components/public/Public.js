@@ -14,6 +14,8 @@ import CategorieDetails from './categorie-details/CategorieDetails';
 import ActorDetails from './actors/actor-details/ActorDetails';
 import Actors from './actors/actors/Actors';
 import NotFound from './notfound/NotFound.jsx';
+import Studios from './studios/studios/Studios.jsx';
+import StudioDetails from './studios/categorie-details/StudioDetails.jsx';
 
 export const Public = ({ match }) => (
     <React.Fragment>
@@ -27,10 +29,17 @@ export const Public = ({ match }) => (
             <Route key="catalogmovie" exact path="/catalog/movie" render={(props) => (<Redirect to="/catalog/1"  {...props} />)} />
             <Route key="movie" exact path="/catalog/movie/:id" component={MovieDetails} />
             <Route key="list-categories" exact path="/categories" component={Categories} />
-            <Route key="list-categories-id" exact path="/categories/:id" component={Categories} />
+            <Route key="list-categories-id" exact path="/categories/:page" component={Categories} />
             <Route key="categoriecategorie" exact path="/categories/categorie" render={(props) => (<Redirect to="/categories/1"  {...props} />)} />
             <Route key="categoriesn" exact path="/categories/categorie/:name" render={(props) => (<Redirect to={"/categories/categorie/" + props.match.params.name + "/1"}  {...props} />)} />
             <Route key="categoriesnp" exact path="/categories/categorie/:name/:page" component={CategorieDetails} />
+
+            <Route key="list-studios" exact path="/studios" component={Studios} />
+            <Route key="list-studios-id" exact path="/studios/:page" component={Studios} />
+            <Route key="studiosstudio" exact path="/studios/studio" render={(props) => (<Redirect to="/studios/1"  {...props} />)} />
+            <Route key="studiosn" exact path="/studios/studio/:name" render={(props) => (<Redirect to={"/studios/studio/" + props.match.params.name + "/1"}  {...props} />)} />
+            <Route key="studiosnp" exact path="/studios/studio/:name/:page" component={StudioDetails} />
+
             <Route key="list-actors" exact path="/actors/:page" component={Actors} />
             <Route key="actors" exact path="/actors" render={(props) => (<Redirect to="/actors/1"  {...props} />)} />
             <Route key="actor" exact path="/actors/actor" render={(props) => (<Redirect to="/actors/1"  {...props} />)} />
