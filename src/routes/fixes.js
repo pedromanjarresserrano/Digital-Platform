@@ -1,12 +1,12 @@
 const express = require('express');
 const {
     specialName,
-    specialNameReparto
+    fullfixes
 } = require('../controller/fixes');
 let router = express.Router();
 
 router.get("/specialnames", specialName);
-router.get("/specialnamesfix", specialNameReparto);
+router.get("/fullfixes", fullfixes);
 
 
 

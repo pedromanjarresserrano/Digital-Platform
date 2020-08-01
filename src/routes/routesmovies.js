@@ -4,9 +4,6 @@ const ObjectID = require('mongodb').ObjectID;
 const Collection = require('../models').moviemodel;
 const config = require("../config/index")
 const options = config.options;
-const path = require('path')
-const util = require('util')
-const fs = require('fs')
 const attrname = "portada";
 const { saveFile } = require('../services/files');
 

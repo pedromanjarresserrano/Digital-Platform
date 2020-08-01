@@ -387,6 +387,9 @@ export const Admin = ({ match }) => {
                                 headers={[{
                                     name: "name",
                                     label: "Nombre"
+                                },{
+                                    name: "visualname",
+                                    label: "Visual Name"
                                 }, {
                                     name: "duration",
                                     label: "Duration"

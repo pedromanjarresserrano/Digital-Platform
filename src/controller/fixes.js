@@ -74,103 +74,221 @@ async function specialName(req, res) {
     res.send({ msg: "ok" })
 }
 
-async function specialNameReparto(req, res) {
-    let listA = await Actors.find({});
+async function fullfixes(req, res) {
 
-    let listM = await Movies.find({});
-    /* let find = { "$or": [] }
- 
-     listA.forEach(e => {
-         find["$or"].push({
-             "$name": {$regex : '.*' + e.name.toLowerCase() + '.*'}
-         })
-     })
-     console.log(find);
-     let listMTemp = await Movies.aggregate([
-         {
-             $project:
-             {
-                 name: { $toLower: "$name" },
-             }
-         }
-         ,
-         {
-             "$match": find
-         }
-     ]
-     );
- 
-     res.send(listMTemp);
-     return;*/
-    var process = 0;
-
-
-    listA.forEach(async (a) => {
-        listM.forEach(async (m, i) => {
-
-            const name = a.name.toLowerCase();
-            if ((m.visualname && m.visualname.toLowerCase().includes(name)) || m.name.toLowerCase().includes(name)) {
-                if (!findIf(m.reparto, a._id)) {
-                    m.reparto.push(a);
-                    await Movies.findByIdAndUpdate({ _id: m._id }, { $set: m });
+    try {
+        let listA = await Actors.find({});
+        let find = {
+            "$and": [
+                {
+                    "$or": [{}]
+                }, {
+                    "$and": [{}]
                 }
+            ]
+        }
+        let process = 0;
+        for (let i = 0; i < listA.length; i++) {
+            const a = listA[i];
+
+            find["$and"][0]["$or"][0] = {
+                "visualname": { $regex: '.*' + a.name.toLowerCase() + '.*', $options: 'i' }
             }
 
+            find["$and"][1]["$and"][0] = {
+                "reparto": {
+                    "$not": {
+                        "$all": [a._id]
+                    }
+                }
+            }
+            //  console.log(JSON.stringify(find));
+
+            let listMTemp = await Movies.aggregate([
+                {
+                    $project: {
+                        visualname: 1,
+                        reparto: 1
+
+                    }
+                },
+                {
+                    "$match": find
+                }
+            ]
+            );
+
+            //   console.log(JSON.stringify(listMTemp));
+
+            let update = listMTemp.map((movie) => {
+                movie.reparto.push(a)
+                return ({
+                    updateOne: {
+                        filter: { _id: movie._id },
+                        update: { $set: movie },
+                        upsert: true
+                    }
+                })
+            })
+            //       console.log(JSON.stringify(update));
+            await Movies.bulkWrite(update)
 
             try {
-                process = Math.floor((i + 1) * 100 / (listM.length * 3), 0)
+                process = Math.floor((i + 1) * 100 / (listA.length), 0)
                 if (socketServer.socket)
-                    socketServer.socket.emit("RMF", { process, name: m.name })
+                    socketServer.socket.emit("RMF", { process, name: "Fixing actors " })
             } catch (error) {
                 console.log(error);
             }
-        })
-    })
-    let listC = await Categories.find({});
 
-    listM = await Movies.find({});
+        }
 
-    listC.forEach(async (c) => {
-        listM.forEach(async (m) => {
-            const name = c.name.toLowerCase();
-            if ((m.visualname && m.visualname.toLowerCase().includes(name)) || m.name.toLowerCase().includes(name)) {
-                if (!findIf(m.categorias, c._id)) {
-                    m.categorias.push(c);
-                    await Movies.findByIdAndUpdate({ _id: m._id }, { $set: m });
+        process = 0;
+
+        find = {
+            "$and": [
+                {
+                    "$or": [{}]
+                }, {
+                    "$and": [{}]
+                }
+            ]
+        }
+
+        let listC = await Categories.find({});
+
+        for (let i = 0; i < listC.length; i++) {
+            const c = listC[i];
+
+            find["$and"][0]["$or"][0] = {
+                "visualname": { $regex: '.*' + c.name.toLowerCase() + '.*', $options: 'si' }
+            }
+
+            find["$and"][1]["$and"][0] = {
+                "categorias": {
+                    "$not": {
+                        "$all": [c._id]
+                    }
                 }
             }
-        })
-    })
+            //   console.log(JSON.stringify(find));
 
-    listM = await Movies.find({});
+            let listMTemp = await Movies.aggregate([
+                {
+                    $project: {
+                        visualname: 1,
+                        categorias: 1
 
-    let listS = await Studios.find({});
+                    }
+                },
+                {
+                    "$match": find
+                }
+            ]
+            );
 
-    listS.forEach(async (s) => {
-        listM.forEach(async (m) => {
-            const name = s.name.toLowerCase();
-            if ((m.visualname && m.visualname.toLowerCase().includes(name)) || m.name.toLowerCase().includes(name) || m.name.toLowerCase().includes(name.replace(" ", ""))) {
-                m.studio = s;
-                await Movies.findByIdAndUpdate({ _id: m._id }, { $set: m });
+            // console.log(JSON.stringify(listMTemp));
 
+            let update = listMTemp.map((movie) => {
+                movie.categorias.push(c)
+                return ({
+                    updateOne: {
+                        filter: { _id: movie._id },
+                        update: { $set: { categorias: movie.categorias } },
+                        upsert: true
+                    }
+                })
+            })
+            console.log("\n" + JSON.stringify(update));
+            //  await Movies.bulkWrite(update)
+
+            try {
+                process = Math.floor((i + 1) * 100 / (listC.length), 0)
+                if (socketServer.socket)
+                    socketServer.socket.emit("RMF", { process, name: "Fixing categories " })
+            } catch (error) {
+                console.log(error);
             }
-        })
-    })
+        }
 
-    res.send({ msg: "ok" })
-}
+        process = 0;
+
+        find = {
+            "$and": [
+                {
+                    "$or": [{}]
+                }, {
+                    "$and": [{}]
+                }
+            ]
+        }
+
+        let listS = await Studios.find({});
+
+        for (let i = 0; i < listS.length; i++) {
+            const s = listS[i];
+
+            find["$and"][0]["$or"][0] = {
+                "visualname": { $regex: '.*' + s.name.toLowerCase() + '.*', $options: 'si' }
+            }
+
+            find["$and"][1]["$and"][0] = {
+                "studio": {
+                    "$ne": s._id
+                }
+            }
+
+            //console.log(JSON.stringify(find));
+
+            let listMTemp = await Movies.aggregate([
+                {
+                    $project: {
+                        visualname: 1,
+                        studio: 1
+
+                    }
+                },
+                {
+                    "$match": find
+                }
+            ]
+            );
+
+            // console.log(JSON.stringify(listMTemp));
+
+            let update = listMTemp.map((movie) => {
+                return ({
+                    updateOne: {
+                        filter: { _id: movie._id },
+                        update: { $set: { studio: s } },
+                        upsert: true
+                    }
+                })
+            })
+            //console.log("\n" + JSON.stringify(update));
+            await Movies.bulkWrite(update)
+
+            try {
+                process = Math.floor((i + 1) * 100 / (listS.length), 0)
+                if (socketServer.socket)
+                    socketServer.socket.emit("RMF", { process, name: "Fixing studios " })
+            } catch (error) {
+                console.log(error);
+            }
+        }
 
 
-function findIf(array, id) {
-    for (let i = 0; i < array.length; i++) {
-        if (array[i]._id = id)
-            return true;
 
+        res.send({ msg: "ok" });
+
+    } catch (error) {
+        console.log(error);
+        res.send({ msg: "error", error })
     }
-    return false;
 }
+
 
 module.exports = {
     specialName,
-    specialNameReparto
+    fullfixes
 }
