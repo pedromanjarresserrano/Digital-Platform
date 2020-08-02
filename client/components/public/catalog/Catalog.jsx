@@ -47,6 +47,8 @@ class Catalog extends React.Component {
         await this.setState(statesVal);
         this.loadCate();
         this.loadPage(page);
+        document.title = "Movies Plaform - Page " + page
+
     }
 
     async componentDidMount() {
@@ -68,6 +70,8 @@ class Catalog extends React.Component {
             search: this.props.location.search ? this.props.location.search : "",
 
         });
+        document.title = "Movies Plaform - Page " + pageNumber
+
     }
 
     loadCate() {

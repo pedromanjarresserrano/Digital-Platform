@@ -33,6 +33,13 @@ studioSchema.pre("findOneAndUpdate", updateDate);
 studioSchema.pre("save", updateDate);
 studioSchema.pre("findOneAndUpdate", updateDate);
 
+studioSchema.pre("save", function (next) {
+    if (this.name)
+        this.name = this.name.trim();
+  
+        next();
+});
+
 studioSchema.plugin(mongoosePaginate);
 
 module.exports = mongoose.model('Studio', studioSchema)

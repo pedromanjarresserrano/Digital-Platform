@@ -35,7 +35,7 @@ async function specialName(req, res) {
                             splitted[i - 2] = capitalizeFirstLetter(splitted[i - 2]);
                             actor = await Actors.findOne({ name: splitted[i - 1] });
                             if (!actor) {
-                                actor = await Actors.findOne({ name: splitted[i - 2] + " " + splitted[i - 1] });
+                                actor = await Actors.findOne({ name: splitted[i - 2] + " " + splitted[i - 1] })
                             }
                             if (actor)
                                 e.reparto.push(actor)
@@ -59,6 +59,10 @@ async function specialName(req, res) {
                     e.visualname = capitalizeFirstLetter(splitted[0]) + " - " + capitalizeFirstLetter(splitted.slice(4).join(" "));
                     e.year = parseInt("20" + splitted[1])
                     e.studio = capitalizeFirstLetter(splitted[0])
+                    await Movies.findByIdAndUpdate({ _id: e._id }, { $set: e });
+                }
+                if (count == 0) {
+                    e.visualname = e.name.replace(".", "");
                     await Movies.findByIdAndUpdate({ _id: e._id }, { $set: e });
                 }
             }
@@ -199,8 +203,8 @@ async function fullfixes(req, res) {
                     }
                 })
             })
-            console.log("\n" + JSON.stringify(update));
-            //  await Movies.bulkWrite(update)
+            //console.log("\n" + JSON.stringify(update));
+             await Movies.bulkWrite(update)
 
             try {
                 process = Math.floor((i + 1) * 100 / (listC.length), 0)
