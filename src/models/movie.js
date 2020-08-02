@@ -2,6 +2,11 @@ let mongoose = require('mongoose')
 const mongoosePaginate = require('mongoose-paginate-v2');
 const fs = require('fs')
 
+const schemaOptions = {
+    autoCreate: true,
+    timestamps: { createdAt: 'created', updatedAt: 'updated' },
+}
+
 let movieSchema = new mongoose.Schema({
     visualname: {
         type: String,
@@ -78,7 +83,7 @@ let movieSchema = new mongoose.Schema({
     },
     files: [String]
 
-}, { autoCreate: true })
+}, schemaOptions)
 
 movieSchema.plugin(require('mongoose-autopopulate'));
 
@@ -92,21 +97,7 @@ movieSchema.pre("save", function (next) {
         this.description = this.description.trim();
     next();
 });
-const updateDate = (next) => {
-    try {
-        this.updated = Date.now;
-        console.log("update field")
-        next();
-    } catch (error) {
-        return next(error);
-    }
-}
 
-movieSchema.pre("update", updateDate);
-movieSchema.pre("updateOne", updateDate);
-movieSchema.pre("findOneAndUpdate", updateDate);
-movieSchema.pre("save", updateDate);
-movieSchema.pre("findOneAndUpdate", updateDate);
 movieSchema.pre("delete", (next) => {
     if (this.files) {
         this.files.forEach(e => {

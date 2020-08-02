@@ -1,6 +1,11 @@
 let mongoose = require('mongoose')
 const mongoosePaginate = require('mongoose-paginate-v2');
 
+const schemaOptions = {
+    autoCreate: true,
+    timestamps: { createdAt: 'created', updatedAt: 'updated' },
+}
+
 let studioSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -13,31 +18,15 @@ let studioSchema = new mongoose.Schema({
         type: String,
         default: ""
     }
-}, { autoCreate: true })
+}, schemaOptions)
 
 studioSchema.plugin(require('mongoose-autopopulate'));
-
-
-const updateDate = (next) => {
-    try {
-        this.updated = Date.now;
-        next();
-    } catch (error) {
-        return next(error);
-    }
-}
-
-studioSchema.pre("update", updateDate);
-studioSchema.pre("updateOne", updateDate);
-studioSchema.pre("findOneAndUpdate", updateDate);
-studioSchema.pre("save", updateDate);
-studioSchema.pre("findOneAndUpdate", updateDate);
 
 studioSchema.pre("save", function (next) {
     if (this.name)
         this.name = this.name.trim();
-  
-        next();
+
+    next();
 });
 
 studioSchema.plugin(mongoosePaginate);

@@ -1,6 +1,11 @@
 let mongoose = require('mongoose')
 const mongoosePaginate = require('mongoose-paginate-v2');
 
+const schemaOptions = {
+    autoCreate: true,
+    timestamps: { createdAt: 'created', updatedAt: 'updated' },
+}
+
 let actorSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -26,7 +31,7 @@ let actorSchema = new mongoose.Schema({
         type: String,
         default: ""
     }
-}, { autoCreate: true })
+}, schemaOptions)
 
 actorSchema.plugin(require('mongoose-autopopulate'));
 

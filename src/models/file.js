@@ -1,5 +1,10 @@
 let mongoose = require('mongoose')
 
+const schemaOptions = {
+    autoCreate: true,
+    timestamps: { createdAt: 'created', updatedAt: 'updated' },
+}
+
 let fileSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -10,6 +15,6 @@ let fileSchema = new mongoose.Schema({
         type: String,
         default: ""
     }
-}, { autoCreate: true })
+}, schemaOptions)
 
 module.exports = mongoose.model('File', fileSchema)

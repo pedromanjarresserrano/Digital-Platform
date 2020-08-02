@@ -3,6 +3,11 @@ let validator = require('validator')
 const mongoosePaginate = require('mongoose-paginate-v2');
 const Bcrypt = require("bcryptjs");
 
+const schemaOptions = {
+    autoCreate: true,
+    timestamps: { createdAt: 'created', updatedAt: 'updated' },
+}
+
 let usuarioSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -33,7 +38,7 @@ let usuarioSchema = new mongoose.Schema({
         type: String,
         default: ""
     }
-}, { autoCreate: true })
+}, schemaOptions)
 
 usuarioSchema.plugin(require('mongoose-autopopulate'));
 
@@ -46,22 +51,6 @@ usuarioSchema.pre("save", function (next) {
     this.password = Bcrypt.hashSync(this.password, 10);
     next();
 });
-
-const updateDate = (next) => {
-    try {
-        this.updated = Date.now;
-        next();
-    } catch (error) {
-        return next(error);
-    }
-}
-
-usuarioSchema.pre("update", updateDate);
-usuarioSchema.pre("updateOne", updateDate);
-usuarioSchema.pre("findOneAndUpdate", updateDate);
-usuarioSchema.pre("save", updateDate);
-usuarioSchema.pre("findOneAndUpdate", updateDate);
-
 
 usuarioSchema.methods.comparePassword = async function (plaintext) {
     return await Bcrypt.compareSync(plaintext, this.password);
