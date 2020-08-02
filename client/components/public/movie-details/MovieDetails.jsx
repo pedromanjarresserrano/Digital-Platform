@@ -10,6 +10,8 @@ import {
 import Axios from 'axios';
 import { Link } from 'react-router-dom'
 import Actor from '../actors/actor/Actor';
+import { segFormat } from '../../utils/Utils';
+
 
 class MovieDetails extends React.Component {
 
@@ -54,14 +56,7 @@ class MovieDetails extends React.Component {
     this.props.history.goBack();
   }
 
-  getTime = () => {
-    let totalSeconds = this.state.item.duration;
-    let hours = Math.floor(totalSeconds / 3600);
-    totalSeconds %= 3600;
-    let minutes = Math.floor(totalSeconds / 60);
-    let seconds = Math.floor(totalSeconds % 60);
-    return (hours > 0 ? hours + " h " : '') + (minutes > 0 ? minutes + " min " : '') + seconds + " seg "
-  }
+  
 
   render() {
     /*    <button onClick={this.regresar}>Regresar </button>*/
@@ -102,7 +97,7 @@ class MovieDetails extends React.Component {
                       <i className="fab fa-twitter-square fa-2x padding-left-1" aria-hidden="true"></i>
                     </div>
                     <div className="col-sm-12 ">
-                      <span className="classification">{this.getTime()} | {this.state.item.year ? this.state.item.year : '-'}</span>
+                      <span className="classification">{segFormat(this.state.item.duration)} | {this.state.item.year ? this.state.item.year : '-'}</span>
                     </div>
                   </div>
                 </div>

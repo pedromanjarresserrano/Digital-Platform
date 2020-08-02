@@ -12,7 +12,7 @@ import NotFound from '../public/notfound/NotFound';
 import ToastContainer from './ui/toastcontainer/ToastContainer';
 
 import FooterAdmin from './footer/FooterAdmin';
-import { kbToSize } from './utils/Utils';
+import { kbToSize, segFormat, dateFormat } from '../utils/Utils';
 
 export const Admin = ({ match }) => {
     return (
@@ -32,6 +32,18 @@ export const Admin = ({ match }) => {
                             }, {
                                 name: "url",
                                 label: "Location"
+                            }, {
+                                name: "created",
+                                label: "Creado",
+                                converter: function (value) {
+                                    return dateFormat(value)
+                                }
+                            }, {
+                                name: "updated",
+                                label: "Actualizado",
+                                converter: function (value) {
+                                    return dateFormat(value)
+                                }
                             }]}
                             baseRoute={`${match.path}/locations/location`}
                             baseUrl={'/api/location'}
@@ -100,6 +112,18 @@ export const Admin = ({ match }) => {
                             headers={[{
                                 name: "name",
                                 label: "Nombre"
+                            }, {
+                                name: "created",
+                                label: "Creado",
+                                converter: function (value) {
+                                    return dateFormat(value)
+                                }
+                            }, {
+                                name: "updated",
+                                label: "Actualizado",
+                                converter: function (value) {
+                                    return dateFormat(value)
+                                }
                             }]}
                             baseRoute={`${match.path}/genders/gender`}
                             baseUrl={'/api/generos'}
@@ -149,6 +173,18 @@ export const Admin = ({ match }) => {
                             headers={[{
                                 name: "name",
                                 label: "Nombre"
+                            }, {
+                                name: "created",
+                                label: "Creado",
+                                converter: function (value) {
+                                    return dateFormat(value)
+                                }
+                            }, {
+                                name: "updated",
+                                label: "Actualizado",
+                                converter: function (value) {
+                                    return dateFormat(value)
+                                }
                             }]}
                             baseRoute={`${match.path}/categories/categorie`}
                             baseUrl={'/api/categorias'}
@@ -199,6 +235,18 @@ export const Admin = ({ match }) => {
                             headers={[{
                                 name: "name",
                                 label: "Nombre"
+                            }, {
+                                name: "created",
+                                label: "Creado",
+                                converter: function (value) {
+                                    return dateFormat(value)
+                                }
+                            }, {
+                                name: "updated",
+                                label: "Actualizado",
+                                converter: function (value) {
+                                    return dateFormat(value)
+                                }
                             }]}
                             baseRoute={`${match.path}/studios/studio`}
                             baseUrl={'/api/studios'}
@@ -258,6 +306,18 @@ export const Admin = ({ match }) => {
                                 }, {
                                     name: "imageAvatar",
                                     label: "Imagen avatar"
+                                }, {
+                                    name: "created",
+                                    label: "Creado",
+                                    converter: function (value) {
+                                        return dateFormat(value)
+                                    }
+                                }, {
+                                    name: "updated",
+                                    label: "Actualizado",
+                                    converter: function (value) {
+                                        return dateFormat(value)
+                                    }
                                 }]}
                                 baseRoute={`${match.path}/actores/actor`}
                                 baseUrl={'/api/actores'}
@@ -388,12 +448,15 @@ export const Admin = ({ match }) => {
                                 headers={[{
                                     name: "name",
                                     label: "Nombre"
-                                },{
+                                }, {
                                     name: "visualname",
                                     label: "Visual Name"
                                 }, {
                                     name: "duration",
-                                    label: "Duration"
+                                    label: "Duration",
+                                    converter: function (value) {
+                                        return segFormat(value, false)
+                                    }
                                 }, {
                                     name: "like",
                                     label: "Like"
@@ -403,7 +466,7 @@ export const Admin = ({ match }) => {
                                 }, {
                                     name: "size",
                                     label: "Size file",
-                                    converter: function(value){
+                                    converter: function (value) {
                                         return kbToSize(value)
                                     }
                                 }, {
@@ -415,12 +478,18 @@ export const Admin = ({ match }) => {
                                 }, {
                                     name: "portada",
                                     label: "Imagen portada"
-                                },{
+                                }, {
                                     name: "created",
-                                    label: "Creado"
-                                },{
+                                    label: "Creado",
+                                    converter: function (value) {
+                                        return dateFormat(value)
+                                    }
+                                }, {
                                     name: "updated",
-                                    label: "Actualizado"
+                                    label: "Actualizado",
+                                    converter: function (value) {
+                                        return dateFormat(value)
+                                    }
                                 }]}
                                 baseRoute={`${match.path}/movies/movie`}
                                 baseUrl={'/api/movies'}
