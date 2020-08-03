@@ -8,24 +8,6 @@ const attrname = "portada";
 const { saveFile } = require('../services/files');
 
 
-const readMany = async (req, res) => {
-    let query = req.body || {};
-    query = Object.keys(query).length === 0 ? req.query : query;
-    options.page = parseInt(req.params.page);
-    if (query.duration)
-        query.duration = { $gte: parseInt(query.duration[0]) * 60, $lte: parseInt(query.duration[1]) * 60 }
-    if (options.page === -1) {
-        let result = await Collection.find(query).sort({ updated: -1 });
-        res.send(result);
-    } else {
-        options.sort = { updated: -1 };
-        let result = await Collection.paginate(query, options);
-        res.send(result);
-
-    }
-
-
-}
 
 const update = async (req, res) => {
     let changedEntry = req.body;
@@ -36,17 +18,6 @@ const update = async (req, res) => {
     res.sendStatus(200).send(changedEntry);
 };
 
-
-// ========
-// Read one
-// ========
-const readOne = async (req, res) => {
-    const { _id } = req.params;
-    let result = await Collection.findById(_id);
-    result.view = result.view ? result.view + 1 : 1;
-    await Collection.updateOne({ _id: _id }, { $set: { view: result.view } });
-    res.send(result);
-};
 
 const likedOne = async (req, res) => {
     const { _id } = req.params;
@@ -93,10 +64,7 @@ router.post('/', config.multer.single(attrname), async function (req, res) {
 });
 
 
-router.get('/:_id', readOne);
-router.get('/all/:page', readMany);
 router.post('/:_id/like', likedOne);
-router.post('/all/:page', readMany);
 router.put('/:_id', update);
 
 module.exports = router;

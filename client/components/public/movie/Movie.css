@@ -142,6 +142,7 @@
 .lazy-load-image-background>img {
 	width: 100%;
 }
+.card-m{}
 
 @media (max-width: 771px) {
 	.card-m>div {

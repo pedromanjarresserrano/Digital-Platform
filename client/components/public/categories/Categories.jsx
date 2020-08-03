@@ -1,7 +1,9 @@
 import React from 'react';
 import axios from 'axios';
-import Paginator from '../../admin/ui/paginator/Paginator';
 import Categorie from '../categorie/Categorie';
+import Pagination from 'react-js-pagination';
+import RotateCircleLoading from 'react-loadingg/lib/RotateCircleLoading';
+import { generatePath } from 'react-router-dom';
 
 class Categories extends React.Component {
 
@@ -11,27 +13,38 @@ class Categories extends React.Component {
             initialItems: [],
             items: [],
             itemCount: 0,
-            pageSize: 0
+            pageSize: 0,
+            activePage: 1,
+            loading: true
         }
+        this.load = this.load.bind(this);
 
     }
+    load = async () => {
 
-    filtrarLista = (event) => {
-        var updatedList = this.state.initialItems;
-        updatedList = updatedList.filter(function (item) {
-            return item.name.toLowerCase().search(event.target.value.toLowerCase()) !== -1;
+        let page = this.props.match.params.page;
+
+        page = page ? parseInt(page) : 1;
+
+        var statesVal = { activePage: page }
+
+        await this.setState(statesVal);
+        this.loadPage(page);
+    }
+
+    async componentDidMount() {
+        this.load();
+    }
+
+    onPageChanged = pageNumber => {
+        pageNumber = parseInt(pageNumber)
+        this.setState({ activePage: pageNumber, loading: true });
+        this.loadPage(pageNumber);
+        this.props.history.push({
+            pathname: generatePath(this.props.match.path, { page: pageNumber })
         });
-        this.setState({ items: updatedList });
     }
 
-    componentWillMount() {
-        this.loadPage(1);
-    }
-
-    onPageChanged = data => {
-        const { currentPage } = data;
-        this.loadPage(currentPage);
-    }
 
     loadPage(page) {
         axios.get('/api/categorias/all/' + page)
@@ -41,7 +54,8 @@ class Categories extends React.Component {
                     items: response.data.itemsList,
                     paginator: response.data.paginator,
                     itemCount: response.data.paginator.itemCount,
-                    pageSize: response.data.paginator.perPage
+                    pageSize: response.data.paginator.perPage,
+                    loading: false
                 });
             });
     }
@@ -54,19 +68,37 @@ class Categories extends React.Component {
         return (
             <div className=" p-1" >
                 <div className="col-12">
-                    <div className="filter-list">
-                        <div className="display d-flex flex-row  flex-warp px-5 row" >                            {
-                            this.state.items.map(function (item) {
-                                return (
-                                    <div className="w-100 w-m-20" key={item._id} >
-                                        <Categorie item={item} />
-                                    </div>
-                                );
-                            }, this)
+                    <Pagination
+                        activePage={this.state.activePage}
+                        totalItemsCount={itemCount}
+                        itemsCountPerPage={pageSize}
+                        pageRangeDisplayed={9}
+                        onChange={this.onPageChanged} />
+                    <div className="filter-list d-flex flex-row justify-content-center">
+                        {
+                            (this.state.loading) ?
+                                <div className="m-5 pb-5">
+                                    <RotateCircleLoading size="large" />
+                                </div>
+                                : <div className="display d-flex flex-row  flex-warp px-5 row w-100 mw-1200" >
+                                    {
+                                        this.state.items.map(function (item) {
+                                            return (
+                                                <div className="w-100 w-m-20" key={item._id} >
+                                                    <Categorie item={item} />
+                                                </div>
+                                            );
+                                        }, this)
+                                    }
+                                </div>
                         }
-                        </div>
                     </div>
-                    <Paginator totalRecords={itemCount} pageLimit={pageSize} pageNeighbours={3} onPageChanged={this.onPageChanged} />
+                    <Pagination
+                        activePage={this.state.activePage}
+                        totalItemsCount={itemCount}
+                        itemsCountPerPage={pageSize}
+                        pageRangeDisplayed={9}
+                        onChange={this.onPageChanged} />
 
                 </div>
             </div>

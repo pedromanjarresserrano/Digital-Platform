@@ -93,7 +93,7 @@ class Catalog extends React.Component {
         })
         let find = {
             name: { "$regex": ".*" + this.state.search + ".*", $options: 'i' },
-            duration: this.state.timerange
+      /*      duration: this.state.timerange*/
 
         }
         let cats = this.state.categorias.filter(e => e.isChecked);
@@ -200,7 +200,7 @@ class Catalog extends React.Component {
                                         <RotateCircleLoading size="large" />
                                     </div>
                                     :
-                                    <div className="d-flex justify-content-between flex-row flex-wrap p-1 mw-1200  mx-auto">                                    {
+                                    <div className="d-flex justify-content-between flex-row flex-wrap p-1 mw-1200  w-100 mx-auto">                                    {
                                         this.state.items.map((item, index) =>
                                             <Movie item={item} index={index} />
                                             , this)

@@ -28,7 +28,7 @@ export const Public = ({ match }) => (
             <Route key="list-movies-p" exact path="/catalog/:page" component={Catalog} />
             <Route key="catalogmovie" exact path="/catalog/movie" render={(props) => (<Redirect to="/catalog/1"  {...props} />)} />
             <Route key="movie" exact path="/catalog/movie/:id" component={MovieDetails} />
-            <Route key="list-categories" exact path="/categories" component={Categories} />
+            <Route key="list-categories" exact path="/categories" render={(props) => (<Redirect to="/categories/1"  {...props} />)} />
             <Route key="list-categories-id" exact path="/categories/:page" component={Categories} />
             <Route key="categoriecategorie" exact path="/categories/categorie" render={(props) => (<Redirect to="/categories/1"  {...props} />)} />
             <Route key="categoriesn" exact path="/categories/categorie/:name" render={(props) => (<Redirect to={"/categories/categorie/" + props.match.params.name + "/1"}  {...props} />)} />
