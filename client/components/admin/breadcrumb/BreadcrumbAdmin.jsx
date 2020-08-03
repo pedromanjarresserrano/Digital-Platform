@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom'
 import './BreadcrumbAdmin.css'
-import { capitalizeFirstLetter } from '../../../../src/utils/text';
+import { capitalizeFirstLetter } from '../../utils/Utils';
 class BreadcrumbAdmin extends React.Component {
     constructor(props) {
         super(props)

@@ -13,7 +13,7 @@ export const kbToSize = (kb, decimals = 2) => {
 }
 
 export const capitalizeFirstLetter = (string) => {
-    return string ? string.charAt(0).toUpperCase() + string.slice(1) : "";
+    return string && string.length > 0 ? string.charAt(0).toUpperCase() + string.slice(1) : "";
 }
 
 
