@@ -10,9 +10,11 @@ async function specialName(req, res) {
     let list = await Movies.find({});
     let process = 0;
     const size = list.length;
-    list.forEach(async (e, i) => {
+    for (let i = 0; i < size; i++) {
+        const e = list[i];
+
         if (e.name) {
-            if (!e.visualname) {
+            if (!e.visualname || req.query.remake) {
                 let count = (e.name.match(/\./g) || []).length;
                 if (count >= 4) {
                     let splitted = e.name.split(".");
@@ -62,7 +64,7 @@ async function specialName(req, res) {
                     await Movies.findByIdAndUpdate({ _id: e._id }, { $set: e });
                 }
                 if (count == 0) {
-                    e.visualname = e.name.replace(".", "");
+                    e.visualname = e.name.replace(".", " ");
                     await Movies.findByIdAndUpdate({ _id: e._id }, { $set: e });
                 }
             }
@@ -74,7 +76,7 @@ async function specialName(req, res) {
         } catch (error) {
             console.log(error);
         }
-    })
+    }
     res.send({ msg: "ok" })
 }
 
@@ -204,7 +206,7 @@ async function fullfixes(req, res) {
                 })
             })
             //console.log("\n" + JSON.stringify(update));
-             await Movies.bulkWrite(update)
+            await Movies.bulkWrite(update)
 
             try {
                 process = Math.floor((i + 1) * 100 / (listC.length), 0)

@@ -56,7 +56,7 @@ class MovieDetails extends React.Component {
     this.props.history.goBack();
   }
 
-  
+
 
   render() {
     /*    <button onClick={this.regresar}>Regresar </button>*/
@@ -144,7 +144,7 @@ class MovieDetails extends React.Component {
                       </div>
                       <div className="studio">
                         <span>Estudio: </span>
-                        <span>{this.state.item.studio ? this.state.item.studio.name : ''}</span>
+                        <span>{this.state.item.studio ? <Link className="text-white" to={"/studios/studio/" + this.state.item.studio.name}>{this.state.item.studio.name}</Link> : ''}</span>
                       </div>
                     </div>
                     <div className="category">
