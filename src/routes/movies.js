@@ -55,9 +55,10 @@ const getMovieInfo = (inputPath) => {
 };
 
 async function createMovie(files, paths, res) {
-    console.log("Length -----------" + files.length);
-    res.send({ length: files.length });
-    for (let i = 0; i < files.length; i++) {
+    const size = files.length;
+    console.log("Length -----------" + size);
+    res.send({ length: size });
+    for (let i = 0; i < size; i++) {
         try {
 
             let file = files[i];
@@ -65,6 +66,7 @@ async function createMovie(files, paths, res) {
             let nameFile = n[n.length - 1].split(".mp4")[0];
             let movie = await models.moviemodel.findOne({ name: nameFile });
             try {
+                process = Math.floor((i + 1) * 100 / (size), 0)
                 if (socketServer.socket)
                     socketServer.socket.emit("RMF", { process, name: nameFile })
             } catch (error) {
