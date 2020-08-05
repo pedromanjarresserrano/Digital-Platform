@@ -5,7 +5,6 @@ const models = require('../models');
 module.exports = (app) => {
     app.use('/api/movie', require('./movie'));
     app.use('/api/movies', require('./routesmovies'));
-    app.use('/api/movies', require('./routesfile')(models.moviemodel, 'portada', 'name'));
     app.use('/api/movies', require('./crud')(models.moviemodel, { created: -1 }));
     app.use('/api/studios', require('./routesfile')(models.studioSchema, 'image', 'name'));
     app.use('/api/studios', require('./crud')(models.studioSchema, { name: "asc" }));

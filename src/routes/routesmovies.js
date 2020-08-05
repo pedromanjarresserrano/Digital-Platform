@@ -3,7 +3,6 @@ const router = express.Router();
 const ObjectID = require('mongodb').ObjectID;
 const Collection = require('../models').moviemodel;
 const config = require("../config/index")
-const options = config.options;
 const attrname = "portada";
 const { saveFile } = require('../services/files');
 
@@ -52,8 +51,12 @@ router.post('/', config.multer.single(attrname), async function (req, res) {
         } else {
             changedEntry = await Collection.create(changedEntry);
         }
+        changedEntry[attrname] = '/uploads/' + changedEntry._id;
 
-        saveFile(req.file, changedEntry, Collection);
+        await saveFile(req.file, changedEntry, Collection);
+        console.log(doc);
+
+
         res.status(200).send({ message: "Ok", doc });
 
     } catch (error) {

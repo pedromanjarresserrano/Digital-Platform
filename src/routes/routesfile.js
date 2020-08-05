@@ -20,8 +20,8 @@ module.exports = (Collection, attrname, uniqueattrname) => {
 
             doc[attrname] = '/uploads/' + doc._id;
             saveFile(req.file, doc, Collection);
-            res.status(200).send({ message: "Ok", doc });
 
+            res.status(200).send({ message: "Ok", doc });
         } catch (error) {
             console.log(error)
             res.status(500).send({ message: 'Error making post ' + error });
