@@ -1,12 +1,14 @@
 const express = require('express');
 const config = require('../config/index');
 const { saveFile } = require('../services/files');
+const { loggerRequest } = require('../controller/logger');
+const { tokenValidator } = require('../controller/auth');
 
 module.exports = (Collection, attrname, uniqueattrname) => {
 
     const router = express.Router();
 
-    router.post('/', config.multer.single(attrname), async function (req, res) {
+    router.post('/', loggerRequest, tokenValidator, config.multer.single(attrname), async function (req, res) {
         try {
             const find = {};
             find[uniqueattrname] = req.body[uniqueattrname];
