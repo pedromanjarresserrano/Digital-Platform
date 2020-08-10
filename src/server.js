@@ -1,12 +1,15 @@
 
-var express = require("express");
-var session = require('express-session');
-
-var app = new express();
+const express = require("express");
+const session = require('express-session');
+const app = new express();
 const db = require('./utils/db');
-var port = process.env.port || 3000;
+const port = process.env.port || 3000;
 const path = require('path');
 const bodyParser = require('body-parser');
+var cors = require('cors')
+
+
+app.use(cors())
 
 app.use(session({
 	secret: 'secret',

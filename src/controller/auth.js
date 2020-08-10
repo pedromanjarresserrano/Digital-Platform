@@ -30,6 +30,16 @@ const authSign = async (req, res) => {
     }
 }
 
+const validSign = async (req, res) => {
+    const user = req.user;
+    user.password = "true";
+    const token = jwt.sign({ id: user._id }, process.env.SECRETTOKEN, {
+        expiresIn: 60 * 60 * 24
+    })
+    user.token = token;
+    res.send({ user, message: "New token generated" });
+}
+
 const tokenValidator = async (req, res, next) => {
 
     const token = req.headers["x-access-token"]
@@ -40,7 +50,7 @@ const tokenValidator = async (req, res, next) => {
         const user = await Usuario.findOne({ _id: req.decoded })
         if (!user)
             return res.status(401).json({ auth: false, msg: "token-invalid" })
-            
+        req.user = user;
         next()
     } catch (error) {
         return res.status(401).json({ auth: false, msg: "token-invalid" })
@@ -50,5 +60,6 @@ const tokenValidator = async (req, res, next) => {
 
 module.exports = {
     authSign,
-    tokenValidator
+    tokenValidator,
+    validSign
 };
