@@ -1,0 +1,21 @@
+.carousel-item>img {
+    width: 100%;
+    border-top-left-radius: .25rem !important;
+    border-top-right-radius: .25rem !important;
+}
+
+.carousel-indicators {
+    margin-bottom: 0 !important;
+    bottom: -16px;
+}
+
+.container-slider {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.container-slider> div{
+    margin:0px 2.5% 0px 2.5%;
+}

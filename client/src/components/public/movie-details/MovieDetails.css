@@ -1,0 +1,50 @@
+.video-react-video {
+	max-height: 480px;
+}
+
+.video-react:fullscreen {
+	max-height: 100% !important;
+	padding-top: 0% !important;
+}
+
+.video-react.video-react-fullscreen, .video-react.video-react-fullscreen>video {
+	max-height: 100% !important;
+	padding-top: 0% !important;
+}
+
+@media (min-width:768px) {
+	.video-react .video-react-play-progress::before {
+		top: -0.333em !important;
+	}
+	.video-react .video-react-progress-holder {
+		height: 1.3em;
+	}
+	.video-react .video-react-progress-holder .video-react-play-progress, .video-react .video-react-progress-holder .video-react-load-progress {
+		height: 1.3em;
+	}
+	.video-react .video-react-control::before {
+		font-size: 3em;
+	}
+	.video-react .video-react-playback-rate .video-react-playback-rate-value, .video-react .video-react-time-control {
+		font-size: 1.8em;
+	}
+	.video-react .video-react-control-bar {
+		height: 5em;
+	}
+	.video-react .video-react-control {
+		width: 5em;
+	}
+	.video-react .video-react-slider-horizontal .video-react-volume-level, .video-react .video-react-volume-bar.video-react-slider-horizontal {
+		height: 2em;
+	}
+	.video-react .video-react-volume-bar {
+		margin: 1.35em 2.45em;
+	}
+	.video-react .video-react-volume-level::before {
+		font-size: 0;
+	}
+	.video-react {
+		max-height: 480px;
+		padding-top: 480px !important;
+	}
+}
