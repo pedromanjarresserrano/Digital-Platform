@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import Studio from '../Studio/Studio';
+import Studio from '../studio/Studio';
 import Pagination from 'react-js-pagination';
 
 class Studios extends React.Component {
