@@ -61,7 +61,7 @@ export const Admin = ({ match }) => {
                                                 console.log(error);
 
                                             });
-                                        alert("Loading")
+                                     //   alert("Loading")
 
                                     }
                                 }
