@@ -13,7 +13,7 @@ const ajaxSinToken = (endpoint, data, method = 'GET', headers = { 'Content-type'
     if (method == 'POST') {
         return Axios.post(url, data, { headers });
     }
-
+ 
 
     if (method == 'PUT') {
         return Axios.put(url, data, { headers });

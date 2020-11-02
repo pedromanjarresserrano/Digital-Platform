@@ -32,6 +32,7 @@ export default class LoginAdmin extends Component {
                 //this.setState({ loading: false });
                 if (res.status === 200) {
                     localStorage.setItem("userInfo", JSON.stringify(res.data.user));
+                    localStorage.setItem("utoken", res.data.user.token);
                     this.props.history.push('./');
                 } else {
                     this.setState({ message: res.data.message });

@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 const expressJwt = require('express-jwt');
 const { Usuario } = require('../models').usuariomodel;
 
-
+const secret = process.env.SECRETTOKEN || "secret";
 
 const authSign = async (req, res) => {
     try {
@@ -17,12 +17,19 @@ const authSign = async (req, res) => {
         if (!match) {
             return res.status(400).send({ message: "The data send not macth with any user" });
         }
-        user.password = "true";
-        const token = jwt.sign({ id: user._id }, process.env.SECRETTOKEN, {
+        const token = jwt.sign({ id: user._id }, secret, {
             expiresIn: 60 * 60 * 24
         })
-        user.token = token;
-        res.send({ user, message: "The username and password combination is correct!" });
+        res.send({
+            user: {
+                email: user.email,
+                name: user.name,
+                imageAvatar: user.imageAvatar,
+                token: token,
+                password: "true"
+            }
+            , message: "The username and password combination is correct!"
+        });
     } catch (error) {
         console.log(error);
 
@@ -33,11 +40,19 @@ const authSign = async (req, res) => {
 const validSign = async (req, res) => {
     const user = req.user;
     user.password = "true";
-    const token = jwt.sign({ id: user._id }, process.env.SECRETTOKEN, {
+    const token = jwt.sign({ id: user._id }, secret, {
         expiresIn: 60 * 60 * 24
     })
-    user.token = token;
-    res.send({ user, message: "New token generated" });
+    
+    res.send({
+        user: {
+            email: user.email,
+            name: user.name,
+            imageAvatar: user.imageAvatar,
+            token: token,
+            password: "true"
+        }, message: "New token generated"
+    });
 }
 
 const tokenValidator = async (req, res, next) => {
@@ -46,13 +61,15 @@ const tokenValidator = async (req, res, next) => {
     if (!token)
         return res.status(401).json({ auth: false, msg: "token-invalid" })
     try {
-        req.decoded = jwt.verify(token, process.env.SECRETTOKEN);
-        const user = await Usuario.findOne({ _id: req.decoded })
+        req.decoded = await jwt.verify(token, secret);
+        console.log(req.decoded);
+        const user = await users.findOne({ _id: req.decoded.id })
         if (!user)
             return res.status(401).json({ auth: false, msg: "token-invalid" })
         req.user = user;
         next()
     } catch (error) {
+        console.log(error);
         return res.status(401).json({ auth: false, msg: "token-invalid" })
     }
 
