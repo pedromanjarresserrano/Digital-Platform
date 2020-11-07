@@ -21,7 +21,7 @@ class Movie extends React.Component {
       return <>
         <div className="p-1 d-flex flex-column justify-content-center" >
           <img
-            className="img-fluid h-100"
+            className="img-fluid"
             effect="blur"
             src={this.props.item.portada} />
           <p className="text-white margin-0 padding-0 padding-right-1" >{this.getTime(this.props.item.duration)}</p>
