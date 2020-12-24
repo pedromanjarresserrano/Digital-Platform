@@ -45,11 +45,13 @@ class Carousel extends React.Component {
                             let first = file.includes("-1.png");
                             return (
                                 <div className={(first ? "active " : "") + "carousel-item"} key={Math.random()}>
-                                    <LazyLoadImage
-                                        effect="blur"
-                                        alt={file}
-                                        visibleByDefault={first}
-                                        src={file} />
+                                    <div>
+                                        <LazyLoadImage
+                                            effect="blur"
+                                            alt={file}
+                                            visibleByDefault={first}
+                                            src={file} />
+                                    </div>
                                 </div>);
                         }, this)
                     }

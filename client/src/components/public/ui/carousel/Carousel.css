@@ -1,6 +1,27 @@
-.carousel-item>img {
-    width: 100%;
+.carousel-item,.carousel-item>div> img {
 
+    max-height: 122px;
+}
+
+
+.lazy-load-image-background>img {
+    width: unset !important;
+       max-height: 122px;
+   }
+.carousel-item>div{
+    width: 100%;
+    max-height: 122px;
     border-top-left-radius: .25rem !important;
     border-top-right-radius: .25rem !important;
+
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: black;
+}
+
+
+.carousel-inner{
+    background-color: black;
 }
