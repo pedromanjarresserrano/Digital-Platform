@@ -7,13 +7,13 @@ class Header extends React.Component {
     }
 
     handlerClick = (value) => {
-        document.title = "Movies Plaform " + value;
+        document.title = "Digital Plaform " + value;
     }
 
     render() {
         return (
-            <nav className="navbar navbar-expand-lg sticky-top navbar-dark bg-dark">
-                <a className="navbar-brand" href="/">MovieJS</a>
+            <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+                <a className="navbar-brand" href="/">Digital Platform JS</a>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>

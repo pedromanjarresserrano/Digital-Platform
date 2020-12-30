@@ -42,7 +42,7 @@ class MovieDetails extends React.Component {
       this.video.muted = this.state.muted
       this.video.volume = parseFloat(this.state.vol)
 
-      document.title = "Movies Plaform - " + (this.state.item.visualname ? this.state.item.visualname : this.state.item.name);
+      document.title = "Digital Plaform - " + (this.state.item.visualname ? this.state.item.visualname : this.state.item.name);
 
 
     }.bind(this)).catch((error) => {

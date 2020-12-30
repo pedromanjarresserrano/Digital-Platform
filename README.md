@@ -1,4 +1,4 @@
-#Movies-Platform
+#Digital-Platform
 Demo 
 
 https://movie-platform.herokuapp.com/

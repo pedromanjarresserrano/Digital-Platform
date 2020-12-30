@@ -24,7 +24,7 @@ class SidebarAdmin extends React.Component {
             <aside className="main-sidebar sidebar-dark-primary elevation-4">
                 <a href="index3.html" className="brand-link">
                     <img src="/img/AdminLTELogo.png" alt="AdminLTE Logo" className="brand-image img-circle elevation-3" />
-                    <span className="brand-text font-weight-light">Movies Platform</span>
+                    <span className="brand-text font-weight-light">Digital Platform</span>
                 </a>
 
                 <div className="sidebar">
@@ -139,13 +139,13 @@ class SidebarAdmin extends React.Component {
                             <li className="nav-item">
                                 <a href="#" className="nav-link">
                                     <i className="nav-icon far fa-circle text-danger"></i>
-                                    <p className="text">Movie Platform</p>
+                                    <p className="text">Digital Platform</p>
                                 </a>
                             </li>
                             <li className="nav-item">
                                 <a href="#" className="nav-link">
                                     <i className="nav-icon far fa-circle text-warning"></i>
-                                    <p>Version 0.0.1.Beta</p>
+                                    <p>Version 0.0.2.Beta</p>
                                 </a>
                             </li>
                             <li className="nav-item">
