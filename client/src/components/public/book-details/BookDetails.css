@@ -1,9 +1,15 @@
 .carro .carousel-item, .carro,.carousel.slide,.carousel-inner {
-    max-height: 1000px !important; 
+    max-height: 920px !important; 
 }
 
 
 .page,.page img{
-    max-height: 1000px !important;
+    max-height: 920px !important;
 
+}
+
+
+.carro .carousel-item{
+
+    transition: transform .0001s ease,-webkit-transform .0001s ease;
 }

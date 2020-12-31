@@ -24,6 +24,8 @@ class Header extends React.Component {
                         <Link className="nav-item nav-link " to="/categories" onClick={() => this.handlerClick("- Categories")}>Categories</Link>
                         <Link className="nav-item nav-link " to="/actors" onClick={() => this.handlerClick("- Actors")}>Actors</Link>
                         <Link className="nav-item nav-link " to="/studios" onClick={() => this.handlerClick("- Studios")}>Studios</Link>
+
+                        <Link className="nav-item nav-link " to="/books" onClick={() => this.handlerClick("- Books")}>Books</Link>
                     </div>
                 </div>
             </nav>
