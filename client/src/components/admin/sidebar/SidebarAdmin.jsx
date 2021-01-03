@@ -118,6 +118,13 @@ class SidebarAdmin extends React.Component {
                                         Movies
                                     </p>
                                 </Link>
+                            </li>                            <li className="nav-item">
+                                <Link className="nav-link " to="/admin/books" onClick={this.onClickHandler}>
+                                    <i className="nav-icon fas fa-bookmark"></i>
+                                    <p>
+                                        Books
+                                    </p>
+                                </Link>
                             </li>
                             <li className="nav-item">
                                 <Link className="nav-link " to="/admin/studios" onClick={this.onClickHandler}>

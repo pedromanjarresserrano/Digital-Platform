@@ -45,7 +45,7 @@ class BookDetails extends React.Component {
       <div className="container">
         <div className="row">
           <div className="col-sm-12 carro">
-            <div id="s-1" className="carousel slide" data-ride="false"  data-interval="false">
+            <div id="s-1" className="carousel slide" data-ride="false" data-interval="false">
               <div className="carousel-inner">
                 {
                   item['files'].map(file => {
@@ -71,6 +71,8 @@ class BookDetails extends React.Component {
                 <span className="sr-only">Next</span>
               </a>
             </div>
+
+            
           </div>
         </div>
         <div className="row content padding-top-1">
@@ -130,7 +132,7 @@ class BookDetails extends React.Component {
                     </div>
                   </div>
                   <div className="category">
-                    {this.state.item.categorias ? this.state.item.categorias.map(item => (<Link key={item._id} to={"/categories/categorie/" + item.name} className="badge badge-pill badge-dark">  {item.name}</Link>)) : ''}
+                    {this.state.item.categorias ? this.state.item.categorias.map(itm => (<Link key={itm._id} to={"/categories/categorie/" + itm.name} className="badge badge-pill badge-dark">  {itm.name}</Link>)) : ''}
                   </div>
                 </div>
               </div>

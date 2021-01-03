@@ -15,7 +15,7 @@ class Database {
         })
             .then(async (db) => {
             console.log('Database connection successful')
-            var count = await Users.count().exec();
+            var count = await Users.countDocuments().exec();
             console.log(count);
             if (count == 0) {
                 Users.create({
