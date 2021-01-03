@@ -18,7 +18,7 @@ class ProfileButton extends React.Component {
         this.getSince = this.getSince.bind(this);
     }
 
-    componentDidMount() {
+    componentWillMount() {
         var user = localStorage.getItem("userInfo");
         let headers = {}
         headers["x-access-token"] = '' + localStorage.getItem("utoken");
@@ -44,13 +44,11 @@ class ProfileButton extends React.Component {
             })
             .catch(error => {
                 console.log(error);
-                if (error.response.status == 401) {
 
+                localStorage.setItem("userInfo", '');
+                localStorage.setItem("utoken", '');
+                this.props.history.push('/admin/login');
 
-                    localStorage.setItem("userInfo", '');
-                    localStorage.setItem("utoken", '');
-                    this.props.history.push('/admin/login');
-                }
             });
 
     }

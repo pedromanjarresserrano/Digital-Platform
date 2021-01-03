@@ -1,3 +1,4 @@
+import Axios from 'axios';
 import React from 'react';
 import { Link } from 'react-router-dom'
 
@@ -14,9 +15,35 @@ class SidebarAdmin extends React.Component {
     }
 
     onClickHandler(event) {
-        console.log(event);
-        document.querySelectorAll(".nav-link").forEach(e => e.classList.remove("active"));
-        event.currentTarget.classList.add("active");
+        const currentTarget = event.currentTarget;
+        var user = localStorage.getItem("userInfo");
+        let headers = {}
+        headers["x-access-token"] = '' + localStorage.getItem("utoken");
+        Axios.post("/api/admin/revalidsignin", { user }, {
+            headers: headers
+        })
+            .then(res => {
+                //this.setState({ loading: false });
+                if (res.status === 200) {
+                    localStorage.setItem("utoken", res.data.user.token);
+                    localStorage.setItem("userInfo", JSON.stringify(res.data.user));
+                    console.log(currentTarget);
+                    document.querySelectorAll(".nav-link").forEach(e => e.classList.remove("active"));
+                    currentTarget.classList.add("active");
+                } else {
+                    this.props.history.push('./admin/login');
+                }
+            })
+            .catch(error => {
+                console.log(error);
+                if (error.response.status == 401) {
+
+
+                    localStorage.setItem("userInfo", '');
+                    localStorage.setItem("utoken", '');
+                    this.props.history.push('/admin/login');
+                }
+            });
     }
 
     render() {
