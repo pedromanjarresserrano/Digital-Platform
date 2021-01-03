@@ -3,6 +3,7 @@
 import React from 'react';
 import './ProfileButton.css';
 import { withRouter } from "react-router";
+import Axios from 'axios';
 const months = ["Jan", "Fer", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Ded"];
 
 
@@ -18,14 +19,39 @@ class ProfileButton extends React.Component {
     }
 
     componentDidMount() {
-
         var user = localStorage.getItem("userInfo");
-        if (user || user != "null") {
-            this.setState({
-                user: JSON.parse(user)
-            });
+        let headers = {}
+        headers["x-access-token"] = '' + localStorage.getItem("utoken");
+        Axios.post("/api/admin/revalidsignin", { user }, {
+            headers: headers
+        })
+            .then(res => {
+                //this.setState({ loading: false });
+                if (res.status === 200) {
+                    localStorage.setItem("utoken", res.data.user.token);
 
-        }
+
+
+                    if (user || user != "null") {
+                        this.setState({
+                            user: JSON.parse(user)
+                        });
+
+                    }
+                } else {
+                    this.props.history.push('./admin/login');
+                }
+            })
+            .catch(error => {
+                console.log(error);
+                if (error.response.status == 401) {
+
+
+                    localStorage.setItem("userInfo", '');
+                    localStorage.setItem("utoken", '');
+                    this.props.history.push('/admin/login');
+                }
+            });
 
     }
     getSince = (date) => {

@@ -148,7 +148,6 @@ class Form extends React.Component {
         let bool = this.haveFile();
         headers["Content-Type"] = 'application/json';
         headers["x-access-token"] = '' + localStorage.getItem("utoken");
-        ;
         if (bool) {
             for (let formElementIdentifier in this.state.dataForm) {
                 if (this.state.dataForm[formElementIdentifier].value instanceof File) {
