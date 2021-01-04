@@ -1,15 +1,27 @@
-.carro .carousel-item, .carro,.carousel.slide,.carousel-inner {
-    max-height: 920px !important; 
-}
-
-
-.page,.page img{
+.carro .carousel-item,
+.carro,
+.carousel.slide,
+.carousel-inner {
     max-height: 920px !important;
-
 }
 
+.page,
+.page img {
+    max-height: 920px !important;
+}
 
-.carro .carousel-item{
+.carro .carousel-item {
+    transition: transform .0001s ease, -webkit-transform .0001s ease;
+}
 
-    transition: transform .0001s ease,-webkit-transform .0001s ease;
+.carro .carousel-indicators li {
+    height: 30px;
+    text-indent: 0px;
+    text-align: center;
+    padding-top: 3px;
+    border-radius: 12px;
+}
+
+.carousel-indicators {
+    bottom: -46px;
 }

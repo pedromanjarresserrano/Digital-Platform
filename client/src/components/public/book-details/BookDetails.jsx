@@ -43,9 +43,21 @@ class BookDetails extends React.Component {
       return null;
     return (
       <div className="container">
-        <div className="row">
+        <div className="row mb-5">
           <div className="col-sm-12 carro">
             <div id="s-1" className="carousel slide" data-ride="false" data-interval="false">
+
+
+              <ol class="carousel-indicators">
+                {
+                  item['files'].map((file, index) => {
+                    let first = item['files'][0] == file;
+                    return (<li className={(first ? "active " : "")} key={Math.random()} data-target="#s-1" data-slide-to={index}>{index + 1}
+                    </li>);
+
+                  }, this)
+
+                } </ol>
               <div className="carousel-inner">
                 {
                   item['files'].map(file => {
@@ -72,7 +84,7 @@ class BookDetails extends React.Component {
               </a>
             </div>
 
-            
+
           </div>
         </div>
         <div className="row content padding-top-1">
