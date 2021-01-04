@@ -27,7 +27,6 @@ class SidebarAdmin extends React.Component {
                 if (res.status === 200) {
                     localStorage.setItem("utoken", res.data.user.token);
                     localStorage.setItem("userInfo", JSON.stringify(res.data.user));
-                    console.log(currentTarget);
                     document.querySelectorAll(".nav-link").forEach(e => e.classList.remove("active"));
                     currentTarget.classList.add("active");
                 } else {
