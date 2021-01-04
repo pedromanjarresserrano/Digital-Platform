@@ -1,8 +1,10 @@
 .carro .carousel-item,
-.carro,
-.carousel.slide,
 .carousel-inner {
     max-height: 920px !important;
+}
+
+.carro {
+    max-height: 1500px !important;
 }
 
 .page,
@@ -24,4 +26,9 @@
 
 .carousel-indicators {
     bottom: -46px;
+    position: unset;
+    display: flex;
+    flex-flow: row wrap;
 }
+
+.carro>.slide {}

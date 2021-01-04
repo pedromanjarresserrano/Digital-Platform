@@ -45,19 +45,8 @@ class BookDetails extends React.Component {
       <div className="container">
         <div className="row mb-5">
           <div className="col-sm-12 carro">
-            <div id="s-1" className="carousel slide" data-ride="false" data-interval="false">
+            <div id="s-1" className="carousel slide d-flex flex-column" data-ride="false" data-interval="false">
 
-
-              <ol class="carousel-indicators">
-                {
-                  item['files'].map((file, index) => {
-                    let first = item['files'][0] == file;
-                    return (<li className={(first ? "active " : "")} key={Math.random()} data-target="#s-1" data-slide-to={index}>{index + 1}
-                    </li>);
-
-                  }, this)
-
-                } </ol>
               <div className="carousel-inner">
                 {
                   item['files'].map(file => {
@@ -74,6 +63,20 @@ class BookDetails extends React.Component {
                 }
 
               </div>
+
+
+
+
+              <ol class="carousel-indicators">
+                {
+                  item['files'].map((file, index) => {
+                    let first = item['files'][0] == file;
+                    return (<li className={(first ? "active " : "")} key={Math.random()} data-target="#s-1" data-slide-to={index}>{index + 1}
+                    </li>);
+
+                  }, this)
+
+                } </ol>
               <a className="carousel-control-prev" href="#s-1" role="button" data-slide="prev">
                 <span className="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span className="sr-only">Previous</span>
