@@ -1,7 +1,9 @@
 const express = require('express');
 let router = express.Router();
 const {
-    authSign, validSign, tokenValidator
+    authSign,
+    validSign,
+    tokenValidator
 } = require('../controller/auth');
 
 router.post("/signin", authSign);

@@ -45,16 +45,24 @@ class CrudView extends React.Component {
 
 
     deleteClick = async (item) => {
+        let headers = {}
+        headers["x-access-token"] = '' + localStorage.getItem("utoken");
+
         await this.setState({
             modal: true,
             onOkClick: () =>
                 axios
-                    .delete(this.props.baseUrl + '/' + item._id)
+                    .delete(this.props.baseUrl + '/' + item._id,
+                        { headers }
+                    )
                     .then(res => {
                         this.loadPage(1);
                         this.setState({
                             modal: false
                         })
+
+                        toastr["success"]("Delete")
+
                     }),
             onClose: () =>
                 this.setState({
@@ -113,6 +121,12 @@ class CrudView extends React.Component {
                 <div className="row m-2 shadow-sm">
                     <div className="col-12 py-1 bg-secondary">
                         <button title="New" onClick={this.newClick} className="btn btn-sm btn-primary"><i className="fas fa-plus-square"></i></button>
+
+                        {this.props.extraTopAcciones && this.props.extraTopAcciones.length > 0 ? this.props.extraTopAcciones.map(accion =>
+                            <button key={Math.random() + "-id-button-crud-commands"} type="button" className={accion.className} onClick={() => accion.onClick({
+                                items: document.querySelectorAll('input.checkboxcrud:checked')
+                            })}>{accion.name}</button>
+                        ) : ""}
                     </div>
                     <div className="table-responsive">
                         {(this.state.loading) ?

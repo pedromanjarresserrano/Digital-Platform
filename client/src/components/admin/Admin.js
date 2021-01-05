@@ -14,6 +14,25 @@ import ToastContainer from './ui/toastcontainer/ToastContainer';
 import FooterAdmin from './footer/FooterAdmin';
 import { kbToSize, segFormat, dateFormat } from '../../utils/Utils';
 
+toastr.options = {
+    "closeButton": false,
+    "debug": false,
+    "newestOnTop": false,
+    "progressBar": false,
+    "positionClass": "toast-bottom-right",
+    "preventDuplicates": false,
+    "onclick": null,
+    "showDuration": "300",
+    "hideDuration": "1000",
+    "timeOut": "5000",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "linear",
+    "showMethod": "fadeIn",
+    "hideMethod": "fadeOut"
+}
+
+
 export const Admin = ({ match }) => {
     return (
         <div className="sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
@@ -493,7 +512,16 @@ export const Admin = ({ match }) => {
                                 }]}
                                 baseRoute={`${match.path}/movies/movie`}
                                 baseUrl={'/api/movies'}
+                                extraTopAcciones={[
+                                    {
+                                        name: "Add Categories",
+                                        className: "btn btn-sm btn-info",
+                                        onClick: function (data) {
+                                            console.log(data);
 
+                                        }
+                                    }
+                                ]}
                             />)} />
                         <Route key="form-movies" exact path={`${match.path}/movies/movie/:action/:id`} render={(props) => (
                             <Form {...props}

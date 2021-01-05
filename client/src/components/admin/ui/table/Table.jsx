@@ -11,6 +11,7 @@ class Table extends React.Component {
         return (
             <tr key={Math.random() + "-id-tr-head"}>
                 <th />
+                <th />
                 {
                     this.props.headers.map(e => <th key={Math.random() + "-id-th"}>{e.label}</th>)
                 }
@@ -27,7 +28,7 @@ class Table extends React.Component {
                 return (
                     <tr key={Math.random() + "-id-tr-" + data._id}>
                         <td>
-                            {i + 1}
+                            <input type="checkbox" name={data._id + 'checkbox'} className='checkboxcrud' value={data._id} />
                         </td>
                         {
                             this.props.headers.map(h => <td key={h.name + "-" + data._id} className="text-truncate">{h.converter ? h.converter(data[h.name]) : data[h.name]}</td>)
