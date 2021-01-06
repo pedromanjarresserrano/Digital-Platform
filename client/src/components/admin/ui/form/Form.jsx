@@ -109,8 +109,8 @@ class Form extends React.Component {
         updateddataForm[inputIdentifier] = updatedFormElement;
 
         let formIsValid = true;
-        for (let inputIdentifier in updateddataForm) {
-            formIsValid = updateddataForm[inputIdentifier].valid && formIsValid;
+        for (let inputIdentity in updateddataForm) {
+            formIsValid = updateddataForm[inputIdentity].valid && formIsValid;
         }
         this.setState({ dataForm: updateddataForm, formIsValid: formIsValid });
     }
