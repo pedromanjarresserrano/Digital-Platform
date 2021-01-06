@@ -3,11 +3,15 @@ var socketServer = {};
 let interval;
 
 module.exports = {
-    init: function (app) {
+    init: function(app) {
         console.log("Init socket");
 
         const server = require('http').Server(app);
-        const io = socketIo(server);
+        const io = socketIo(server, {
+            cors: {
+                origin: '*',
+            }
+        });
         server.listen(3001);
 
         io.on("connection", (socket) => {
@@ -30,6 +34,6 @@ module.exports = {
 
             socket.emit("FromAPI", response);
         };
-    }
-    , socketServer
+    },
+    socketServer
 }
