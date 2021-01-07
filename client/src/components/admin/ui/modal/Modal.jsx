@@ -14,7 +14,11 @@ class Modal extends React.Component {
     }
 
     close = () => {
-        this.props.onClose();
+        if (this.props.onClose)
+            this.props.onClose();
+        this.setState({
+            show: false
+        })
     }
 
     render() {

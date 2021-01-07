@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom'
+import ReactDOM from 'react-dom';
 
 import Axios from 'axios';
 import HomeAdmin from './home/HomeAdmin';
@@ -13,6 +14,7 @@ import ToastContainer from './ui/toastcontainer/ToastContainer';
 
 import FooterAdmin from './footer/FooterAdmin';
 import { kbToSize, segFormat, dateFormat } from '../../utils/Utils';
+import Modal from './ui/modal/Modal';
 
 toastr.options = {
     "closeButton": false,
@@ -516,8 +518,49 @@ export const Admin = ({ match }) => {
                                     {
                                         name: "Add Categories",
                                         className: "btn btn-sm btn-info",
-                                        onClick: function (data) {
+                                        onClick: async function (data) {
                                             console.log(data);
+
+                                            let response = await Axios.get('/api/categorias/all/-1')
+                                            let value;
+
+                                            ReactDOM.render(<Modal show="true" okLabel="Delete"
+                                                content={
+                                                    <select
+                                                        className={'select-field'}
+                                                        value={value}
+                                                        onChange={event => {
+                                                            value = event.target.value
+                                                        }}
+
+                                                    > {
+                                                            response.data.map(option => (
+                                                                <option key={option._id} value={option._id}>
+                                                                    {option.name}
+                                                                </option>
+                                                            ))
+
+                                                        }
+                                                    </select>
+                                                }
+                                                title="Add Categorie"
+
+                                                onOkClick={event => {
+                                                    console.log(value)
+                                                }
+
+                                                }
+
+
+                                                style={
+                                                    {
+                                                        buttonOk: "btn btn-primary",
+                                                        buttonCancel: "btn btn-primary"
+                                                    }
+                                                }
+                                            />, document.getElementById('modalcontainer'));
+
+
 
                                         }
                                     }
