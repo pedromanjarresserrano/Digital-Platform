@@ -124,7 +124,7 @@ class CrudView extends React.Component {
 
                         {this.props.extraTopAcciones && this.props.extraTopAcciones.length > 0 ? this.props.extraTopAcciones.map(accion =>
                             <button key={Math.random() + "-id-button-crud-commands"} type="button" className={accion.className} onClick={() => accion.onClick({
-                                items: document.querySelectorAll('input.checkboxcrud:checked')
+                                items: Array.from(document.querySelectorAll('input.checkboxcrud:checked')).map(e => e.value)
                             })}>{accion.name}</button>
                         ) : ""}
                     </div>

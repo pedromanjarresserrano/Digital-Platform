@@ -523,8 +523,11 @@ export const Admin = ({ match }) => {
 
                                             let response = await Axios.get('/api/categorias/all/-1')
                                             let value;
+                                            let headers = {}
 
-                                            ReactDOM.render(<Modal show="true" okLabel="Delete"
+                                            headers["Content-Type"] = 'application/json';
+                                            headers["x-access-token"] = '' + localStorage.getItem("utoken");
+                                            ReactDOM.render(<Modal key={'rds-' + Math.random()} show="true" okLabel="Delete"
                                                 content={
                                                     <select
                                                         className={'select-field'}
@@ -533,7 +536,10 @@ export const Admin = ({ match }) => {
                                                             value = event.target.value
                                                         }}
 
-                                                    > {
+                                                    ><option value='Select' disabled selected >
+                                                            Select Value
+                                                        </option>
+                                                        {
                                                             response.data.map(option => (
                                                                 <option key={option._id} value={option._id}>
                                                                     {option.name}
@@ -547,6 +553,26 @@ export const Admin = ({ match }) => {
 
                                                 onOkClick={event => {
                                                     console.log(value)
+                                                    let { items } = data;
+
+                                                    Axios.post('/api/movies/addcatgs', {
+                                                        items,
+                                                        value
+                                                    }, {
+                                                        headers: headers
+                                                    })
+                                                        .then(response => {
+                                                            //this.setState({ loading: false });
+                                                            //this.props.history.push('/');
+                                                            toastr["success"]("Saved")
+
+                                                        })
+                                                        .catch(error => {
+                                                            toastr["error"]("Error on save")
+                                                            console.log(error);
+
+                                                            //this.setState({loading: false });
+                                                        });
                                                 }
 
                                                 }
