@@ -5,6 +5,7 @@ import Pagination from "react-js-pagination";
 import Modal from '../modal/Modal';
 import './CrudView.css';
 import { CommonLoading } from 'react-loadingg';
+import queryString from 'query-string'
 
 class CrudView extends React.Component {
 
@@ -20,9 +21,13 @@ class CrudView extends React.Component {
             extraAcciones: [],
             modal: false,
             onOkClick: null,
+            search: '',
             loading: true
         }
         this.deleteClick = this.deleteClick.bind(this);
+
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSearch = this.handleSearch.bind(this);
     }
     componentWillMount() {
         var user = localStorage.getItem("userInfo");
@@ -80,10 +85,19 @@ class CrudView extends React.Component {
     }
 
     async loadPage(page) {
-        await this.setState({
-            loading: true
-        })
-        axios.get(this.props.baseUrl + '/all/' + page)
+        const values = queryString.parse(this.props.location.search);
+
+
+        var statesVal = { activePage: page }
+        if (values && values.search)
+            statesVal.search = values.search;
+        statesVal.loading = true;
+        await this.setState(statesVal);
+        let find = {
+            name: { "$regex": ".*" + this.state.search + ".*", $options: 'i' }
+        }
+
+        axios.post(this.props.baseUrl + '/all/' + page, find)
             .then(response => {
                 this.setState({
                     items: response.data.itemsList,
@@ -94,10 +108,33 @@ class CrudView extends React.Component {
                 });
             });
     }
+
     newClick = (item) => {
         this.props.history.push({
             pathname: this.props.baseRoute + '/new/0'
         })
+    }
+
+    handleSearch() {
+        this.props.history.push({
+            pathname: this.props.location.pathname,
+            search: '?search=' + this.state.search,
+
+        })
+
+    }
+
+    handleChange(event) {
+        this.setState({ search: event.target.value });
+
+    }
+
+    _handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            this.handleSearch();
+            this.loadPage(1);
+
+        }
     }
 
     render() {
@@ -119,14 +156,28 @@ class CrudView extends React.Component {
 
                 }
                 <div className="row m-2 shadow-sm">
-                    <div className="col-12 py-1 bg-secondary">
-                        <button title="New" onClick={this.newClick} className="btn btn-sm btn-primary"><i className="fas fa-plus-square"></i></button>
+                    <div className="col-12 py-1 bg-secondary d-flex flex-row justify-content-between">
+                        <div>
+                            <button title="New" onClick={this.newClick} className="btn btn-sm btn-primary"><i className="fas fa-plus-square"></i></button>
 
-                        {this.props.extraTopAcciones && this.props.extraTopAcciones.length > 0 ? this.props.extraTopAcciones.map(accion =>
-                            <button key={Math.random() + "-id-button-crud-commands"} type="button" className={accion.className} onClick={() => accion.onClick({
-                                items: Array.from(document.querySelectorAll('input.checkboxcrud:checked')).map(e => e.value)
-                            })}>{accion.name}</button>
-                        ) : ""}
+                            {this.props.extraTopAcciones && this.props.extraTopAcciones.length > 0 ? this.props.extraTopAcciones.map(accion =>
+                                <button key={Math.random() + "-id-button-crud-commands"} type="button" className={accion.className +  ' ml-1'} onClick={() => accion.onClick({
+                                    items: Array.from(document.querySelectorAll('input.checkboxcrud:checked')).map(e => e.value)
+                                })}><i className={accion.icon}></i> {accion.name}</button>
+                            ) : ""}
+                        </div>
+                        <div>
+                            <div className="form-inline">
+                                <div className="input-group">
+                                    <input type="text" className="form-control" onKeyDown={this._handleKeyDown} value={this.state.search} onChange={this.handleChange} />
+                                    <div className="input-group-append">
+                                        <button className="btn btn-sm btn-danger" onClick={this.handleSearch} >Buscar </button>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
                     </div>
                     <div className="table-responsive">
                         {(this.state.loading) ?

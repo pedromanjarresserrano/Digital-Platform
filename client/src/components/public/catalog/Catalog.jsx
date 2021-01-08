@@ -34,7 +34,7 @@ class Catalog extends React.Component {
 
     load = async () => {
 
-        const values = queryString.parse(this.props.location.search)
+        const values = queryString.parse(this.props.location.search);
 
         let page = this.props.match.params.page;
 
@@ -42,7 +42,7 @@ class Catalog extends React.Component {
 
         var statesVal = { activePage: page }
         if (values && values.search)
-            statesVal.search = values.search
+            statesVal.search = values.search;
 
         await this.setState(statesVal);
         this.loadCate();
@@ -93,7 +93,7 @@ class Catalog extends React.Component {
         })
         let find = {
             name: { "$regex": ".*" + this.state.search + ".*", $options: 'i' },
-      /*      duration: this.state.timerange*/
+            /*      duration: this.state.timerange*/
 
         }
         let cats = this.state.categorias.filter(e => e.isChecked);

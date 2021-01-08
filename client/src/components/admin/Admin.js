@@ -518,6 +518,7 @@ export const Admin = ({ match }) => {
                                     {
                                         name: "Add Categories",
                                         className: "btn btn-sm btn-info",
+                                        icon: 'fas fa-plus-square',
                                         onClick: async function (data) {
                                             console.log(data);
 
@@ -527,7 +528,7 @@ export const Admin = ({ match }) => {
 
                                             headers["Content-Type"] = 'application/json';
                                             headers["x-access-token"] = '' + localStorage.getItem("utoken");
-                                            ReactDOM.render(<Modal key={'rds-' + Math.random()} show="true" okLabel="Delete"
+                                            ReactDOM.render(<Modal key={'rds-' + Math.random()} show="true" okLabel="Add"
                                                 content={
                                                     <select
                                                         className={'select-field'}
@@ -581,7 +582,7 @@ export const Admin = ({ match }) => {
                                                 style={
                                                     {
                                                         buttonOk: "btn btn-primary",
-                                                        buttonCancel: "btn btn-primary"
+                                                        buttonCancel: "btn btn-danger"
                                                     }
                                                 }
                                             />, document.getElementById('modalcontainer'));

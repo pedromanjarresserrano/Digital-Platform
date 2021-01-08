@@ -20,15 +20,22 @@ class Table extends React.Component {
 
         );
     }
+    check(id) {
+        let chk = document.getElementById(id);
+
+        chk.checked = !chk.checked;
+    }
 
     getRows() {
         return (
 
             this.props.data.map((data, i) => {
                 return (
-                    <tr key={Math.random() + "-id-tr-" + data._id}>
+                    <tr key={Math.random() + "-id-tr-" + data._id} onClick={() => {
+                        this.check(data._id + 'checkbox');
+                    }}>
                         <td>
-                            <input type="checkbox" name={data._id + 'checkbox'} className='checkboxcrud' value={data._id} />
+                            <input type="checkbox" id={data._id + 'checkbox'} name={data._id + '-n-checkbox'} className='checkboxcrud' value={data._id} />
                         </td>
                         {
                             this.props.headers.map(h => <td key={h.name + "-" + data._id} className="text-truncate">{h.converter ? h.converter(data[h.name]) : data[h.name]}</td>)
