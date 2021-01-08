@@ -40,6 +40,7 @@ class Categories extends React.Component {
         pageNumber = parseInt(pageNumber)
         this.setState({ activePage: pageNumber, loading: true });
         this.loadPage(pageNumber);
+        
         this.props.history.push({
             pathname: generatePath(this.props.match.path, { page: pageNumber })
         });

@@ -6,6 +6,7 @@ import Modal from '../modal/Modal';
 import './CrudView.css';
 import { CommonLoading } from 'react-loadingg';
 import queryString from 'query-string'
+import { generatePath } from 'react-router-dom';
 
 class CrudView extends React.Component {
 
@@ -29,14 +30,22 @@ class CrudView extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSearch = this.handleSearch.bind(this);
     }
-    componentWillMount() {
+    async componentWillMount() {
         var user = localStorage.getItem("userInfo");
         if (!user) {
             this.props.history.push('/admin/login');
 
         }
 
-        this.loadPage(1);
+        let page = this.props.match.params.page;
+
+        page = page ? parseInt(page) : 1;
+
+        var statesVal = { activePage: page }
+
+        await this.setState(statesVal);
+
+        this.loadPage(page);
     }
 
     editClick = (item) => {
@@ -77,11 +86,16 @@ class CrudView extends React.Component {
         })
     }
 
-    onPageChanged = data => {
-        this.loadPage(data);
+    onPageChanged = pageNumber => {
+        this.loadPage(pageNumber);
         this.setState({
-            activePage: data
+            activePage: pageNumber
         })
+        this.props.history.push({
+            pathname: generatePath(this.props.match.path, { page: pageNumber }),
+            search: this.props.location.search ? this.props.location.search : "",
+
+        });
     }
 
     async loadPage(page) {
@@ -161,7 +175,7 @@ class CrudView extends React.Component {
                             <button title="New" onClick={this.newClick} className="btn btn-sm btn-primary"><i className="fas fa-plus-square"></i></button>
 
                             {this.props.extraTopAcciones && this.props.extraTopAcciones.length > 0 ? this.props.extraTopAcciones.map(accion =>
-                                <button key={Math.random() + "-id-button-crud-commands"} type="button" className={accion.className +  ' ml-1'} onClick={() => accion.onClick({
+                                <button key={Math.random() + "-id-button-crud-commands"} type="button" className={accion.className + ' ml-1'} onClick={() => accion.onClick({
                                     items: Array.from(document.querySelectorAll('input.checkboxcrud:checked')).map(e => e.value)
                                 })}><i className={accion.icon}></i> {accion.name}</button>
                             ) : ""}

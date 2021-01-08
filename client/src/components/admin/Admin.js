@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom'
+import { Redirect, Route, Switch } from 'react-router-dom'
 import ReactDOM from 'react-dom';
 
 import Axios from 'axios';
@@ -190,7 +190,9 @@ export const Admin = ({ match }) => {
                                 formTitle={'Gender data'}
                             />)} />
 
-                        <Route key="crud-categories" exact path={`${match.path}/categories`} render={(props) => (<CrudView {...props}
+                        <Route key="crud-categories-1" exact path="/categories" render={(props) => (<Redirect to={`${match.path}/categories/1`}   {...props} />)} />
+
+                        <Route key="crud-categories" exact path={`${match.path}/categories/:page`} render={(props) => (<CrudView {...props}
                             headers={[{
                                 name: "name",
                                 label: "Nombre"
@@ -211,6 +213,8 @@ export const Admin = ({ match }) => {
                             baseUrl={'/api/categorias'}
 
                         />)} />
+
+
                         <Route key="form-categories" exact path={`${match.path}/categories/categorie/:action/:id`} render={(props) => (
                             <Form {...props}
                                 formField={{
@@ -464,135 +468,134 @@ export const Admin = ({ match }) => {
                                 formTitle={'Actor data'}
                             />)} />
 
-                        <Route key="crud-movies"
-                            exact path={`${match.path}/movies`} render={(props) => (<CrudView {...props}
-                                headers={[{
-                                    name: "name",
-                                    label: "Nombre"
-                                }, {
-                                    name: "visualname",
-                                    label: "Visual Name"
-                                }, {
-                                    name: "duration",
-                                    label: "Duration",
-                                    converter: function (value) {
-                                        return segFormat(value, false)
-                                    }
-                                }, {
-                                    name: "like",
-                                    label: "Like"
-                                }, {
-                                    name: "view",
-                                    label: "Views"
-                                }, {
-                                    name: "size",
-                                    label: "Size file",
-                                    converter: function (value) {
-                                        return kbToSize(value)
-                                    }
-                                }, {
-                                    name: "year",
-                                    label: "Year"
-                                }, {
-                                    name: "quality",
-                                    label: "Quality"
-                                }, {
-                                    name: "portada",
-                                    label: "Imagen portada"
-                                }, {
-                                    name: "created",
-                                    label: "Creado",
-                                    converter: function (value) {
-                                        return dateFormat(value)
-                                    }
-                                }, {
-                                    name: "updated",
-                                    label: "Actualizado",
-                                    converter: function (value) {
-                                        return dateFormat(value)
-                                    }
-                                }]}
-                                baseRoute={`${match.path}/movies/movie`}
-                                baseUrl={'/api/movies'}
-                                extraTopAcciones={[
-                                    {
-                                        name: "Add Categories",
-                                        className: "btn btn-sm btn-info",
-                                        icon: 'fas fa-plus-square',
-                                        onClick: async function (data) {
-                                            console.log(data);
 
-                                            let response = await Axios.get('/api/categorias/all/-1')
-                                            let value;
-                                            let headers = {}
+                        <Route key="crud-movies-1" exact path={`${match.path}/movies`} render={(props) => (<Redirect to={`${match.path}/movies/1`}   {...props} />)} />
 
-                                            headers["Content-Type"] = 'application/json';
-                                            headers["x-access-token"] = '' + localStorage.getItem("utoken");
-                                            ReactDOM.render(<Modal key={'rds-' + Math.random()} show="true" okLabel="Add"
-                                                content={
-                                                    <select
-                                                        className={'select-field'}
-                                                        value={value}
-                                                        onChange={event => {
-                                                            value = event.target.value
-                                                        }}
-                                                    >
-                                                        <option value='Select' disabled selected >
-                                                            Select Value
+
+                        <Route key="crud-movies" exact path={`${match.path}/movies/:page`} render={(props) => (<CrudView {...props}
+                            headers={[{
+                                name: "name",
+                                label: "Nombre"
+                            }, {
+                                name: "visualname",
+                                label: "Visual Name"
+                            }, {
+                                name: "duration",
+                                label: "Duration",
+                                converter: function (value) {
+                                    return segFormat(value, false)
+                                }
+                            }, {
+                                name: "like",
+                                label: "Like"
+                            }, {
+                                name: "view",
+                                label: "Views"
+                            }, {
+                                name: "size",
+                                label: "Size file",
+                                converter: function (value) {
+                                    return kbToSize(value)
+                                }
+                            }, {
+                                name: "year",
+                                label: "Year"
+                            }, {
+                                name: "quality",
+                                label: "Quality"
+                            }, {
+                                name: "portada",
+                                label: "Imagen portada"
+                            }, {
+                                name: "created",
+                                label: "Creado",
+                                converter: function (value) {
+                                    return dateFormat(value)
+                                }
+                            }, {
+                                name: "updated",
+                                label: "Actualizado",
+                                converter: function (value) {
+                                    return dateFormat(value)
+                                }
+                            }]}
+                            baseRoute={`${match.path}/movies/movie`}
+                            baseUrl={'/api/movies'}
+                            extraTopAcciones={[
+                                {
+                                    name: "Add Categories",
+                                    className: "btn btn-sm btn-info",
+                                    icon: 'fas fa-plus-square',
+                                    onClick: async function (data) {
+                                        console.log(data);
+
+                                        let response = await Axios.get('/api/categorias/all/-1')
+                                        let value;
+                                        let headers = {}
+
+                                        headers["Content-Type"] = 'application/json';
+                                        headers["x-access-token"] = '' + localStorage.getItem("utoken");
+                                        ReactDOM.render(<Modal key={'rds-' + Math.random()} show="true" okLabel="Add"
+                                            content={
+                                                <select
+                                                    className={'select-field'}
+                                                    value={value}
+                                                    onChange={event => {
+                                                        value = event.target.value
+                                                    }}
+                                                >
+                                                    <option value='Select' disabled selected >
+                                                        Select Value
                                                         </option>
-                                                        {
-                                                            response.data.map(option => (
-                                                                <option key={option._id} value={option._id}>
-                                                                    {option.name}
-                                                                </option>
-                                                            ))
-
-                                                        }
-                                                    </select>
-                                                }
-                                                title="Add Categorie"
-
-                                                onOkClick={event => {
-                                                    console.log(value)
-                                                    let { items } = data;
-
-                                                    Axios.post('/api/movies/addcatgs', {
-                                                        items,
-                                                        value
-                                                    }, {
-                                                        headers: headers
-                                                    })
-                                                        .then(response => {
-                                                            //this.setState({ loading: false });
-                                                            //this.props.history.push('/');
-                                                            toastr["success"]("Saved")
-
-                                                        })
-                                                        .catch(error => {
-                                                            toastr["error"]("Error on save")
-                                                            console.log(error);
-
-                                                            //this.setState({loading: false });
-                                                        });
-                                                }
-
-                                                }
-
-
-                                                style={
                                                     {
-                                                        buttonOk: "btn btn-primary",
-                                                        buttonCancel: "btn btn-danger"
+                                                        response.data.map(option => (
+                                                            <option key={option._id} value={option._id}>
+                                                                {option.name}
+                                                            </option>
+                                                        ))
+
                                                     }
+                                                </select>
+                                            }
+                                            title="Add Categorie"
+
+                                            onOkClick={event => {
+                                                console.log(value)
+                                                let { items } = data;
+
+                                                Axios.post('/api/movies/addcatgs', {
+                                                    items,
+                                                    value
+                                                }, {
+                                                    headers: headers
+                                                })
+                                                    .then((res => {
+                                                        toastr["success"]("Saved");
+                                                        close();
+                                                    }).bind(this))
+                                                    .catch(error => {
+                                                        toastr["error"]("Error on save");
+                                                        console.log(error);
+                                                    });
+                                            }
+
+                                            }
+
+
+                                            style={
+                                                {
+                                                    buttonOk: "btn btn-primary",
+                                                    buttonCancel: "btn btn-danger"
                                                 }
-                                            />, document.getElementById('modalcontainer'));
+                                            }
+                                        />, document.getElementById('modalcontainer'));
 
 
 
-                                        }
                                     }
-                                ]}
-                            />)} />
+                                }
+                            ]}
+                        />)} />
                         <Route key="form-movies" exact path={`${match.path}/movies/movie/:action/:id`} render={(props) => (
                             <Form {...props}
                                 formField={{
