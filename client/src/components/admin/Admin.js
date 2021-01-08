@@ -535,8 +535,8 @@ export const Admin = ({ match }) => {
                                                         onChange={event => {
                                                             value = event.target.value
                                                         }}
-
-                                                    ><option value='Select' disabled selected >
+                                                    >
+                                                        <option value='Select' disabled selected >
                                                             Select Value
                                                         </option>
                                                         {

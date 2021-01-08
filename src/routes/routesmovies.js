@@ -78,11 +78,14 @@ router.post('/addcatgs', async function(req, res) {
         let list = await Collection.find({ _id: { $in: req.body.items } });
 
         console.log(list);
-        list.forEach(i => i.categorias.push(new ObjectID(req.body.value)))
-        list.forEach(async e => {
-            await Collection.findOneAndUpdate({ _id: e._id }, { $set: e }, { upsert: true, new: true, setDefaultsOnInsert: true, fields: '-__v' })
+        list.forEach(async item => {
+            if (item.categorias.map(e => e.toString()).join(',').indexOf(req.body.value) == -1)
+                item.categorias.push(new ObjectID(req.body.value))
+
+            await Collection.findOneAndUpdate({ _id: item._id }, { $set: item }, { upsert: true, new: true, setDefaultsOnInsert: true, fields: '-__v' })
         })
-        res.json({ msg: 'All OK' })
+
+        res.json({ message: 'All OK' })
 
     } catch (error) {
         console.log(error)

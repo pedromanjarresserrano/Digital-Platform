@@ -6,9 +6,9 @@ const models = require('../models');
 const ffmpeg = require('fluent-ffmpeg');
 const service = require('../services/movie');
 var process = 0;
-const socketServer = require("../services/socket").socketServer
+const socketServer = require("../services/socket").serverIO
 
-router.post('/', async function (req, res) {
+router.post('/', async function(req, res) {
     let paths = req.body.path;
     if (process == 0) {
         process++;
@@ -67,8 +67,7 @@ async function createMovie(files, paths, res) {
             let movie = await models.moviemodel.findOne({ name: nameFile });
             try {
                 process = Math.floor((i + 1) * 100 / (size), 0)
-                if (socketServer.socket)
-                    socketServer.socket.emit("RMF", { process, name: nameFile })
+                socketServer.io.emit("RMF", { process, name: nameFile })
             } catch (error) {
                 console.log(error);
             }
@@ -100,7 +99,9 @@ async function createMovie(files, paths, res) {
 async function generatefiles(newvideo, ratio) {
     if (newvideo.files.length < 10) {
         var list = await service.generatePreviews({
-            name: newvideo._id, url: newvideo.url, ratio: ratio
+            name: newvideo._id,
+            url: newvideo.url,
+            ratio: ratio
         })
         newvideo.files = [];
         list.map(e => "/thumbnail/" + e).forEach(i => newvideo.files.push(i));

@@ -1,20 +1,20 @@
 const socketIo = require("socket.io");
-var socketServer = {};
+let socketServer = {};
 let interval;
-
+const serverIO = {};
 module.exports = {
     init: function(app) {
         console.log("Init socket");
 
         const server = require('http').Server(app);
-        const io = socketIo(server, {
+        serverIO.io = socketIo(server, {
             cors: {
                 origin: '*',
             }
         });
         server.listen(3001);
 
-        io.on("connection", (socket) => {
+        serverIO.io.on("connection", (socket) => {
             socketServer["socket"] = socket;
             console.log("New client connected");
             /*  if (interval) {
@@ -35,5 +35,6 @@ module.exports = {
             socket.emit("FromAPI", response);
         };
     },
-    socketServer
+    socketServer,
+    serverIO
 }
