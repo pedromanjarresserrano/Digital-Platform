@@ -46,7 +46,9 @@ export const Admin = ({ match }) => {
                     <BreadcrumbAdmin />
                     <Switch>
                         <Route exact path={`${match.path}`} component={HomeAdmin} />
-                        <Route key="crud-locations" exact path={`${match.path}/locations`} render={(props) => (<CrudView {...props}
+                        <Route key="crud-locations-1" exact path={`${match.path}/locations`} render={(props) => (<Redirect to={`${match.path}/locations/1`}   {...props} />)} />
+
+                        <Route key="crud-locations" exact path={`${match.path}/locations/:page`} render={(props) => (<CrudView {...props}
                             headers={[{
                                 name: "name",
                                 label: "Nombre"
@@ -129,7 +131,9 @@ export const Admin = ({ match }) => {
                                 formTitle={'Location data'}
                             />)} />
 
-                        <Route key="crud-genders" exact path={`${match.path}/genders`} render={(props) => (<CrudView {...props}
+                        <Route key="crud-genders-1" exact path={`${match.path}/genders`} render={(props) => (<Redirect to={`${match.path}/genders/1`}   {...props} />)} />
+
+                        <Route key="crud-genders" exact path={`${match.path}/genders/:page`} render={(props) => (<CrudView {...props}
                             headers={[{
                                 name: "name",
                                 label: "Nombre"
@@ -190,7 +194,7 @@ export const Admin = ({ match }) => {
                                 formTitle={'Gender data'}
                             />)} />
 
-                        <Route key="crud-categories-1" exact path="/categories" render={(props) => (<Redirect to={`${match.path}/categories/1`}   {...props} />)} />
+                        <Route key="crud-categories-1" exact path={`${match.path}/categories`} render={(props) => (<Redirect to={`${match.path}/categories/1`}   {...props} />)} />
 
                         <Route key="crud-categories" exact path={`${match.path}/categories/:page`} render={(props) => (<CrudView {...props}
                             headers={[{
@@ -256,7 +260,10 @@ export const Admin = ({ match }) => {
                             />)} />
 
 
-                        <Route key="crud-studios" exact path={`${match.path}/studios`} render={(props) => (<CrudView {...props}
+                        <Route key="crud-studios-1" exact path={`${match.path}/studios`} render={(props) => (<Redirect to={`${match.path}/studios/1`}   {...props} />)} />
+
+
+                        <Route key="crud-studios" exact path={`${match.path}/studios/:page`} render={(props) => (<CrudView {...props}
                             headers={[{
                                 name: "name",
                                 label: "Nombre"
@@ -317,37 +324,39 @@ export const Admin = ({ match }) => {
                                 formTitle={'Studio data'}
                             />)} />
 
-                        <Route key="crud-actores"
-                            exact path={`${match.path}/actores`} render={(props) => (<CrudView {...props}
-                                headers={[{
-                                    name: "name",
-                                    label: "Nombre"
-                                }, {
-                                    name: "aka",
-                                    label: "Aka (Alias)"
-                                }, {
-                                    name: "edad",
-                                    label: "Edad"
-                                }, {
-                                    name: "imageAvatar",
-                                    label: "Imagen avatar"
-                                }, {
-                                    name: "created",
-                                    label: "Creado",
-                                    converter: function (value) {
-                                        return dateFormat(value)
-                                    }
-                                }, {
-                                    name: "updated",
-                                    label: "Actualizado",
-                                    converter: function (value) {
-                                        return dateFormat(value)
-                                    }
-                                }]}
-                                baseRoute={`${match.path}/actores/actor`}
-                                baseUrl={'/api/actores'}
+                        <Route key="crud-actores-1" exact path={`${match.path}/actores`} render={(props) => (<Redirect to={`${match.path}/actores/1`}   {...props} />)} />
 
-                            />)} />
+
+                        <Route key="crud-actores" exact path={`${match.path}/actores/:page`} render={(props) => (<CrudView {...props}
+                            headers={[{
+                                name: "name",
+                                label: "Nombre"
+                            }, {
+                                name: "aka",
+                                label: "Aka (Alias)"
+                            }, {
+                                name: "edad",
+                                label: "Edad"
+                            }, {
+                                name: "imageAvatar",
+                                label: "Imagen avatar"
+                            }, {
+                                name: "created",
+                                label: "Creado",
+                                converter: function (value) {
+                                    return dateFormat(value)
+                                }
+                            }, {
+                                name: "updated",
+                                label: "Actualizado",
+                                converter: function (value) {
+                                    return dateFormat(value)
+                                }
+                            }]}
+                            baseRoute={`${match.path}/actores/actor`}
+                            baseUrl={'/api/actores'}
+
+                        />)} />
                         <Route key="form-actores" exact path={`${match.path}/actores/actor/:action/:id`} render={(props) => (
                             <Form {...props}
                                 formField={{
@@ -470,7 +479,6 @@ export const Admin = ({ match }) => {
 
 
                         <Route key="crud-movies-1" exact path={`${match.path}/movies`} render={(props) => (<Redirect to={`${match.path}/movies/1`}   {...props} />)} />
-
 
                         <Route key="crud-movies" exact path={`${match.path}/movies/:page`} render={(props) => (<CrudView {...props}
                             headers={[{
@@ -801,10 +809,10 @@ export const Admin = ({ match }) => {
                                 formTitle={'Video data'}
                             />)} />
 
-
+                        <Route key="crud-books-1" exact path={`${match.path}/books`} render={(props) => (<Redirect to={`${match.path}/books/1`}   {...props} />)} />
 
                         <Route key="crud-books"
-                            exact path={`${match.path}/books`} render={(props) => (<CrudView {...props}
+                            exact path={`${match.path}/books/:page`} render={(props) => (<CrudView {...props}
                                 headers={[{
                                     name: "name",
                                     label: "Nombre"
