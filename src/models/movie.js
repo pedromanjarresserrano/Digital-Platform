@@ -88,7 +88,7 @@ let movieSchema = new mongoose.Schema({
 movieSchema.plugin(require('mongoose-autopopulate'));
 
 movieSchema.plugin(mongoosePaginate);
-movieSchema.pre("save", function (next) {
+movieSchema.pre("save", function(next) {
     if (this.name)
         this.name = this.name.trim();
     if (this.visualname)
@@ -103,7 +103,7 @@ movieSchema.pre("delete", (next) => {
         this.files.forEach(e => {
             try {
                 fs.unlinkSync("./" + e)
-                //file removed
+                    //file removed
             } catch (err) {
                 console.error(err)
             }

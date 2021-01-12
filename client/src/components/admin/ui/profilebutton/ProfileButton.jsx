@@ -19,39 +19,10 @@ class ProfileButton extends React.Component {
     }
 
     componentWillMount() {
-        var user = localStorage.getItem("userInfo");
-        let headers = {}
-        headers["x-access-token"] = '' + localStorage.getItem("utoken");
-        Axios.post("/api/admin/revalidsignin", { user }, {
-            headers: headers
-        })
-            .then(res => {
-                //this.setState({ loading: false });
-                if (res.status === 200) {
-                    localStorage.setItem("utoken", res.data.user.token);
 
-
-
-                    if (user || user != "null") {
-                        this.setState({
-                            user: JSON.parse(user)
-                        });
-
-                    }
-                } else {
-                    this.props.history.push('./admin/login');
-                }
-            })
-            .catch(error => {
-                console.log(error);
-
-                localStorage.setItem("userInfo", '');
-                localStorage.setItem("utoken", '');
-                this.props.history.push('/admin/login');
-
-            });
 
     }
+
     getSince = (date) => {
         try {
             date = new Date(date)

@@ -97,8 +97,6 @@ class Form extends React.Component {
         };
         if (updatedFormElement.optConfig && updatedFormElement.optConfig.multiple) {
             updatedFormElement.value = event.target.value;
-
-            //this.addOrRemove(updatedFormElement.value, event.target.value);
         } else
             if (event.target.type == 'file')
                 updatedFormElement.value = event.target.files[0];
@@ -114,28 +112,20 @@ class Form extends React.Component {
         }
         this.setState({ dataForm: updateddataForm, formIsValid: formIsValid });
     }
+
     haveFile() {
         for (let formElementIdentifier in this.state.dataForm) {
             if (this.state.dataForm[formElementIdentifier].value instanceof File) {
                 return true
             }
-
         }
     }
-
-    formHandler = (event) => {
-        event.preventDefault();
-        this.setState({ loading: true });
-        let headers = {}
+    captureData = () => {
         let data = new FormData();
-        let bool = this.haveFile();
-        headers["Content-Type"] = 'application/json';
-        headers["x-access-token"] = '' + localStorage.getItem("utoken");
-        if (bool) {
+        if (this.haveFile()) {
             for (let formElementIdentifier in this.state.dataForm) {
                 if (this.state.dataForm[formElementIdentifier].value instanceof File) {
                     data.append(formElementIdentifier, this.state.dataForm[formElementIdentifier].value, formElementIdentifier);
-                    headers["Content-Type"] = 'multipart/form-data';
                 } else {
                     data.append(formElementIdentifier, this.state.dataForm[formElementIdentifier].value);
                 }
@@ -146,29 +136,52 @@ class Form extends React.Component {
                 data[formElementIdentifier] = this.state.dataForm[formElementIdentifier].value;
             }
         }
-        console.log(data);
-
-        Axios.post(this.props.baseUrl, data, {
-            headers: headers
-        })
-            .then(response => {
-                //this.setState({ loading: false });
-                //this.props.history.push('/');
-                toastr["success"]("Saved")
-
-                this.cancelClick();
-            })
-            .catch(error => {
-                toastr["error"]("Error on save")
-                console.log(error);
-
-                //this.setState({ loading: false });
-            });
+        return data;
     }
+
+    formHandler = (event) => {
+        event.preventDefault();
+        let data = this.captureData();
+        this.sendForm(data);
+        this.cancelClick();
+
+    }
+
+    saveAndNew = () => {
+        let data = this.captureData();
+        this.sendForm(data);
+        document.getElementsByTagName('form')[0].reset();
+        this.setState({
+            dataForm: this.props.formField,
+            formIsValid: false,
+            loading: false
+        });
+    }
+
+    async sendForm(data) {
+        try {
+            this.setState({ loading: true });
+            let headers = {}
+            headers["Content-Type"] = 'application/json';
+            headers["x-access-token"] = '' + localStorage.getItem("utoken");
+            if (this.haveFile())
+                headers["Content-Type"] = 'multipart/form-data';
+
+            await Axios.post(this.props.baseUrl, data, {
+                headers: headers
+            });
+            toastr["success"]("Saved")
+            this.setState({ loading: false });
+        } catch (error) {
+            toastr["error"]("Error on save")
+            console.log(error);
+            this.setState({ loading: false });
+        }
+    }
+
 
     cancelClick = (event) => {
         this.props.history.go(-1);
-
     }
 
     mapToInput(formElement) {
@@ -212,7 +225,8 @@ class Form extends React.Component {
                 </div>
                 <div className="card-footer">
                     <button type="button" className="btn btn-danger mr-1" onClick={this.cancelClick}>Cancel</button>
-                    <button type="submit" className="btn btn-success" >Save</button>
+                    <button type="submit" className="btn btn-success mr-1" >Save</button>
+                    <button type="button" className="btn btn-info" onClick={this.saveAndNew} >Save and New</button>
                 </div>
             </form>
         );

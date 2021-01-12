@@ -183,7 +183,7 @@ class CrudView extends React.Component {
                         <div>
                             <div className="form-inline">
                                 <div className="input-group">
-                                    <input type="text" className="form-control" onKeyDown={this._handleKeyDown} value={this.state.search} onChange={this.handleChange} />
+                                    <input type="text" className="form-control form-control-sm" onKeyDown={this._handleKeyDown} value={this.state.search} onChange={this.handleChange} />
                                     <div className="input-group-append">
                                         <button className="btn btn-sm btn-danger" onClick={this.handleSearch} >Buscar </button>
 

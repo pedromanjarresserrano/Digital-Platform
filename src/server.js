@@ -1,4 +1,3 @@
-
 const express = require("express");
 const session = require('express-session');
 const app = new express();
@@ -12,9 +11,9 @@ var cors = require('cors')
 app.use(cors())
 
 app.use(session({
-	secret: 'secret',
-	resave: true,
-	saveUninitialized: true
+    secret: 'secret',
+    resave: true,
+    saveUninitialized: true
 }));
 
 app.use(bodyParser.json());
@@ -25,8 +24,8 @@ require('./routes')(app);
 require('./services/socket').init(app);
 
 
-app.get('*', function (req, res) {
-	res.sendFile('index.html', { root: path.join(__dirname, "/../public") });
+app.get('*', function(req, res) {
+    res.sendFile('index.html', { root: path.join(__dirname, "/../public") });
 })
 
 

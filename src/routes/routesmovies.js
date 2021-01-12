@@ -6,6 +6,8 @@ const config = require("../config/index")
 const attrname = "portada";
 const { saveFile } = require('../services/files');
 
+const { tokenValidator } = require('../controller/auth');
+const { loggerRequest } = require('../controller/logger');
 
 
 const update = async(req, res) => {
@@ -66,11 +68,7 @@ router.post('/', config.multer.single(attrname), async function(req, res) {
 });
 
 
-router.post('/:_id/like', likedOne);
-router.put('/:_id', update);
-
-
-router.post('/addcatgs', async function(req, res) {
+const addcatgs = async function(req, res) {
     try {
         console.log(req.body);
 
@@ -91,7 +89,42 @@ router.post('/addcatgs', async function(req, res) {
         console.log(error)
         res.status(500).send({ message: 'Error making post ' + error });
     }
-});
+}
+
+
+const addacts = async function(req, res) {
+    try {
+        console.log(req.body);
+
+
+        let list = await Collection.find({ _id: { $in: req.body.items } });
+
+        console.log(list);
+        list.forEach(item => {
+            req.body.value.forEach(async actor => {
+                if (item.reparto.map(e => e.toString()).join(',').indexOf(actor) == -1)
+                    item.reparto.push(new ObjectID(actor))
+
+                await Collection.findOneAndUpdate({ _id: item._id }, { $set: item }, { upsert: true, new: true, setDefaultsOnInsert: true, fields: '-__v' })
+
+            })
+        })
+
+        res.json({ message: 'All OK' })
+
+    } catch (error) {
+        console.log(error)
+        res.status(500).send({ message: 'Error making post ' + error });
+    }
+}
+
+
+router.post('/:_id/like', likedOne);
+router.put('/:_id', loggerRequest, tokenValidator, update);
+
+
+router.post('/addcatgs', loggerRequest, tokenValidator, addcatgs);
+router.post('/addacts', loggerRequest, tokenValidator, addacts);
 
 
 

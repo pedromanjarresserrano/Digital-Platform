@@ -1,0 +1,26 @@
+import axios from "axios";
+import { useHistory } from "react-router-dom";
+
+export const session = async (props) => {
+    const history = useHistory();
+    try {
+        var user = localStorage.getItem("userInfo");
+        let headers = {}
+        headers["x-access-token"] = '' + localStorage.getItem("utoken");
+        let res = await axios.post("/api/admin/revalidsignin", { user }, {
+            headers: headers
+        })
+        if (res.status === 200) {
+            localStorage.setItem("utoken", res.data.user.token);
+
+        } else {
+            history.push('./admin/login');
+        }
+    } catch (error) {
+        console.log(error);
+        localStorage.setItem("userInfo", '');
+        localStorage.setItem("utoken", '');
+        history.push('/admin/login');
+    }
+
+}

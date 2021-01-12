@@ -16,7 +16,7 @@ class Actor extends React.Component {
                 state: { item: this.props.item }
             }}>
                 <div className="m-1 bg-dark rounded h-100 d-flex flex-column justify-content-between" >
-                    <div className="h-100 d-flex flex-row justify-content-center">
+                    <div className="h-100 d-flex flex-row justify-content-center actor ">
                         <LazyLoadImage effect="blur"
                             wrapperClassName="img-fluid rounded-top"
                             src={this.props.item.imageAvatar} />

@@ -46,6 +46,7 @@ class Input extends React.Component {
             case ('input'):
                 return (<input
                     className="form-field"
+                    name={this.props.keyId}
                     {...this.props.elementConfig}
                     value={this.props.value}
                     required
@@ -54,6 +55,7 @@ class Input extends React.Component {
             case ('textarea'):
                 return (<textarea
                     className="form-field"
+                    name={this.props.keyId}
                     {...this.props.elementConfig}
                     value={this.props.value}
                     onChange={this.props.changed} />);
@@ -63,6 +65,7 @@ class Input extends React.Component {
                 return (
                     <select
                         className={(this.props.optConfig.multiple ? '' : "form-field") + 'select-field'}
+                        name={this.props.keyId}
                         value={this.props.value}
                         onChange={this.props.changed}
                         {...this.props.optConfig}
@@ -81,6 +84,7 @@ class Input extends React.Component {
                 return (
                     <Select
                         className={(this.props.optConfig.multiple ? '' : "form-field") + 'select-field'}
+                        name={this.props.keyId}
                         value={this.props.value}
                         onChange={this.props.changed}
                         renderValue={selected => {
@@ -109,7 +113,7 @@ class Input extends React.Component {
                         <img className="img-fluid" src={this.props.value instanceof File ? URL.createObjectURL(this.props.value) : this.props.value} {...this.props.elementConfig} />
                         <div className="input-group mb-3 mt-3" >
                             <div className="custom-file">
-                                <input type="file" id={"file-" + this.props.keyId} className="custom-file-input" onChange={this.props.changed} />
+                                <input type="file" id={"file-" + this.props.keyId} name={this.props.keyId} className="custom-file-input" onChange={this.props.changed} />
                                 <label htmlFor={"file-" + this.props.keyId} className="custom-file-label">Upload File</label>
                             </div>
                         </div>
@@ -120,6 +124,7 @@ class Input extends React.Component {
                     className="form-field"
                     {...this.props.elementConfig}
                     value={this.props.value}
+                    name={this.props.keyId}
                     onChange={this.props.changed} />);
         }
     }
