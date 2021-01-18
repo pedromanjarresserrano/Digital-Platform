@@ -22,6 +22,14 @@ class Modal extends React.Component {
         })
     }
 
+    onOk = () => {
+        if (this.props.onOkClick)
+            this.props.onOkClick();
+        this.setState({
+            show: false
+        })
+    }
+
     render() {
         return (<div className={(this.state.show ? "show d-block " : "") + "modal fade "} id="modal-default" aria-modal="true">
             <div className="modal-dialog">
@@ -37,7 +45,7 @@ class Modal extends React.Component {
                     </div>
                     <div className="modal-footer justify-content-between">
                         <button type="button" className={this.props.style && this.props.style.buttonCancel ? this.props.style.buttonCancel : "btn btn-default"} data-dismiss="modal" onClick={this.close}>Close</button>
-                        <button type="button" className={this.props.style && this.props.style.buttonOk ? this.props.style.buttonOk : "btn btn-primary"} onClick={this.onOkClick}>{this.props.okLabel}</button>
+                        <button type="button" className={this.props.style && this.props.style.buttonOk ? this.props.style.buttonOk : "btn btn-primary"} onClick={this.onOk}>{this.props.okLabel}</button>
                     </div>
                 </div>
 

@@ -15,8 +15,8 @@ import ToastContainer from './ui/toastcontainer/ToastContainer';
 import FooterAdmin from './footer/FooterAdmin';
 import { kbToSize, segFormat, dateFormat } from '../../utils/Utils';
 import Modal from './ui/modal/Modal';
-import { Chip, ListItemText, MenuItem, Select } from '@material-ui/core';
 import { session } from './session/Session';
+import { ShowAddModal } from './ui/modal/Funtions';
 
 toastr.options = {
     "closeButton": false,
@@ -538,156 +538,24 @@ export const Admin = ({ match }) => {
                                     className: "btn btn-sm btn-info",
                                     icon: 'fas fa-plus-square',
                                     onClick: async function (data) {
+                                        ShowAddModal('/api/categorias/all/-1', '/api/movies/addcatgs', data, "Add Categories");
                                         console.log(data);
-
-                                        let response = await Axios.get('/api/categorias/all/-1')
-                                        let value;
-                                        let headers = {}
-
-                                        headers["Content-Type"] = 'application/json';
-                                        headers["x-access-token"] = '' + localStorage.getItem("utoken");
-                                        ReactDOM.render(<Modal key={'rds-' + Math.random()} show="true" okLabel="Add"
-                                            content={
-                                                <select
-                                                    className={'select-field'}
-                                                    value={value}
-                                                    onChange={event => {
-                                                        value = event.target.value
-                                                    }}
-                                                >
-                                                    <option value='Select' disabled selected >
-                                                        Select Value
-                                                        </option>
-                                                    {
-                                                        response.data.map(option => (
-                                                            <option key={option._id} value={option._id}>
-                                                                {option.name}
-                                                            </option>
-                                                        ))
-
-                                                    }
-                                                </select>
-                                            }
-                                            title="Add Categorie"
-
-                                            onOkClick={event => {
-                                                console.log(value)
-                                                let { items } = data;
-
-                                                Axios.post('/api/movies/addcatgs', {
-                                                    items,
-                                                    value
-                                                }, {
-                                                    headers: headers
-                                                })
-                                                    .then((res => {
-                                                        toastr["success"]("Saved");
-                                                        close();
-                                                    }).bind(this))
-                                                    .catch(error => {
-                                                        toastr["error"]("Error on save");
-                                                        console.log(error);
-                                                    });
-                                            }
-
-                                            }
-
-
-                                            style={
-                                                {
-                                                    buttonOk: "btn btn-primary",
-                                                    buttonCancel: "btn btn-danger"
-                                                }
-                                            }
-                                        />, document.getElementById('modalcontainer'));
-
-
-
                                     }
                                 }, {
                                     name: "Add Actors",
                                     className: "btn btn-sm btn-warning",
                                     icon: 'fas fa-plus-square',
                                     onClick: async function (data) {
-
-                                        let response = await Axios.get('/api/actores/all/-1')
-                                        let value = [];
-                                        let headers = {}
-
-                                        headers["Content-Type"] = 'application/json';
-                                        headers["x-access-token"] = '' + localStorage.getItem("utoken");
-                                        ReactDOM.render(<Modal key={'rds-' + Math.random()} show="true" okLabel="Add"
-                                            content={
-                                                <Select
-                                                    className={'select-field'}
-                                                    value={value}
-                                                    onChange={event => {
-                                                        console.log(event.target.value);
-                                                        event.target.value.forEach(i => { if (value.indexOf(i)) value.push(i) })
-                                                    }}
-
-                                                    renderValue={selected => {
-                                                        console.log(value)
-
-                                                        return (<div className={'chips'}>
-                                                            {
-                                                                value.map(v => {
-                                                                    console.log(v)
-                                                                    return <Chip key={v} label={response.data.find(x => x._id === v).name} className={'chip'} />
-                                                                })
-                                                            }
-                                                        </div>)
-                                                    }
-                                                    }
-                                                    multiple={true}
-
-                                                >
-                                                    {
-                                                        response.data.map(function (item) {
-                                                            return (
-                                                                <MenuItem key={item._id} value={item._id}>
-                                                                    <ListItemText primary={item.name} />
-                                                                </MenuItem>
-                                                            );
-                                                        }, this)
-                                                    }
-                                                </Select>
-                                            }
-                                            title="Add Actors"
-
-                                            onOkClick={event => {
-                                                console.log(value)
-                                                let { items } = data;
-
-                                                Axios.post('/api/movies/addacts', {
-                                                    items,
-                                                    value
-                                                }, {
-                                                    headers: headers
-                                                })
-                                                    .then((res => {
-                                                        toastr["success"]("Saved");
-                                                        close();
-                                                    }).bind(this))
-                                                    .catch(error => {
-                                                        toastr["error"]("Error on save");
-                                                        console.log(error);
-                                                    });
-                                            }
-
-                                            }
-
-
-                                            style={
-                                                {
-                                                    buttonOk: "btn btn-primary",
-                                                    buttonCancel: "btn btn-danger"
-                                                }
-                                            }
-                                        />, document.getElementById('modalcontainer'));
-
-
-
+                                        ShowAddModal('/api/actores/all/-1', '/api/movies/addacts', data, "Add Actors");
+                                    }
+                                }, {
+                                    name: "Check CurrentPage",
+                                    className: "btn btn-sm btn-dark",
+                                    icon: 'fas fa-check-square',
+                                    onClick: async function (data) {
+                                        Array.from(document.getElementsByClassName('checkboxcrud')).forEach(e => {
+                                            e.checked = !e.checked;
+                                        })
                                     }
                                 }
                             ]}

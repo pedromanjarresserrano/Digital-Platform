@@ -2,6 +2,7 @@ import React from 'react';
 import CategoriesHome from '../categories/CategoriesHome';
 import Axios from 'axios';
 import ActorsHome from '../actors/ActorsHome';
+import './Home.css'
 
 class Home extends React.Component {
 
@@ -40,9 +41,12 @@ class Home extends React.Component {
     render() {
         return (
             <div>
-                {
-                    this.state.items.map((item) => <CategoriesHome key={Math.random()} item={item} />)
-                }
+
+                <div className="w-lg-1140 mx-auto">
+                    {
+                        this.state.items.map((item) => <CategoriesHome key={Math.random()} item={item} />)
+                    }
+                </div>
                 <ActorsHome items={this.state.actors} />
             </div>
         );

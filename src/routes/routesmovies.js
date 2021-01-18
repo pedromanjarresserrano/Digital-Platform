@@ -77,10 +77,12 @@ const addcatgs = async function(req, res) {
 
         console.log(list);
         list.forEach(async item => {
-            if (item.categorias.map(e => e.toString()).join(',').indexOf(req.body.value) == -1)
-                item.categorias.push(new ObjectID(req.body.value))
+            req.body.value.forEach(async cat => {
+                if (item.categorias.map(e => e.toString()).join(',').indexOf(cat) == -1)
+                    item.categorias.push(new ObjectID(cat))
 
-            await Collection.findOneAndUpdate({ _id: item._id }, { $set: item }, { upsert: true, new: true, setDefaultsOnInsert: true, fields: '-__v' })
+                await Collection.findOneAndUpdate({ _id: item._id }, { $set: item }, { upsert: true, new: true, setDefaultsOnInsert: true, fields: '-__v' })
+            })
         })
 
         res.json({ message: 'All OK' })

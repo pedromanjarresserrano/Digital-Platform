@@ -36,12 +36,16 @@ class CrudView extends React.Component {
             this.props.history.push('/admin/login');
 
         }
+        const values = queryString.parse(this.props.location.search);
 
         let page = this.props.match.params.page;
 
         page = page ? parseInt(page) : 1;
 
         var statesVal = { activePage: page }
+        if (values && values.search) {
+            statesVal.search = values.search;
+        }
 
         await this.setState(statesVal);
 
@@ -99,14 +103,6 @@ class CrudView extends React.Component {
     }
 
     async loadPage(page) {
-        const values = queryString.parse(this.props.location.search);
-
-
-        var statesVal = { activePage: page }
-        if (values && values.search)
-            statesVal.search = values.search;
-        statesVal.loading = true;
-        await this.setState(statesVal);
         let find = {
             name: { "$regex": ".*" + this.state.search + ".*", $options: 'i' }
         }
@@ -129,24 +125,26 @@ class CrudView extends React.Component {
         })
     }
 
-    handleSearch() {
+    handleSearch(event) {
+        debugger;
+        event.preventDefault();
         this.props.history.push({
-            pathname: this.props.location.pathname,
+            pathname: generatePath(this.props.match.path, { page: 1 }),
             search: '?search=' + this.state.search,
 
         })
+        this.loadPage(1);
 
     }
 
     handleChange(event) {
+        debugger;
         this.setState({ search: event.target.value });
-
     }
 
     _handleKeyDown = (e) => {
         if (e.key === 'Enter') {
             this.handleSearch();
-            this.loadPage(1);
 
         }
     }
@@ -181,16 +179,18 @@ class CrudView extends React.Component {
                             ) : ""}
                         </div>
                         <div>
-                            <div className="form-inline">
-                                <div className="input-group">
-                                    <input type="text" className="form-control form-control-sm" onKeyDown={this._handleKeyDown} value={this.state.search} onChange={this.handleChange} />
-                                    <div className="input-group-append">
-                                        <button className="btn btn-sm btn-danger" onClick={this.handleSearch} >Buscar </button>
+                            <form onSubmit={this.handleSearch}>
+                                <div className="form-inline">
+                                    <div className="input-group">
+                                        <input type="text" className="form-control form-control-sm" onKeyDown={this._handleKeyDown} value={this.state.search} onChange={this.handleChange} />
+                                        <div className="input-group-append">
+                                            <button className="btn btn-sm btn-danger" type='submit' >Buscar </button>
 
+                                        </div>
                                     </div>
-                                </div>
 
-                            </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                     <div className="table-responsive">
