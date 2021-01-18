@@ -543,10 +543,17 @@ export const Admin = ({ match }) => {
                                     }
                                 }, {
                                     name: "Add Actors",
-                                    className: "btn btn-sm btn-warning",
+                                    className: "btn btn-sm btn-warning ",
                                     icon: 'fas fa-plus-square',
                                     onClick: async function (data) {
                                         ShowAddModal('/api/actores/all/-1', '/api/movies/addacts', data, "Add Actors");
+                                    }
+                                }, {
+                                    name: "Set Studio",
+                                    className: "btn btn-sm text-light bg-secondary border border-dark",
+                                    icon: 'fas fa-plus-square',
+                                    onClick: async function (data) {
+                                        ShowAddModal('/api/studios/all/-1', '/api/movies/addsts', data, "Studio", false);
                                     }
                                 }, {
                                     name: "Check CurrentPage",

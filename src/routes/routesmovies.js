@@ -121,12 +121,39 @@ const addacts = async function(req, res) {
 }
 
 
+const addsts = async function(req, res) {
+    try {
+        console.log(req.body);
+
+
+        let list = await Collection.find({ _id: { $in: req.body.items } });
+
+        console.log(list);
+        list.forEach(async item => {
+            if (item.studio != -1)
+                item.studio = new ObjectID(req.body.value)
+
+            await Collection.findOneAndUpdate({ _id: item._id }, { $set: item }, { upsert: true, new: true, setDefaultsOnInsert: true, fields: '-__v' })
+
+
+        })
+
+        res.json({ message: 'All OK' })
+
+    } catch (error) {
+        console.log(error)
+        res.status(500).send({ message: 'Error making post ' + error });
+    }
+}
+
+
 router.post('/:_id/like', likedOne);
 router.put('/:_id', loggerRequest, tokenValidator, update);
 
 
 router.post('/addcatgs', loggerRequest, tokenValidator, addcatgs);
 router.post('/addacts', loggerRequest, tokenValidator, addacts);
+router.post('/addsts', loggerRequest, tokenValidator, addsts);
 
 
 

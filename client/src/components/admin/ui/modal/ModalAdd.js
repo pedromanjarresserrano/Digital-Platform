@@ -5,17 +5,22 @@ import Modal from './Modal';
 
 
 export default function ModalAdd(props) {
-    const [value, setValue] = React.useState([]);
-    const [response, setResponse] = React.useState({ data: [] });
+    let [value, setValue] = React.useState(props.multiple ? [] : '');
+    let [response, setResponse] = React.useState({ data: [] });
 
-    const {
+    let {
         urlData, urlPost, data, title, multiple
     } = props;
 
-    useEffect(async () => {
-        let res = await axios.get(urlData);
-        setResponse({ data: res.data });
-    }, []);
+    useEffect(() => {
+        async function fetchData() {
+            let res = await axios.get(urlData);
+            setResponse({ data: res.data });
+        }
+        fetchData();
+        return () => console.log('unmounting...');
+
+    }, [urlData]);
 
     let headers = {}
 
@@ -24,25 +29,21 @@ export default function ModalAdd(props) {
     return (
         <Modal key={'rds-' + Math.random()} show="true" okLabel="Add"
             content={
-                <FormControl>
+                <FormControl className='w-100'>
                     <Select
                         className={'select-field'}
                         value={value}
                         onChange={event => {
-                            console.log(event.target.value);
                             setValue(event.target.value);
-
                         }}
 
                         renderValue={selected => {
-                            console.log(value)
-
                             return (<div className={'chips'}>
                                 {
-                                    value.map(v => {
+                                    value.map ? value.map(v => {
                                         console.log(v)
                                         return <Chip key={v} label={response.data.find(x => x._id === v).name} className={'chip'} />
-                                    })
+                                    }) : response.data.find(x => x._id === value).name
                                 }
                             </div>)
                         }
@@ -53,9 +54,9 @@ export default function ModalAdd(props) {
                             response.data.map(function (item) {
                                 return (
                                     <MenuItem key={item._id} value={item._id}>
-                                        <Checkbox checked={value.indexOf(item._id) > -1} />
+                                        {props.multiple ? <Checkbox checked={value.indexOf(item._id) > -1} fontSize="small" /> : ''}
 
-                                        <ListItemText primary={item.name} />
+                                        <ListItemText primary={item.name} fontSize="small" />
                                     </MenuItem>
                                 );
                             }, this)
