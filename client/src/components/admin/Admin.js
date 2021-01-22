@@ -1,6 +1,5 @@
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom'
-import ReactDOM from 'react-dom';
 
 import Axios from 'axios';
 import HomeAdmin from './home/HomeAdmin';
@@ -14,7 +13,6 @@ import ToastContainer from './ui/toastcontainer/ToastContainer';
 
 import FooterAdmin from './footer/FooterAdmin';
 import { kbToSize, segFormat, dateFormat } from '../../utils/Utils';
-import Modal from './ui/modal/Modal';
 import { session } from './session/Session';
 import { ShowAddModal } from './ui/modal/Funtions';
 

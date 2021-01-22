@@ -20,7 +20,7 @@ export default function ModalAdd(props) {
         fetchData();
         return () => console.log('unmounting...');
 
-    }, [urlData]);
+    }, [urlData, value, title, data]);
 
     let headers = {}
 
