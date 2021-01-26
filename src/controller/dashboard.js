@@ -7,11 +7,11 @@ const getDashMovieInfo = async(req, res) => {
 
     try {
 
-        let listC = await Categories.find();
+        let listC = await Categories.find().limit(4);
         let result = [];
         for (let i = 0; i < listC.length; i++) {
             const c = listC[i];
-            let listM = await Movies.find({ categorias: { $all: [c] } }).limit(8);
+            let listM = await Movies.find({ categorias: { $all: [c] } }).sort({ created: -1 }).limit(8);
             if (listM.length > 0)
                 result.push({
                     _id: c,
