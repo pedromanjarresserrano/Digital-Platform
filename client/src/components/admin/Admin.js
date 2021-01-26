@@ -76,6 +76,7 @@ export const Admin = ({ match }) => {
                                     name: "Procesar",
                                     className: "btn btn-sm btn-warning",
                                     onClick: function (data) {
+                                        toastr['success']('Scanning');
                                         Axios.post("/api/movies/read", { path: data.url })
                                             .then(response => {
                                                 //this.setState({ loading: false });
@@ -83,6 +84,7 @@ export const Admin = ({ match }) => {
                                             })
                                             .catch(error => {
                                                 console.log(error);
+                                                toastr['error']('Error on scanning');
 
                                             });
                                         //   alert("Loading")
@@ -445,7 +447,7 @@ export const Admin = ({ match }) => {
                                         elementType: 'input',
                                         elementConfig: {
                                             type: 'text',
-                                            placeholder: 'Aka'
+                                            placeholder: 'bio'
                                         },
                                         optConfig: {},
                                         value: '',

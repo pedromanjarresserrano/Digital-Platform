@@ -37,6 +37,10 @@ let usuarioSchema = new mongoose.Schema({
     imageAvatar: {
         type: String,
         default: ""
+    },
+    status: {
+        type: String,
+        default: 'disable'
     }
 }, schemaOptions)
 
@@ -44,7 +48,7 @@ usuarioSchema.plugin(require('mongoose-autopopulate'));
 
 usuarioSchema.plugin(mongoosePaginate);
 
-usuarioSchema.pre("save", function (next) {
+usuarioSchema.pre("save", function(next) {
     if (!this.isModified("password")) {
         return next();
     }
@@ -52,7 +56,7 @@ usuarioSchema.pre("save", function (next) {
     next();
 });
 
-usuarioSchema.methods.comparePassword = async function (plaintext) {
+usuarioSchema.methods.comparePassword = async function(plaintext) {
     return await Bcrypt.compareSync(plaintext, this.password);
 };
 

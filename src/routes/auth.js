@@ -5,9 +5,10 @@ const {
     validSign,
     tokenValidator
 } = require('../controller/auth');
+const { loggerRequest } = require('../controller/logger');
 
-router.post("/signin", authSign);
-router.post("/revalidsignin", tokenValidator, validSign);
+router.post("/signin", loggerRequest, authSign);
+router.post("/revalidsignin", loggerRequest, tokenValidator, validSign);
 
 
 

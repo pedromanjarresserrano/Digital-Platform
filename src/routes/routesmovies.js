@@ -147,7 +147,7 @@ const addsts = async function(req, res) {
 }
 
 
-router.post('/:_id/like', likedOne);
+router.post('/:_id/like', loggerRequest, likedOne);
 router.put('/:_id', loggerRequest, tokenValidator, update);
 
 

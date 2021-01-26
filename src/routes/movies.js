@@ -6,9 +6,10 @@ const models = require('../models');
 const ffmpeg = require('fluent-ffmpeg');
 const service = require('../services/movie');
 var process = 0;
-const socketServer = require("../services/socket").serverIO
+const socketServer = require("../services/socket").serverIO;
+const { loggerRequest } = require('../controller/logger');
 
-router.post('/', async function(req, res) {
+router.post('/', loggerRequest, async function(req, res) {
     let paths = req.body.path;
     if (process == 0) {
         process++;

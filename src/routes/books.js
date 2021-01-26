@@ -4,9 +4,10 @@ const path = require('path');
 const fs = require('fs');
 const models = require('../models');
 var process = 0;
-const socketServer = require("../services/socket").socketServer
+const socketServer = require("../services/socket").socketServer;
+const { loggerRequest } = require('../controller/logger');
 
-router.post('/', async function (req, res) {
+router.post('/', loggerRequest, async function(req, res) {
     let paths = req.body.path;
     if (process == 0) {
         process++;

@@ -1,4 +1,5 @@
 const express = require('express');
+const { loggerRequest } = require('../controller/logger');
 const router = express.Router();
 
 const { storeWithOriginalName } = require('../services/files');
@@ -8,7 +9,7 @@ const multer = require('multer')({
 });
 
 
-router.post('/', multer.single('attachment'), function (req, res, next) {
+router.post('/', loggerRequest, multer.single('attachment'), function(req, res, next) {
     return storeWithOriginalName(req.file)
         .then(encodeURIComponent)
         .then(encoded => {

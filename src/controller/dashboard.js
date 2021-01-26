@@ -3,7 +3,7 @@ const Movies = models.moviemodel;
 const Actors = models.actormodel;
 const Categories = models.categoriamodel;
 
-const getDashMovieInfo = async (req, res) => {
+const getDashMovieInfo = async(req, res) => {
 
     try {
 
@@ -11,7 +11,7 @@ const getDashMovieInfo = async (req, res) => {
         let result = [];
         for (let i = 0; i < listC.length; i++) {
             const c = listC[i];
-            let listM = await Movies.find({ categorias: { $all: [c] } }).limit(16);
+            let listM = await Movies.find({ categorias: { $all: [c] } }).limit(8);
             if (listM.length > 0)
                 result.push({
                     _id: c,
@@ -28,7 +28,7 @@ const getDashMovieInfo = async (req, res) => {
     }
 }
 
-const getDashActorsInfo = async (req, res) => {
+const getDashActorsInfo = async(req, res) => {
     try {
         let result = await Actors.find({}).sort({ updated: -1 }).limit(12)
 
