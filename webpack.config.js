@@ -13,8 +13,7 @@ module.exports = {
         extensions: ['.js', '.jsx']
     },
     module: {
-        rules: [
-            {
+        rules: [{
                 test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
                 use: {
@@ -26,11 +25,9 @@ module.exports = {
             },
             {
                 test: /\.html$/,
-                use: [
-                    {
-                        loader: "html-loader"
-                    }
-                ]
+                use: [{
+                    loader: "html-loader"
+                }]
             },
             {
                 test: /\.css$/i,
@@ -38,12 +35,10 @@ module.exports = {
             },
             {
                 test: /\.(png|jpe?g|gif|svg)$/,
-                use: [
-                    {
-                        loader: 'file-loader',
-                        options: {},
-                    },
-                ],
+                use: [{
+                    loader: 'file-loader',
+                    options: {},
+                }, ],
             }
         ]
     },

@@ -82,7 +82,13 @@ class SidebarAdmin extends React.Component {
                                         </Link>
 
                                     </li>
+                                    <li className="nav-item">
+                                        <Link className="nav-item nav-link " to="/studios">
+                                            <i className="far fa-circle nav-icon"></i>
+                                            <p>Studios</p>
+                                        </Link>
 
+                                    </li>
                                     <li className="nav-item">
                                         <Link className="nav-item nav-link " to="/actors">
                                             <i className="far fa-circle nav-icon"></i>
