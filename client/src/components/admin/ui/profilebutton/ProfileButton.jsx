@@ -1,13 +1,16 @@
 
 
-import React from 'react';
+import React, { useContext } from 'react';
 import './ProfileButton.css';
 import { withRouter } from "react-router";
 import Axios from 'axios';
+import { types } from '../../types/types';
+import { AuthContext } from '../../auth/AuthContext';
 const months = ["Jan", "Fer", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Ded"];
 
 
 class ProfileButton extends React.Component {
+    static contextType = AuthContext;
 
     constructor(props) {
         super(props);
@@ -35,6 +38,12 @@ class ProfileButton extends React.Component {
 
     signOut = () => {
         localStorage.setItem("userInfo", null);
+        localStorage.setItem("utoken", null);
+        const { dispatch } = this.context;
+
+        dispatch({
+            type: types.logout
+        });
         this.props.history.push('/admin/login');
     }
 
