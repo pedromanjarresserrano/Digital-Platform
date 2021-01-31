@@ -1,6 +1,5 @@
-import Axios from 'axios';
 import React from 'react';
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import { session } from '../session/Session';
 
 class SidebarAdmin extends React.Component {
@@ -16,7 +15,7 @@ class SidebarAdmin extends React.Component {
     }
 
     onClickHandler(event) {
-        session();
+        session(this.props.history);
 
         const currentTarget = event.currentTarget;
         document.querySelectorAll(".nav-link").forEach(e => e.classList.remove("active"));
@@ -182,4 +181,4 @@ class SidebarAdmin extends React.Component {
 
 }
 
-export default SidebarAdmin;
+export default withRouter(SidebarAdmin);
