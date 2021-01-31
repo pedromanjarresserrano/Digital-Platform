@@ -15,6 +15,7 @@ import FooterAdmin from './footer/FooterAdmin';
 import { kbToSize, segFormat, dateFormat } from '../../utils/Utils';
 import { session } from './session/Session';
 import { ShowAddModal } from './ui/modal/Funtions';
+import { fixFull } from './movies/MoviesFunctions';
 
 toastr.options = {
     "closeButton": false,
@@ -563,6 +564,13 @@ export const Admin = ({ match }) => {
                                         Array.from(document.getElementsByClassName('checkboxcrud')).forEach(e => {
                                             e.checked = !e.checked;
                                         })
+                                    }
+                                }, {
+                                    name: "Full fixes",
+                                    className: "btn btn-sm btn-success",
+                                    icon: 'fas fa-check-square',
+                                    onClick: async function (data) {
+                                        fixFull();
                                     }
                                 }
                             ]}

@@ -1,4 +1,5 @@
 const express = require('express');
+const { tokenValidator } = require('../controller/auth');
 const {
     specialName,
     fullfixes
@@ -6,8 +7,8 @@ const {
 const { loggerRequest } = require('../controller/logger');
 let router = express.Router();
 
-router.get("/specialnames", loggerRequest, specialName);
-router.get("/fullfixes", loggerRequest, fullfixes);
+router.get("/specialnames", loggerRequest, tokenValidator, specialName);
+router.get("/fullfixes", loggerRequest, tokenValidator, fullfixes);
 
 
 

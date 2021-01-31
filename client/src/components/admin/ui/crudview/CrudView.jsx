@@ -126,7 +126,6 @@ class CrudView extends React.Component {
     }
 
     handleSearch(event) {
-        debugger;
         event.preventDefault();
         this.props.history.push({
             pathname: generatePath(this.props.match.path, { page: 1 }),
@@ -138,7 +137,6 @@ class CrudView extends React.Component {
     }
 
     handleChange(event) {
-        debugger;
         this.setState({ search: event.target.value });
     }
 
