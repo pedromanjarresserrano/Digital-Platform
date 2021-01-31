@@ -1,11 +1,11 @@
 #Digital-Platform
 Demo 
 
-https://movie-platform.herokuapp.com/
+https://digital-platform.herokuapp.com/
 
 Admin
 
-https://movie-platform.herokuapp.com/admin
+https://digital-platform.herokuapp.com/admin
 
 User: test@test.com
 Pass: 1234
