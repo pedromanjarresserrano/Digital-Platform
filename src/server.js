@@ -1,17 +1,14 @@
 const express = require("express");
 const session = require('express-session');
 const app = new express();
-const db = require('./utils/db');
-const port = process.env.PORT || 3000;
 const path = require('path');
 const bodyParser = require('body-parser');
 var cors = require('cors')
 
-
 app.use(cors())
 
 app.use(session({
-    secret: 'secret',
+    secret: process.env.SECRETSESSION || 'secret',
     resave: true,
     saveUninitialized: true
 }));
@@ -29,4 +26,4 @@ app.get('*', function(req, res) {
 })
 
 
-app.listen(port, () => console.log(`Listening on port ${port}`));
+module.exports = app;

@@ -1,0 +1,31 @@
+{
+    "movie": {
+        "visualname": "Movie1",
+        "name": "name1",
+        "updated": "01/02/2021",
+        "created": "01/02/2021",
+        "url": "/path/to/movie",
+        "duration": 2000,
+        "description": "test description",
+        "like": 4000,
+        "view": 10000,
+        "size": 20000345,
+        "year": 2021,
+        "quality": 2046,
+        "director": "director1",
+        "guion": "guion de test",
+        "reparto": [],
+        "studio": null,
+        "categorias": [],
+        "portada": "",
+        "files": [
+            "file1"
+        ]
+    },
+    "user": {
+        "name": "admin",
+        "username": "test@test.com",
+        "email": "test@test.com",
+        "password": "1234"
+    }
+}

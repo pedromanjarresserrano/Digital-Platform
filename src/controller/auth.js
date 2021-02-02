@@ -1,14 +1,10 @@
-const express = require('express');
-let router = express.Router();
 const models = require('../models');
 const users = models.usuariomodel;
 const jwt = require('jsonwebtoken');
-const expressJwt = require('express-jwt');
-const { Usuario } = require('../models').usuariomodel;
 
 const secret = process.env.SECRETTOKEN || "secret";
 
-const authSign = async (req, res) => {
+const authSign = async(req, res) => {
     try {
         const { email, password } = req.body;
         let user = await users.findOne({ email });
@@ -27,8 +23,8 @@ const authSign = async (req, res) => {
                 imageAvatar: user.imageAvatar,
                 token: token,
                 password: "true"
-            }
-            , message: "The username and password combination is correct!"
+            },
+            message: "The username and password combination is correct!"
         });
     } catch (error) {
         console.log(error);
@@ -37,13 +33,13 @@ const authSign = async (req, res) => {
     }
 }
 
-const validSign = async (req, res) => {
+const validSign = async(req, res) => {
     const user = req.user;
     user.password = "true";
     const token = jwt.sign({ id: user._id }, secret, {
         expiresIn: 60 * 60 * 24
     })
-    
+
     res.send({
         user: {
             email: user.email,
@@ -51,11 +47,12 @@ const validSign = async (req, res) => {
             imageAvatar: user.imageAvatar,
             token: token,
             password: "true"
-        }, message: "New token generated"
+        },
+        message: "New token generated"
     });
 }
 
-const tokenValidator = async (req, res, next) => {
+const tokenValidator = async(req, res, next) => {
 
     const token = req.headers["x-access-token"]
     if (!token)
