@@ -1,5 +1,3 @@
-var moment = require('moment');
-
 export const kbToSize = (kb, decimals = 2) => {
     if (kb === 0) return '0 Bytes';
 

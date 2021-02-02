@@ -7,7 +7,7 @@
         "dev": "npm-run-all --parallel watch:server watch:build",
         "watch:build": "webpack --watch client/",
         "watch:server": "nodemon -r dotenv/config --inspect src/server.js",
-        "build": "./node_modules/.bin/webpack -p",
+        "building": "./node_modules/.bin/webpack -p",
         "test": "jest --forceExit",
         "start": "node src/server.js "
     },
