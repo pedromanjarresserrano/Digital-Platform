@@ -9,7 +9,11 @@ const authSign = async(req, res) => {
         const { email, password } = req.body;
         let user = await users.findOne({ email });
         if (!user) return res.status(400).send("The data send not macth with any user");
-        const match = user.comparePassword(password);
+        if (!password) {
+            return res.status(400).send({ message: "The data send not macth with any user" });
+        }
+
+        const match = await user.comparePassword(password);
         if (!match) {
             return res.status(400).send({ message: "The data send not macth with any user" });
         }
@@ -28,8 +32,7 @@ const authSign = async(req, res) => {
         });
     } catch (error) {
         console.log(error);
-
-        res.status(500).send(error);
+        return res.status(500).send({ message: error });
     }
 }
 

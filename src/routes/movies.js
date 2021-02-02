@@ -10,16 +10,20 @@ const socketServer = require("../services/socket").serverIO;
 const { loggerRequest } = require('../controller/logger');
 
 router.post('/', loggerRequest, async function(req, res) {
-    let paths = req.body.path;
-    if (process == 0) {
-        process++;
-        let files = getFiles(path.join(paths));
-        files = files.filter(e => e.endsWith(".mp4"));
-        await createMovie(files, paths, res);
-    } else {
-        res.send({ msg: "Already running" })
+    try {
+        let paths = req.body.path;
+        if (process == 0) {
+            process++;
+            let files = getFiles(path.join(paths));
+            files = files.filter(e => e.endsWith(".mp4"));
+            await createMovie(files, paths, res);
+        } else {
+            res.send({ msg: "Already running" })
+        }
+    } catch (error) {
+        process = 0;
+        res.status(502).send(error);
     }
-
 })
 
 router.get("/progress", (req, res) => {
