@@ -48,7 +48,8 @@ actorSchema.pre("save", function(next) {
 
 const updateDate = (next) => {
     try {
-        this.updated = Date.now;
+        if (this)
+            this.updated = Date.now;
         next();
     } catch (error) {
         return next(error);

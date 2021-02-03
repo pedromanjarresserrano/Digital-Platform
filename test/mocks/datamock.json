@@ -1,7 +1,7 @@
 {
     "movie": {
-        "visualname": "Movie1",
-        "name": "name1",
+        "visualname": "",
+        "name": "name1.12.12.34.test.sdf",
         "updated": "01/02/2021",
         "created": "01/02/2021",
         "url": "/path/to/movie",
@@ -27,5 +27,32 @@
         "username": "test@test.com",
         "email": "test@test.com",
         "password": "1234"
+    },
+    "book": {
+        "visualname": "Book1",
+        "name": "name1",
+        "updated": "01/02/2021",
+        "created": "01/02/2021",
+        "url": "/path/to/movie",
+        "description": "test description",
+        "like": 4000,
+        "view": 10000,
+        "pages": 20000345,
+        "year": 2021,
+        "processed": false,
+        "writer": "guion de test",
+        "categorias": [],
+        "portada": "",
+        "files": [
+            "file1"
+        ]
+    },
+    "actor": {
+        "name": "test ",
+        "updated": "01/01/2021",
+        "aka": "aka",
+        "edad": 12,
+        "imageAvatar": "   ",
+        "bio": "  "
     }
 }

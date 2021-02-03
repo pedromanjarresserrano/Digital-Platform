@@ -1,5 +1,5 @@
 const request = require('supertest');
-const { moviemodel, usuariomodel } = require('../src/models');
+const { moviemodel, usuariomodel, actormodel } = require('../src/models');
 
 let mongoose = require('mongoose');
 const app = require('../src/server');
@@ -9,7 +9,9 @@ const mongoUrl = 'mongodb://127.0.0.1:27017/digital-test'
 const fs = require('fs');
 let datamock = JSON.parse(fs.readFileSync(__dirname + '/mocks/datamock.json'));
 let movie = datamock.movie;
+let book = datamock.book;
 let user = datamock.user;
+let actor = datamock.actor;
 var token;
 
 
@@ -19,8 +21,11 @@ const server = app.listen(PORT)
 beforeAll(async() => {
     mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true })
     await moviemodel.deleteMany({});
+    await actormodel.deleteMany({});
     await usuariomodel.deleteMany({});
+
     await usuariomodel.create(user);
+    await actormodel.create(actor);
     await request(server)
         .post('/api/admin/signin')
         .send({ email: user.email, password: user.password })
@@ -29,6 +34,16 @@ beforeAll(async() => {
             token = res.body.user.token;
         });
 })
+
+
+
+afterAll(done => {
+    mongoose.connection.db.dropDatabase(() => {
+        mongoose.connection.close(() => done())
+    })
+    server.close();
+})
+
 
 test("POST /api/admin/signin", async() => {
     await request(server)
@@ -328,12 +343,52 @@ test("POST /movie/read", async() => {
         .post("/api/movies/read")
         .send({ path: "./" })
         .expect(200)
+
+
 })
 
 
-afterAll(done => {
-    mongoose.connection.db.dropDatabase(() => {
-        mongoose.connection.close(() => done())
-    })
-    server.close();
+test("POST /books/read", async() => {
+
+    await request(server)
+        .post("/api/books/read")
+        .send({})
+        .expect(502)
+
+    await request(server)
+        .post("/api/books/read")
+        .send({ path: "./" })
+        .expect(200)
+
+
+})
+
+
+test("GET /fixes/specialnames", async() => {
+    await request(server)
+        .get("/api/fixes/specialnames")
+        .set('x-access-token', token)
+        .expect(200)
+        .then((res) => {
+
+            expect(res.body).toBeTruthy();
+            expect(res.body.msg).toBe("ok");
+        })
+
+
+})
+
+
+test("GET /fixes/fullfixes", async() => {
+    await request(server)
+        .get("/api/fixes/fullfixes")
+        .set('x-access-token', token)
+        .expect(200)
+        .then((res) => {
+
+            expect(res.body).toBeTruthy();
+            expect(res.body.msg).toBe("ok");
+        })
+
+
 })

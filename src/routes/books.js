@@ -8,13 +8,18 @@ const socketServer = require("../services/socket").socketServer;
 const { loggerRequest } = require('../controller/logger');
 
 router.post('/', loggerRequest, async function(req, res) {
-    let paths = req.body.path;
-    if (process == 0) {
-        process++;
-        let files = getDirs(path.join(paths));
-        await createBook(files, res);
-    } else {
-        res.send({ msg: "Already running" })
+    try {
+        let paths = req.body.path;
+        if (process == 0) {
+            process++;
+            let files = getDirs(path.join(paths));
+            await createBook(files, res);
+        } else {
+            res.send({ msg: "Already running" })
+        }
+    } catch (error) {
+        process = 0;
+        res.status(502).send(error);
     }
 
 })
@@ -68,10 +73,8 @@ async function createBook(files, res) {
         try {
 
             let file = files[i];
-            console.log(file);
             let n = file.split("/");
             let nameFile = n[n.length - 1];
-            console.log(nameFile);
             let movie = await models.bookmodel.findOne({ name: nameFile });
             try {
                 process = Math.floor((i + 1) * 100 / (size), 0)
@@ -92,7 +95,7 @@ async function createBook(files, res) {
                     });
             }
         } catch (error) {
-            console.log(error);
+            //   console.log(error);
             continue
         }
     }
