@@ -19,7 +19,11 @@ jobs:
             - node_modules
       - run:
           name: test
-          command: npm run test
+          command: npm run coverage
+      
+      - store_artifacts:
+          path: coverage
+
 workflows:
   # The workflow version
   version: 2.1

@@ -9,7 +9,7 @@
         "watch:server": "nodemon -r dotenv/config --inspect src/app.js",
         "building": "./node_modules/.bin/webpack -p",
         "test": "jest --forceExit",
-        "coverage": "jest --coverage --forceExit",
+        "coverage": "jest --coverage --collectCoverage=true --forceExit",
         "start": "node src/app.js "
     },
     "author": "Pedrioko",
