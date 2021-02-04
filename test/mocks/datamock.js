@@ -1,7 +1,7 @@
-{
+module.exports = {
     "movie": {
         "visualname": "",
-        "name": "name1.12.12.34.test.sdf",
+        "name": "std24.name1.12.34.test.sdf.and.test2",
         "updated": "01/02/2021",
         "created": "01/02/2021",
         "url": "/path/to/movie",
@@ -28,6 +28,15 @@
         "email": "test@test.com",
         "password": "1234"
     },
+    "category": {
+        "name": "sdf",
+        "updated": "01/02/2021",
+        "created": "01/02/2021",
+        "image": "test@test.com",
+        "imagenes": [
+            "1234"
+        ]
+    },
     "book": {
         "visualname": "Book1",
         "name": "name1",
@@ -48,11 +57,33 @@
         ]
     },
     "actor": {
-        "name": "test ",
+        "name": "test",
         "updated": "01/01/2021",
         "aka": "aka",
         "edad": 12,
         "imageAvatar": "   ",
         "bio": "  "
+    },
+    "actor2": {
+        "name": "test maria",
+        "updated": "01/01/2021",
+        "aka": "aka",
+        "edad": 12,
+        "imageAvatar": "   ",
+        "bio": "  "
+    },
+    "actor3": {
+        "name": "test2",
+        "updated": "01/01/2021",
+        "aka": "aka",
+        "edad": 12,
+        "imageAvatar": "   ",
+        "bio": "  "
+    },
+    "studio": {
+        "name": "std24",
+        "updated": "01/02/2021",
+        "created": "01/02/2021",
+        "image": "   ",
     }
 }

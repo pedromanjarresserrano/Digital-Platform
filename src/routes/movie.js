@@ -46,7 +46,7 @@ router.get('/:_id', loggerRequest, async function(req, res) {
 
 
     } catch (error) {
-        res.send({ msg: "error", error })
+        res.status(502).send({ msg: "error", error })
     }
 });
 

@@ -1,6 +1,6 @@
 #Digital-Platform  
 [![CircleCI](https://circleci.com/gh/circleci/circleci-docs.svg?style=svg)](https://app.circleci.com/pipelines/github/Pedrioko/Digital-Platform)
-[![Heroku](https://heroku-badge.herokuapp.com/?app=digital-platform)]
+![Heroku](https://heroku-badge.herokuapp.com/?app=digital-platform)
 
 Demo 
 

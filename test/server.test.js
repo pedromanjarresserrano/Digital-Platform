@@ -7,11 +7,15 @@ const PORT = 9001;
 const mongoUrl = 'mongodb://127.0.0.1:27017/digital-test'
 
 const fs = require('fs');
-let datamock = JSON.parse(fs.readFileSync(__dirname + '/mocks/datamock.json'));
+let datamock = require('./mocks/datamock.js');
 let movie = datamock.movie;
 let book = datamock.book;
 let user = datamock.user;
 let actor = datamock.actor;
+let actor2 = datamock.actor2;
+let actor3 = datamock.actor3;
+let category = datamock.category;
+let studio = datamock.studio;
 var token;
 
 
@@ -25,7 +29,6 @@ beforeAll(async() => {
     await usuariomodel.deleteMany({});
 
     await usuariomodel.create(user);
-    await actormodel.create(actor);
     await request(server)
         .post('/api/admin/signin')
         .send({ email: user.email, password: user.password })
@@ -109,7 +112,105 @@ test("GET /index", async() => {
 
 })
 
+test("POST /actores", async() => {
+    await request(server)
+        .post("/api/actores")
+        .set('x-access-token', token)
+        .send(actor)
+        .expect(200)
+
+    await request(server)
+        .post("/api/actores")
+        .set('x-access-token', token)
+        .send(actor2)
+        .expect(200)
+    await request(server)
+        .post("/api/actores")
+        .set('x-access-token', token)
+        .send(actor3)
+        .expect(200)
+
+
+})
+
+
+test("POST /categorias", async() => {
+    await request(server)
+        .post("/api/categorias")
+        .set('x-access-token', token)
+        .send({})
+        .expect(500)
+
+    await request(server)
+        .post("/api/categorias")
+        .set('x-access-token', token)
+        .send(category)
+        .expect(200)
+
+})
+
+
+test("POST /studios", async() => {
+    await request(server)
+        .post("/api/studios")
+        .set('x-access-token', token)
+        .send({})
+        .expect(500)
+
+    await request(server)
+        .post("/api/studios")
+        .set('x-access-token', token)
+        .send(studio)
+        .expect(200)
+
+})
+
+
+test("POST /books", async() => {
+
+    await request(server)
+        .post("/api/books")
+        .set('x-access-token', token)
+        .send({})
+        .expect(502)
+
+    await request(server)
+        .post("/api/books")
+        .set('x-access-token', token)
+        .send(book)
+        .expect(200)
+
+})
+
+
 test("POST /movie", async() => {
+
+    await request(server)
+        .post("/api/movies")
+        .set('x-access-token', token)
+        .send({})
+        .expect(500)
+
+    await request(server)
+        .post("/api/movies")
+        .set('x-access-token', token)
+        .send(movie)
+        .expect(200)
+
+
+})
+
+
+
+test("POST /movie", async() => {
+
+    await request(server)
+        .post("/api/movies")
+        .set('x-access-token', token)
+        .send({})
+        .expect(500)
+
+
     await request(server)
         .post("/api/movies")
         .set('x-access-token', token)
@@ -129,7 +230,6 @@ test("GET /movie/all", async() => {
 
             expect(response.body[0].visualname).toBe(movie.visualname);
             expect(response.body[0].name).toBe(movie.name);
-            expect(response.body[0].updated).toBe(new Date(movie.updated).toISOString());
             expect(response.body[0].url).toBe(movie.url);
             expect(response.body[0].size).toBe(movie.size);
 
@@ -149,7 +249,6 @@ test("GET /movie/all", async() => {
 
             expect(response.body.itemsList[0].visualname).toBe(movie.visualname);
             expect(response.body.itemsList[0].name).toBe(movie.name);
-            expect(response.body.itemsList[0].updated).toBe(new Date(movie.updated).toISOString());
             expect(response.body.itemsList[0].url).toBe(movie.url);
             expect(response.body.itemsList[0].size).toBe(movie.size);
 
@@ -162,6 +261,11 @@ test("GET /movie/all", async() => {
 
 test("POST /movie/all", async() => {
     await request(server)
+        .post("/api/movies/all/-10000")
+        .send({})
+        .expect(502)
+
+    await request(server)
         .post("/api/movies/all/-1")
         .send({})
         .expect(200)
@@ -171,7 +275,6 @@ test("POST /movie/all", async() => {
 
             expect(response.body[0].visualname).toBe(movie.visualname);
             expect(response.body[0].name).toBe(movie.name);
-            expect(response.body[0].updated).toBe(new Date(movie.updated).toISOString());
             expect(response.body[0].url).toBe(movie.url);
             expect(response.body[0].size).toBe(movie.size);
 
@@ -191,7 +294,6 @@ test("POST /movie/all", async() => {
 
             expect(response.body.itemsList[0].visualname).toBe(movie.visualname);
             expect(response.body.itemsList[0].name).toBe(movie.name);
-            expect(response.body.itemsList[0].updated).toBe(new Date(movie.updated).toISOString());
             expect(response.body.itemsList[0].url).toBe(movie.url);
             expect(response.body.itemsList[0].size).toBe(movie.size);
 
@@ -221,7 +323,6 @@ test("GET /movie/id", async() => {
 
                     expect(response.body.visualname).toBe(movie.visualname);
                     expect(response.body.name).toBe(movie.name);
-                    expect(response.body.updated).toBe(new Date(movie.updated).toISOString());
                     expect(response.body.url).toBe(movie.url);
                     expect(response.body.size).toBe(movie.size);
 
@@ -251,7 +352,6 @@ test("POST /movie/fo", async() => {
 
                     expect(response.body.visualname).toBe(movie.visualname);
                     expect(response.body.name).toBe(movie.name);
-                    expect(response.body.updated).toBe(new Date(movie.updated).toISOString());
                     expect(response.body.url).toBe(movie.url);
                     expect(response.body.size).toBe(movie.size);
 
@@ -391,4 +491,88 @@ test("GET /fixes/fullfixes", async() => {
         })
 
 
+})
+
+
+
+test("GET /dashboard/movies", async() => {
+    await request(server)
+        .get("/api/dashboard/movies")
+        .set('x-access-token', token)
+        .expect(200)
+        .then((res) => {
+            expect(res.body).toBeTruthy();
+            expect(res.body.msg).toBe("ok");
+
+            expect(res.body.result.length).toEqual(1);
+            expect(res.body.result[0].movies).toBeTruthy();
+            expect(res.body.result[0].movies.length).toEqual(1);
+
+            expect(res.body.result[0].movies[0].name).toEqual(movie.name);
+            expect(res.body.result[0].movies[0].view).toEqual(movie.view);
+            expect(res.body.result[0].movies[0].size).toEqual(movie.size);
+            expect(res.body.result[0].movies[0].like).toEqual(movie.like + 1);
+
+        })
+
+
+})
+
+
+
+test("GET /dashboard/actors", async() => {
+    await request(server)
+        .get("/api/dashboard/actors")
+        .set('x-access-token', token)
+        .expect(200)
+        .then((res) => {
+            console.log(res.body);
+            expect(res.body).toBeTruthy();
+            expect(res.body.msg).toBe("ok");
+            expect(res.body.result).toBeTruthy();
+            expect(res.body.result.length).toEqual(3);
+            expect(res.body.result[0].name).toEqual(actor3.name);
+            expect(res.body.result[1].name).toEqual(actor2.name);
+            expect(res.body.result[2].name).toEqual(actor.name);
+
+        })
+
+
+})
+
+
+
+test("GET /movie", async() => {
+
+    await request(server)
+        .get("/api/movie/" + 12345)
+        .set('x-access-token', token)
+        .expect(502)
+        .then((res) => {
+            console.log(res.body);
+            expect(res.body).toBeTruthy();
+            expect(res.body.msg).toEqual("error");
+
+        });
+
+    await request(server)
+        .post("/api/movies/all/1")
+        .send({})
+        .expect(200)
+        .then(async(response) => {
+            expect(Array.isArray(response.body.itemsList)).toBeTruthy();
+            expect(response.body.itemsList.length).toEqual(1);
+            let _id = response.body.itemsList[0]._id;
+
+            await request(server)
+                .get("/api/movie/" + _id)
+                .set('x-access-token', token)
+                .expect(502)
+                .then((res) => {
+                    expect(res.body).toBeTruthy();
+                    expect(res.body.msg).toEqual("error");
+                });
+
+
+        });
 })
