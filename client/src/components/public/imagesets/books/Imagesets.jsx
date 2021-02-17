@@ -1,15 +1,14 @@
 import React from 'react';
-import Movie from '../movie/Movie'
 import axios from 'axios';
 import { generatePath } from "react-router";
-import './Books.css';
+import './Imagesets.css';
 import Pagination from "react-js-pagination";
 import { RotateCircleLoading } from 'react-loadingg';
 import queryString from 'query-string'
-import Book from '../book/Book';
-import { Constants } from '../common/Constants';
+import { Constants } from '../../common/Constants';
+import Imageset from '../imageset/Imageset';
 
-class Books extends React.Component {
+class Imagesets extends React.Component {
 
     constructor(props) {
         super(props)
@@ -102,7 +101,7 @@ class Books extends React.Component {
         if (cats.length > 0)
             find.categorias = cats.map(e => e._id);
 
-        axios.post('/api/books/all/' + page, find)
+        axios.post('/api/imagesets/all/' + page, find)
             .then(response => {
                 this.setState({
                     items: response.data.itemsList,
@@ -204,7 +203,7 @@ class Books extends React.Component {
                                     :
                                     <div className="d-flex justify-content-between flex-row flex-wrap p-1 mw-1200  w-100 mx-auto">                                    {
                                         this.state.items.map((item, index) =>
-                                            <Book item={item} index={index} />
+                                            <Imageset item={item} index={index} />
                                             , this)
                                     }
 
@@ -228,4 +227,4 @@ class Books extends React.Component {
     }
 }
 
-export default Books;
+export default Imagesets;

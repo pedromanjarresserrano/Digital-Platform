@@ -6,6 +6,7 @@ import './Catalog.css';
 import Pagination from "react-js-pagination";
 import { RotateCircleLoading } from 'react-loadingg';
 import queryString from 'query-string'
+import { Constants } from '../common/Constants';
 
 class Catalog extends React.Component {
 
@@ -191,7 +192,7 @@ class Catalog extends React.Component {
                             activePage={this.state.activePage}
                             totalItemsCount={this.state.itemCount}
                             itemsCountPerPage={this.state.pageSize}
-                            pageRangeDisplayed={9}
+                            pageRangeDisplayed={Constants.PUBLIC.PAGE_VISIBLE_COUNT}
                             onChange={this.onPageChanged} />
                         <div className="filter-list">
                             {
@@ -216,7 +217,7 @@ class Catalog extends React.Component {
                                 activePage={this.state.activePage}
                                 totalItemsCount={this.state.itemCount}
                                 itemsCountPerPage={this.state.pageSize}
-                                pageRangeDisplayed={9}
+                                pageRangeDisplayed={Constants.PUBLIC.PAGE_VISIBLE_COUNT}
                                 onChange={this.onPageChanged} />
                         </div>
                     </div>

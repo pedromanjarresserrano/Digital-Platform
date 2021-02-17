@@ -5,6 +5,7 @@ import Movie from '../../movie/Movie'
 import { generatePath } from "react-router";
 import RotateCircleLoading from 'react-loadingg/lib/RotateCircleLoading';
 import Pagination from 'react-js-pagination';
+import { Constants } from '../../common/Constants';
 
 class ActorDetails extends React.Component {
 
@@ -114,7 +115,7 @@ class ActorDetails extends React.Component {
             totalItemsCount={itemCount}
             itemsCountPerPage={pageSize}
             activePage={this.state.activePage}
-            pageRangeDisplayed={9}
+            pageRangeDisplayed={Constants.PUBLIC.PAGE_VISIBLE_COUNT}
             onChange={this.onPageChanged} />
 
         </div>

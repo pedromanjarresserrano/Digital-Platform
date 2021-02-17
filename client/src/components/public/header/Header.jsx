@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
-
+import './Header.css';
 class Header extends React.Component {
     componentWillMount() {
         //console.log(this)
@@ -8,6 +8,7 @@ class Header extends React.Component {
 
     handlerClick = (value) => {
         document.title = "Digital Plaform " + value;
+        $('.navbar-collapse').collapse('hide');
     }
 
     render() {
@@ -18,7 +19,10 @@ class Header extends React.Component {
                     <span className="navbar-toggler-icon"></span>
                 </button>
                 <div className="collapse navbar-collapse d-lg-flex flex-lg-row-reverse" id="navbarNavAltMarkup">
-                    <div className="navbar-nav">
+                    <div className="navbar-nav bg-dark">
+                        <li class="d-inline d-lg-none">
+                            <button data-toggle="collapse" data-target="#navbarNavAltMarkup" class="close float-right">&times;</button>
+                        </li>
                         <Link className="nav-item nav-link " to="/home" onClick={() => this.handlerClick("")}>Home</Link>
                         <Link className="nav-item nav-link " to="/catalog" onClick={() => this.handlerClick("- Catalog")}>Catalog</Link>
                         <Link className="nav-item nav-link " to="/categories" onClick={() => this.handlerClick("- Categories")}>Categories</Link>

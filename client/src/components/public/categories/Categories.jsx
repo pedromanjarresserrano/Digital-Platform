@@ -4,6 +4,7 @@ import Categorie from '../categorie/Categorie';
 import Pagination from 'react-js-pagination';
 import RotateCircleLoading from 'react-loadingg/lib/RotateCircleLoading';
 import { generatePath } from 'react-router-dom';
+import { Constants } from '../common/Constants';
 
 class Categories extends React.Component {
 
@@ -73,7 +74,7 @@ class Categories extends React.Component {
                         activePage={this.state.activePage}
                         totalItemsCount={itemCount}
                         itemsCountPerPage={pageSize}
-                        pageRangeDisplayed={9}
+                        pageRangeDisplayed={Constants.PUBLIC.PAGE_VISIBLE_COUNT}
                         onChange={this.onPageChanged} />
                     <div className="filter-list d-flex flex-row justify-content-center">
                         {
@@ -98,7 +99,7 @@ class Categories extends React.Component {
                         activePage={this.state.activePage}
                         totalItemsCount={itemCount}
                         itemsCountPerPage={pageSize}
-                        pageRangeDisplayed={9}
+                        pageRangeDisplayed={Constants.PUBLIC.PAGE_VISIBLE_COUNT}
                         onChange={this.onPageChanged} />
 
                 </div>

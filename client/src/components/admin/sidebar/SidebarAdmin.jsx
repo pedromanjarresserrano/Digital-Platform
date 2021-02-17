@@ -128,7 +128,8 @@ class SidebarAdmin extends React.Component {
                                         Movies
                                     </p>
                                 </Link>
-                            </li>                            <li className="nav-item">
+                            </li> 
+                                                       <li className="nav-item">
                                 <Link className="nav-link " to="/admin/books" onClick={this.onClickHandler}>
                                     <i className="nav-icon fas fa-bookmark"></i>
                                     <p>
@@ -137,6 +138,14 @@ class SidebarAdmin extends React.Component {
                                 </Link>
                             </li>
                             <li className="nav-item">
+                                <Link className="nav-link " to="/admin/imagesets" onClick={this.onClickHandler}>
+                                    <i className="nav-icon fas fa-image"></i>
+                                    <p>
+                                        Imagesets
+                                    </p>
+                                </Link>
+                            </li>
+                             <li className="nav-item">
                                 <Link className="nav-link " to="/admin/studios" onClick={this.onClickHandler}>
                                     <i className="nav-icon fas fa-dungeon"></i>
                                     <p>

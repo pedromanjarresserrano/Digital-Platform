@@ -1024,6 +1024,239 @@ export const Admin = ({ match, ...rest }) => {
                                 />)} />
 
 
+                            <Route key="crud-imagesets-1" exact path={`${match.path}/imagesets`} render={(props) => (<Redirect to={`${match.path}/imagesets/1`}   {...props} />)} />
+
+                            <Route key="crud-imagesets"
+                                exact path={`${match.path}/imagesets/:page`} render={(props) => (<CrudView {...props}
+                                    headers={[{
+                                        name: "name",
+                                        label: "Nombre"
+                                    }, {
+                                        name: "visualname",
+                                        label: "Visual Name"
+                                    }, {
+                                        name: "like",
+                                        label: "Like"
+                                    }, {
+                                        name: "view",
+                                        label: "Views"
+                                    }, {
+                                        name: "pages",
+                                        label: "Pages"
+                                    }, {
+                                        name: "year",
+                                        label: "Year"
+                                    }, {
+                                        name: "writer",
+                                        label: "Writer"
+                                    }, {
+                                        name: "portada",
+                                        label: "Imagen portada"
+                                    }, {
+                                        name: "created",
+                                        label: "Creado",
+                                        converter: function (value) {
+                                            return dateFormat(value)
+                                        }
+                                    }, {
+                                        name: "updated",
+                                        label: "Actualizado",
+                                        converter: function (value) {
+                                            return dateFormat(value)
+                                        }
+                                    }]}
+                                    baseRoute={`${match.path}/imagesets/imageset`}
+                                    baseUrl={'/api/imagesets'}
+
+                                />)} />
+                            <Route key="form-imagesets" exact path={`${match.path}/imagesets/imageset/:action/:id`} render={(props) => (
+                                <Form {...props}
+                                    formField={{
+                                        name: {
+                                            elementType: 'input',
+                                            elementConfig: {
+                                                type: 'text',
+                                                placeholder: 'Movie Name'
+                                            },
+                                            optConfig: {},
+                                            value: '',
+                                            validation: {
+                                                required: true
+                                            },
+                                            valid: false,
+                                            touched: false,
+                                            label: 'Name',
+                                            inline: true
+                                        },
+                                        visualname: {
+                                            elementType: 'input',
+                                            elementConfig: {
+                                                type: 'text',
+                                                placeholder: 'Visualname Name'
+                                            },
+                                            optConfig: {},
+                                            value: '',
+                                            validation: {
+                                                required: false
+                                            },
+                                            valid: false,
+                                            touched: false,
+                                            label: 'Visual Name',
+                                            inline: true
+                                        },
+                                        url: {
+                                            elementType: 'input',
+                                            elementConfig: {
+                                                type: 'text',
+                                                placeholder: 'url of file'
+                                            },
+                                            optConfig: {},
+                                            value: '',
+                                            validation: {
+                                                required: true
+                                            },
+                                            valid: false,
+                                            touched: false,
+                                            label: 'File URL',
+                                            inline: true
+                                        },
+                                        duration: {
+                                            elementType: 'input',
+                                            elementConfig: {
+                                                type: 'number',
+                                                placeholder: 'Duration',
+                                                step: "any"
+                                            },
+                                            optConfig: {},
+                                            value: '',
+                                            validation: {
+                                                required: false
+                                            },
+                                            valid: false,
+                                            touched: false,
+                                            label: 'Duration',
+                                            inline: true
+                                        },
+                                        like: {
+                                            elementType: 'input',
+                                            elementConfig: {
+                                                type: 'number',
+                                                placeholder: 'Likes'
+                                            },
+                                            optConfig: {},
+                                            value: '',
+                                            validation: {
+                                                required: false
+                                            },
+                                            valid: false,
+                                            touched: false,
+                                            label: 'Likes',
+                                            inline: true
+                                        },
+                                        view: {
+                                            elementType: 'input',
+                                            elementConfig: {
+                                                type: 'number',
+                                                placeholder: 'View'
+                                            },
+                                            optConfig: {},
+                                            value: '',
+                                            validation: {
+                                                required: false
+                                            },
+                                            valid: false,
+                                            touched: false,
+                                            label: 'View',
+                                            inline: true
+                                        },
+                                        pages: {
+                                            elementType: 'input',
+                                            elementConfig: {
+                                                type: 'number',
+                                                placeholder: 'Pages',
+                                                step: "any"
+                                            },
+                                            optConfig: {},
+                                            value: '',
+                                            validation: {
+                                                required: false
+                                            },
+                                            valid: false,
+                                            touched: false,
+                                            label: 'Size file',
+                                            inline: true
+                                        },
+                                        year: {
+                                            elementType: 'input',
+                                            elementConfig: {
+                                                type: 'number',
+                                                placeholder: 'Year'
+                                            },
+                                            optConfig: {},
+                                            value: '',
+                                            validation: {
+                                                required: false
+                                            },
+                                            valid: false,
+                                            touched: false,
+                                            label: 'Year',
+                                            inline: true
+                                        },
+                                        writer: {
+                                            elementType: 'input',
+                                            elementConfig: {
+                                                type: 'text',
+                                                placeholder: 'Writer'
+                                            },
+                                            optConfig: {},
+                                            value: '',
+                                            validation: {
+                                                required: false
+                                            },
+                                            valid: false,
+                                            touched: false,
+                                            label: 'Quality',
+                                            inline: true
+                                        },
+                                        categorias: {
+                                            elementType: 'select-model',
+                                            elementConfig: {},
+                                            optConfig: {
+                                                multiple: true
+                                            },
+                                            apiUrlModel: '/api/categorias/all/-1',
+                                            value: [],
+                                            uiValue: {},
+                                            validation: {
+                                                required: false
+                                            },
+                                            valid: false,
+                                            touched: false,
+                                            labelField: 'name',
+                                            label: 'Categorias',
+                                            inline: true
+                                        },
+                                        portada: {
+                                            elementType: 'file-image',
+                                            elementConfig: {
+                                                alt: 'Imagen portada'
+                                            },
+                                            value: '',
+                                            validation: {
+                                                required: false
+                                            },
+                                            valid: false,
+                                            touched: false,
+                                            label: '',
+                                            inline: false
+                                        }
+                                    }
+                                    }
+                                    baseUrl={'/api/imagesets'}
+                                    formTitle={'Imageset data'}
+                                />)} />
+
+
                             <Route key="not-found-path" exact path={`${match.path}/*`} component={NotFound} />
                         </Switch>
                     </div>

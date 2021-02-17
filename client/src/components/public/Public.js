@@ -18,6 +18,9 @@ import Studios from './studios/studios/Studios.jsx';
 import StudioDetails from './studios/categorie-details/StudioDetails.jsx';
 import Books from './books/Books.jsx';
 import BookDetails from './book-details/BookDetails';
+import Imageset from './imagesets/imageset/Imageset.jsx';
+import ImagesetDetails from './imagesets/imageset-details/ImagesetDetails.jsx';
+import Imagesets from './imagesets/imagesets/Imagesets.jsx';
 export const Public = ({ match }) => (
     <React.Fragment>
         <Header />
@@ -48,11 +51,17 @@ export const Public = ({ match }) => (
             <Route key="actorn" exact path="/actors/actor/:name" render={(props) => (<Redirect to={"/actors/actor/" + props.match.params.name + "/1"}  {...props} />)} />
             <Route key="actornp" exact path="/actors/actor/:name/:page" component={ActorDetails} />
 
-
+            
             <Route key="list-books" exact path="/books" render={(props) => (<Redirect to="/books/1"  {...props} />)} />
             <Route key="list-books-p" exact path="/books/:page" component={Books} />
             <Route key="booksb" exact path="/books/book" render={(props) => (<Redirect to="/books/1"  {...props} />)} />
             <Route key="book" exact path="/books/book/:id" component={BookDetails} />
+
+
+            <Route key="list-imagesets" exact path="/imagesets" render={(props) => (<Redirect to="/imagesets/1"  {...props} />)} />
+            <Route key="list-imagesets-p" exact path="/imagesets/:page" component={Imagesets} />
+            <Route key="imagesetsb" exact path="/imagesets/imageset" render={(props) => (<Redirect to="/imagesets/1"  {...props} />)} />
+            <Route key="imageset" exact path="/imagesets/imageset/:id" component={ImagesetDetails} />
            
             <Route exact path="/index" component={Home} />
             <Route exact path="*" component={NotFound} />

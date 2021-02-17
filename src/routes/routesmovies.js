@@ -5,6 +5,7 @@ const Collection = require('../models').moviemodel;
 const config = require("../config/index")
 const attrname = "portada";
 const { saveFile } = require('../services/files');
+const fs = require('fs')
 
 const { tokenValidator } = require('../controller/auth');
 const { loggerRequest } = require('../controller/logger');
@@ -158,12 +159,42 @@ const addsts = async function(req, res) {
     }
 }
 
+const remove = async(req, res) => {
+    console.log('New delete movie');
+    try {
+        let doc = await Collection.findById(req.params._id);
+        if (doc.files) {
+
+            doc.files.forEach(file => {
+                let path = "./public/" + file;
+                fs.unlink(path, (err) => {
+                    if (err) {
+                        console.error(err)
+                        return
+                    }
+
+                    console.log("file " + file + " removed");
+                })
+            })
+        }
+
+        await Collection.deleteOne({ _id: req.params._id });
+        res.sendStatus(200);
+    } catch (error) {
+        console.log(error);
+        res.status(502).send(error);
+    }
+
+
+
+};
 
 router.post('/:_id/like', loggerRequest, likedOne);
 router.put('/:_id', loggerRequest, tokenValidator, update);
 router.post('/addcatgs', loggerRequest, tokenValidator, addcatgs);
 router.post('/addacts', loggerRequest, tokenValidator, addacts);
 router.post('/addsts', loggerRequest, tokenValidator, addsts);
+router.delete('/:_id', loggerRequest, tokenValidator, remove);
 
 
 

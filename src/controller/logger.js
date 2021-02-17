@@ -1,5 +1,5 @@
 const loggerRequest = (req, res, next) => {
-    console.log(req.protocol.toUpperCase() + ":" + req.method + ": " + req.ip + " - " + req.originalUrl);
+    console.log(req.protocol.toUpperCase() + ":" + req.method + ": " + req.ip + " - " + req.originalUrl + "   " + new Date());
     next()
 }
 

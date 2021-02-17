@@ -5,6 +5,7 @@ import Movie from '../movie/Movie'
 import RotateCircleLoading from 'react-loadingg/lib/RotateCircleLoading';
 import Pagination from 'react-js-pagination';
 import { generatePath } from 'react-router-dom';
+import { Constants } from '../common/Constants';
 
 class CategorieDetails extends React.Component {
 
@@ -96,7 +97,7 @@ class CategorieDetails extends React.Component {
             totalItemsCount={itemCount}
             itemsCountPerPage={pageSize}
             activePage={this.state.activePage}
-            pageRangeDisplayed={9}
+            pageRangeDisplayed={Constants.PUBLIC.PAGE_VISIBLE_COUNT}
             onChange={this.onPageChanged} />
 
         </div>

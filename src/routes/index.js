@@ -6,6 +6,7 @@ module.exports = (app) => {
     app.use('/api/movies', require('./routesmovies'));
     app.use('/api/movies', require('./crud')(models.moviemodel, { created: -1 }));
     app.use('/api/books', require('./crud')(models.bookmodel, { created: -1 }));
+    app.use('/api/imagesets', require('./crud')(models.imagesetmodel, { created: -1 }));
     app.use('/api/studios', require('./routesfile')(models.studioSchema, 'image', 'name'));
     app.use('/api/studios', require('./crud')(models.studioSchema, { name: "asc" }));
     app.use('/api/actores', require('./routesfile')(models.actormodel, 'imageAvatar', 'name'));
@@ -16,10 +17,12 @@ module.exports = (app) => {
     app.use('/api/location', require('./crud')(models.locationmodel, { name: "asc" }));
     app.use('/api/movies/read', require('./movies'));
     app.use('/api/books/read', require('./books'));
+    app.use('/api/imageset/read', require('./imageset'));
     app.use('/api/admin', require('./auth'));
 
     app.use('/file', require('./file'));
     app.use('/api/dashboard', require('./dashboard'));
     app.use('/api/fixes', require('./fixes'));
     app.use('/api/book/page', require('./bookpage'));
+    app.use('/api/imageset/page', require('./imagesetpage'));
 }

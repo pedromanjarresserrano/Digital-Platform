@@ -4,6 +4,7 @@ import Actor from '../actor/Actor';
 import Pagination from 'react-js-pagination';
 import { generatePath } from "react-router";
 import RotateCircleLoading from 'react-loadingg/lib/RotateCircleLoading';
+import { Constants } from '../../common/Constants';
 
 class Actors extends React.Component {
 
@@ -80,7 +81,7 @@ class Actors extends React.Component {
                             activePage={this.state.activePage}
                             totalItemsCount={itemCount}
                             itemsCountPerPage={pageSize}
-                            pageRangeDisplayed={9}
+                            pageRangeDisplayed={Constants.PUBLIC.PAGE_VISIBLE_COUNT}
                             onChange={this.onPageChanged} />
                         <div className="filter-list d-flex flex-row justify-content-center">
                             {
@@ -105,7 +106,7 @@ class Actors extends React.Component {
                             activePage={this.state.activePage}
                             totalItemsCount={itemCount}
                             itemsCountPerPage={pageSize}
-                            pageRangeDisplayed={9}
+                            pageRangeDisplayed={Constants.PUBLIC.PAGE_VISIBLE_COUNT}
                             onChange={this.onPageChanged} />
 
                     </div>
