@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom'
 
@@ -18,9 +17,8 @@ import Studios from './studios/studios/Studios.jsx';
 import StudioDetails from './studios/categorie-details/StudioDetails.jsx';
 import Books from './books/Books.jsx';
 import BookDetails from './book-details/BookDetails';
-import Imageset from './imagesets/imageset/Imageset.jsx';
-import ImagesetDetails from './imagesets/imageset-details/ImagesetDetails.jsx';
-import Imagesets from './imagesets/imagesets/Imagesets.jsx';
+import ImagesetDetails from './imagesets/imageset-details/ImagesetDetails';
+import Imagesets from './imagesets/imagesets/Imagesets';
 export const Public = ({ match }) => (
     <React.Fragment>
         <Header />
