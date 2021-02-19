@@ -18,11 +18,12 @@ router.post('/', loggerRequest, async function(req, res) {
             files = files.filter(e => e.endsWith(".mp4"));
             await createMovie(files, paths, res);
         } else {
-            res.send({ msg: "Already running" })
+            return res.send({ msg: "Already running" })
         }
     } catch (error) {
         process = 0;
-        res.status(502).send(error);
+        console.log(error)
+        return res.status(502).send(error);
     }
 })
 
@@ -65,11 +66,11 @@ async function createMovie(files, paths, res) {
     res.send({ length: size });
     for (let i = 0; i < size; i++) {
         try {
-
             let file = files[i];
             let n = file.split("/");
             let nameFile = n[n.length - 1].split(".mp4")[0];
             let movie = await models.moviemodel.findOne({ name: nameFile });
+
             try {
                 process = Math.floor((i + 1) * 100 / (size), 0)
                 socketServer.io.emit("RMF", { process, name: nameFile })
@@ -90,12 +91,21 @@ async function createMovie(files, paths, res) {
                     });
             }
             movie.url = file;
+
+
             await generatefiles(movie, [metadata.width, metadata.height]);
+
         } catch (error) {
-            console.log(error);
+            //  console.log(error);
             continue
         }
     }
+    var list = await models.moviemodel.find({ files: { $exists: true, $eq: [] } })
+    list.forEach(async e => {
+        console.log('Deleting');
+        console.log(e._id);
+        await models.moviemodel.deleteOne({ _id: e._id })
+    })
     process = 0;
 }
 
