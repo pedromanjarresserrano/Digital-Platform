@@ -70,13 +70,18 @@ async function createMovie(files, paths, res) {
             let n = file.split("/");
             let nameFile = n[n.length - 1].split(".mp4")[0];
             let movie = await models.moviemodel.findOne({ name: nameFile });
-
             try {
                 process = Math.floor((i + 1) * 100 / (size), 0)
                 socketServer.io.emit("RMF", { process, name: nameFile })
             } catch (error) {
                 console.log(error);
             }
+            if (movie && movie.files && movie.files.length == 10) {
+
+                await models.moviemodel.findOneAndUpdate({ _id: movie._id }, { url: file })
+                continue
+            }
+
             let metadata = await getMovieInfo(file);
             if (!movie) {
                 metadata = metadata.streams[0];
@@ -102,8 +107,6 @@ async function createMovie(files, paths, res) {
     }
     var list = await models.moviemodel.find({ files: { $exists: true, $eq: [] } })
     list.forEach(async e => {
-        console.log('Deleting');
-        console.log(e._id);
         await models.moviemodel.deleteOne({ _id: e._id })
     })
     process = 0;
