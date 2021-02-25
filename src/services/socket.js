@@ -12,7 +12,7 @@ module.exports = {
                 origin: '*',
             }
         });
-        server.listen(3001);
+        server.listen(process.env.WSPORT || 3001);
 
         serverIO.io.on("connection", (socket) => {
             socketServer["socket"] = socket;

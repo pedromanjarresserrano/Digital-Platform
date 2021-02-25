@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "dev": "npm-run-all --parallel watch:server watch:build",
-        "watch:build": "webpack --watch client/",
+        "watch:build": "webpack  -r dotenv/config --watch client/",
         "watch:server": "nodemon -r dotenv/config --inspect src/app.js",
         "building": "./node_modules/.bin/webpack -p",
         "test": "jest --forceExit",
