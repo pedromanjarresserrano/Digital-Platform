@@ -1,7 +1,6 @@
 let fs = require('fs')
 let express = require('express');
 const models = require('../models');
-const { log } = require('console');
 const { loggerRequest } = require('../controller/logger');
 let router = express.Router();
 
