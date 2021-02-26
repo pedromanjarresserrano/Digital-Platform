@@ -8,10 +8,10 @@ module.exports = (Collection, attrname, uniqueattrname) => {
 
     const router = express.Router();
 
-    router.post('/', loggerRequest, tokenValidator, config.multer.single(attrname), async function (req, res) {
+    router.post('/', loggerRequest, tokenValidator, config.multer.single(attrname), async function(req, res) {
         try {
             const find = {};
-            find[uniqueattrname] = req.body[uniqueattrname];
+            find[uniqueattrname] = req.body[uniqueattrname].trim();
             let doc = await Collection.findOne(find)
             if (!doc) {
                 doc = await Collection.create(req.body)
@@ -35,6 +35,3 @@ module.exports = (Collection, attrname, uniqueattrname) => {
 
     return router;
 }
-
-
-

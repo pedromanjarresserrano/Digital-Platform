@@ -69,7 +69,12 @@ async function createMovie(files, paths, res) {
             let file = files[i];
             let n = file.split("/");
             let nameFile = n[n.length - 1].split(".mp4")[0];
-            let movie = await models.moviemodel.findOne({ name: nameFile });
+            let movie = await models.moviemodel.findOne({
+                $or: [
+                    { name: nameFile.trim() },
+                    { url: { "$regex": nameFile, "$options": "i" } }
+                ]
+            });
             try {
                 process = Math.floor((i + 1) * 100 / (size), 0)
                 socketServer.io.emit("RMF", { process, name: nameFile })
@@ -101,7 +106,6 @@ async function createMovie(files, paths, res) {
             await generatefiles(movie, [metadata.width, metadata.height]);
 
         } catch (error) {
-            //  console.log(error);
             continue
         }
     }

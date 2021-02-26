@@ -1,5 +1,6 @@
 let mongoose = require('mongoose');
 const Users = require('../models/usuario')
+const Movies = require('../models/movie')
 
 class Database {
     constructor() {
@@ -25,6 +26,14 @@ class Database {
                         password: "1234"
                     })
                 }
+
+                let res = await Movies.aggregate([
+                    { "$group": { "_id": "$name", "count": { "$sum": 1 } } },
+                    { "$match": { "_id": { "$ne": null }, "count": { "$gt": 1 } } },
+                    { "$project": { "name": "$_id", "_id": 0 } }
+                ]);
+
+                console.log(res);
             })
             .catch(err => {
                 console.error('Database connection error')
