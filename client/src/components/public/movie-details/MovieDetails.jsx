@@ -11,6 +11,7 @@ import Axios from 'axios';
 import { Link } from 'react-router-dom'
 import Actor from '../actors/actor/Actor';
 import { segFormat } from '../../../utils/Utils';
+import { BrowserUtils } from '../common/BrowserUtils';
 
 
 class MovieDetails extends React.Component {
@@ -25,6 +26,8 @@ class MovieDetails extends React.Component {
       vol: vol
     }
   }
+
+
   //--------------------------------------------------------------
   componentWillMount() {
     let id = (this.props.location.state) ? this.props.location.state.item._id : this.props.match.params.id;
@@ -144,7 +147,7 @@ class MovieDetails extends React.Component {
                       </div>
                       <div className="studio">
                         <span>Estudio: </span>
-                        <span>{this.state.item.studio ? <Link className="text-white" to={"/studios/studio/" + this.state.item.studio.name}>{this.state.item.studio.name}</Link> : ''}</span>
+                        <span>{this.state.item.studio ? <Link className="badge badge-pill badge-dark text-white" to={"/studios/studio/" + this.state.item.studio.name}>{this.state.item.studio.name}</Link> : ''}</span>
                       </div>
                     </div>
                     <div className="category">

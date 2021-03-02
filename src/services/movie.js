@@ -31,7 +31,7 @@ async function generatePreviews(params) {
 
 const getScreenShot = (url, nameFile, porcent, width, height) => {
     return new Promise((resolve, reject) => {
-        return ffmpeg({ source: url, nolog: true })
+        return ffmpeg({ source: url, nolog: true, timeout: 1 })
             .on('error', async function(err) {
                 console.log('an error happened: ' + err.message);
                 return reject(err.message);

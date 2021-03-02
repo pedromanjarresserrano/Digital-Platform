@@ -1,6 +1,7 @@
 let mongoose = require('mongoose')
 const mongoosePaginate = require('mongoose-paginate-v2');
 const fs = require('fs')
+const _ = require('underscore');
 
 const schemaOptions = {
     autoCreate: true,
@@ -39,6 +40,10 @@ let movieSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
+    unique_views: [{
+        type: String,
+        default: []
+    }],
     size: {
         type: Number,
         default: 0
@@ -85,18 +90,35 @@ let movieSchema = new mongoose.Schema({
 
 }, schemaOptions)
 
-movieSchema.plugin(require('mongoose-autopopulate'));
+let check = function(next) {
+    console.log("Checking movie.......");
+    console.log(this.unique_views);
 
-movieSchema.plugin(mongoosePaginate);
-movieSchema.pre("save", function(next) {
     if (this.name)
         this.name = this.name.trim();
     if (this.visualname)
         this.visualname = this.visualname.trim();
     if (this.description)
         this.description = this.description.trim();
+    this.unique_views = _.uniq(this.unique_views);
+    this.view = this.unique_views.length;
+
+    console.log(this.unique_views);
+
     next();
-});
+}
+
+
+movieSchema.plugin(require('mongoose-autopopulate'));
+
+movieSchema.plugin(mongoosePaginate);
+
+
+movieSchema.pre("save", check);
+movieSchema.pre("update", check);
+movieSchema.pre("updateOne", check);
+movieSchema.pre("findByIdAndUpdate", check);
+movieSchema.pre("findOneAndUpdate", check);
 
 movieSchema.pre("delete", (next) => {
     if (this.files) {
@@ -111,6 +133,7 @@ movieSchema.pre("delete", (next) => {
     }
     next();
 });
+
 
 
 module.exports = mongoose.model('Movie', movieSchema)

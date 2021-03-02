@@ -5,6 +5,7 @@ import Pagination from 'react-js-pagination';
 import { generatePath } from "react-router";
 import RotateCircleLoading from 'react-loadingg/lib/RotateCircleLoading';
 import { Constants } from '../../common/Constants';
+import { BrowserUtils } from '../../common/BrowserUtils';
 
 class Actors extends React.Component {
 
@@ -55,7 +56,7 @@ class Actors extends React.Component {
     }
 
     loadPage(page) {
-        axios.get('/api/actores/all/' + page)
+        axios.get('/api/actores/all/' + page + (BrowserUtils.isMobile() == true ? '?chunk=24' : ''))
             .then(response => {
                 console.log(response);
                 this.setState({
@@ -93,7 +94,7 @@ class Actors extends React.Component {
                                         {
                                             this.state.items.map(function (item) {
                                                 return (
-                                                    <div className="w-100 w-m-20" key={item._id} >
+                                                    <div className="w-m-20 w-50" key={item._id} >
                                                         <Actor item={item} />
                                                     </div>
                                                 );

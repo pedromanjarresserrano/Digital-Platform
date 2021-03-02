@@ -252,6 +252,21 @@ export const Admin = ({ match, ...rest }) => {
                                             touched: false,
                                             label: 'Name',
                                             inline: true
+                                        }, alias: {
+                                            elementType: 'input',
+                                            elementConfig: {
+                                                type: 'text',
+                                                placeholder: 'Categoria alias'
+                                            },
+                                            optConfig: {},
+                                            value: '',
+                                            validation: {
+                                                required: false
+                                            },
+                                            valid: false,
+                                            touched: false,
+                                            label: 'Alias',
+                                            inline: true
                                         },
                                         image: {
                                             elementType: 'file-image',

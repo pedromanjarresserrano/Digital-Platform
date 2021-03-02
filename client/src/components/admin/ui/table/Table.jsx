@@ -7,6 +7,23 @@ class Table extends React.Component {
         super(props);
     }
 
+    componentDidMount() {
+        try {
+            resizableGrid(document.getElementsByClassName('crud-table')[0]);
+        } catch (err) {
+
+        }
+    }
+
+    componentDidUpdate() {
+        try {
+            resizableGrid(document.getElementsByClassName('crud-table')[0]);
+        } catch (err) {
+
+        }
+    }
+
+
     getHeaders() {
         return (
             <tr key={Math.random() + "-id-tr-head"}>

@@ -2,7 +2,6 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 import React from 'react'
 export const session = async(historyProp) => {
-    debugger
     const history = !historyProp ? useHistory() : historyProp;
     try {
         var user = localStorage.getItem("userInfo");

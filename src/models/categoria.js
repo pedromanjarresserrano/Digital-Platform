@@ -11,6 +11,11 @@ let categoriaSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    alias: {
+        type: String,
+        default: '',
+        required: false,
+    },
     updated: { type: Date, default: Date.now },
     created: { type: Date, default: Date.now },
     image: String,

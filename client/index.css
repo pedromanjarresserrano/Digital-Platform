@@ -1,166 +1,185 @@
 body {
-  padding: 0 !important;
-  /* background-color: #282929 !important;
+    padding: 0 !important;
+    /* background-color: #282929 !important;
   color: white;*/
-  margin: 0 !important;
+    margin: 0 !important;
 }
 
 .p-1 {
-  padding: 0.5rem;
+    padding: 0.5rem;
 }
 
 .pagination {
-  flex-flow: row;
-  justify-content: center;
+    flex-flow: row;
+    justify-content: center;
 }
 
 .pagination>li>a {
-  border-radius: 2px;
-  width: 35px;
-  height: 35px;
-  background-color: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid #dee2e6;
+    border-radius: 2px;
+    width: 35px;
+    height: 35px;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #dee2e6;
 }
 
 .text-white {
-  color: white;
+    color: white;
 }
 
 .text-red {
-  color: rgb(243, 73, 73);
+    color: rgb(243, 73, 73);
 }
 
 .fa.fa-star.checked {
-  color: orange;
+    color: orange;
 }
 
 body {
-  background: #15181d;
+    background: #15181d;
 }
 
-.movie-content, .content, .movie-body, .header {
-  color: #fff;
+.movie-content,
+.content,
+.movie-body,
+.header {
+    color: #fff;
 }
 
 .copyright {
-  background: #101318;
-  padding: 2rem 1rem;
-  color: #c7c7c8;
+    background: #101318;
+    padding: 2rem 1rem;
+    color: #c7c7c8;
 }
 
 .item-footer {
-  padding: 20px 40px;
+    padding: 20px 40px;
 }
 
-.suscribe-title, .copyright, .item-footer, .item-footer ul li a {
-  font-size: 1rem;
-  color: #fff;
+.suscribe-title,
+.copyright,
+.item-footer,
+.item-footer ul li a {
+    font-size: 1rem;
+    color: #fff;
 }
 
 .row-content {
-  background: #09121b;
+    background: #09121b;
 }
 
-.label-field, .form-field {
-  height: 26px !important;
+.label-field,
+.form-field {
+    height: 26px !important;
 }
 
 [type="number"] {
-  padding: 0 !important;
+    padding: 0 !important;
 }
 
 select.form-field {
-  padding: 0 1.5rem 0 0;
+    padding: 0 1.5rem 0 0;
 }
 
 .form-field-image>img {
-  min-height: 280px;
-  max-height: 280px;
-  width: 180px;
-  max-width: 280px;
+    min-height: 280px;
+    max-height: 280px;
+    width: 180px;
+    max-width: 280px;
 }
 
 .form-field-image {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .chips {
-  display: 'flex';
-  flex-wrap: 'wrap';
+    display: 'flex';
+    flex-wrap: 'wrap';
 }
 
 .chip {
-  margin: 2px;
+    margin: 2px;
 }
 
 .select-field {
-  width: 100%;
-  background-color: whitesmoke;
+    width: 100%;
+    background-color: whitesmoke;
 }
 
 .Mui-selected {
-  color: #fff !important;
-  background-color: #1c91ff !important;
+    color: #fff !important;
+    background-color: #1c91ff !important;
 }
 
 .img-actor {
-  height: 150px;
+    height: 150px;
 }
 
 .w-20 {
-  width: 20% !important;
+    width: 20% !important;
 }
 
 .w-25 {
-  width: 25% !important;
+    width: 25% !important;
 }
 
-.mw-80{
-  max-width: 85% !important;
+.w-33 {
+    width: 33.3% !important;
 }
 
+.mw-80 {
+    max-width: 85% !important;
+}
 
 .mw-1200 {
-  max-width: 1200px !important;
+    max-width: 1200px !important;
 }
 
 @media (min-width: 768px) {
-  .w-m-20 {
-    width: 20% !important;
-  }
-  .w-m-25 {
-    width: 25% !important;
-  }
+    .w-m-20 {
+        width: 20% !important;
+    }
+    .w-m-25 {
+        width: 25% !important;
+    }
+    .w-m-33 {
+        width: 33.3% !important;
+    }
 }
 
 @media (min-width: 992px) {
-  .w-l-20 {
-    width: 20% !important;
-  }
-  .w-l-25 {
-    width: 25% !important;
-  }
+    .w-l-20 {
+        width: 20% !important;
+    }
+    .w-l-25 {
+        width: 25% !important;
+    }
+    .w-l-33 {
+        width: 33.3% !important;
+    }
 }
 
 @media (min-width: 1200px) {
-  .w-lg-20 {
-    width: 20% !important;
-  }
-  .w-lg-25 {
-    width: 25% !important;
-  }
+    .w-lg-20 {
+        width: 20% !important;
+    }
+    .w-lg-25 {
+        width: 25% !important;
+    }
 }
 
 @media (min-width: 1300px) {
-  .w-xl-20 {
-    width: 20% !important;
-  }
-  .w-xl-25 {
-    width: 25% !important;
-  }
+    .w-xl-20 {
+        width: 20% !important;
+    }
+    .w-xl-25 {
+        width: 25% !important;
+    }
+    .w-xl-33 {
+        width: 33.3% !important;
+    }
 }

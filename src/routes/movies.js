@@ -109,11 +109,18 @@ async function createMovie(files, paths, res) {
             continue
         }
     }
+    console.log('DELETING');
     var list = await models.moviemodel.find({ files: { $exists: true, $eq: [] } })
     list.forEach(async e => {
         await models.moviemodel.deleteOne({ _id: e._id })
     })
     process = 0;
+
+    try {
+        socketServer.io.emit("RMF", { process, name: '' })
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 
