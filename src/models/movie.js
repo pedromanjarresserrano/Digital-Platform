@@ -91,9 +91,6 @@ let movieSchema = new mongoose.Schema({
 }, schemaOptions)
 
 let check = function(next) {
-    console.log("Checking movie.......");
-    console.log(this.unique_views);
-
     if (this.name)
         this.name = this.name.trim();
     if (this.visualname)
@@ -102,9 +99,6 @@ let check = function(next) {
         this.description = this.description.trim();
     this.unique_views = _.uniq(this.unique_views);
     this.view = this.unique_views.length;
-
-    console.log(this.unique_views);
-
     next();
 }
 
