@@ -90,7 +90,7 @@ let movieSchema = new mongoose.Schema({
 
 }, schemaOptions)
 
-let check = function(next) {
+const check = function(next) {
     if (this.name)
         this.name = this.name.trim();
     if (this.visualname)

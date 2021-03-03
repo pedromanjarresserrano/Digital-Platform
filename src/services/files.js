@@ -1,6 +1,7 @@
 const path = require('path');
 const util = require('util');
 const fs = require('fs');
+const mime = require('mime-types')
 
 
 function saveFile(file, doc, collection) {
@@ -17,7 +18,7 @@ async function updateDoc(doc, Collection) {
 
 
 function storeWithName(file, name) {
-    var fullNewPath = path.join(file.destination, name)
+    var fullNewPath = path.join(file.destination, name + '.' + mime.extension(file.mimetype))
     var rename = util.promisify(fs.rename)
     rename(file.path, fullNewPath)
 }

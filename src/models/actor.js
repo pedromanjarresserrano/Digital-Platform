@@ -46,20 +46,26 @@ actorSchema.pre("save", function(next) {
     next();
 });
 
-const updateDate = (next) => {
+const check = (next) => {
     try {
         if (this)
             this.updated = Date.now;
+        if (this.name)
+            this.name = this.name.trim();
+        if (this.aka)
+            this.aka = this.aka.trim();
+        if (this.bio)
+            this.bio = this.bio.trim();
         next();
     } catch (error) {
         return next(error);
     }
 }
 
-actorSchema.pre("update", updateDate);
-actorSchema.pre("updateOne", updateDate);
-actorSchema.pre("findOneAndUpdate", updateDate);
-actorSchema.pre("save", updateDate);
-actorSchema.pre("findOneAndUpdate", updateDate);
+actorSchema.pre("update", check);
+actorSchema.pre("updateOne", check);
+actorSchema.pre("findOneAndUpdate", check);
+actorSchema.pre("save", check);
+actorSchema.pre("findOneAndUpdate", check);
 
 module.exports = mongoose.model('Actor', actorSchema)

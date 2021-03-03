@@ -3,6 +3,7 @@ const config = require('../config/index');
 const { saveFile } = require('../services/files');
 const { loggerRequest } = require('../controller/logger');
 const { tokenValidator } = require('../controller/auth');
+const mime = require('mime-types')
 
 module.exports = (Collection, attrname, uniqueattrname) => {
 
@@ -20,7 +21,7 @@ module.exports = (Collection, attrname, uniqueattrname) => {
                 doc = req.body;
             }
 
-            doc[attrname] = '/uploads/' + doc._id;
+            doc[attrname] = '/uploads/' + doc._id + '.' + mime.extension(req.file.mimetype);
             saveFile(req.file, doc, Collection);
 
             res.status(200).send({ message: "Ok", doc });
