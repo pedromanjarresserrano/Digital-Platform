@@ -5,14 +5,13 @@ import {
   CurrentTimeDisplay,
   TimeDivider,
   VolumeMenuButton,
-  BigPlayButton
+  BigPlayButton,
+  PlaybackRateMenuButton
 } from 'video-react';
 import Axios from 'axios';
 import { Link } from 'react-router-dom'
 import Actor from '../actors/actor/Actor';
 import { segFormat } from '../../../utils/Utils';
-import { BrowserUtils } from '../common/BrowserUtils';
-
 
 class MovieDetails extends React.Component {
 
@@ -78,6 +77,7 @@ class MovieDetails extends React.Component {
                   <CurrentTimeDisplay order={4.1} />
                   <TimeDivider order={4.2} />
                   <VolumeMenuButton />
+                  <PlaybackRateMenuButton rates={[10, 5, 2, 1, 0.5, 0.1]} order={7.1} />
                 </ControlBar>
               </Player>
             </div>
@@ -151,7 +151,7 @@ class MovieDetails extends React.Component {
                       </div>
                     </div>
                     <div className="category">
-                      {this.state.item.categorias ? this.state.item.categorias.map(item => (<Link key={item._id} to={"/categories/categorie/" + item.name} className="badge badge-pill badge-dark">  {item.name}</Link>)) : ''}
+                      {this.state.item.categorias ? this.state.item.categorias.map(cat => (<Link key={cat._id} to={"/categories/categorie/" + cat.name} className="badge badge-pill badge-dark">  {cat.name}</Link>)) : ''}
                     </div>
                   </div>
                 </div>
@@ -161,9 +161,9 @@ class MovieDetails extends React.Component {
         </div>
         <h4 className="text-white">Reparto</h4>
         <div className="row ">
-          {this.state.item.reparto ? this.state.item.reparto.map(item => (
+          {this.state.item.reparto ? this.state.item.reparto.map(reparto => (
             <div className="w-20">
-              <Actor item={item} />
+              <Actor item={reparto} />
             </div>
           )) : ''}
         </div>

@@ -31,26 +31,26 @@ async function specialName(req, res) {
                             e.reparto.push(actor)
                     }
                     e.reparto = []
-                    for (let i = 0; i < splitted.length; i++) {
-                        if (splitted[i] == "and") {
-                            splitted[i - 1] = capitalizeFirstLetter(splitted[i - 1]);
-                            splitted[i - 2] = capitalizeFirstLetter(splitted[i - 2]);
-                            actor = await Actors.findOne({ name: splitted[i - 1] });
+                    for (let j = 0; j < splitted.length; j++) {
+                        if (splitted[j] == "and") {
+                            splitted[j - 1] = capitalizeFirstLetter(splitted[j - 1]);
+                            splitted[j - 2] = capitalizeFirstLetter(splitted[j - 2]);
+                            actor = await Actors.findOne({ name: splitted[j - 1] });
                             if (!actor) {
-                                actor = await Actors.findOne({ name: splitted[i - 2] + " " + splitted[i - 1] })
+                                actor = await Actors.findOne({ name: splitted[j - 2] + " " + splitted[j - 1] })
                             }
                             if (actor)
                                 e.reparto.push(actor)
-                            if (splitted[i + 1]) {
-                                splitted[i + 1] = capitalizeFirstLetter(splitted[i + 1]);
-                                actor = await Actors.findOne({ name: splitted[i + 1] });
+                            if (splitted[j + 1]) {
+                                splitted[j + 1] = capitalizeFirstLetter(splitted[j + 1]);
+                                actor = await Actors.findOne({ name: splitted[j + 1] });
                             }
                             if (actor)
                                 e.reparto.push(actor)
 
-                            if (splitted[i + 2]) {
-                                splitted[i + 2] = capitalizeFirstLetter(splitted[i + 2]);
-                                actor = await Actors.findOne({ name: splitted[i + 1] + " " + splitted[i + 2] });
+                            if (splitted[j + 2]) {
+                                splitted[j + 2] = capitalizeFirstLetter(splitted[j + 2]);
+                                actor = await Actors.findOne({ name: splitted[j + 1] + " " + splitted[j + 2] });
                             }
                             if (actor)
                                 e.reparto.push(actor)
@@ -97,6 +97,14 @@ async function fullfixes(req, res) {
 
             find["$and"][0]["$or"][0] = {
                 "visualname": { $regex: '.*' + a.name.toLowerCase() + '.*', $options: 'i' }
+            }
+
+            find["$and"][0]["$or"][1] = {
+                "visualname": { $regex: '.*' + a.name.toLowerCase().replace(/\s/g, '') + '.*', $options: 'si' }
+            }
+
+            find["$and"][0]["$or"][2] = {
+                "visualname": { $regex: '.*' + a.name.toLowerCase().replace(/\s/g, '.') + '.*', $options: 'si' }
             }
 
             find["$and"][1]["$and"][0] = {
@@ -240,6 +248,14 @@ async function fullfixes(req, res) {
 
             find["$and"][0]["$or"][0] = {
                 "visualname": { $regex: '.*' + s.name.toLowerCase() + '.*', $options: 'si' }
+            }
+
+            find["$and"][0]["$or"][1] = {
+                "visualname": { $regex: '.*' + s.name.toLowerCase().replace(/\s/g, '') + '.*', $options: 'si' }
+            }
+
+            find["$and"][0]["$or"][2] = {
+                "visualname": { $regex: '.*' + s.name.toLowerCase().replace(/\s/g, '.') + '.*', $options: 'si' }
             }
 
             find["$and"][1]["$and"][0] = {

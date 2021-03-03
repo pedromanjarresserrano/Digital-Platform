@@ -8,7 +8,6 @@ let router = express.Router();
 //	Stream the movie
 //
 router.get('/:_id', loggerRequest, async function(req, res) {
-    console.log(req.sessionID);
     try {
         const { _id } = req.params;
         const movie = await models.moviemodel.findById(_id);
@@ -44,7 +43,6 @@ router.get('/:_id', loggerRequest, async function(req, res) {
         }
         movie.unique_views.push(req.sessionID)
         movie.view = movie.unique_views.length;
-        console.log(movie);
         movie.save();
 
     } catch (error) {

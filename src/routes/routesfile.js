@@ -20,8 +20,8 @@ module.exports = (Collection, attrname, uniqueattrname) => {
                 req.body._id = doc._id;
                 doc = req.body;
             }
-
-            doc[attrname] = '/uploads/' + doc._id + '.' + mime.extension(req.file.mimetype);
+            if (req.file && req.file.mimetype)
+                doc[attrname] = '/uploads/' + doc._id + '.' + mime.extension(req.file.mimetype);
             saveFile(req.file, doc, Collection);
 
             res.status(200).send({ message: "Ok", doc });
