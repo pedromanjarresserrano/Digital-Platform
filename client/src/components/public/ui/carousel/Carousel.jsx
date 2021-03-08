@@ -25,21 +25,21 @@ class Carousel extends React.Component {
 
 
     mouseLeave = () => {
-        $("#" + this.state.id).carousel(0)
         $("#" + this.state.id).carousel({
-            pause: false,
-            interval: "false"
-
+            pause: null,
+            interval: false
         });
-        $("#" + this.state.id).carousel("pause");
+        $("#" + this.state.id).carousel(0)
+        $("#" + this.state.id).carousel('pause')
+
 
     }
 
 
     render() {
         return (
-            <div id={this.state.id} className="carousel slide" onMouseEnter={this.mouseEnter} onMouseLeave={this.mouseLeave} data-pause={this.props.pause ? this.props.pause : "false"}>
-                <div className="carousel-inner">
+            <div id={this.state.id} className="carousel slide" onMouseEnter={this.mouseEnter} onMouseLeave={this.mouseLeave}  data-pause={this.props.pause ? this.props.pause : "true"}>
+                <div className="carousel-inner" >
                     {
                         this.props.items.map(file => {
                             let first = file.includes("-1.png");

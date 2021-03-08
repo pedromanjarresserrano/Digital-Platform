@@ -24,9 +24,10 @@
 }
 
 @media (max-width: 767px) {
+    .lazy-load-image-background>img,
     .carousel-item,
     .carousel-item>div>img {
-        max-height: 192px;
+        max-height: 192px !important;
     }
     .slide .carousel-item>div {
         max-height: unset;
