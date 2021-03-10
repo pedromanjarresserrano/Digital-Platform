@@ -11,6 +11,7 @@ class ImagesetDetails extends React.Component {
     this.state = {
       item: {},
     }
+    this.fix = this.fix.bind(this);
   }
   //--------------------------------------------------------------
   async componentWillMount() {
@@ -29,15 +30,31 @@ class ImagesetDetails extends React.Component {
 
   }
 
-
-  regresar = () => {
-    this.props.history.goBack();
+  fix = () => {
+    let number = parseInt($('li.pagenumber.active')[0].innerHTML) - 1;
+    this.changeVisible(number);
   }
 
-  className
+  changeVisible = (index) => {
+    console.log(index);
+    const listPages = $('.pagenumber');
+
+    for (let i = 0; i < listPages.length; i++) {
+      const e = $(listPages[i]);
+      e.removeClass('d-block');
+      e.addClass('d-none');
+
+    }
+    $(listPages[index]).addClass('d-block');
+
+    for (let i = index - 5, j = index + 5; i < index; i++, j--) {
+      $(listPages[i]).addClass('d-block');
+      $(listPages[j]).addClass('d-block');
+
+    }
+  }
 
   render() {
-    /*    <button onClick={this.regresar}>Regresar </button>*/
     const { item } = this.state;
     if (!item._id)
       return null;
@@ -53,8 +70,8 @@ class ImagesetDetails extends React.Component {
                     let first = item['files'][0] == file;
                     return (<div className={(first ? "active " : "") + "carousel-item"} key={Math.random()}>
 
-                      <div className="d-flex justify-content-center w-100 h-100 page" >
-                        <img className="d-block mx-auto h-100 mh-100" src={"/api/imageset/page?id=" + item._id + "&name=" + file} />
+                      <div className="d-flex justify-content-center mh-100 page" >
+                        <img className="img-fluid" src={"/api/imageset/page?id=" + item._id + "&name=" + file} />
                       </div>
                     </div>);
 
@@ -70,18 +87,19 @@ class ImagesetDetails extends React.Component {
               <ol class="carousel-indicators">
                 {
                   item['files'].map((file, index) => {
+
                     let first = item['files'][0] == file;
-                    return (<li className={(first ? "active " : "")} key={Math.random()} data-target="#s-1" data-slide-to={index}>{index + 1}
+                    return (<li className={('pagenumber ') + (first ? "active " : "") + (index < 10 ? 'd-block' : 'd-none')} onClick={() => this.changeVisible(index)} key={Math.random()} data-target="#s-1" data-slide-to={index}>{index + 1}
                     </li>);
 
                   }, this)
 
                 } </ol>
-              <a className="carousel-control-prev" href="#s-1" role="button" data-slide="prev">
+              <a className="carousel-control-prev" href="#s-1" onClick={() => this.fix()} role="button" data-slide="prev">
                 <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span className="sr-only">Previous</span>
+                <span className="sr-only" >Previous</span>
               </a>
-              <a className="carousel-control-next" href="#s-1" role="button" data-slide="next">
+              <a className="carousel-control-next" href="#s-1" onClick={() => this.fix()} role="button" data-slide="next">
                 <span className="carousel-control-next-icon" aria-hidden="true"></span>
                 <span className="sr-only">Next</span>
               </a>

@@ -22,6 +22,7 @@ const readMany = async(req, res, Collection, sortBy) => {
         let query = req.body || {};
         query = Object.keys(query).length === 0 ? req.query : query;
         options.page = parseInt(req.params.page);
+        let aux = options.limit;
         if (query && query.chunk) {
             options.limit = parseInt(query.chunk);
             if (Object.keys(query).length === 1) {
@@ -37,6 +38,7 @@ const readMany = async(req, res, Collection, sortBy) => {
             let result = await Collection.paginate(query, options);
             res.send(result);
         }
+        options.limit = aux;
     } catch (error) {
         console.log(error);
         res.status(502).send(error);

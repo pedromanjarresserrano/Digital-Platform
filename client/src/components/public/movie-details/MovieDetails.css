@@ -29,7 +29,7 @@
     }
     .video-react .video-react-playback-rate .video-react-playback-rate-value,
     .video-react .video-react-time-control {
-        font-size: 1.8em;
+        font-size: 1.8em !important;
         line-height: 1.5em !important;
     }
     .video-react .video-react-control-bar {

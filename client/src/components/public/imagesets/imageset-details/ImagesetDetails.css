@@ -7,9 +7,9 @@
     max-height: 1500px !important;
 }
 
-.page,
-.page img {
-    max-height: 920px !important;
+.page>img {
+    /*  width: 100%!important;
+    height: auto!important;*/
 }
 
 .carro .carousel-item {
