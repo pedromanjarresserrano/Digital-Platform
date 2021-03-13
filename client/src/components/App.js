@@ -24,29 +24,17 @@ export const App = () => {
     }, [user])
 
 
-    return ( < AuthContext.Provider value = {
-            { user, dispatch } } >
-        <
-        BrowserRouter >
-        <
-        Switch >
-        <
-        Route path = "/admin/login"
-        component = { LoginAdmin }
-        />
+    return (<AuthContext.Provider value={{ user, dispatch }}>
+        <BrowserRouter>
+            <Switch>
+                <Route path="/admin/login" component={LoginAdmin} />
 
-        <
-        Route path = "/admin"
-        component = { Admin }
-        /> <
-        Route path = "/"
-        component = { Public }
-        /> <
-        Route component = { NotFound }
-        /> <
-        /Switch> <
-        /BrowserRouter> <
-        /AuthContext.Provider>
+                <Route path="/admin" component={Admin} />
+                <Route path="/" component={Public} />
+                <Route component={NotFound} />
+            </Switch>
+        </BrowserRouter>
+    </AuthContext.Provider>
     )
 
 }
