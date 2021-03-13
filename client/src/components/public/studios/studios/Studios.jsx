@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import Studio from '../studio/Studio';
 import Pagination from 'react-js-pagination';
+import { Constants } from '../../common/Constants';
 
 class Studios extends React.Component {
 
@@ -84,7 +85,7 @@ class Studios extends React.Component {
                         totalItemsCount={itemCount}
                         itemsCountPerPage={pageSize}
                         activePage={this.state.activePage}
-                        pageRangeDisplayed={9}
+                        pageRangeDisplayed={Constants.PUBLIC.PAGE_VISIBLE_COUNT}
                         onChange={this.onPageChanged} />
 
                 </div>

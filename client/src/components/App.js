@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
 import { Admin } from './admin/Admin';
 
-import NotFound from './public/notfound/NotFound';
+import NotFound from './public/panels/notfound/NotFound';
 import { Public } from './public/Public';
 import 'react-slideshow-image/dist/styles.css'
 import { AuthContext } from './admin/auth/AuthContext';
@@ -24,17 +24,29 @@ export const App = () => {
     }, [user])
 
 
-    return (<AuthContext.Provider value={{ user, dispatch }}>
-        <BrowserRouter>
-            <Switch>
-                <Route path="/admin/login" component={LoginAdmin} />
+    return ( < AuthContext.Provider value = {
+            { user, dispatch } } >
+        <
+        BrowserRouter >
+        <
+        Switch >
+        <
+        Route path = "/admin/login"
+        component = { LoginAdmin }
+        />
 
-                <Route path="/admin" component={Admin} />
-                <Route path="/" component={Public} />
-                <Route component={NotFound} />
-            </Switch>
-        </BrowserRouter>
-    </AuthContext.Provider>
+        <
+        Route path = "/admin"
+        component = { Admin }
+        /> <
+        Route path = "/"
+        component = { Public }
+        /> <
+        Route component = { NotFound }
+        /> <
+        /Switch> <
+        /BrowserRouter> <
+        /AuthContext.Provider>
     )
 
 }

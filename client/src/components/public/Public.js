@@ -1,22 +1,22 @@
 import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom'
 
-import Catalog from './catalog/Catalog.jsx';
-import Header from './header/Header';
-import Home from './home/home/Home';
-import MovieDetails from './movie-details/MovieDetails';
-import Breadcrumb from './breadcrumb/Breadcrumb';
-import Footer from './footer/Footer';
+import Catalog from './movies/catalog/Catalog.jsx';
+import Header from './panels/header/Header';
+import Home from './panels/home/home/Home';
+import MovieDetails from './movies/movie-details/MovieDetails';
+import Breadcrumb from './panels/breadcrumb/Breadcrumb';
+import Footer from './panels/footer/Footer';
 
-import Categories from './categories/Categories';
-import CategorieDetails from './categorie-details/CategorieDetails';
+import Categories from './categories/categories/Categories';
+import CategorieDetails from './categories/categorie-details/CategorieDetails';
 import ActorDetails from './actors/actor-details/ActorDetails';
 import Actors from './actors/actors/Actors';
-import NotFound from './notfound/NotFound.jsx';
+import NotFound from './panels/notfound/NotFound.jsx';
 import Studios from './studios/studios/Studios.jsx';
-import StudioDetails from './studios/categorie-details/StudioDetails.jsx';
-import Books from './books/Books.jsx';
-import BookDetails from './book-details/BookDetails';
+import StudioDetails from './studios/studio-details/StudioDetails.jsx';
+import Books from './books/books/Books.jsx';
+import BookDetails from './books/book-details/BookDetails';
 import ImagesetDetails from './imagesets/imageset-details/ImagesetDetails';
 import Imagesets from './imagesets/imagesets/Imagesets';
 export const Public = ({ match }) => (

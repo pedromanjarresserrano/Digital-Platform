@@ -13,7 +13,27 @@
     padding-top: 0% !important;
 }
 
-@media (min-width:768px) {
+@media (max-width:768px) {
+    .video-react .video-react-progress-holder {
+        height: 2.3em;
+    }
+    .video-react .video-react-progress-holder .video-react-play-progress,
+    .video-react .video-react-progress-holder .video-react-load-progress,
+    .video-react .video-react-progress-holder .video-react-tooltip-progress-bar,
+    .video-react .video-react-progress-holder .video-react-load-progress div,
+    .video-react-play-progress .video-react-slider-bar,
+    .video-react .video-react-progress-holder,
+    .video-react .video-react-progress-holder .video-react-load-progress {
+        height: 1.3em !important;
+    }
+    .video-react-icon-fullscreen:before,
+    .video-react .video-react-play-control:before {
+        font-size: 2.3em !important;
+        line-height: 1.4 !important;
+    }
+}
+
+@media (max-width:768px) {
     .video-react .video-react-play-progress::before {
         top: -0.333em !important;
     }
@@ -21,6 +41,11 @@
         height: 1.3em;
     }
     .video-react .video-react-progress-holder .video-react-play-progress,
+    .video-react .video-react-progress-holder .video-react-load-progress,
+    .video-react .video-react-progress-holder .video-react-tooltip-progress-bar,
+    .video-react .video-react-progress-holder .video-react-load-progress div,
+    .video-react-play-progress .video-react-slider-bar,
+    .video-react .video-react-progress-holder,
     .video-react .video-react-progress-holder .video-react-load-progress {
         height: 1.3em;
     }

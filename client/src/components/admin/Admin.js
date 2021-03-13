@@ -8,7 +8,7 @@ import BreadcrumbAdmin from './breadcrumb/BreadcrumbAdmin';
 import Form from './ui/form/Form';
 import CrudView from './ui/crudview/CrudView';
 import HeaderAdmin from './header/HeaderAdmin';
-import NotFound from '../public/notfound/NotFound';
+import NotFound from '../public/panels/notfound/NotFound';
 import ToastContainer from './ui/toastcontainer/ToastContainer';
 
 import FooterAdmin from './footer/FooterAdmin';

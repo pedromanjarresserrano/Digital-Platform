@@ -2,14 +2,13 @@ import React from 'react';
 import Movie from '../movie/Movie'
 import axios from 'axios';
 import { generatePath } from "react-router";
-import './Books.css';
+import './Catalog.css';
 import Pagination from "react-js-pagination";
 import { RotateCircleLoading } from 'react-loadingg';
 import queryString from 'query-string'
-import Book from '../book/Book';
-import { Constants } from '../common/Constants';
+import { Constants } from '../../common/Constants';
 
-class Books extends React.Component {
+class Catalog extends React.Component {
 
     constructor(props) {
         super(props)
@@ -36,7 +35,7 @@ class Books extends React.Component {
 
     load = async () => {
 
-        const values = queryString.parse(this.props.location.search)
+        const values = queryString.parse(this.props.location.search);
 
         let page = this.props.match.params.page;
 
@@ -44,7 +43,7 @@ class Books extends React.Component {
 
         var statesVal = { activePage: page }
         if (values && values.search)
-            statesVal.search = values.search
+            statesVal.search = values.search;
 
         await this.setState(statesVal);
         this.loadCate();
@@ -95,14 +94,14 @@ class Books extends React.Component {
         })
         let find = {
             name: { "$regex": ".*" + this.state.search + ".*", $options: 'i' },
-      /*      duration: this.state.timerange*/
+            /*      duration: this.state.timerange*/
 
         }
         let cats = this.state.categorias.filter(e => e.isChecked);
         if (cats.length > 0)
             find.categorias = cats.map(e => e._id);
 
-        axios.post('/api/books/all/' + page, find)
+        axios.post('/api/movies/all/' + page, find)
             .then(response => {
                 this.setState({
                     items: response.data.itemsList,
@@ -130,7 +129,6 @@ class Books extends React.Component {
     _handleKeyDown = (e) => {
         if (e.key === 'Enter') {
             this.handleSearch();
-            this.loadPage(1);
 
         }
     }
@@ -148,6 +146,7 @@ class Books extends React.Component {
             search: '?search=' + this.state.search,
 
         })
+        this.loadPage(1);
 
     }
 
@@ -204,7 +203,7 @@ class Books extends React.Component {
                                     :
                                     <div className="d-flex justify-content-between flex-row flex-wrap p-1 mw-1200  w-100 mx-auto">                                    {
                                         this.state.items.map((item, index) =>
-                                            <Book item={item} index={index} />
+                                            <Movie item={item} index={index} />
                                             , this)
                                     }
 
@@ -228,4 +227,4 @@ class Books extends React.Component {
     }
 }
 
-export default Books;
+export default Catalog;

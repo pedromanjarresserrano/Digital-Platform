@@ -1,13 +1,13 @@
 import React from 'react';
-import './CategorieDetails.css';
+import './StudioDetails.css';
 import Axios from 'axios';
-import Movie from '../movie/Movie'
 import RotateCircleLoading from 'react-loadingg/lib/RotateCircleLoading';
 import Pagination from 'react-js-pagination';
+import Movie from '../../movies/movie/Movie';
 import { generatePath } from 'react-router-dom';
-import { Constants } from '../common/Constants';
+import { Constants } from '../../common/Constants';
 
-class CategorieDetails extends React.Component {
+class StudioDetails extends React.Component {
 
   constructor(props) {
     super(props)
@@ -30,7 +30,7 @@ class CategorieDetails extends React.Component {
       this.loadPage(1);
 
     } else {
-      Axios.post("/api/categorias/fo", { name: this.props.match.params.name })
+      Axios.post("/api/studios/fo", { name: this.props.match.params.name })
         .then(function (response) {
           this.setState({
             item: response.data
@@ -46,7 +46,7 @@ class CategorieDetails extends React.Component {
   }
 
   loadPage(page) {
-    Axios.get("/api/movies/all/" + page + "?categorias=" + (this.props.location.state ? this.props.location.state.item._id : this.state.item._id)).then(function (response) {
+    Axios.get("/api/movies/all/" + page + "?studio=" + (this.props.location.state ? this.props.location.state.item._id : this.state.item._id)).then(function (response) {
       this.setState({
         items: response.data.itemsList,
         paginator: response.data.paginator,
@@ -107,4 +107,4 @@ class CategorieDetails extends React.Component {
 
 
 }
-export default CategorieDetails;
+export default StudioDetails;

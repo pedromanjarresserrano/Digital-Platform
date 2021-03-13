@@ -1,7 +1,6 @@
 import React from 'react';
-import Slider from '../../ui/slider/Slider';
 import { Link } from 'react-router-dom';
-import Movie from '../../movie/Movie';
+import Movie from '../../../movies/movie/Movie';
 
 class CategoriesHome extends React.Component {
 

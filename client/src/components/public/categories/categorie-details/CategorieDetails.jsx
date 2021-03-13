@@ -1,12 +1,13 @@
 import React from 'react';
-import './StudioDetails.css';
+import './CategorieDetails.css';
 import Axios from 'axios';
+import Movie from '../../movies/movie/Movie'
 import RotateCircleLoading from 'react-loadingg/lib/RotateCircleLoading';
 import Pagination from 'react-js-pagination';
-import Movie from '../../movie/Movie';
 import { generatePath } from 'react-router-dom';
+import { Constants } from '../../common/Constants';
 
-class StudioDetails extends React.Component {
+class CategorieDetails extends React.Component {
 
   constructor(props) {
     super(props)
@@ -29,7 +30,7 @@ class StudioDetails extends React.Component {
       this.loadPage(1);
 
     } else {
-      Axios.post("/api/studios/fo", { name: this.props.match.params.name })
+      Axios.post("/api/categorias/fo", { name: this.props.match.params.name })
         .then(function (response) {
           this.setState({
             item: response.data
@@ -45,7 +46,7 @@ class StudioDetails extends React.Component {
   }
 
   loadPage(page) {
-    Axios.get("/api/movies/all/" + page + "?studio=" + (this.props.location.state ? this.props.location.state.item._id : this.state.item._id)).then(function (response) {
+    Axios.get("/api/movies/all/" + page + "?categorias=" + (this.props.location.state ? this.props.location.state.item._id : this.state.item._id)).then(function (response) {
       this.setState({
         items: response.data.itemsList,
         paginator: response.data.paginator,
@@ -96,7 +97,7 @@ class StudioDetails extends React.Component {
             totalItemsCount={itemCount}
             itemsCountPerPage={pageSize}
             activePage={this.state.activePage}
-            pageRangeDisplayed={9}
+            pageRangeDisplayed={Constants.PUBLIC.PAGE_VISIBLE_COUNT}
             onChange={this.onPageChanged} />
 
         </div>
@@ -106,4 +107,4 @@ class StudioDetails extends React.Component {
 
 
 }
-export default StudioDetails;
+export default CategorieDetails;

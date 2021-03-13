@@ -4,7 +4,7 @@ import Categorie from '../categorie/Categorie';
 import Pagination from 'react-js-pagination';
 import RotateCircleLoading from 'react-loadingg/lib/RotateCircleLoading';
 import { generatePath } from 'react-router-dom';
-import { Constants } from '../common/Constants';
+import { Constants } from '../../common/Constants';
 
 class Categories extends React.Component {
 

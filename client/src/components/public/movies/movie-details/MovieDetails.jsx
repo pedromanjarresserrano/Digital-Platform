@@ -10,8 +10,8 @@ import {
 } from 'video-react';
 import Axios from 'axios';
 import { Link } from 'react-router-dom'
-import Actor from '../actors/actor/Actor';
-import { segFormat } from '../../../utils/Utils';
+import Actor from '../../actors/actor/Actor';
+import { segFormat } from '../../../../utils/Utils';
 
 class MovieDetails extends React.Component {
 

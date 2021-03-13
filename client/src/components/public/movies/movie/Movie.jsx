@@ -1,7 +1,7 @@
 import React from 'react';
 import './Movie.css';
 import { Link } from 'react-router-dom'
-import Carousel from '../ui/carousel/Carousel';
+import Carousel from '../../ui/carousel/Carousel';
 
 
 class Movie extends React.Component {

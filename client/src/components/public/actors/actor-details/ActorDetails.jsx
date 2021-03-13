@@ -1,7 +1,7 @@
 import React from 'react';
 import './ActorDetails.css';
 import Axios from 'axios';
-import Movie from '../../movie/Movie'
+import Movie from '../../movies/movie/Movie'
 import { generatePath } from "react-router";
 import RotateCircleLoading from 'react-loadingg/lib/RotateCircleLoading';
 import Pagination from 'react-js-pagination';

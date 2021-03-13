@@ -1,7 +1,7 @@
 
 import React from 'react';
 import './Slider.css';
-import Movie from '../../movie/Movie';
+import Movie from '../../movies/movie/Movie';
 import { Slide } from 'react-slideshow-image';
 
 class Slider extends React.Component {
