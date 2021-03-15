@@ -141,12 +141,8 @@ class Catalog extends React.Component {
     }
 
     handleSearch() {
-        this.props.history.push({
-            pathname: this.props.location.pathname,
-            search: '?search=' + this.state.search,
 
-        })
-        this.loadPage(1);
+        this.onPageChanged(1);
 
     }
 
@@ -201,11 +197,22 @@ class Catalog extends React.Component {
                                         <RotateCircleLoading size="large" />
                                     </div>
                                     :
-                                    <div className="d-flex justify-content-between flex-row flex-wrap p-1 mw-1200  w-100 mx-auto">                                    {
-                                        this.state.items.map((item, index) =>
-                                            <Movie item={item} index={index} />
-                                            , this)
-                                    }
+                                    <div className="d-flex justify-content-between flex-row flex-wrap p-1 mw-1200  w-100 mx-auto">
+                                        {
+
+                                            this.state.items.map((item, index) =>
+                                                <Movie item={item} index={index} />
+                                                , this)
+                                        }
+                                        {
+                                            (this.state.items ?
+                                                ([...Array(10).keys()]
+                                                ).map((item, index) => {
+                                                    console.log('sddd');
+                                                    return (<div className="w-100 w-m-20 card-m d-md-block d-none" />)
+                                                })
+                                                : <div />)
+                                        }
 
                                     </div>
                             }

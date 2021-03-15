@@ -1,6 +1,4 @@
-.video-react-video {
-    max-height: 480px;
-}
+.video-react-video {}
 
 .video-react:fullscreen {
     max-height: 100% !important;
@@ -11,6 +9,11 @@
 .video-react.video-react-fullscreen>video {
     max-height: 100% !important;
     padding-top: 0% !important;
+}
+
+.video-react .video-react-play-progress:before {
+    top: -0.4em !important;
+    font-size: 2em !important;
 }
 
 @media (max-width:768px) {
@@ -31,11 +34,8 @@
         font-size: 2.3em !important;
         line-height: 1.4 !important;
     }
-}
-
-@media (max-width:768px) {
-    .video-react .video-react-play-progress::before {
-        top: -0.333em !important;
+    .video-react .video-react-play-progress:before {
+        top: -0.16em !important;
     }
     .video-react .video-react-progress-holder {
         height: 1.3em;
@@ -74,7 +74,6 @@
         font-size: 0;
     }
     .video-react {
-        max-height: 480px;
         padding-top: 480px !important;
     }
 }

@@ -29,7 +29,6 @@ class Movie extends React.Component {
       </>
 
     } else {
-
       return <div className="w-100 preview" >
         <Carousel items={this.props.item.files} pause='null' />
 
