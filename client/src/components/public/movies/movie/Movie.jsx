@@ -30,7 +30,7 @@ class Movie extends React.Component {
 
     } else {
       return <div className="w-100 preview" >
-        <Carousel items={this.props.item.files} pause='null' />
+        <Carousel items={this.props.item.files} pause={null} />
 
         <span className="text-white time-stamp" >{this.getTime(this.props.item.duration)}</span>
 

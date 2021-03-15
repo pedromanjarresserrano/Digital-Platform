@@ -9,7 +9,7 @@ class Carousel extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            id: "id-cs-" + Math.floor((Math.random() * 100000))
+            id: "id-cs-" + Math.floor((Math.random() * 1000000000))
         }
         this.mouseEnter = this.mouseEnter.bind(this);
         this.mouseLeave = this.mouseLeave.bind(this);
