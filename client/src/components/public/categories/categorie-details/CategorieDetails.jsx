@@ -40,9 +40,11 @@ class CategorieDetails extends React.Component {
         .catch(error => {
           console.log(error);
 
-          //this.setState({ loading: false });
-        });;
+        });
     }
+
+    this.playlist = this.playlist.bind(this);
+
   }
 
   loadPage(page) {
@@ -68,12 +70,25 @@ class CategorieDetails extends React.Component {
     });
   }
 
+  playlist = () => {
+
+    this.props.history.push({
+      pathname: '/playlist',
+      state: { categorias: (this.props.location.state ? this.props.location.state.item._id : this.state.item._id) }
+    })
+
+  }
 
   render() {
     const { pageSize, itemCount } = this.state;
 
     return (
       <div className="container-fluid">
+        <div className="row">
+          <button className="btn btn-success" onClick={this.playlist}>
+            Play as playlist
+          </button>
+        </div>
         <div className="d-block">
           <h1 className="text-white">{this.state.item.name}</h1>
           <div className="d-flex flex-row justify-content-center   mx-auto w-100 mw-1200">

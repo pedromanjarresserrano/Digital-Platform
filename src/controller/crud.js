@@ -23,12 +23,13 @@ const readMany = async(req, res, Collection, sortBy) => {
         query = Object.keys(query).length === 0 ? req.query : query;
         options.page = parseInt(req.params.page);
         let aux = options.limit;
-        if (query && query.chunk) {
-            options.limit = parseInt(query.chunk);
-            if (Object.keys(query).length === 1) {
-                query = {};
-            }
+        if (req.query && req.query.chunk) {
+            options.limit = parseInt(req.query.chunk);
         }
+
+        console.log(req.query);
+        console.log(query);
+        console.log(options);
         if (options.page === -1) {
             let result = await Collection.find(query).sort(sortBy);
             res.send(result);

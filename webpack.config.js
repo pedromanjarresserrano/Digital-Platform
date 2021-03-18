@@ -9,7 +9,7 @@ module.exports = {
         publicPath: '/',
         filename: '[name].js'
     },
-    mode: 'production',
+    mode: 'development',
     resolve: {
         extensions: ['.js', '.jsx']
     },

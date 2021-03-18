@@ -19,6 +19,7 @@ import Books from './books/books/Books.jsx';
 import BookDetails from './books/book-details/BookDetails';
 import ImagesetDetails from './imagesets/imageset-details/ImagesetDetails';
 import Imagesets from './imagesets/imagesets/Imagesets';
+import PlaylistViewer from './playlist/playlist-viewer/PlaylistViewer.jsx';
 export const Public = ({ match }) => (
     <React.Fragment>
         <Header />
@@ -60,7 +61,7 @@ export const Public = ({ match }) => (
             <Route key="list-imagesets-p" exact path="/imagesets/:page" component={Imagesets} />
             <Route key="imagesetsb" exact path="/imagesets/imageset" render={(props) => (<Redirect to="/imagesets/1"  {...props} />)} />
             <Route key="imageset" exact path="/imagesets/imageset/:id" component={ImagesetDetails} />
-           
+            <Route key="playlist" exact path="/playlist" component={PlaylistViewer} />      
             <Route exact path="/index" component={Home} />
             <Route exact path="*" component={NotFound} />
         </Switch>

@@ -208,7 +208,6 @@ class Catalog extends React.Component {
                                             (this.state.items ?
                                                 ([...Array(10).keys()]
                                                 ).map((item, index) => {
-                                                    console.log('sddd');
                                                     return (<div className="w-100 w-m-20 card-m d-md-block d-none" />)
                                                 })
                                                 : <div />)

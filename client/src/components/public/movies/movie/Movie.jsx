@@ -43,13 +43,23 @@ class Movie extends React.Component {
     return (
       <div className="w-100 w-m-20 card-m" key={this.props.item._id} title={this.props.item.name} >
         <div className=" border rounded bg-dark border-dark w-100 mb-2 mt-2" >
-          <Link to={"/catalog/movie/" + this.props.item._id} className="w-100">
+          {this.props.onClicked ? <div onClick={() => this.props.onClicked(this.props.item)} >
             {
               this.getPreview()
             }
 
             <p className="text-white text-center text-truncate" ><small>{this.props.item.visualname ? this.props.item.visualname : this.props.item.name} </small></p>
-          </Link>
+          </div >
+            :
+
+            (<Link to={"/catalog/movie/" + this.props.item._id} className="w-100" >
+              {
+                this.getPreview()
+              }
+
+              <p className="text-white text-center text-truncate" ><small>{this.props.item.visualname ? this.props.item.visualname : this.props.item.name} </small></p>
+            </Link>)
+          }
         </div>
 
       </div>

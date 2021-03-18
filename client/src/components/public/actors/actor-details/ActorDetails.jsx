@@ -20,6 +20,9 @@ class ActorDetails extends React.Component {
       loading: true
 
     }
+
+    this.playlist = this.playlist.bind(this);
+
   }
   //--------------------------------------------------------------
   componentDidMount() {
@@ -70,12 +73,21 @@ class ActorDetails extends React.Component {
     });
   }
 
+  playlist = () => {
+
+    this.props.history.push({
+      pathname: '/playlist',
+      state: { reparto: (this.props.location.state ? this.props.location.state.item._id : this.state.item._id) }
+    })
+
+  }
 
   render() {
     const { pageSize, itemCount } = this.state;
 
     return (
       <div className="container-fluid">
+
         <div className="d-block  px-5 ">
           {
             (this.state.loading) ?
@@ -94,7 +106,9 @@ class ActorDetails extends React.Component {
                   <div className="mb-1 text-light">Edad {this.state.item.edad} </div>
                   <p className="card-text mb-auto">Biography <br />{this.state.item.bio}.</p>
                 </div>
-
+                <button className="btn btn-success" onClick={this.playlist}>
+                  Play as playlist
+          </button>
               </div>
                 <div className="d-flex flex-row justify-content-center   mx-auto w-100 mw-1200">
                   <div className="display d-flex flex-row  flex-wrap w-100" >
