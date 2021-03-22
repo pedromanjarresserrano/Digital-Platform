@@ -16,6 +16,14 @@
     font-size: 2em !important;
 }
 
+.playing-overlay {
+    position: relative;
+    background: rgb(0, 0, 0, 0.8);
+    padding: 11px;
+    margin: -40px 0px auto 0px;
+    z-index: 1000;
+}
+
 @media (max-width:768px) {
     .video-react .video-react-progress-holder {
         height: 2.3em;

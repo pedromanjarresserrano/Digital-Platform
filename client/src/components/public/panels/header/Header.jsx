@@ -20,8 +20,8 @@ class Header extends React.Component {
                 </button>
                 <div className="collapse navbar-collapse d-lg-flex flex-lg-row-reverse" id="navbarNavAltMarkup">
                     <div className="navbar-nav bg-dark">
-                        <li class="d-inline d-lg-none">
-                            <button data-toggle="collapse" data-target="#navbarNavAltMarkup" class="close float-right">&times;</button>
+                        <li className="d-inline d-lg-none">
+                            <button data-toggle="collapse" data-target="#navbarNavAltMarkup" className="close float-right">&times;</button>
                         </li>
                         <Link className="nav-item nav-link " to="/home" onClick={() => this.handlerClick("")}>Home</Link>
                         <Link className="nav-item nav-link " to="/catalog" onClick={() => this.handlerClick("- Catalog")}>Catalog</Link>

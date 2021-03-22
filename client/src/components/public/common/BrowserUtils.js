@@ -5,30 +5,38 @@ export const BrowserUtils = {
     mediaTrack: function(params) {
         let video = document.querySelector('video');
 
-        function onPlayButtonClick() {
-            playVideo();
-        }
+        /* Previous Track & Next Track */
 
-        function playVideo() {
-            video.play()
-                .then(_ => updateMetadata())
-                .catch(error => log(error.message));
-        }
+        navigator.mediaSession.setActionHandler('previoustrack', () => {
+            updateMetadata(params.back());
+        });
 
-
+        navigator.mediaSession.setActionHandler('nexttrack', () => {
+            updateMetadata(params.next());
+        });
         /* Seek Backward & Seek Forward */
 
         let defaultSkipTime = 10; /* Time to skip in seconds by default */
+        function updatePositionState() {
+            if ('setPositionState' in navigator.mediaSession) {
+                log('Updating position state...');
+                navigator.mediaSession.setPositionState({
+                    duration: video.duration,
+                    playbackRate: video.playbackRate,
+                    position: video.currentTime
+                });
+            }
+        }
 
         navigator.mediaSession.setActionHandler('seekbackward', function(event) {
-            log('> User clicked "Seek Backward" icon.');
+            console.log('> User clicked "Seek Backward" icon.');
             const skipTime = event.seekOffset || defaultSkipTime;
             video.currentTime = Math.max(video.currentTime - skipTime, 0);
             updatePositionState();
         });
 
         navigator.mediaSession.setActionHandler('seekforward', function(event) {
-            log('> User clicked "Seek Forward" icon.');
+            console.log('> User clicked "Seek Forward" icon.');
             const skipTime = event.seekOffset || defaultSkipTime;
             video.currentTime = Math.min(video.currentTime + skipTime, video.duration);
             updatePositionState();
@@ -37,14 +45,14 @@ export const BrowserUtils = {
         /* Play & Pause */
 
         navigator.mediaSession.setActionHandler('play', async function() {
-            log('> User clicked "Play" icon.');
+            console.log('> User clicked "Play" icon.');
             await video.play();
             navigator.mediaSession.playbackState = "playing";
             // Do something more than just playing video...
         });
 
         navigator.mediaSession.setActionHandler('pause', function() {
-            log('> User clicked "Pause" icon.');
+            console.log('> User clicked "Pause" icon.');
             video.pause();
             navigator.mediaSession.playbackState = "paused";
             // Do something more than just pausing video...
@@ -54,18 +62,18 @@ export const BrowserUtils = {
 
         try {
             navigator.mediaSession.setActionHandler('stop', function() {
-                log('> User clicked "Stop" icon.');
+                console.log('> User clicked "Stop" icon.');
                 // TODO: Clear UI playback...
             });
         } catch (error) {
-            log('Warning! The "stop" media session action is not supported.');
+            console.log('Warning! The "stop" media session action is not supported.');
         }
 
         /* Seek To (supported since Chrome 78) */
 
         try {
             navigator.mediaSession.setActionHandler('seekto', function(event) {
-                log('> User clicked "Seek To" icon.');
+                console.log('> User clicked "Seek To" icon.');
                 if (event.fastSeek && ('fastSeek' in video)) {
                     video.fastSeek(event.seekTime);
                     return;
@@ -74,7 +82,17 @@ export const BrowserUtils = {
                 updatePositionState();
             });
         } catch (error) {
-            log('Warning! The "seekto" media session action is not supported.');
+            console.log('Warning! The "seekto" media session action is not supported.');
         }
+
+
+
+        function updateMetadata(name) {
+            navigator.mediaSession.metadata = new MediaMetadata({
+                title: name
+            });
+        }
+
+        updateMetadata(params.name)
     }
 }

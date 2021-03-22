@@ -60,6 +60,13 @@ class Movie extends React.Component {
               <p className="text-white text-center text-truncate" ><small>{this.props.item.visualname ? this.props.item.visualname : this.props.item.name} </small></p>
             </Link>)
           }
+          {
+            this.props.playing ?
+              <div className="playing-overlay">
+                Now playing
+            </div>
+              : ''
+          }
         </div>
 
       </div>

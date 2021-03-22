@@ -15,7 +15,7 @@ import { segFormat } from '../../../../utils/Utils';
 import { Link } from 'react-router-dom'
 import { Constants } from '../../common/Constants';
 import Pagination from 'react-js-pagination';
-
+import { BrowserUtils } from '../../common/BrowserUtils';
 class PlaylistViewer extends React.Component {
 
   constructor(props) {
@@ -31,12 +31,36 @@ class PlaylistViewer extends React.Component {
       activePage: 1,
       index: 0,
       muted: vol == 0,
-      vol: vol
+      vol: !isNaN(vol) ? vol : 1.0
     }
 
     this.handleChange = this.handleChange.bind(this);
+    this.next = this.next.bind(this);
+    this.back = this.back.bind(this);
 
   }
+
+  next = () => {
+    let index = this.state.items.indexOf(this.state.item) + 1;
+    if (index < this.state.items.length) {
+      this.setState({
+        item: this.state.items[index]
+      })
+      this.player.video.load();
+      return this.state.item.visualname ? this.state.item.visualname : this.state.item.name;
+    }
+  }
+  back = () => {
+    let index = this.state.items.indexOf(this.state.item) - 1;
+    if (index > 0) {
+      this.setState({
+        item: this.state.items[index]
+      })
+      this.player.video.load();
+      return this.state.item.visualname ? this.state.item.visualname : this.state.item.name;
+    }
+  }
+
 
   handleChange(item) {
     this.setState({
@@ -82,6 +106,9 @@ class PlaylistViewer extends React.Component {
     }
 
     this.video = this.player.video.video;
+    this.video.addEventListener("ended", (() => {
+      this.next();
+    }).bind(this));
     this.video.addEventListener("volumechange", e => {
       if (e.srcElement.muted)
         localStorage.setItem("volumen", 0)
@@ -92,6 +119,11 @@ class PlaylistViewer extends React.Component {
     this.video.volume = parseFloat(this.state.vol)
 
     document.title = "Digital Plaform - " + (this.state.item.visualname ? this.state.item.visualname : this.state.item.name);
+    BrowserUtils.mediaTrack({
+      name: this.state.item.visualname ? this.state.item.visualname : this.state.item.name,
+      next: this.next,
+      back: this.back
+    });
 
   }
 
@@ -110,16 +142,20 @@ class PlaylistViewer extends React.Component {
       <div className="container-md container-fluid">
         <div className="row">
           <div className="col-sm-12">
-            <Player loop={false} poster={this.state.item.files[1]} ref={(player) => { this.player = player }}>
+            <Player loop={false} autoPlay={true} poster={this.state.item.files[1]} ref={(player) => { this.player = player }}>
               <source src={"/api/movie/" + this.state.item._id} />
               <BigPlayButton position="center" />
               <ControlBar autoHide={true}>
                 <CurrentTimeDisplay order={4.1} />
                 <TimeDivider order={4.2} />
                 <VolumeMenuButton />
-                <PlaybackRateMenuButton rates={[10, 5, 2, 1, 0.5, 0.1]} order={7.1} />
+                <PlaybackRateMenuButton rates={[2, 1.5, 1.25, 1, 0.5, 0.1]} order={7.1} />
               </ControlBar>
             </Player>
+          </div>
+          <div className=" d-flex flex-row  justify-content-between w-100">
+            <button className="btn btn-success" onClick={this.back}>Back</button>
+            <button className="btn btn-success" onClick={this.next}>Next</button>
           </div>
         </div>
         <div className="row content padding-top-1">
@@ -222,7 +258,9 @@ class PlaylistViewer extends React.Component {
               <div className="display d-flex flex-row  justify-content-between flex-wrap w-100" >  {
 
                 this.state.items.map((m, index) =>
-                  <Movie item={m} index={index} onClicked={this.handleChange} />
+                  <>
+                    <Movie item={m} index={index} onClicked={this.handleChange} playing={m == this.state.item} />
+                  </>
                   , this)
 
               }
