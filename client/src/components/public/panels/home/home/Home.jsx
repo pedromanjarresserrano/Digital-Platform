@@ -26,7 +26,7 @@ class Home extends React.Component {
                 this.setState({
                     items: response.data.result
                 });
-            });
+            }).catch(error => { console.log(error) });
 
         Axios.get('/api/dashboard/actors')
             .then(response => {
@@ -34,7 +34,7 @@ class Home extends React.Component {
                 this.setState({
                     actors: response.data.result
                 });
-            });
+            }).catch(error => { console.log(error) });
     }
 
 

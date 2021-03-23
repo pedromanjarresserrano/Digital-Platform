@@ -57,7 +57,9 @@ class CategorieDetails extends React.Component {
         loading: false
 
       });
-    }.bind(this));
+    }.bind(this))
+      .catch(error => { console.log(error) });
+
   }
 
 

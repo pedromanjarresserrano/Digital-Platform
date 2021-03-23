@@ -85,7 +85,7 @@ class Books extends React.Component {
                         return e;
                     })
                 });
-            });
+            }).catch(error => { console.log(error) });
     }
 
     async loadPage(page) {
@@ -94,7 +94,7 @@ class Books extends React.Component {
         })
         let find = {
             name: { "$regex": ".*" + this.state.search + ".*", $options: 'i' },
-      /*      duration: this.state.timerange*/
+            /*      duration: this.state.timerange*/
 
         }
         let cats = this.state.categorias.filter(e => e.isChecked);

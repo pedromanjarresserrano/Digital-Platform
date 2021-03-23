@@ -85,7 +85,7 @@ class Catalog extends React.Component {
                         return e;
                     })
                 });
-            });
+            }).catch(error => { console.log(error) });
     }
 
     async loadPage(page) {

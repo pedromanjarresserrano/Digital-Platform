@@ -67,7 +67,7 @@ class Actors extends React.Component {
                     loading: false
 
                 });
-            });
+            }).catch(error => { console.log(error) });
     }
 
 
