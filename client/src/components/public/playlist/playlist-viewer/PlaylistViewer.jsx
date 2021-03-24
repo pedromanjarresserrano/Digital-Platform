@@ -37,6 +37,7 @@ class PlaylistViewer extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.next = this.next.bind(this);
     this.back = this.back.bind(this);
+    this.loadTitle = this.loadTitle.bind(this);
 
   }
 
@@ -47,6 +48,7 @@ class PlaylistViewer extends React.Component {
         item: this.state.items[index]
       })
       this.player.video.load();
+      this.loadTitle();
       return this.state.item.visualname ? this.state.item.visualname : this.state.item.name;
     }
   }
@@ -57,7 +59,9 @@ class PlaylistViewer extends React.Component {
         item: this.state.items[index]
       })
       this.player.video.load();
+      this.loadTitle();
       return this.state.item.visualname ? this.state.item.visualname : this.state.item.name;
+      
     }
   }
 
@@ -117,8 +121,7 @@ class PlaylistViewer extends React.Component {
     })
     this.video.muted = this.state.muted
     this.video.volume = parseFloat(this.state.vol)
-
-    document.title = "Digital Plaform - " + (this.state.item.visualname ? this.state.item.visualname : this.state.item.name);
+    this.loadTitle();
     BrowserUtils.mediaTrack({
       name: this.state.item.visualname ? this.state.item.visualname : this.state.item.name,
       next: this.next,
@@ -126,7 +129,9 @@ class PlaylistViewer extends React.Component {
     });
 
   }
-
+  loadTitle = () => {
+    document.title = "Digital Plaform - " + (this.state.item.visualname ? this.state.item.visualname : this.state.item.name);
+  }
 
   regresar = () => {
     this.props.history.goBack();

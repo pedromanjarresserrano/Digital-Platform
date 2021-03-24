@@ -107,6 +107,20 @@ async function fullfixes(req, res) {
                 "visualname": { $regex: '.*' + a.name.toLowerCase().replace(/\s/g, '.') + '.*', $options: 'si' }
             }
 
+
+            find["$and"][0]["$or"][3] = {
+                "name": { $regex: '.*' + a.name.toLowerCase().replace(/\s/g, '.') + '.*', $options: 'si' }
+            }
+
+            find["$and"][0]["$or"][4] = {
+                "name": { $regex: '.*' + a.name.toLowerCase() + '.*', $options: 'i' }
+            }
+
+            find["$and"][0]["$or"][5] = {
+                "name": { $regex: '.*' + a.name.toLowerCase().replace(/\s/g, '') + '.*', $options: 'si' }
+            }
+
+
             find["$and"][1]["$and"][0] = {
                     "reparto": {
                         "$not": {
@@ -180,11 +194,31 @@ async function fullfixes(req, res) {
             find["$and"][0]["$or"][2] = {
                 "visualname": { $regex: '.*' + c.name.toLowerCase().replace(/\s/g, '.') + '.*', $options: 'si' }
             }
+
+
+            find["$and"][0]["$or"][3] = {
+                "name": { $regex: '.*' + c.name.toLowerCase() + '.*', $options: 'si' }
+            }
+
+
+            find["$and"][0]["$or"][4] = {
+                "name": { $regex: '.*' + c.name.toLowerCase().replace(/\s/g, '') + '.*', $options: 'si' }
+            }
+
+            find["$and"][0]["$or"][5] = {
+                "name": { $regex: '.*' + c.name.toLowerCase().replace(/\s/g, '.') + '.*', $options: 'si' }
+            }
             if (c.alias && c.alias.trim().length > 0) {
-                find["$and"][0]["$or"][3] = {
+                find["$and"][0]["$or"][6] = {
                     "visualname": { $regex: '.*' + c.alias.toLowerCase() + '.*', $options: 'si' }
                 }
+
+                find["$and"][0]["$or"][7] = {
+                    "name": { $regex: '.*' + c.alias.toLowerCase() + '.*', $options: 'si' }
+                }
+
             }
+
 
             find["$and"][1]["$and"][0] = {
                     "categorias": {
@@ -257,6 +291,20 @@ async function fullfixes(req, res) {
             find["$and"][0]["$or"][2] = {
                 "visualname": { $regex: '.*' + s.name.toLowerCase().replace(/\s/g, '.') + '.*', $options: 'si' }
             }
+
+            find["$and"][0]["$or"][3] = {
+                "name": { $regex: '.*' + s.name.toLowerCase() + '.*', $options: 'si' }
+            }
+
+            find["$and"][0]["$or"][4] = {
+                "name": { $regex: '.*' + s.name.toLowerCase().replace(/\s/g, '') + '.*', $options: 'si' }
+            }
+
+            find["$and"][0]["$or"][5] = {
+                "name": { $regex: '.*' + s.name.toLowerCase().replace(/\s/g, '.') + '.*', $options: 'si' }
+            }
+
+
 
             find["$and"][1]["$and"][0] = {
                 "studio": {

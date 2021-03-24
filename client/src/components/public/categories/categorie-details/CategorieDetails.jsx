@@ -86,13 +86,13 @@ class CategorieDetails extends React.Component {
 
     return (
       <div className="container-fluid">
-        <div className="row">
-          <button className="btn btn-success" onClick={this.playlist}>
-            Play as playlist
-          </button>
-        </div>
         <div className="d-block">
-          <h1 className="text-white">{this.state.item.name}</h1>
+          <div className="d-flex row-flex justify-content-between">
+            <h1 className="text-white">{this.state.item.name}</h1>
+            <button className="btn btn-success" onClick={this.playlist}>
+              Play as playlist
+          </button>
+          </div>
           <div className="d-flex flex-row justify-content-center   mx-auto w-100 mw-1200">
             <div className="display d-flex flex-row  flex-wrap w-100" >
               {
