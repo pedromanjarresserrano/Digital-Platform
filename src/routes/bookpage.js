@@ -5,7 +5,7 @@ const fs = require('fs');
 const models = require('../models');
 const { Stream } = require('stream');
 
-router.get('/', async function (req, res) {
+router.get('/', async function(req, res) {
     let id = req.query.id;
     let name = req.query.name;
 
@@ -24,7 +24,7 @@ router.get('/', async function (req, res) {
             }
         })
     ps.pipe(res) // <---- this makes a trick with stream error handling
-
+    return;
 })
 
 

@@ -12,6 +12,7 @@ import Axios from 'axios';
 import { Link } from 'react-router-dom'
 import Actor from '../../actors/actor/Actor';
 import { segFormat } from '../../../../utils/Utils';
+import PictureInPicture from '../../ui/pinp/PictureInPicture';
 
 class MovieDetails extends React.Component {
 
@@ -134,7 +135,7 @@ class MovieDetails extends React.Component {
                   <div className="info-gratitude margin-bottom-1 w-100">
                     <div className="directed w-100">
                       <span>Título original: </span>
-                      <span className='w-100'  style={{ wordWrap: 'break-word' }}>{this.state.item.name ? this.state.item.name : ''}</span>
+                      <span className='w-100' style={{ wordWrap: 'break-word' }}>{this.state.item.name ? this.state.item.name : ''}</span>
                     </div>
                     <div className="directed w-100">
                       <span>Director: </span>

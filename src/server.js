@@ -22,7 +22,7 @@ require('./services/socket').init(app);
 
 
 app.get('*', function(req, res) {
-    res.sendFile('index.html', { root: path.join(__dirname, "/../public") });
+    return res.sendFile('index.html', { root: path.join(__dirname, "/../public") });
 })
 
 

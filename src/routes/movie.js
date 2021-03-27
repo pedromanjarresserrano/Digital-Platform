@@ -18,14 +18,20 @@ router.get('/:_id', loggerRequest, async function(req, res) {
         const fileSize = stat.size
         const range = req.headers.range
         if (range) {
-            const parts = range.replace(/bytes=/, "").split("-")
-            const start = parseInt(parts[0], 10)
-            const end = parts[1] ?
-                parseInt(parts[1], 10) :
-                fileSize - 1
+            var split = range.split(/[-=]/);
+            const start = parseInt(split[1])
+            const end = split[2] ? +split[2] : fileSize - 1;
             const chunksize = (end - start) + 1
+            if (parseInt(start) >= fileSize || parseInt(end) >= fileSize) {
+                //Indicate the acceptable range.
+                res.status(416);
+                res.set("Content-Range", 'bytes */' + fileSize); // File size.
+                //Return the 416 'Requested Range Not Satisfiable'.
+                res.end();
+            }
             const file = fs.createReadStream(path, { start, end })
             const head = {
+                'Connection': 'keep-alive',
                 'Content-Range': `bytes ${start}-${end}/${fileSize}`,
                 'Accept-Ranges': 'bytes',
                 'Content-Length': chunksize,
@@ -44,6 +50,7 @@ router.get('/:_id', loggerRequest, async function(req, res) {
         movie.unique_views.push(req.sessionID)
         movie.view = movie.unique_views.length;
         movie.save();
+        return;
 
     } catch (error) {
         res.status(502).send({ msg: "error", error })

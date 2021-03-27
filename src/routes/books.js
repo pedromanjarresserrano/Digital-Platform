@@ -21,7 +21,7 @@ router.post('/', loggerRequest, async function(req, res) {
         process = 0;
         res.status(502).send(error);
     }
-
+    return;
 })
 
 router.get("/progress", (req, res) => {

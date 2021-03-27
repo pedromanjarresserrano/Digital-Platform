@@ -12,7 +12,7 @@ import { authReducer } from './admin/auth/authReducer';
 import { LoginAdmin } from './admin/login/LoginAdmin.js';
 
 const init = () => {
-    return JSON.parse(localStorage.getItem('userInfo')) || { logged: false };
+    return JSON.parse(localStorage.getItem('userInfo') || "{}") || { logged: false };
 }
 
 export const App = () => {
