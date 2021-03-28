@@ -21,7 +21,7 @@ router.get('/:_id', loggerRequest, async function(req, res) {
             var split = range.split(/[-=]/);
             const start = parseInt(split[1])
             const end = split[2] ? +split[2] : fileSize - 1;
-            const chunksize = (end - start) + 1
+            const chunksize = 1024 * 300;
             if (parseInt(start) >= fileSize || parseInt(end) >= fileSize) {
                 //Indicate the acceptable range.
                 res.status(416);

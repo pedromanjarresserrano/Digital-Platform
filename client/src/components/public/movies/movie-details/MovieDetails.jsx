@@ -13,6 +13,7 @@ import { Link } from 'react-router-dom'
 import Actor from '../../actors/actor/Actor';
 import { segFormat } from '../../../../utils/Utils';
 import PictureInPicture from '../../ui/pinp/PictureInPicture';
+import { Constants } from '../../common/Constants';
 
 class MovieDetails extends React.Component {
 
@@ -43,11 +44,9 @@ class MovieDetails extends React.Component {
           localStorage.setItem("volumen", e.srcElement.volume)
       })
       this.video.muted = this.state.muted
-      this.video.volume = parseFloat(this.state.vol)
+      this.video.volume = parseFloat(isNaN(this.state.vol) ? 0 : this.state.vol);
 
       document.title = "Digital Plaform - " + (this.state.item.visualname ? this.state.item.visualname : this.state.item.name);
-
-
     }.bind(this)).catch((error) => {
       console.log(error);
     });
@@ -77,7 +76,7 @@ class MovieDetails extends React.Component {
                 <CurrentTimeDisplay order={4.1} />
                 <TimeDivider order={4.2} />
                 <VolumeMenuButton />
-                <PlaybackRateMenuButton rates={[10, 5, 2, 1, 0.5, 0.1]} order={7.1} />
+                <PlaybackRateMenuButton rates={Constants.PUBLIC.RATES} order={7.1} />
               </ControlBar>
             </Player>
           </div>

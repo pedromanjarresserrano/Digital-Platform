@@ -88,7 +88,7 @@ class CategorieDetails extends React.Component {
       <div className="container-fluid">
         <div className="d-block">
           <div className="d-flex row-flex justify-content-between">
-            <h1 className="text-white">{this.state.item.name}</h1>
+            <h1 className="text-white text-truncate">{this.state.item.name}</h1>
             <button className="btn btn-success" onClick={this.playlist}>
               Play as playlist
           </button>

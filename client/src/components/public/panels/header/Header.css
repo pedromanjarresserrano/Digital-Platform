@@ -6,6 +6,10 @@ body {
 /* mobile navbar sidebar under lg breakpoint */
 
 @media (max-width: 992px) {
+    .navbar-collapse.collapsing {
+        height: 0 !important;
+        transition: unset !important;
+    }
     .navbar-collapse.collapsing .navbar-nav {
         display: block;
         position: fixed;

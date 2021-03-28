@@ -61,7 +61,7 @@ class PlaylistViewer extends React.Component {
       this.player.video.load();
       this.loadTitle();
       return this.state.item.visualname ? this.state.item.visualname : this.state.item.name;
-      
+
     }
   }
 
@@ -154,7 +154,7 @@ class PlaylistViewer extends React.Component {
                 <CurrentTimeDisplay order={4.1} />
                 <TimeDivider order={4.2} />
                 <VolumeMenuButton />
-                <PlaybackRateMenuButton rates={[2, 1.5, 1.25, 1, 0.5, 0.1]} order={7.1} />
+                <PlaybackRateMenuButton rates={Constants.PUBLIC.RATES} order={7.1} />
               </ControlBar>
             </Player>
           </div>

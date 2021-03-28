@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom'
 import { session } from '../session/Session';
-
+import './SidebarAdmin.css'
 class SidebarAdmin extends React.Component {
 
     constructor(props) {
@@ -21,6 +21,17 @@ class SidebarAdmin extends React.Component {
         document.querySelectorAll(".nav-link").forEach(e => e.classList.remove("active"));
         currentTarget.classList.add("active");
 
+    }
+
+    componentDidMount() {
+        OverlayScrollbars(document.querySelectorAll('.main-sidebar .nav-sidebar'),{
+            className: 'os-theme-light',
+            sizeAutoCapable: true,
+            scrollbars: {
+                autoHide: true,
+                clickScrolling: true
+            }
+        });
     }
 
     render() {
@@ -128,8 +139,8 @@ class SidebarAdmin extends React.Component {
                                         Movies
                                     </p>
                                 </Link>
-                            </li> 
-                                                       <li className="nav-item">
+                            </li>
+                            <li className="nav-item">
                                 <Link className="nav-link " to="/admin/books" onClick={this.onClickHandler}>
                                     <i className="nav-icon fas fa-bookmark"></i>
                                     <p>
@@ -145,7 +156,7 @@ class SidebarAdmin extends React.Component {
                                     </p>
                                 </Link>
                             </li>
-                             <li className="nav-item">
+                            <li className="nav-item">
                                 <Link className="nav-link " to="/admin/studios" onClick={this.onClickHandler}>
                                     <i className="nav-icon fas fa-dungeon"></i>
                                     <p>

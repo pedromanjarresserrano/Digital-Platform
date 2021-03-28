@@ -1,0 +1,7 @@
+[class*=sidebar-dark-] .sidebar a i {
+    margin-right: 5px;
+}
+
+[class*=sidebar-dark-] .sidebar a:hover {
+    color: white !important;
+}
