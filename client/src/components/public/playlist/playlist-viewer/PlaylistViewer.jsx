@@ -47,7 +47,9 @@ class PlaylistViewer extends React.Component {
       this.setState({
         item: this.state.items[index]
       })
+      let pbr = this.player.playbackRate;
       this.player.video.load();
+      this.player.playbackRate = pbr;
       this.loadTitle();
       return this.state.item.visualname ? this.state.item.visualname : this.state.item.name;
     }
@@ -58,7 +60,9 @@ class PlaylistViewer extends React.Component {
       this.setState({
         item: this.state.items[index]
       })
+      let pbr = this.player.playbackRate;
       this.player.video.load();
+      this.player.playbackRate = pbr;
       this.loadTitle();
       return this.state.item.visualname ? this.state.item.visualname : this.state.item.name;
 

@@ -19,7 +19,7 @@ class Categorie extends React.Component {
                 <div className="p-1 portada" >
 
                     <LazyLoadImage effect="blur"
-                        wrapperClassName="img-fluid  d-flex justify-content-center"
+                       placeholderSrc="/img/loading.svg"  wrapperClassName="img-fluid  d-flex justify-content-center"
                         src={this.props.item.image}  />
 
                     <p className="text-white text-center">{this.props.item.name}</p>

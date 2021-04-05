@@ -49,6 +49,7 @@ class Carousel extends React.Component {
                                         <LazyLoadImage
                                             effect="blur"
                                             alt={file}
+                                            placeholderSrc	="/img/loading.svg"
                                             visibleByDefault={first}
                                             src={file} />
                                     </div>

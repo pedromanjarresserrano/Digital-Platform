@@ -4,9 +4,15 @@ export const BrowserUtils = {
     },
     mediaTrack: function(params) {
         let video = document.querySelector('video');
+        window.next = () => {
+            updateMetadata(params.next());
+        }
+
+        window.back = () => {
+            updateMetadata(params.back());
+        }
 
         /* Previous Track & Next Track */
-
         navigator.mediaSession.setActionHandler('previoustrack', () => {
             updateMetadata(params.back());
         });

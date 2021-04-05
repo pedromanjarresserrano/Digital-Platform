@@ -17,6 +17,7 @@ class Studio extends React.Component {
                 <div className="p-1 d-flex flex-column justify-content-between h-100" >
                     <div className="d-flex flex-column justify-content-center h-100 studio">
                         <LazyLoadImage effect="blur"
+                            placeholderSrc="/img/loading.svg"
                             wrapperClassName="img-fluid d-block mx-auto"
                             src={this.props.item.image} />
                     </div>

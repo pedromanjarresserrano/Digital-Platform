@@ -5,3 +5,7 @@
 [class*=sidebar-dark-] .sidebar a:hover {
     color: white !important;
 }
+
+.main-sidebar {
+    margin-bottom: -57px !important;
+}
