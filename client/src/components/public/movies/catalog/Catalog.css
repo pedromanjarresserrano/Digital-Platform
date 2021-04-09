@@ -14,3 +14,7 @@
     background-color: rgb(4, 0, 255) !important;
     color: white !important;
 }
+
+.sticky-top-scroll {
+    background: #19191f;
+}

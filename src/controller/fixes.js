@@ -119,6 +119,35 @@ async function fullfixes(req, res) {
             find["$and"][0]["$or"][5] = {
                 "name": { $regex: '.*' + a.name.toLowerCase().replace(/\s/g, '') + '.*', $options: 'si' }
             }
+            if (a.alias) {
+
+                find["$and"][0]["$or"][6] = {
+                    "visualname": { $regex: '.*' + a.alias.toLowerCase() + '.*', $options: 'i' }
+                }
+
+                find["$and"][0]["$or"][7] = {
+                    "visualname": { $regex: '.*' + a.alias.toLowerCase().replace(/\s/g, '') + '.*', $options: 'si' }
+                }
+
+                find["$and"][0]["$or"][8] = {
+                    "visualname": { $regex: '.*' + a.alias.toLowerCase().replace(/\s/g, '.') + '.*', $options: 'si' }
+                }
+
+
+                find["$and"][0]["$or"][9] = {
+                    "name": { $regex: '.*' + a.alias.toLowerCase().replace(/\s/g, '.') + '.*', $options: 'si' }
+                }
+
+                find["$and"][0]["$or"][10] = {
+                    "name": { $regex: '.*' + a.alias.toLowerCase() + '.*', $options: 'i' }
+                }
+
+                find["$and"][0]["$or"][11] = {
+                    "name": { $regex: '.*' + a.alias.toLowerCase().replace(/\s/g, '') + '.*', $options: 'si' }
+                }
+
+            }
+
 
 
             find["$and"][1]["$and"][0] = {
@@ -304,7 +333,32 @@ async function fullfixes(req, res) {
                 "name": { $regex: '.*' + s.name.toLowerCase().replace(/\s/g, '.') + '.*', $options: 'si' }
             }
 
+            if (s.alias) {
+                find["$and"][0]["$or"][6] = {
+                    "visualname": { $regex: '.*' + s.alias.toLowerCase() + '.*', $options: 'si' }
+                }
 
+                find["$and"][0]["$or"][7] = {
+                    "visualname": { $regex: '.*' + s.alias.toLowerCase().replace(/\s/g, '') + '.*', $options: 'si' }
+                }
+
+                find["$and"][0]["$or"][8] = {
+                    "visualname": { $regex: '.*' + s.alias.toLowerCase().replace(/\s/g, '.') + '.*', $options: 'si' }
+                }
+
+                find["$and"][0]["$or"][9] = {
+                    "name": { $regex: '.*' + s.alias.toLowerCase() + '.*', $options: 'si' }
+                }
+
+                find["$and"][0]["$or"][10] = {
+                    "name": { $regex: '.*' + s.alias.toLowerCase().replace(/\s/g, '') + '.*', $options: 'si' }
+                }
+
+                find["$and"][0]["$or"][11] = {
+                    "name": { $regex: '.*' + s.alias.toLowerCase().replace(/\s/g, '.') + '.*', $options: 'si' }
+                }
+
+            }
 
             find["$and"][1]["$and"][0] = {
                 "studio": {

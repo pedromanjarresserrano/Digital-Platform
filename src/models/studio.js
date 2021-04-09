@@ -12,6 +12,11 @@ let studioSchema = new mongoose.Schema({
         required: true,
         default: ""
     },
+    alias: {
+        type: String,
+        default: '',
+        required: false,
+    },
     updated: { type: Date, default: Date.now },
     created: { type: Date, default: Date.now },
     image: {
@@ -22,7 +27,7 @@ let studioSchema = new mongoose.Schema({
 
 studioSchema.plugin(require('mongoose-autopopulate'));
 
-studioSchema.pre("save", function (next) {
+studioSchema.pre("save", function(next) {
     if (this.name)
         this.name = this.name.trim();
 

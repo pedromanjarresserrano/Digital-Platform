@@ -2,8 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom'
 import socketIOClient from "socket.io-client";
 import TopMenu from '../ui/topmenu/TopMenu';
-
-const ENDPOINT =  process.env.URLWS;
+import "./HeaderAdmin.css"
+const ENDPOINT = process.env.URLWS;
 
 class HeaderAdmin extends React.Component {
 
@@ -22,7 +22,6 @@ class HeaderAdmin extends React.Component {
 
 
     componentDidMount() {
-        console.log(ENDPOINT);
         const socket = socketIOClient(ENDPOINT);
         socket.on("RMF", data => {
             if (data.process >= 100) {
