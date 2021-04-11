@@ -16,6 +16,8 @@ import { Link } from 'react-router-dom'
 import { Constants } from '../../common/Constants';
 import Pagination from 'react-js-pagination';
 import { BrowserUtils } from '../../common/BrowserUtils';
+import NextButtom from '../../ui/nextbuttom/NextButtom';
+import PrevButtom from '../../ui/prevbuttom/PrevButtom';
 class PlaylistViewer extends React.Component {
 
   constructor(props) {
@@ -56,7 +58,7 @@ class PlaylistViewer extends React.Component {
   }
   back = () => {
     let index = this.state.items.indexOf(this.state.item) - 1;
-    if (index > 0) {
+    if (index >= 0) {
       this.setState({
         item: this.state.items[index]
       })
@@ -105,7 +107,7 @@ class PlaylistViewer extends React.Component {
 
 
   //--------------------------------------------------------------
-  async componentWillMount() {
+  async componentDidMount() {
     await this.loadPage(1);
     if (this.state.items && this.state.items.length > 0) {
       this.setState({
@@ -154,6 +156,9 @@ class PlaylistViewer extends React.Component {
             <Player loop={false} autoPlay={true} poster={this.state.item.files[1]} ref={(player) => { this.player = player }}>
               <source src={"/api/movie/" + this.state.item._id} />
               <BigPlayButton position="center" />
+
+              <NextButtom onClick={this.next} />
+              <PrevButtom onClick={this.back} />
               <ControlBar autoHide={true}>
                 <CurrentTimeDisplay order={4.1} />
                 <TimeDivider order={4.2} />

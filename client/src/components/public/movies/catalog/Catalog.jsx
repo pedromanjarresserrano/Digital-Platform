@@ -56,23 +56,23 @@ class Catalog extends React.Component {
     async componentDidMount() {
         this.load();
         document.body.style.paddingTop = '0';
-     /*   document.addEventListener("DOMContentLoaded", function () {
-            window.addEventListener('scroll', function () {
-                if (window.scrollY > 50) {
-                    let element = document.getElementsByClassName('sticky-top-scroll')[0];
-                    element.classList.add('fixed-top');
-                    // add padding top to show content behind navbar
-                    this.setState({ navbar_height: element.offsetHeight })
-                    let cal = (this.state.navbar_height) - 12;
-                    document.body.style.paddingTop = cal + 'px';
-                } else {
-                    document.getElementsByClassName('sticky-top-scroll')[0].classList.remove('fixed-top');
-                    // remove padding top from body
-                    document.body.style.paddingTop = '0';
-                }
-            }.bind(this));
-        }.bind(this));
-        */
+        /*   document.addEventListener("DOMContentLoaded", function () {
+               window.addEventListener('scroll', function () {
+                   if (window.scrollY > 50) {
+                       let element = document.getElementsByClassName('sticky-top-scroll')[0];
+                       element.classList.add('fixed-top');
+                       // add padding top to show content behind navbar
+                       this.setState({ navbar_height: element.offsetHeight })
+                       let cal = (this.state.navbar_height) - 12;
+                       document.body.style.paddingTop = cal + 'px';
+                   } else {
+                       document.getElementsByClassName('sticky-top-scroll')[0].classList.remove('fixed-top');
+                       // remove padding top from body
+                       document.body.style.paddingTop = '0';
+                   }
+               }.bind(this));
+           }.bind(this));
+           */
     }
 
     async componentDidUpdate() {
@@ -106,7 +106,21 @@ class Catalog extends React.Component {
                 });
             }).catch(error => { console.log(error) });
     }
+    playlist = () => {
+        let find = {
+            name: { "$regex": ".*" + this.state.search + ".*", $options: 'i' },
+            /*      duration: this.state.timerange*/
 
+        }
+        let cats = this.state.categorias.filter(e => e.isChecked);
+        if (cats.length > 0)
+            find.categorias = cats.map(e => e._id);
+        this.props.history.push({
+            pathname: '/playlist',
+            state: find
+        })
+
+    }
     async loadPage(page) {
         await this.setState({
             loading: true
@@ -196,6 +210,9 @@ class Catalog extends React.Component {
                                         })
                                     }
                                 </select>
+                                <button className="btn btn-success" onClick={this.playlist}>
+                                    Play as playlist
+                                </button>
                             </div>
                         </div>
                     </div>

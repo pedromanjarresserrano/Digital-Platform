@@ -24,6 +24,12 @@
     z-index: 1000;
 }
 
+.video-react .video-react-progress-holder,
+.video-react .video-react-progress-holder .video-react-load-progress,
+.video-react .video-react-play-progress {
+    height: 0.6em !important;
+}
+
 @media (max-width:768px) {
     .video-react .video-react-progress-holder {
         height: 2.3em;
