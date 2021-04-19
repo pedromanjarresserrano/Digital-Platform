@@ -75,10 +75,11 @@ class ActorDetails extends React.Component {
   }
 
   playlist = () => {
-
+    let find = { reparto: (this.props.location.state ? this.props.location.state.item._id : this.state.item._id) };
+    localStorage.setItem("fils", JSON.stringify(find));
     this.props.history.push({
       pathname: '/playlist',
-      state: { reparto: (this.props.location.state ? this.props.location.state.item._id : this.state.item._id) }
+      state: find
     })
 
   }

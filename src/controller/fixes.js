@@ -238,16 +238,25 @@ async function fullfixes(req, res) {
                 "name": { $regex: '.*' + c.name.toLowerCase().replace(/\s/g, '.') + '.*', $options: 'si' }
             }
             if (c.alias && c.alias.trim().length > 0) {
-                find["$and"][0]["$or"][6] = {
-                    "visualname": { $regex: '.*' + c.alias.toLowerCase() + '.*', $options: 'si' }
-                }
+                let aliases = c.alias.split(',')
+                if (aliases.length > 1) {
+                    aliases.forEach(element => {
+                        find["$and"][0]["$or"].push({
+                            "visualname": { $regex: '.*' + element.toLowerCase() + '.*', $options: 'si' }
+                        });
+                    });
 
-                find["$and"][0]["$or"][7] = {
-                    "name": { $regex: '.*' + c.alias.toLowerCase() + '.*', $options: 'si' }
-                }
+                } else {
+                    find["$and"][0]["$or"][6] = {
+                        "visualname": { $regex: '.*' + c.alias.toLowerCase() + '.*', $options: 'si' }
+                    }
 
+                    find["$and"][0]["$or"][7] = {
+                        "name": { $regex: '.*' + c.alias.toLowerCase() + '.*', $options: 'si' }
+                    }
+                }
             }
-
+            //  console.log(find["$and"][0]["$or"]);
 
             find["$and"][1]["$and"][0] = {
                     "categorias": {

@@ -73,10 +73,11 @@ class CategorieDetails extends React.Component {
   }
 
   playlist = () => {
-
+    let find = { categorias: (this.props.location.state ? this.props.location.state.item._id : this.state.item._id) };
+    localStorage.setItem("fils", JSON.stringify(find));
     this.props.history.push({
       pathname: '/playlist',
-      state: { categorias: (this.props.location.state ? this.props.location.state.item._id : this.state.item._id) }
+      state: find
     })
 
   }

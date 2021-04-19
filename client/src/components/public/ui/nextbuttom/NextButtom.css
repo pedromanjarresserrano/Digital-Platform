@@ -1,9 +1,9 @@
 .nextbar {
     display: none;
-    top: 0 !important;
+    top: 40% !important;
     right: 0 !important;
     position: absolute !important;
-    height: calc(100% - 3em) !important;
+    height: calc(100% - 3em - 70%) !important;
     width: 35px !important;
     background-color: rgba(43, 51, 63, 0.7);
     z-index: 100;

@@ -69,10 +69,11 @@ class StudioDetails extends React.Component {
   }
 
   playlist = () => {
-
+    let find = { studio: (this.props.location.state ? this.props.location.state.item._id : this.state.item._id) };
+    localStorage.setItem("fils", JSON.stringify(find));
     this.props.history.push({
       pathname: '/playlist',
-      state: { studio: (this.props.location.state ? this.props.location.state.item._id : this.state.item._id) }
+      state: find
     })
 
   }

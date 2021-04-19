@@ -115,11 +115,11 @@ class Catalog extends React.Component {
         let cats = this.state.categorias.filter(e => e.isChecked);
         if (cats.length > 0)
             find.categorias = cats.map(e => e._id);
+        localStorage.setItem("fils", JSON.stringify(find));
         this.props.history.push({
             pathname: '/playlist',
             state: find
         })
-
     }
     async loadPage(page) {
         await this.setState({

@@ -24,7 +24,8 @@ export default class PrevButtom extends Component {
 
         return (
             <div className={classNames(className, "backbar ",
-                "video-react-control-bar-auto-hide")}>  <a
+                "video-react-control-bar-auto-hide")} onClick={this.handleClick}
+            >  <a
                     ref={c => {
                         this.button = c;
                     }}
@@ -42,7 +43,6 @@ export default class PrevButtom extends Component {
                         backgroundPosition: 'center'
                     }}
                     tabIndex="0"
-                    onClick={this.handleClick}
                 />
             </div>
         );

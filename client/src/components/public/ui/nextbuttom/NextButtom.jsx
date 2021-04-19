@@ -25,7 +25,8 @@ export default class NextButtom extends Component {
 
         return (
             <div className={classNames(className, "nextbar ",
-                "video-react-control-bar-auto-hide")}> <a
+                "video-react-control-bar-auto-hide")} onClick={this.handleClick}
+            > <a
                     ref={c => {
                         this.button = c;
                     }}
@@ -41,7 +42,6 @@ export default class NextButtom extends Component {
                         backgroundPosition: 'center'
                     }}
                     tabIndex="0"
-                    onClick={this.handleClick}
                 />
             </div>
         );

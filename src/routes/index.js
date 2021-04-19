@@ -1,4 +1,5 @@
 const models = require('../models');
+const cookieParser = require('cookie-parser');
 
 
 module.exports = (app) => {

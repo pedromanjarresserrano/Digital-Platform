@@ -31,7 +31,7 @@ export const Public = ({ match }) => (
             <Route key="list-movies-p" exact path="/catalog/:page" component={Catalog} />
             <Route key="catalogmovie" exact path="/catalog/movie" render={(props) => (<Redirect to="/catalog/1"  {...props} />)} />
             <Route key="movie" exact path="/catalog/movie/:id" component={MovieDetails} />
-           
+
             <Route key="list-categories" exact path="/categories" render={(props) => (<Redirect to="/categories/1"  {...props} />)} />
             <Route key="list-categories-id" exact path="/categories/:page" component={Categories} />
             <Route key="categoriecategorie" exact path="/categories/categorie" render={(props) => (<Redirect to="/categories/1"  {...props} />)} />
@@ -50,7 +50,7 @@ export const Public = ({ match }) => (
             <Route key="actorn" exact path="/actors/actor/:name" render={(props) => (<Redirect to={"/actors/actor/" + props.match.params.name + "/1"}  {...props} />)} />
             <Route key="actornp" exact path="/actors/actor/:name/:page" component={ActorDetails} />
 
-            
+
             <Route key="list-books" exact path="/books" render={(props) => (<Redirect to="/books/1"  {...props} />)} />
             <Route key="list-books-p" exact path="/books/:page" component={Books} />
             <Route key="booksb" exact path="/books/book" render={(props) => (<Redirect to="/books/1"  {...props} />)} />
@@ -61,7 +61,12 @@ export const Public = ({ match }) => (
             <Route key="list-imagesets-p" exact path="/imagesets/:page" component={Imagesets} />
             <Route key="imagesetsb" exact path="/imagesets/imageset" render={(props) => (<Redirect to="/imagesets/1"  {...props} />)} />
             <Route key="imageset" exact path="/imagesets/imageset/:id" component={ImagesetDetails} />
-            <Route key="playlist" exact path="/playlist" component={PlaylistViewer} />      
+            <Route key="list-movies" exact path="/playlist"
+                render={(props) => {
+                    debugger
+                    return (<><Redirect to="/playlist/1"  {...props} /></>);
+                }} />
+            <Route key="playlist" exact path="/playlist/:page" component={PlaylistViewer} />
             <Route exact path="/index" component={Home} />
             <Route exact path="*" component={NotFound} />
         </Switch>

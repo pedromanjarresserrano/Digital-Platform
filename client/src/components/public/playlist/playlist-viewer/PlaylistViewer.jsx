@@ -40,6 +40,9 @@ class PlaylistViewer extends React.Component {
     this.next = this.next.bind(this);
     this.back = this.back.bind(this);
     this.loadTitle = this.loadTitle.bind(this);
+    if (!this.props.location.state) {
+      this.props.location.state = JSON.parse(localStorage.getItem("fils"))
+    }
 
   }
 
@@ -98,41 +101,56 @@ class PlaylistViewer extends React.Component {
     });
   }
 
+  async load() {
+
+    let page = this.props.match.params.page;
+
+    page = page ? parseInt(page) : 1;
+
+    var statesVal = { activePage: page }
+
+    await this.setState(statesVal);
+    await this.loadPage(page);
+  }
+
   onPageChanged = pageNumber => {
     pageNumber = parseInt(pageNumber)
     this.setState({ activePage: pageNumber, loading: true });
     this.loadPage(pageNumber);
+    this.props.history.push({
+      pathname: generatePath(this.props.match.path, { page: pageNumber }),
+      state: this.props.history.state
 
+    });
   }
 
-
-  //--------------------------------------------------------------
   async componentDidMount() {
-    await this.loadPage(1);
+    await this.load();
+    debugger;
     if (this.state.items && this.state.items.length > 0) {
       this.setState({
         item: this.state.items[0]
       })
-    }
 
-    this.video = this.player.video.video;
-    this.video.addEventListener("ended", (() => {
-      this.next();
-    }).bind(this));
-    this.video.addEventListener("volumechange", e => {
-      if (e.srcElement.muted)
-        localStorage.setItem("volumen", 0)
-      else
-        localStorage.setItem("volumen", e.srcElement.volume)
-    })
-    this.video.muted = this.state.muted
-    this.video.volume = parseFloat(this.state.vol)
-    this.loadTitle();
-    BrowserUtils.mediaTrack({
-      name: this.state.item.visualname ? this.state.item.visualname : this.state.item.name,
-      next: this.next,
-      back: this.back
-    });
+      this.video = this.player.video.video;
+      this.video.addEventListener("ended", (() => {
+        this.next();
+      }).bind(this));
+      this.video.addEventListener("volumechange", e => {
+        if (e.srcElement.muted)
+          localStorage.setItem("volumen", 0)
+        else
+          localStorage.setItem("volumen", e.srcElement.volume)
+      })
+      this.video.muted = this.state.muted
+      this.video.volume = parseFloat(this.state.vol)
+      this.loadTitle();
+      BrowserUtils.mediaTrack({
+        name: this.state.item.visualname ? this.state.item.visualname : this.state.item.name,
+        next: this.next,
+        back: this.back
+      });
+    }
 
   }
   loadTitle = () => {
