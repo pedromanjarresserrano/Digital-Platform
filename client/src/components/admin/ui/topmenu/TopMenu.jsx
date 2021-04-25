@@ -14,7 +14,7 @@ class TopMenu extends React.Component {
 
     render() {
         return (
-            <ul className="navbar-nav ml-auto">
+            <ul className="navbar-nav">
                 <ProfileButton />
             </ul>
         );

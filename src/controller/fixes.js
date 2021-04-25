@@ -72,7 +72,7 @@ async function specialName(req, res) {
         try {
             process = Math.floor((i + 1) * 100 / (size), 0)
             if (socketServer.socket)
-                socketServer.socket.emit("RMF", { process, name: e.name })
+                socketServer.socket.emit("RMF", { id: "processnames", process, name: e.name })
         } catch (error) {
             console.log(error);
         }
@@ -189,7 +189,7 @@ async function fullfixes(req, res) {
             try {
                 process = Math.floor((i + 1) * 100 / (listA.length), 0)
                 if (socketServer.socket)
-                    socketServer.socket.emit("RMF", { process, name: "Fixing actors " })
+                    socketServer.socket.emit("RMF", { id: "processfixes", process, name: "Fixing actors " })
             } catch (error) {
                 console.log(error);
             }
@@ -207,7 +207,39 @@ async function fullfixes(req, res) {
         }
 
         let listC = await Categories.find({});
+        let listMTemp = await Movies.aggregate([{
+                $project: {
+                    visualname: 1,
+                    categorias: 1
 
+                }
+            },
+            {
+                "$match": find
+            }
+        ]);
+        let update = listMTemp.map((movie) => {
+                return ({
+                    updateOne: {
+                        filter: { _id: movie._id },
+                        update: { $set: { categorias: [] } },
+                        upsert: true
+                    }
+                })
+            })
+            //console.log("\n" + JSON.stringify(update));
+        await Movies.bulkWrite(update)
+        listMTemp = await Movies.aggregate([{
+                $project: {
+                    visualname: 1,
+                    categorias: 1
+
+                }
+            },
+            {
+                "$match": find
+            }
+        ]);
         for (let i = 0; i < listC.length; i++) {
             const c = listC[i];
 
@@ -243,6 +275,9 @@ async function fullfixes(req, res) {
                     aliases.forEach(element => {
                         find["$and"][0]["$or"].push({
                             "visualname": { $regex: '.*' + element.toLowerCase() + '.*', $options: 'si' }
+                        });
+                        find["$and"][0]["$or"].push({
+                            "name": { $regex: '.*' + element.toLowerCase() + '.*', $options: 'si' }
                         });
                     });
 
@@ -297,7 +332,7 @@ async function fullfixes(req, res) {
             try {
                 process = Math.floor((i + 1) * 100 / (listC.length), 0)
                 if (socketServer.socket)
-                    socketServer.socket.emit("RMF", { process, name: "Fixing categories " })
+                    socketServer.socket.emit("RMF", { id: "processfixes", process, name: "Fixing categories " })
             } catch (error) {
                 console.log(error);
             }
@@ -406,7 +441,7 @@ async function fullfixes(req, res) {
             try {
                 process = Math.floor((i + 1) * 100 / (listS.length), 0)
                 if (socketServer.socket)
-                    socketServer.socket.emit("RMF", { process, name: "Fixing studios " })
+                    socketServer.socket.emit("RMF", { id: "processfixes", process, name: "Fixing studios " })
             } catch (error) {
                 console.log(error);
             }

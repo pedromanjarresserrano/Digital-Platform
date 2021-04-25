@@ -11,8 +11,8 @@ class HeaderAdmin extends React.Component {
         super(props)
 
         this.state = {
-            progress: 0,
-            current: ""
+            //  progress: 0,
+            // current: ""
         }
 
     }
@@ -28,13 +28,16 @@ class HeaderAdmin extends React.Component {
                 data.name = "";
                 data.process = 0;
             }
-            this.setState({
+            let noti = this.state;
+            noti[data.id] = {
                 progress: data.process,
-                current: data.name
-            })
+                current: data.name ? data.name : "Task end"
+            }
+            this.setState(noti);
         });
     }
     render() {
+        const keys = Object.keys(this.state);
         return (
             <>
                 <ul className="navbar-nav">
@@ -45,9 +48,33 @@ class HeaderAdmin extends React.Component {
                         <Link className="nav-item nav-link " to="/admin">Home Admin</Link>      </li>
 
                 </ul>
-                <div id="Progress" className="w-25 d-flex flex-row justify-content-end">
-                    <small className="d-flex flex-row w-100 justify-content-end"> <span className="d-block text-truncate w-75">{this.state.current}</span> - <span className="w-25 d-block">{this.state.progress} % </span></small>
-                </div>
+                <ul className="navbar-nav ml-auto">
+
+                    <li className="nav-item dropdown">
+                        <a className="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
+                            <i className="far fa-bell"></i>
+                            <span className="badge badge-warning navbar-badge">{keys.length}</span>
+                        </a>
+                        <div className="dropdown-menu dropdown-menu-lg dropdown-menu-right" >
+                            <span className="dropdown-item dropdown-header">{keys.length} Notifications</span>
+                            {
+                                keys.map((i) =>
+                                    <>
+                                        <div className="dropdown-divider"></div>
+                                        <a href="#" className="dropdown-item d-flex flex-row justify-content-between">
+                                            <i className="fas fa-tasks mr-2"></i><span className="text-truncate w-75"> <small>{this.state[i].current}</small></span>
+                                            <span className="float-right text-muted text-sm">{this.state[i].progress}%</span>
+                                        </a>
+                                    </>
+                                )
+                            }
+
+                            <div className="dropdown-divider"></div>
+                            <a href="#" className="dropdown-item dropdown-footer">See All Notifications</a>
+                        </div>
+                    </li>
+                </ul>
+
                 <TopMenu />
 
             </>

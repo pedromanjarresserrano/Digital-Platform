@@ -1,3 +1,11 @@
 body {
     padding-top: 0px !important;
 }
+
+.mxw-300 {
+    max-width: 300px !important;
+}
+
+.miw-300 {
+    min-width: 300px !important;
+}

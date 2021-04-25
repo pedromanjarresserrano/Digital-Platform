@@ -63,6 +63,12 @@ const getMovieInfo = (inputPath) => {
 async function createMovie(files, paths, res) {
     const size = files.length;
     console.log("Length -----------" + size);
+    let list1 = await models.moviemodel.find({})
+    list1 = list1.map(e => e.url);
+    console.log(list1.length);
+    console.log(files.length);
+    let list2 = files.filter(e => !list1.includes(e))
+    console.log(list2.length);
     res.send({ length: size });
     for (let i = 0; i < size; i++) {
         try {
@@ -77,7 +83,7 @@ async function createMovie(files, paths, res) {
             });
             try {
                 process = Math.floor((i + 1) * 100 / (size), 0)
-                socketServer.io.emit("RMF", { process, name: nameFile })
+                socketServer.io.emit("RMF", { id: "processlocation", process, name: nameFile })
             } catch (error) {
                 console.log(error);
             }
