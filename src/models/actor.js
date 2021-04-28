@@ -57,9 +57,7 @@ const check = (next) => {
         if (this.bio)
             this.bio = this.bio.trim();
         next();
-    } catch (error) {
-        return next(error);
-    }
+    } catch (error) {}
 }
 
 actorSchema.pre("update", check);
