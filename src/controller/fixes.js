@@ -18,53 +18,59 @@ async function specialName(req, res) {
                 let count = (e.name.match(/\./g) || []).length;
                 if (count >= 4) {
                     let splitted = e.name.split(".");
-                    let actor = {};
-                    actor = await Actors.findOne({ name: splitted[4] });
-                    if (actor)
-                        e.reparto.push(actor)
-
-                    if (splitted[5]) {
-                        splitted[5] = capitalizeFirstLetter(splitted[5]);
-                        splitted[4] = capitalizeFirstLetter(splitted[4]);
-                        actor = await Actors.findOne({ name: splitted[4] + " " + splitted[5] });
+                    if (!isNaN(parseInt(splitted[1]))) {
+                        let actor = {};
+                        actor = await Actors.findOne({ name: splitted[4] });
                         if (actor)
                             e.reparto.push(actor)
-                    }
-                    e.reparto = []
-                    for (let j = 0; j < splitted.length; j++) {
-                        if (splitted[j] == "and") {
-                            splitted[j - 1] = capitalizeFirstLetter(splitted[j - 1]);
-                            splitted[j - 2] = capitalizeFirstLetter(splitted[j - 2]);
-                            actor = await Actors.findOne({ name: splitted[j - 1] });
-                            if (!actor) {
-                                actor = await Actors.findOne({ name: splitted[j - 2] + " " + splitted[j - 1] })
-                            }
-                            if (actor)
-                                e.reparto.push(actor)
-                            if (splitted[j + 1]) {
-                                splitted[j + 1] = capitalizeFirstLetter(splitted[j + 1]);
-                                actor = await Actors.findOne({ name: splitted[j + 1] });
-                            }
-                            if (actor)
-                                e.reparto.push(actor)
 
-                            if (splitted[j + 2]) {
-                                splitted[j + 2] = capitalizeFirstLetter(splitted[j + 2]);
-                                actor = await Actors.findOne({ name: splitted[j + 1] + " " + splitted[j + 2] });
-                            }
+                        if (splitted[5]) {
+                            splitted[5] = capitalizeFirstLetter(splitted[5]);
+                            splitted[4] = capitalizeFirstLetter(splitted[4]);
+                            actor = await Actors.findOne({ name: splitted[4] + " " + splitted[5] });
                             if (actor)
                                 e.reparto.push(actor)
+                        }
+                        e.reparto = []
+                        for (let j = 0; j < splitted.length; j++) {
+                            if (splitted[j] == "and") {
+                                splitted[j - 1] = capitalizeFirstLetter(splitted[j - 1]);
+                                splitted[j - 2] = capitalizeFirstLetter(splitted[j - 2]);
+                                actor = await Actors.findOne({ name: splitted[j - 1] });
+                                if (!actor) {
+                                    actor = await Actors.findOne({ name: splitted[j - 2] + " " + splitted[j - 1] })
+                                }
+                                if (actor)
+                                    e.reparto.push(actor)
+                                if (splitted[j + 1]) {
+                                    splitted[j + 1] = capitalizeFirstLetter(splitted[j + 1]);
+                                    actor = await Actors.findOne({ name: splitted[j + 1] });
+                                }
+                                if (actor)
+                                    e.reparto.push(actor)
+
+                                if (splitted[j + 2]) {
+                                    splitted[j + 2] = capitalizeFirstLetter(splitted[j + 2]);
+                                    actor = await Actors.findOne({ name: splitted[j + 1] + " " + splitted[j + 2] });
+                                }
+                                if (actor)
+                                    e.reparto.push(actor)
+
+                            }
 
                         }
-
+                        e.visualname = capitalizeFirstLetter(splitted[0]) + " - " + capitalizeFirstLetter(splitted.slice(4).join(" "));
+                        e.year = parseInt("20" + splitted[1])
+                        e.studio = capitalizeFirstLetter(splitted[0])
+                        await Movies.findByIdAndUpdate({ _id: e._id }, { $set: e });
                     }
-                    e.visualname = capitalizeFirstLetter(splitted[0]) + " - " + capitalizeFirstLetter(splitted.slice(4).join(" "));
-                    e.year = parseInt("20" + splitted[1])
-                    e.studio = capitalizeFirstLetter(splitted[0])
-                    await Movies.findByIdAndUpdate({ _id: e._id }, { $set: e });
+                } else {
+                    count = 0;
                 }
+
                 if (count == 0) {
-                    e.visualname = e.name.replace(".", " ");
+                    e.visualname = e.name.replace(/\./g, " ");
+                    console.log(e.visualname);
                     await Movies.findByIdAndUpdate({ _id: e._id }, { $set: e });
                 }
             }
@@ -189,7 +195,7 @@ async function fullfixes(req, res) {
             try {
                 process = Math.floor((i + 1) * 100 / (listA.length), 0)
                 if (socketServer.socket)
-                    socketServer.socket.emit("RMF", { id: "processfixes", process, name: "Fixing actors " })
+                    socketServer.socket.emit("RMF", { id: "processfixesact", process, name: "Fixing actors " })
             } catch (error) {
                 console.log(error);
             }
@@ -332,7 +338,7 @@ async function fullfixes(req, res) {
             try {
                 process = Math.floor((i + 1) * 100 / (listC.length), 0)
                 if (socketServer.socket)
-                    socketServer.socket.emit("RMF", { id: "processfixes", process, name: "Fixing categories " })
+                    socketServer.socket.emit("RMF", { id: "processfixescat", process, name: "Fixing categories " })
             } catch (error) {
                 console.log(error);
             }
@@ -441,7 +447,7 @@ async function fullfixes(req, res) {
             try {
                 process = Math.floor((i + 1) * 100 / (listS.length), 0)
                 if (socketServer.socket)
-                    socketServer.socket.emit("RMF", { id: "processfixes", process, name: "Fixing studios " })
+                    socketServer.socket.emit("RMF", { id: "processfixesstd", process, name: "Fixing studios " })
             } catch (error) {
                 console.log(error);
             }

@@ -108,13 +108,25 @@ class Catalog extends React.Component {
     }
     playlist = () => {
         let find = {
-            name: { "$regex": ".*" + this.state.search + ".*", $options: 'i' },
-            /*      duration: this.state.timerange*/
+            $and: [
+                {
+                    $or: [
+                        {
+                            name: { "$regex": ".*" + this.state.search + ".*", $options: 'i' },
+                        },
+                        {
+                            visualname: { "$regex": ".*" + this.state.search + ".*", $options: 'i' },
+                        },
+                    ]
+                },
+                {
 
+                }
+            ]
         }
         let cats = this.state.categorias.filter(e => e.isChecked);
         if (cats.length > 0)
-            find.categorias = cats.map(e => e._id);
+            find.$and[1].categorias = cats.map(e => e._id);
         localStorage.setItem("fils", JSON.stringify(find));
         this.props.history.push({
             pathname: '/playlist',
@@ -126,13 +138,25 @@ class Catalog extends React.Component {
             loading: true
         })
         let find = {
-            name: { "$regex": ".*" + this.state.search + ".*", $options: 'i' },
-            /*      duration: this.state.timerange*/
+            $and: [
+                {
+                    $or: [
+                        {
+                            name: { "$regex": ".*" + this.state.search + ".*", $options: 'i' },
+                        },
+                        {
+                            visualname: { "$regex": ".*" + this.state.search + ".*", $options: 'i' },
+                        },
+                    ]
+                },
+                {
 
+                }
+            ]
         }
         let cats = this.state.categorias.filter(e => e.isChecked);
         if (cats.length > 0)
-            find.categorias = cats.map(e => e._id);
+            find.$and[1].categorias = cats.map(e => e._id);
 
         axios.post('/api/movies/all/' + page, find)
             .then(response => {

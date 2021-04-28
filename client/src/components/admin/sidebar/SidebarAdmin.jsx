@@ -23,17 +23,6 @@ class SidebarAdmin extends React.Component {
 
     }
 
-    componentDidMount() {
-        OverlayScrollbars(document.querySelectorAll('.main-sidebar .nav-sidebar'),{
-            className: 'os-theme-light',
-            sizeAutoCapable: true,
-            scrollbars: {
-                autoHide: true,
-                clickScrolling: true
-            }
-        });
-    }
-
     render() {
         return (
             <aside className="main-sidebar sidebar-dark-primary elevation-4">

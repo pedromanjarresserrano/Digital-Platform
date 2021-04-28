@@ -123,7 +123,7 @@ async function createMovie(files, paths, res) {
     process = 0;
 
     try {
-        socketServer.io.emit("RMF", { process, name: '' })
+        socketServer.io.emit("RMF", { id: "processlocation", process, name: '' })
     } catch (error) {
         console.log(error);
     }
