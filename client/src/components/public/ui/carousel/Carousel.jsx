@@ -9,36 +9,33 @@ class Carousel extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            id: "id-cs-" + Math.floor((Math.random() * 1000000000))
+            id: "id-cs-" + Math.floor((Math.random() * 1000000000)),
         }
-        this.mouseEnter = this.mouseEnter.bind(this);
-        this.mouseLeave = this.mouseLeave.bind(this);
     }
+    componentDidMount() {
+        let enter = false;
+        $("#" + this.state.id).on("mouseenter", function () {
+            if (!enter) {
+                enter = true
+                $(this).carousel(0)
+                    .carousel('cycle');
+            }
+        }).on("mouseleave", function () {
+            enter = false;
+            $(this).carousel(0)
+                .carousel('pause')
+                .carousel('pause')
+                
 
-    mouseEnter = () => {
-        $("#" + this.state.id).carousel({
-            interval: 350,
-            cycle: true,
-            pause: "false"
-        }).carousel(0);
-    }
 
-
-    mouseLeave = () => {
-        $("#" + this.state.id).carousel({
-            pause: null,
-            interval: false
         });
-        $("#" + this.state.id).carousel(0)
-        $("#" + this.state.id).carousel('pause')
-
 
     }
 
 
     render() {
         return (
-            <div id={this.state.id} className="carousel slide" onMouseEnter={this.mouseEnter} onMouseLeave={this.mouseLeave}  data-pause={this.props.pause ? this.props.pause : "true"}>
+            <div id={this.state.id} className="carousel slide" data-interval="350" data-pause={this.props.pause ? this.props.pause : "true"}>
                 <div className="carousel-inner" >
                     {
                         this.props.items.map(file => {
@@ -49,7 +46,7 @@ class Carousel extends React.Component {
                                         <LazyLoadImage
                                             effect="blur"
                                             alt={file}
-                                            placeholderSrc	="/img/loading.svg"
+                                            placeholderSrc="/img/loading.svg"
                                             visibleByDefault={first}
                                             src={file} />
                                     </div>
