@@ -92,3 +92,5 @@ public/uploads/
 .idea/
 .vscode/
 client/.vscode/
+
+package-lock.json
