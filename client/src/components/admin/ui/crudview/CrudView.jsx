@@ -142,7 +142,7 @@ class CrudView extends React.Component {
 
     _handleKeyDown = (e) => {
         if (e.key === 'Enter') {
-            this.handleSearch();
+            this.handleSearch(e);
 
         }
     }

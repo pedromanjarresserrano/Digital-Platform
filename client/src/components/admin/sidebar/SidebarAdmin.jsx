@@ -14,6 +14,10 @@ class SidebarAdmin extends React.Component {
         console.log(this)
     }
 
+    componentDidMount(){
+        $('[data-widget="treeview"]').Treeview('init');
+    }
+
     onClickHandler(event) {
         session(this.props.history);
 

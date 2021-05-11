@@ -12,7 +12,8 @@ module.exports = (Collection, attrname, uniqueattrname) => {
     router.post('/', loggerRequest, tokenValidator, config.multer.single(attrname), async function(req, res) {
         try {
             const find = {};
-            find[uniqueattrname] = req.body[uniqueattrname].trim();
+
+            find[uniqueattrname] = req.body[uniqueattrname] ? req.body[uniqueattrname].trim() : "null";
             let doc = await Collection.findOne(find)
             if (!doc) {
                 doc = await Collection.create(req.body)
@@ -24,10 +25,10 @@ module.exports = (Collection, attrname, uniqueattrname) => {
                 doc[attrname] = '/uploads/' + doc._id + '.' + mime.extension(req.file.mimetype);
             saveFile(req.file, doc, Collection);
 
-            res.status(200).send({ message: "Ok", doc });
+            return res.status(200).send({ message: "Ok", doc });
         } catch (error) {
             console.log(error)
-            res.status(500).send({ message: 'Error making post ' + error });
+            return res.status(500).send({ message: 'Error making post ' + error });
         }
 
     });

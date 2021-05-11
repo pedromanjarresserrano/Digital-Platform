@@ -185,7 +185,7 @@ class Catalog extends React.Component {
     }
     _handleKeyDown = (e) => {
         if (e.key === 'Enter') {
-            this.handleSearch();
+            this.handleSearch(e);
 
         }
     }
@@ -197,9 +197,14 @@ class Catalog extends React.Component {
 
     }
 
-    handleSearch() {
+    handleSearch(event) {
+        event.preventDefault();
+        this.props.history.push({
+            pathname: generatePath(this.props.match.path, { page: 1 }),
+            search: '?search=' + this.state.search,
 
-        this.onPageChanged(1);
+        })
+        this.loadPage(1);
 
     }
 
