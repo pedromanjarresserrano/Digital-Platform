@@ -1,0 +1,19 @@
+.slider-dp img {
+    display: none;
+    width: 100%;
+    max-height: 122px;
+}
+
+.slider-dp img:nth-child(1) {
+    display: block;
+}
+
+.slider-dp {
+    width: 100%;
+}
+
+@media (max-width: 767px) {
+    .slider-dp img {
+        max-height: 192px !important;
+    }
+}

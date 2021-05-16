@@ -1,8 +1,8 @@
 
 import React from 'react';
 import './Slider.css';
-import Movie from '../../movies/movie/Movie';
-import { Slide } from 'react-slideshow-image';
+import Movie from '../../movie/Movie';
+
 
 class Slider extends React.Component {
 
@@ -12,7 +12,7 @@ class Slider extends React.Component {
         let aux = []
         let couter = 1;
         for (let i = 0; i < this.props.items.length; i++) {
-            if (couter == 4 || i == (this.props.items.length - 1)) {
+            if (couter == 3 || i == (this.props.items.length - 1)) {
                 list.push(aux);
                 aux.push(this.props.items[i]);
 
@@ -28,39 +28,59 @@ class Slider extends React.Component {
 
         }
 
+        console.log(list)
         this.state = {
-            id: "id-ss-lg-" + Math.floor((Math.random() * 1000000)),
+            id: "id-cs-" + Math.floor((Math.random() * 100000)),
             items: list
         }
+    }
+
+    componentDidMount() {
+        $("#" + this.state.id).carousel({
+            interval: false,
+            cycle: true,
+            pause: false
+        }).carousel(0);
     }
 
     render() {
 
         return (
-            <Slide autoplay={false} >
-                {
-                    this.state.items.map((movie) => {
-                        return (
-                            <div key={Math.random()} className="each-slide px-4" key={Math.random()}>
-                                <span key={Math.random()} className="container-slider">
-                                    {
-                                        movie.map((e, i) => {
-                                            return (
+            <div key={Math.random()} id={this.state.id} className="carousel slide" data-pause={this.props.pause ? this.props.pause : "hover"} data-ride="carousel" data-interval="false">
 
-                                                <div key={Math.random()} className="w-100 w-m-20 d-flex justify-content-center flex-row">
-                                                    <Movie item={e} index={i} />
-                                                </div>
-                                            )
-                                        }, this)
+                <ol key={Math.random()} className="carousel-indicators">
+                    {
 
-                                    }
-                                </span>
-                            </div>)
-                    }, this)
-                }
+                        this.state.items.map((movie, index) => {
+                            return (<li key={Math.random()} data-target="#carouselExampleCaptions" data-slide-to={index} className={index == 0 ? "active " : ""}></li>)
+                        })
+                    }
 
-            </Slide>
+                </ol>
+                <div key={Math.random()} className="carousel-inner">
+                    {
 
+                        this.state.items.map((movie, index) => {
+                            return (
+                                <div key={Math.random()} className={(index == 0 ? "active " : "") + "carousel-item"} key={Math.random()}>
+                                    <div key={Math.random()} className="d-flex">
+                                        {
+                                            movie.map((e, i) => {
+                                                return (
+
+                                                    <div key={Math.random()} className="w-100 w-md-20">
+                                                        <Movie item={e} index={i} />
+                                                    </div>
+                                                )
+                                            }, this)
+
+                                        }
+                                    </div>
+                                </div>)
+                        }, this)
+                    }
+                </div>
+            </div >
         );
     }
 

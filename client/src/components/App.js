@@ -6,7 +6,6 @@ import { Admin } from './admin/Admin';
 
 import NotFound from './public/panels/notfound/NotFound';
 import { Public } from './public/Public';
-import 'react-slideshow-image/dist/styles.css'
 import { AuthContext } from './admin/auth/AuthContext';
 import { authReducer } from './admin/auth/authReducer';
 import { LoginAdmin } from './admin/login/LoginAdmin.js';

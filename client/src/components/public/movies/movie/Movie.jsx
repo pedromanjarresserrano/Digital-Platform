@@ -1,13 +1,11 @@
 import React from 'react';
 import './Movie.css';
 import { Link } from 'react-router-dom'
-import Carousel from '../../ui/carousel/Carousel';
+import HoverSlider from '../../ui/hoverslider/HoverSlider';
 
 
 class Movie extends React.Component {
 
-  componentWillMount() {
-  }
   getTime = (totalSeconds) => {
     let hours = Math.floor(totalSeconds / 3600);
     totalSeconds %= 3600;
@@ -30,8 +28,10 @@ class Movie extends React.Component {
 
     } else {
       return <div className="w-100 preview" >
-        <Carousel items={this.props.item.files} pause={null} />
-
+    
+       <HoverSlider
+          images={this.props.item.files}
+        /> 
         <span className="text-white time-stamp" >{this.getTime(this.props.item.duration)}</span>
 
         <span className="text-white quality-stamp" >{this.props.item.quality}p</span>
@@ -40,6 +40,7 @@ class Movie extends React.Component {
   }
 
   render() {
+    const name = this.props.item.visualname ? this.props.item.visualname : this.props.item.name;
     return (
       <div className="w-100 w-m-20 card-m" key={this.props.item._id} title={this.props.item.name} >
         <div className=" border rounded bg-dark border-dark w-100 mb-2 mt-2" >
@@ -47,8 +48,8 @@ class Movie extends React.Component {
             {
               this.getPreview()
             }
-
-            <p className="text-white text-center text-truncate" ><small>{this.props.item.visualname ? this.props.item.visualname : this.props.item.name} </small></p>
+ø
+            <p className="text-white text-center text-truncate" ><small>{name} </small></p>
           </div >
             :
 
@@ -57,7 +58,7 @@ class Movie extends React.Component {
                 this.getPreview()
               }
 
-              <p className="text-white text-center text-truncate" ><small>{this.props.item.visualname ? this.props.item.visualname : this.props.item.name} </small></p>
+              <p className="text-white text-center text-truncate" ><small>{name} </small></p>
             </Link>)
           }
           {
