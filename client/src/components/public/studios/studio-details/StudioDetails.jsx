@@ -33,9 +33,10 @@ class StudioDetails extends React.Component {
       Axios.post("/api/studios/fo", { name: this.props.match.params.name })
         .then(function (response) {
           this.setState({
-            item: response.data
+            item: response.data,
+            activePage: this.props.match.params.page
           })
-          this.loadPage(1);
+          this.loadPage(this.props.match.params.page);
         }.bind(this))
         .catch(error => {
           console.log(error);

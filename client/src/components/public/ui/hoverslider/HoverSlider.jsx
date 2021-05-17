@@ -15,7 +15,7 @@ class HoverSlider extends React.Component {
 
     componentDidMount() {
         let div = document.getElementById(this.state.id);
-        let list = document.querySelectorAll("#" + this.state.id + " img");
+        let list = div.childNodes;
         let fun = function (event) {
             event.preventDefault();
             let slider = this.getBoundingClientRect();
@@ -29,11 +29,14 @@ class HoverSlider extends React.Component {
         }
         div.addEventListener("mousemove", fun);
         div.addEventListener("touchemove", fun);
-        
+
         function show(img) {
+            img = img > 0 ? img - 1 : 0;
             list.forEach(e => e.style.display = "none");
-            list[img > 0 ? img - 1 : 0].style.display = "block"
+            list[img].style.display = "block"
+            list[img].src = this.props.images[img];
         }
+        show = show.bind(this);
 
         div.addEventListener("mouseleave", function () {
             list.forEach(e => e.style.display = "none");
@@ -53,10 +56,9 @@ class HoverSlider extends React.Component {
                         return (
                             <img
                                 effect="blur"
-                                alt={movie}
-                                placeholderSrc="/img/loading.svg"
+                                placeholder="/img/loading.svg"
                                 visibleByDefault={first}
-                                src={movie} />);
+                                src={first ? movie : ''} />);
                     }, this)
                 }
 
