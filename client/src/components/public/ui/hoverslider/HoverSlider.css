@@ -2,6 +2,7 @@
     display: none;
     width: 100%;
     max-height: 122px;
+    min-height: 122px;
 }
 
 .slider-dp img:nth-child(1) {
@@ -10,6 +11,7 @@
 
 .slider-dp {
     width: 100%;
+    background-color: black;
 }
 
 @media (max-width: 767px) {
