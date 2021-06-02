@@ -26,16 +26,44 @@ class Database {
                         password: "1234"
                     })
                 }
+                /*
+                                let res = await Movies.aggregate([
+                                    { "$group": { "_id": "$name", "count": { "$sum": 1 } } },
+                                    { "$match": { "_id": { "$ne": null }, "count": { "$gt": 1 } } },
+                                    { "$project": { "name": "$_id", "_id": 0 } }
+                                ]);
 
-                let res = await Movies.aggregate([
-                    { "$group": { "_id": "$name", "count": { "$sum": 1 } } },
-                    { "$match": { "_id": { "$ne": null }, "count": { "$gt": 1 } } },
-                    { "$project": { "name": "$_id", "_id": 0 } }
-                ]);
+                                console.log(res);
 
-                console.log(res);
+                                res = await Movies.aggregate([
+                                    { "$group": { "_id": "$duration", "count": { "$sum": 1 } } },
+                                    { "$match": { "_id": { "$ne": null }, "count": { "$gt": 1 } } },
+                                    { "$project": { "duration": "$_id", "_id": 0 } },
+                                    { $sort: { duration: 1 } }
+
+                                ]);
+
+                                console.log(res);
+
+                                res = await Movies.aggregate([{
+                                        $group: {
+                                            _id: { duration: "$duration" },
+                                            idsForDuplicatedDocs: { $addToSet: "$_id" },
+                                            count: { $sum: 1 }
+                                        }
+                                    },
+                                    {
+                                        $match: {
+                                            count: { $gt: 1 }
+                                        }
+                                    },
+                                    { $sort: { count: -1 } }
+                                ]);
+
+                                console.log(JSON.stringify(res));*/
             })
             .catch(err => {
+                console.log(err)
                 console.error('Database connection error')
             })
     }

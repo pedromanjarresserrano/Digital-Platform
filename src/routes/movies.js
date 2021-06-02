@@ -62,6 +62,7 @@ const getMovieInfo = (inputPath) => {
 
 async function createMovie(files, paths, res) {
     const size = files.length;
+    res.send({ length: size });
     console.log("Length -----------" + size);
     let list1 = await models.moviemodel.find({})
     list1 = list1.map(e => e.url);
@@ -69,7 +70,6 @@ async function createMovie(files, paths, res) {
     console.log(files.length);
     let list2 = files.filter(e => !list1.includes(e))
     console.log(list2.length);
-    res.send({ length: size });
     for (let i = 0; i < size; i++) {
         try {
             let file = files[i];

@@ -11,6 +11,7 @@ class Table extends React.Component {
         try {
             resizableGrid(document.getElementsByClassName('crud-table')[0]);
         } catch (err) {
+            console.log(err);
 
         }
     }
@@ -19,7 +20,7 @@ class Table extends React.Component {
         try {
             resizableGrid(document.getElementsByClassName('crud-table')[0]);
         } catch (err) {
-
+            console.log(err);
         }
     }
 

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom'
 
 import Axios from 'axios';
@@ -17,6 +17,7 @@ import { kbToSize, segFormat, dateFormat } from '../../utils/Utils';
 import { ShowAddModal } from './ui/modal/Funtions';
 import { fixFull } from './movies/MoviesFunctions';
 import { AuthContext } from './auth/AuthContext';
+import Duplicates from './Duplicates';
 
 toastr.options = {
     "closeButton": false,
@@ -44,8 +45,6 @@ export const Admin = ({ match, ...rest }) => {
     const { user } = useContext(AuthContext);
 
 
-
-
     return (
         (!user.logged)
             ? <Redirect to="/admin/login" />
@@ -58,6 +57,8 @@ export const Admin = ({ match, ...rest }) => {
                     <div className="content-wrapper">
                         <BreadcrumbAdmin />
                         <Switch>
+                            <Route exact path={`${match.path}/movies/duplicates`} component={Duplicates} />
+
                             <Route exact path={`${match.path}`} component={HomeAdmin} />
                             <Route key="crud-locations-1" exact path={`${match.path}/locations`} render={(props) => (<Redirect to={`${match.path}/locations/1`}   {...props} />)} />
 
@@ -560,6 +561,9 @@ export const Admin = ({ match, ...rest }) => {
                                     name: "portada",
                                     label: "Imagen portada"
                                 }, {
+                                    name: "url",
+                                    label: "Location"
+                                }, {
                                     name: "created",
                                     label: "Creado",
                                     converter: function (value) {
@@ -604,6 +608,29 @@ export const Admin = ({ match, ...rest }) => {
                                         onClick: async function (data) {
                                             Array.from(document.getElementsByClassName('checkboxcrud')).forEach(e => {
                                                 e.checked = !e.checked;
+                                            })
+                                        }
+                                    }, {
+                                        name: "Massive delete",
+                                        className: "btn btn-sm btn-dark",
+                                        icon: 'fas fa-check-square',
+                                        onClick: async function (data) {
+                                            let headers = {}
+                                            headers["x-access-token"] = '' + localStorage.getItem("utoken");
+                                            data.items.forEach(i => {
+                                                Axios
+                                                    .delete('/api/movies/' + i,
+                                                        { headers }
+                                                    )
+                                                    .then(res => {
+                                                        this.loadPage(1);
+                                                        this.setState({
+                                                            modal: false
+                                                        })
+
+                                                        toastr["success"]("Delete")
+
+                                                    })
                                             })
                                         }
                                     }, {

@@ -64,7 +64,7 @@ class CrudView extends React.Component {
 
     deleteClick = async (item) => {
         let headers = {}
-        headers["x-access-token"] = '' + localStorage.getItem("utoken");
+        headers["x-access-token"] = localStorage.getItem("utoken");
 
         await this.setState({
             modal: true,

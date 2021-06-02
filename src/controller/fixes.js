@@ -70,7 +70,6 @@ async function specialName(req, res) {
 
                 if (count == 0) {
                     e.visualname = e.name.replace(/\./g, " ");
-                    console.log(e.visualname);
                     await Movies.findByIdAndUpdate({ _id: e._id }, { $set: e });
                 }
             }
@@ -157,13 +156,12 @@ async function fullfixes(req, res) {
 
 
             find["$and"][1]["$and"][0] = {
-                    "reparto": {
-                        "$not": {
-                            "$all": [a._id]
-                        }
+                "reparto": {
+                    "$not": {
+                        "$all": [a._id]
                     }
                 }
-                //  console.log(JSON.stringify(find));
+            }
 
             let listMTemp = await Movies.aggregate([{
                     $project: {
@@ -177,19 +175,18 @@ async function fullfixes(req, res) {
                 }
             ]);
 
-            //   console.log(JSON.stringify(listMTemp));
 
             let update = listMTemp.map((movie) => {
-                    movie.reparto.push(a)
-                    return ({
-                        updateOne: {
-                            filter: { _id: movie._id },
-                            update: { $set: movie },
-                            upsert: true
-                        }
-                    })
+                movie.reparto.push(a)
+                return ({
+                    updateOne: {
+                        filter: { _id: movie._id },
+                        update: { $set: movie },
+                        upsert: true
+                    }
                 })
-                //       console.log(JSON.stringify(update));
+            })
+
             await Movies.bulkWrite(update)
 
             try {
@@ -225,15 +222,15 @@ async function fullfixes(req, res) {
             }
         ]);
         let update = listMTemp.map((movie) => {
-                return ({
-                    updateOne: {
-                        filter: { _id: movie._id },
-                        update: { $set: { categorias: [] } },
-                        upsert: true
-                    }
-                })
+            return ({
+                updateOne: {
+                    filter: { _id: movie._id },
+                    update: { $set: { categorias: [] } },
+                    upsert: true
+                }
             })
-            //console.log("\n" + JSON.stringify(update));
+        })
+
         await Movies.bulkWrite(update)
         listMTemp = await Movies.aggregate([{
                 $project: {
@@ -297,16 +294,14 @@ async function fullfixes(req, res) {
                     }
                 }
             }
-            //  console.log(find["$and"][0]["$or"]);
 
             find["$and"][1]["$and"][0] = {
-                    "categorias": {
-                        "$not": {
-                            "$all": [c._id]
-                        }
+                "categorias": {
+                    "$not": {
+                        "$all": [c._id]
                     }
                 }
-                //   console.log(JSON.stringify(find));
+            }
 
             let listMTemp = await Movies.aggregate([{
                     $project: {
@@ -320,19 +315,17 @@ async function fullfixes(req, res) {
                 }
             ]);
 
-            // console.log(JSON.stringify(listMTemp));
 
             let update = listMTemp.map((movie) => {
-                    movie.categorias.push(c)
-                    return ({
-                        updateOne: {
-                            filter: { _id: movie._id },
-                            update: { $set: { categorias: movie.categorias } },
-                            upsert: true
-                        }
-                    })
+                movie.categorias.push(c)
+                return ({
+                    updateOne: {
+                        filter: { _id: movie._id },
+                        update: { $set: { categorias: movie.categorias } },
+                        upsert: true
+                    }
                 })
-                //console.log("\n" + JSON.stringify(update));
+            })
             await Movies.bulkWrite(update)
 
             try {
@@ -416,7 +409,6 @@ async function fullfixes(req, res) {
                 }
             }
 
-            //console.log(JSON.stringify(find));
 
             let listMTemp = await Movies.aggregate([{
                     $project: {
@@ -430,18 +422,16 @@ async function fullfixes(req, res) {
                 }
             ]);
 
-            // console.log(JSON.stringify(listMTemp));
 
             let update = listMTemp.map((movie) => {
-                    return ({
-                        updateOne: {
-                            filter: { _id: movie._id },
-                            update: { $set: { studio: s } },
-                            upsert: true
-                        }
-                    })
+                return ({
+                    updateOne: {
+                        filter: { _id: movie._id },
+                        update: { $set: { studio: s } },
+                        upsert: true
+                    }
                 })
-                //console.log("\n" + JSON.stringify(update));
+            })
             await Movies.bulkWrite(update)
 
             try {

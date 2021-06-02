@@ -189,12 +189,107 @@ const remove = async(req, res) => {
 
 };
 
+const duplicates = async(req, res) => {
+    try {
+
+        let response = [];
+        let dura = await Collection.aggregate([
+            { "$group": { "_id": "$duration", "count": { "$sum": 1 } } },
+            { "$match": { "_id": { "$ne": null }, "count": { "$gt": 1 } } },
+            { "$project": { "duration": "$_id", "_id": 0 } },
+            { $sort: { duration: 1 } }
+
+        ]);
+        /*
+                for (const i of dura) {
+                    let dupe = await Collection.find({ "duration": { $gt: i.duration - 1, $lt: i.duration + 1 } })
+                    response.push({
+                        _id: i,
+
+                        idsForDuplicatedDocs: dupe
+                    })
+                }*/
+        response = await Collection.aggregate([{
+                $group: {
+                    _id: { duration: "$duration" },
+                    idsForDuplicatedDocs: { $addToSet: "$_id" },
+                    count: { $sum: 1 }
+                }
+            },
+            {
+                $match: {
+                    count: { $gt: 1 }
+                }
+            },
+            { $sort: { count: -1 } }
+        ]);
+
+        for (const i of response) {
+            for (let j = 0; j < i.idsForDuplicatedDocs.length; j++) {
+                const e = i.idsForDuplicatedDocs[j];
+                i.idsForDuplicatedDocs[j] = await Collection.findById(e).exec();
+            }
+        }
+
+        res.send(response)
+        return;
+    } catch (error) {
+        console.log(error);
+        res.status(502).send(error);
+    }
+
+
+
+};
+
+const removeWithFile = async(req, res) => {
+    console.log('New delete movie');
+    try {
+        let doc = await Collection.findById(req.params._id);
+        if (doc.files) {
+
+            doc.files.forEach(file => {
+                let path = "./public/" + file;
+                fs.unlink(path, (err) => {
+                    if (err) {
+                        console.error(err)
+                        return
+                    }
+
+                    console.log("file " + file + " removed");
+                })
+            })
+        }
+        let path = doc.url;
+
+        fs.unlink(path, (err) => {
+            if (err) {
+                console.error(err)
+                return
+            }
+
+            console.log("file " + path + " removed");
+        })
+
+        await Collection.deleteOne({ _id: req.params._id });
+        res.sendStatus(200);
+    } catch (error) {
+        console.log(error);
+        res.status(502).send(error);
+    }
+
+
+
+};
+
 router.post('/:_id/like', loggerRequest, likedOne);
 router.put('/:_id', loggerRequest, tokenValidator, update);
 router.post('/addcatgs', loggerRequest, tokenValidator, addcatgs);
 router.post('/addacts', loggerRequest, tokenValidator, addacts);
 router.post('/addsts', loggerRequest, tokenValidator, addsts);
 router.delete('/:_id', loggerRequest, tokenValidator, remove);
+router.delete('/deletewithfile/:_id', loggerRequest, tokenValidator, removeWithFile);
+router.get('/duplicates', loggerRequest, duplicates);
 
 
 
