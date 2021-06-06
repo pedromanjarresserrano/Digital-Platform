@@ -18,6 +18,8 @@ import { ShowAddModal } from './ui/modal/Funtions';
 import { fixFull } from './movies/MoviesFunctions';
 import { AuthContext } from './auth/AuthContext';
 import Duplicates from './Duplicates';
+import CrudGridView from './ui/crudview/CrudGridView';
+import Movie from '../public/movies/movie/Movie';
 
 toastr.options = {
     "closeButton": false,
@@ -525,6 +527,128 @@ export const Admin = ({ match, ...rest }) => {
 
 
                             <Route key="crud-movies-1" exact path={`${match.path}/movies`} render={(props) => (<Redirect to={`${match.path}/movies/1`}   {...props} />)} />
+                            <Route key="crud-grid-movies-1" exact path={`${match.path}/gridmovies`} render={(props) => (<Redirect to={`${match.path}/gridmovies/1`}   {...props} />)} />
+
+                            <Route key="crud-grid-movies" exact path={`${match.path}/gridmovies/:page`} render={(props) => (<CrudGridView {...props}
+                                headers={[{
+                                    name: "name",
+                                    label: "Nombre"
+                                }, {
+                                    name: "visualname",
+                                    label: "Visual Name"
+                                }, {
+                                    name: "duration",
+                                    label: "Duration",
+                                    converter: function (value) {
+                                        return segFormat(value, false)
+                                    }
+                                }, {
+                                    name: "like",
+                                    label: "Like"
+                                }, {
+                                    name: "view",
+                                    label: "Views"
+                                }, {
+                                    name: "size",
+                                    label: "Size file",
+                                    converter: function (value) {
+                                        return kbToSize(value)
+                                    }
+                                }, {
+                                    name: "year",
+                                    label: "Year"
+                                }, {
+                                    name: "quality",
+                                    label: "Quality"
+                                }, {
+                                    name: "portada",
+                                    label: "Imagen portada"
+                                }, {
+                                    name: "url",
+                                    label: "Location"
+                                }, {
+                                    name: "created",
+                                    label: "Creado",
+                                    converter: function (value) {
+                                        return dateFormat(value)
+                                    }
+                                }, {
+                                    name: "updated",
+                                    label: "Actualizado",
+                                    converter: function (value) {
+                                        return dateFormat(value)
+                                    }
+                                }]}
+                                baseRoute={`${match.path}/movies/movie`}
+                                baseUrl={'/api/movies'}
+                                getItem={function (item) {
+                                    return (<Movie item={item} />)
+                                }}
+                                extraTopAcciones={[
+                                    {
+                                        name: "Add Categories",
+                                        className: "btn btn-sm btn-info",
+                                        icon: 'fas fa-plus-square',
+                                        onClick: async function (data) {
+                                            ShowAddModal('/api/categorias/all/-1', '/api/movies/addcatgs', data, "Add Categories");
+                                            console.log(data);
+                                        }
+                                    }, {
+                                        name: "Add Actors",
+                                        className: "btn btn-sm btn-warning ",
+                                        icon: 'fas fa-plus-square',
+                                        onClick: async function (data) {
+                                            ShowAddModal('/api/actores/all/-1', '/api/movies/addacts', data, "Add Actors");
+                                        }
+                                    }, {
+                                        name: "Set Studio",
+                                        className: "btn btn-sm text-light bg-secondary border border-dark",
+                                        icon: 'fas fa-plus-square',
+                                        onClick: async function (data) {
+                                            ShowAddModal('/api/studios/all/-1', '/api/movies/addsts', data, "Studio", false);
+                                        }
+                                    }, {
+                                        name: "Check CurrentPage",
+                                        className: "btn btn-sm btn-dark",
+                                        icon: 'fas fa-check-square',
+                                        onClick: async function (data) {
+                                            Array.from(document.getElementsByClassName('checkboxcrud')).forEach(e => {
+                                                e.checked = !e.checked;
+                                            })
+                                        }
+                                    }, {
+                                        name: "Massive delete",
+                                        className: "btn btn-sm btn-dark",
+                                        icon: 'fas fa-check-square',
+                                        onClick: async function (data) {
+                                            let headers = {}
+                                            headers["x-access-token"] = '' + localStorage.getItem("utoken");
+                                            data.items.forEach(i => {
+                                                Axios
+                                                    .delete('/api/movies/' + i,
+                                                        { headers }
+                                                    )
+                                                    .then(res => {
+                                                        this.loadPage(1);
+                                                        this.setState({
+                                                            modal: false
+                                                        })
+
+                                                        toastr["success"]("Delete")
+
+                                                    })
+                                            })
+                                        }
+                                    }, {
+                                        name: "Full fixes",
+                                        className: "btn btn-sm btn-success",
+                                        icon: 'fas fa-check-square',
+                                        onClick: async function (data) {
+                                            fixFull()
+                                        }
+                                    }
+                                ]}
+                            />)} />
 
                             <Route key="crud-movies" exact path={`${match.path}/movies/:page`} render={(props) => (<CrudView {...props}
                                 headers={[{

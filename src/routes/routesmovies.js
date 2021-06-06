@@ -200,16 +200,16 @@ const duplicates = async(req, res) => {
             { $sort: { duration: 1 } }
 
         ]);
-        /*
-                for (const i of dura) {
-                    let dupe = await Collection.find({ "duration": { $gt: i.duration - 1, $lt: i.duration + 1 } })
-                    response.push({
-                        _id: i,
 
-                        idsForDuplicatedDocs: dupe
-                    })
-                }*/
-        response = await Collection.aggregate([{
+        for (const i of dura) {
+            let dupe = await Collection.find({ "duration": { $gt: i.duration - 1, $lt: i.duration } })
+            response.push({
+                _id: i,
+
+                idsForDuplicatedDocs: dupe
+            })
+        }
+        /*response = await Collection.aggregate([{
                 $group: {
                     _id: { duration: "$duration" },
                     idsForDuplicatedDocs: { $addToSet: "$_id" },
@@ -230,7 +230,7 @@ const duplicates = async(req, res) => {
                 i.idsForDuplicatedDocs[j] = await Collection.findById(e).exec();
             }
         }
-
+*/
         res.send(response)
         return;
     } catch (error) {
