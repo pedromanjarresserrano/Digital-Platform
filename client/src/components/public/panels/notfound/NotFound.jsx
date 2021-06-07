@@ -6,9 +6,7 @@ class NotFound extends React.Component {
     this.state = {
     }
   }
-  //--------------------------------------------------------------
-  componentWillMount() {
-  }
+
   render() {
     return (
       <div className="d-flex flex-row justify-content-center">

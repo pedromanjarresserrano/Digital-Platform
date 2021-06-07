@@ -1,6 +1,5 @@
 
 import React from 'react';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
 import './HoverSlider.css';
 
 class HoverSlider extends React.Component {
@@ -38,7 +37,8 @@ class HoverSlider extends React.Component {
         }
         show = show.bind(this);
 
-        div.addEventListener("mouseleave", function () {
+        div.addEventListener("mouseleave", function (e) {
+            e.preventDefault()
             list.forEach(e => e.style.display = "none");
             list[0].style.display = "block"
         });

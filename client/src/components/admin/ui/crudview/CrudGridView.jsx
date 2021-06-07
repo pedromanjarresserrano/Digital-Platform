@@ -1,5 +1,4 @@
 import React from 'react';
-import Table from '../table/Table';
 import Pagination from "react-js-pagination";
 import Modal from '../modal/Modal';
 import './CrudView.css';

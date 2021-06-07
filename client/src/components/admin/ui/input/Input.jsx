@@ -2,7 +2,6 @@ import React from 'react';
 import Axios from 'axios';
 import Select from '@material-ui/core/Select';
 import Chip from '@material-ui/core/Chip';
-import Checkbox from '@material-ui/core/Checkbox';
 import MenuItem from '@material-ui/core/MenuItem';
 import ListItemText from '@material-ui/core/ListItemText';
 

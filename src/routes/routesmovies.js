@@ -11,7 +11,7 @@ const { tokenValidator } = require('../controller/auth');
 const { loggerRequest } = require('../controller/logger');
 
 
-const update = async(req, res) => {
+const update = async (req, res) => {
     try {
         let changedEntry = req.body;
         changedEntry._id = new ObjectID(changedEntry._id);
@@ -27,7 +27,7 @@ const update = async(req, res) => {
 };
 
 
-const likedOne = async(req, res) => {
+const likedOne = async (req, res) => {
     try {
         const { _id } = req.params;
         var result = await Collection.findById(_id);
@@ -42,7 +42,7 @@ const likedOne = async(req, res) => {
 };
 
 
-router.post('/', config.multer.single(attrname), async function(req, res) {
+router.post('/', config.multer.single(attrname), async function (req, res) {
     try {
         const find = {};
         find["name"] = req.body["name"];
@@ -81,7 +81,7 @@ router.post('/', config.multer.single(attrname), async function(req, res) {
 });
 
 
-const addcatgs = async function(req, res) {
+const addcatgs = async function (req, res) {
     try {
         console.log(req.body);
 
@@ -107,7 +107,7 @@ const addcatgs = async function(req, res) {
 }
 
 
-const addacts = async function(req, res) {
+const addacts = async function (req, res) {
     try {
         console.log(req.body);
 
@@ -134,7 +134,7 @@ const addacts = async function(req, res) {
 }
 
 
-const addsts = async function(req, res) {
+const addsts = async function (req, res) {
     try {
         console.log(req.body);
 
@@ -159,7 +159,7 @@ const addsts = async function(req, res) {
     }
 }
 
-const remove = async(req, res) => {
+const remove = async (req, res) => {
     console.log('New delete movie');
     try {
         let doc = await Collection.findById(req.params._id);
@@ -189,39 +189,39 @@ const remove = async(req, res) => {
 
 };
 
-const duplicates = async(req, res) => {
+const duplicates = async (req, res) => {
     try {
 
         let response = [];
-        let dura = await Collection.aggregate([
-            { "$group": { "_id": "$duration", "count": { "$sum": 1 } } },
-            { "$match": { "_id": { "$ne": null }, "count": { "$gt": 1 } } },
-            { "$project": { "duration": "$_id", "_id": 0 } },
-            { $sort: { duration: 1 } }
-
-        ]);
-
-        for (const i of dura) {
-            let dupe = await Collection.find({ "duration": { $gt: i.duration - 1, $lt: i.duration } })
-            response.push({
-                _id: i,
-
-                idsForDuplicatedDocs: dupe
-            })
-        }
-        /*response = await Collection.aggregate([{
-                $group: {
-                    _id: { duration: "$duration" },
-                    idsForDuplicatedDocs: { $addToSet: "$_id" },
-                    count: { $sum: 1 }
-                }
-            },
-            {
-                $match: {
-                    count: { $gt: 1 }
-                }
-            },
-            { $sort: { count: -1 } }
+        /*  let dura = await Collection.aggregate([
+              { "$group": { "_id": "$duration", "count": { "$sum": 1 } } },
+              { "$match": { "_id": { "$ne": null }, "count": { "$gt": 1 } } },
+              { "$project": { "duration": "$_id", "_id": 0 } },
+              { $sort: { duration: 1 } }
+  
+          ]);
+  
+          for (const i of dura) {
+              let dupe = await Collection.find({ "duration": { $gt: i.duration - 1, $lte: i.duration } })
+              response.push({
+                  _id: i,
+  
+                  idsForDuplicatedDocs: dupe
+              })
+          }*/
+        response = await Collection.aggregate([{
+            $group: {
+                _id: { duration: "$duration" },
+                idsForDuplicatedDocs: { $addToSet: "$_id" },
+                count: { $sum: 1 }
+            }
+        },
+        {
+            $match: {
+                count: { $gt: 1 }
+            }
+        },
+        { $sort: { count: -1 } }
         ]);
 
         for (const i of response) {
@@ -230,7 +230,7 @@ const duplicates = async(req, res) => {
                 i.idsForDuplicatedDocs[j] = await Collection.findById(e).exec();
             }
         }
-*/
+
         res.send(response)
         return;
     } catch (error) {
@@ -242,7 +242,7 @@ const duplicates = async(req, res) => {
 
 };
 
-const removeWithFile = async(req, res) => {
+const removeWithFile = async (req, res) => {
     console.log('New delete movie');
     try {
         let doc = await Collection.findById(req.params._id);
@@ -282,6 +282,51 @@ const removeWithFile = async(req, res) => {
 
 };
 
+const renameFile = async (req, res) => {
+    console.log('rename file movie');
+    try {
+        let changedEntry = req.body;
+        let doc = await Collection.findById(req.params._id);
+        if (doc.files) {
+
+
+            let path = doc.url;
+            let spliter = path.split('/');
+            let name = spliter.pop();
+            let aux = name.split(".");
+            aux[0] = changedEntry.name;
+
+            name = aux.join('.');
+            spliter.push(name);
+            let newname = spliter.join('/');
+            console.log(path);
+            console.log(newname);
+            fs.rename(path, newname, async (err) => {
+                if (err) {
+                    console.error(err)
+
+                }
+
+
+                console.log("file " + path + " renamed");
+                console.log("file new name " + newname);
+
+                //   await Collection.({ _id: req.params._id });
+                await Collection.findOneAndUpdate({ _id: doc._id }, { $set: { name: changedEntry.name, visualname: changedEntry.name, url: newname } }, { upsert: true, new: true, setDefaultsOnInsert: true, fields: '-__v' }).exec();
+
+            })
+        }
+        res.sendStatus(200);
+    } catch (error) {
+        console.log(error);
+        res.status(502).send(error);
+    }
+
+
+
+};
+
+
 router.post('/:_id/like', loggerRequest, likedOne);
 router.put('/:_id', loggerRequest, tokenValidator, update);
 router.post('/addcatgs', loggerRequest, tokenValidator, addcatgs);
@@ -290,6 +335,7 @@ router.post('/addsts', loggerRequest, tokenValidator, addsts);
 router.delete('/:_id', loggerRequest, tokenValidator, remove);
 router.delete('/deletewithfile/:_id', loggerRequest, tokenValidator, removeWithFile);
 router.get('/duplicates', loggerRequest, duplicates);
+router.post('/renamefile/:_id', loggerRequest, tokenValidator, renameFile);
 
 
 

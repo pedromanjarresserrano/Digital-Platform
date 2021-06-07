@@ -1,9 +1,8 @@
 
 
-import React, { useContext } from 'react';
+import React from 'react';
 import './ProfileButton.css';
 import { withRouter } from "react-router";
-import Axios from 'axios';
 import { types } from '../../types/types';
 import { AuthContext } from '../../auth/AuthContext';
 const months = ["Jan", "Fer", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Ded"];

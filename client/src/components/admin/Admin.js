@@ -14,7 +14,7 @@ import ToastContainer from './ui/toastcontainer/ToastContainer';
 import FooterAdmin from './footer/FooterAdmin';
 import { kbToSize, segFormat, dateFormat } from '../../utils/Utils';
 
-import { ShowAddModal } from './ui/modal/Funtions';
+import { ShowAddModal, ShowInputTextModal } from './ui/modal/Funtions';
 import { fixFull } from './movies/MoviesFunctions';
 import { AuthContext } from './auth/AuthContext';
 import Duplicates from './Duplicates';
@@ -91,9 +91,9 @@ export const Admin = ({ match, ...rest }) => {
                                         name: "Procesar",
                                         className: "btn btn-sm btn-warning",
                                         onClick: function (data) {
-                                            toastr['success']('Scanning');
                                             Axios.post("/api/movies/read", { path: data.url })
                                                 .then(response => {
+                                                    toastr['success']('Scanning');
                                                     //this.setState({ loading: false });
                                                     //this.props.history.push('/');
                                                 })
@@ -584,6 +584,16 @@ export const Admin = ({ match, ...rest }) => {
                                 getItem={function (item) {
                                     return (<Movie item={item} />)
                                 }}
+                                extraAcciones={[
+                                    {
+                                        name: "Rename File",
+                                        className: "btn btn-sm btn-warning",
+                                        onClick: function (data) {
+                                            ShowInputTextModal("/api/movies/renamefile/" + data._id, "New name");
+
+                                        }
+                                    }
+                                ]}
                                 extraTopAcciones={[
                                     {
                                         name: "Add Categories",
