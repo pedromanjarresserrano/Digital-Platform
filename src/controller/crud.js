@@ -4,7 +4,7 @@ let options = config.options;
 // ======
 // Create
 // ======
-const create = async(req, res, Collection) => {
+const create = async (req, res, Collection) => {
     let newEntry = req.body;
     try {
         newEntry = await Collection.create(newEntry);
@@ -17,12 +17,18 @@ const create = async(req, res, Collection) => {
 // =========
 // Read many
 // =========
-const readMany = async(req, res, Collection, sortBy) => {
+const readMany = async (req, res, Collection, sortBy) => {
     try {
         let query = req.body || {};
         query = Object.keys(query).length === 0 ? req.query : query;
         options.page = parseInt(req.params.page);
         let aux = options.limit;
+        if (req.query && req.query.sort) {
+            if (req.query && req.query.sortdir) {
+                sortBy = {}
+                sortBy[req.query.sort] = req.query.sortdir;
+            }
+        }
         if (req.query && req.query.chunk) {
             options.limit = parseInt(req.query.chunk);
             if (Object.keys(query).length === 1 && Object.keys(query)[0] == 'chunk') {
@@ -50,7 +56,7 @@ const readMany = async(req, res, Collection, sortBy) => {
 // ========
 // Read one
 // ========
-const readOne = async(req, res, Collection) => {
+const readOne = async (req, res, Collection) => {
     const { _id } = req.params;
     try {
         let doc = await Collection.findById(_id);
@@ -62,7 +68,7 @@ const readOne = async(req, res, Collection) => {
 // ========
 // Read Find one
 // ========
-const readFindOne = async(req, res, Collection) => {
+const readFindOne = async (req, res, Collection) => {
     let query = req.body || {};
     try {
         let doc = await Collection.findOne(query);
@@ -75,7 +81,7 @@ const readFindOne = async(req, res, Collection) => {
 // ======
 // Update
 // ======
-const update = async(req, res, Collection) => {
+const update = async (req, res, Collection) => {
     let changedEntry = req.body;
     try {
         await Collection.findByIdAndUpdate({ _id: changedEntry._id }, { $set: changedEntry });
@@ -88,7 +94,7 @@ const update = async(req, res, Collection) => {
 // ======
 // Remove
 // ======
-const remove = async(req, res, Collection) => {
+const remove = async (req, res, Collection) => {
     try {
         await Collection.deleteOne({ _id: req.params._id });
         res.sendStatus(200);

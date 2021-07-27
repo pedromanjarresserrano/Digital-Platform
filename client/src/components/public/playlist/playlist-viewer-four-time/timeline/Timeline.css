@@ -1,0 +1,11 @@
+
+.content {
+    flex: 1;
+    display: flex;
+    overflow: auto;
+}
+
+.box {
+    display: flex;
+    min-height: min-content; /* needs vendor prefixes */
+}

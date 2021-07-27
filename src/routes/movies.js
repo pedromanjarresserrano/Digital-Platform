@@ -9,7 +9,7 @@ var process = 0;
 const socketServer = require("../services/socket").serverIO;
 const { loggerRequest } = require('../controller/logger');
 
-router.post('/', loggerRequest, async function(req, res) {
+router.post('/', loggerRequest, async function (req, res) {
     try {
         let paths = req.body.path;
         if (process == 0) {
@@ -61,6 +61,7 @@ const getMovieInfo = (inputPath) => {
 };
 
 async function createMovie(files, paths, res) {
+    let errorlist = [];
     const size = files.length;
     res.send({ length: size });
     console.log("Length -----------" + size);
@@ -72,7 +73,7 @@ async function createMovie(files, paths, res) {
     console.log(list2.length);
     for (let i = 0; i < size; i++) {
         try {
-            let file = files[i];
+            let file = files[i].replace('\\', '/');
             let n = file.split("/");
             let nameFile = n[n.length - 1].split(".mp4")[0];
             let movie = await models.moviemodel.findOne({
@@ -92,18 +93,20 @@ async function createMovie(files, paths, res) {
                 await models.moviemodel.findOneAndUpdate({ _id: movie._id }, { url: file })
                 continue
             }
-
+            console.log('getting meta info');
             let metadata = await getMovieInfo(file);
+
             if (!movie) {
                 metadata = metadata.streams[0];
+                let sz = ((metadata.bit_rate ? metadata.bit_rate : 1) * (metadata.duration ? metadata.duration : 1)) / 8192;
                 movie = await models
                     .moviemodel
                     .create({
                         name: nameFile,
                         url: file,
-                        quality: metadata.height,
-                        size: (metadata.bit_rate * metadata.duration) / 8192,
-                        duration: metadata.duration,
+                        quality: metadata.height ? metadata.height : 0,
+                        size: sz ? sz : 0,
+                        duration: metadata.duration ? metadata.duration : 1,
                     });
             }
             movie.url = file;
@@ -112,6 +115,13 @@ async function createMovie(files, paths, res) {
             await generatefiles(movie, [metadata.width, metadata.height]);
 
         } catch (error) {
+            let filess = files[i].replace('\\', '/');
+            errorlist.push({
+                file: 'file:///' + filess,
+                error: JSON.stringify(error)
+            })
+            console.log(error);
+
             continue
         }
     }
@@ -127,6 +137,28 @@ async function createMovie(files, paths, res) {
     } catch (error) {
         console.log(error);
     }
+    console.log('WRITING FILE');
+    errorlist = {
+        errorlist,
+        count: errorlist.length
+    }
+    fs.writeFile("i:/test-" + new Date().getTime() + ".json", JSON.stringify(errorlist), function (err) {
+        if (err) {
+            console.log(err);
+        }
+    });
+
+    errorlist.errorlist.forEach(filess => {
+        filess = filess.file
+        let n1 = filess.split("/");
+        let nameFiles = n1[n1.length - 1];
+        fs.rename(filess, "I:/moveds/" + nameFiles, function (err) {
+            if (err) console.log(err)
+            console.log('Successfully renamed - AKA moved!')
+        })
+    })
+
+
 }
 
 

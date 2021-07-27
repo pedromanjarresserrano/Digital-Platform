@@ -191,46 +191,58 @@ const remove = async (req, res) => {
 
 const duplicates = async (req, res) => {
     try {
+        let page = req.query.page;
+        let response = { items: [] };
+        let dura = await Collection.aggregate([
+            { "$group": { "_id": "$duration", "count": { "$sum": 1 } } },
+            { "$match": { "_id": { "$ne": null }, "count": { "$gt": 1 } } },
+            { "$project": { "duration": "$_id", "_id": 0 } },
+            { $sort: { duration: 1 } }
 
-        let response = [];
-        /*  let dura = await Collection.aggregate([
-              { "$group": { "_id": "$duration", "count": { "$sum": 1 } } },
-              { "$match": { "_id": { "$ne": null }, "count": { "$gt": 1 } } },
-              { "$project": { "duration": "$_id", "_id": 0 } },
-              { $sort: { duration: 1 } }
-  
-          ]);
-  
-          for (const i of dura) {
-              let dupe = await Collection.find({ "duration": { $gt: i.duration - 1, $lte: i.duration } })
-              response.push({
-                  _id: i,
-  
-                  idsForDuplicatedDocs: dupe
-              })
-          }*/
-        response = await Collection.aggregate([{
-            $group: {
-                _id: { duration: "$duration" },
-                idsForDuplicatedDocs: { $addToSet: "$_id" },
-                count: { $sum: 1 }
-            }
-        },
-        {
-            $match: {
-                count: { $gt: 1 }
-            }
-        },
-        { $sort: { count: -1 } }
         ]);
 
-        for (const i of response) {
-            for (let j = 0; j < i.idsForDuplicatedDocs.length; j++) {
-                const e = i.idsForDuplicatedDocs[j];
-                i.idsForDuplicatedDocs[j] = await Collection.findById(e).exec();
-            }
-        }
 
+        for (const i of dura) {
+            let dupe = await Collection.find({ "duration": { $gte: i.duration - 60, $lte: i.duration + 60 } })
+            if (dupe.length > 1)
+                response.items.push({
+                    _id: i,
+
+                    idsForDuplicatedDocs: dupe
+                })
+        }
+        let pagesize = 5;
+        let count = response.items.length;
+        let aux = (page - 1) * pagesize;
+        console.log(aux)
+        response.items = response.items.slice(aux, aux + pagesize);
+        response.count = count;
+        response.pages = Math.ceil(count / pagesize);
+        response.pagesize = pagesize;
+
+        /*
+      response = await Collection.aggregate([{
+          $group: {
+              _id: { duration: "$duration" },
+              idsForDuplicatedDocs: { $addToSet: "$_id" },
+              count: { $sum: 1 }
+          }
+      },
+      {
+          $match: {
+              count: { $gt: 1 }
+          }
+      },
+      { $sort: { count: -1 } }
+      ]);
+
+      for (const i of response) {
+          for (let j = 0; j < i.idsForDuplicatedDocs.length; j++) {
+              const e = i.idsForDuplicatedDocs[j];
+              i.idsForDuplicatedDocs[j] = await Collection.findById(e).exec();
+          }
+      }
+*/
         res.send(response)
         return;
     } catch (error) {
@@ -246,33 +258,34 @@ const removeWithFile = async (req, res) => {
     console.log('New delete movie');
     try {
         let doc = await Collection.findById(req.params._id);
-        if (doc.files) {
+        if (doc) {
+            let path = doc.url;
 
-            doc.files.forEach(file => {
-                let path = "./public/" + file;
-                fs.unlink(path, (err) => {
-                    if (err) {
-                        console.error(err)
-                        return
-                    }
+            fs.unlink(path, async (err) => {
+                if (err) {
+                    console.log(err)
+                    return res.status(502).send(err);
 
-                    console.log("file " + file + " removed");
-                })
+                }
+                await Collection.deleteOne({ _id: req.params._id });
+                res.sendStatus(200);
+                console.log("file " + path + " removed");
+                if (doc.files) {
+                    doc.files.forEach(file => {
+                        let fpath = "./public/" + file;
+                        fs.unlink(fpath, (errf) => {
+                            if (err) {
+                                console.log(errf)
+                                return res.status(502).send(errf);
+
+                            }
+
+                            console.log("file " + file + " removed");
+                        })
+                    })
+                }
             })
         }
-        let path = doc.url;
-
-        fs.unlink(path, (err) => {
-            if (err) {
-                console.error(err)
-                return
-            }
-
-            console.log("file " + path + " removed");
-        })
-
-        await Collection.deleteOne({ _id: req.params._id });
-        res.sendStatus(200);
     } catch (error) {
         console.log(error);
         res.status(502).send(error);

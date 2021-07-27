@@ -2,6 +2,7 @@ import React from 'react';
 import './Movie.css';
 import { Link } from 'react-router-dom'
 import HoverSlider from '../../ui/hoverslider/HoverSlider';
+import { kbToSize } from '../../../../utils/Utils';
 
 
 class Movie extends React.Component {
@@ -28,10 +29,10 @@ class Movie extends React.Component {
 
     } else {
       return <div className="w-100 preview" >
-    
-       <HoverSlider
+
+        <HoverSlider
           images={this.props.item.files}
-        /> 
+        />
         <span className="text-white time-stamp" >{this.getTime(this.props.item.duration)}</span>
 
         <span className="text-white quality-stamp" >{this.props.item.quality}p</span>
@@ -48,7 +49,6 @@ class Movie extends React.Component {
             {
               this.getPreview()
             }
-ø
             <p className="text-white text-center text-truncate" ><small>{name} </small></p>
           </div >
             :
@@ -58,7 +58,7 @@ class Movie extends React.Component {
                 this.getPreview()
               }
 
-              <p className="text-white text-center text-truncate" ><small>{name} </small></p>
+              <p className="text-white text-center text-truncate p-0 m-0" ><small>{name} </small></p>
             </Link>)
           }
           {
@@ -68,9 +68,19 @@ class Movie extends React.Component {
             </div>
               : ''
           }
+          {
+            this.props.extradata ?
+              <div style={{ "font-size": "10px" }}>
+                Size:
+                {
+                  kbToSize(this.props.item.size)
+                }
+              </div>
+              : ''
+          }
         </div>
 
-      </div>
+      </div >
 
     );
   }

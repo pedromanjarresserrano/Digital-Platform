@@ -59,23 +59,6 @@ class Catalog extends React.Component {
     async componentDidMount() {
         this.load();
         document.body.style.paddingTop = '0';
-        /*   document.addEventListener("DOMContentLoaded", function () {
-               window.addEventListener('scroll', function () {
-                   if (window.scrollY > 50) {
-                       let element = document.getElementsByClassName('sticky-top-scroll')[0];
-                       element.classList.add('fixed-top');
-                       // add padding top to show content behind navbar
-                       this.setState({ navbar_height: element.offsetHeight })
-                       let cal = (this.state.navbar_height) - 12;
-                       document.body.style.paddingTop = cal + 'px';
-                   } else {
-                       document.getElementsByClassName('sticky-top-scroll')[0].classList.remove('fixed-top');
-                       // remove padding top from body
-                       document.body.style.paddingTop = '0';
-                   }
-               }.bind(this));
-           }.bind(this));
-           */
     }
 
     async componentDidUpdate() {

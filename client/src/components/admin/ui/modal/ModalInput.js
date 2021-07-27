@@ -10,49 +10,37 @@ export default class ModalInput extends React.Component {
         this.state = { value: '' };
 
         this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+        this.inputRef = React.createRef();
     }
 
     handleChange(event) {
-        this.setState({ value: event.target.value });
+        event.preventDefault();
+        this.setState({
+            value: event.target.value,
+            currentCursor: event.target.selectionStart
+        },
+            () => {
+                this.inputRef.current.selectionStart = this.state.currentCursor;
+                this.inputRef.current.selectionEnd = this.state.currentCursor;
+            });
     }
 
-    handleSubmit(event) {
-        alert('A name was submitted: ' + this.state.value);
-        event.preventDefault();
-    }
 
     render() {
-
-
-        let headers = {}
-
-        headers["Content-Type"] = 'application/json';
-        headers["x-access-token"] = '' + localStorage.getItem("utoken");
-
-        let {
-            urlPost, title
-        } = this.props;
-
         return (
 
             <Modal key={'rds-' + Math.random()} show="true" okLabel="Save"
-                content={
-                    <form >
-                        <label>
-                            Name:
-          <input type="text" autoFocus='true' value={this.state.value} onChange={this.handleChange} />
-                        </label>
 
-                    </form>
-                }
-                title={title}
+                title={this.props.title}
 
                 onOkClick={event => {
-                    axios.post(urlPost, {
+                    axios.post(this.props.urlPost, {
                         name: this.state.value
                     }, {
-                        headers: headers
+                        headers: {
+                            "Content-Type": 'application/json',
+                            "x-access-token": localStorage.getItem("utoken")
+                        }
                     })
                         .then((res => {
                             toastr["success"]("Send");
@@ -73,7 +61,22 @@ export default class ModalInput extends React.Component {
                         buttonCancel: "btn btn-danger"
                     }
                 }
-            />
+            >
+                <form >
+                    <label>
+                        Name:
+                        <input
+                            ref={this.inputRef}
+                            type="text" autoFocus='true'
+                            value={this.state.value}
+                            selectionStart={this.cursor}
+                            selectionEnd={this.cursor}
+                            onChange={this.handleChange}
+                        />
+                    </label>
+
+                </form>
+            </Modal>
         );
     }
 

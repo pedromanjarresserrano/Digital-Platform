@@ -69,7 +69,7 @@ class MovieDetails extends React.Component {
       <div className="container-md container-fluid">
         <div className="row">
           <div className="col-sm-12">
-            <Player loop={false} poster={this.state.item.files[1]} ref={(player) => { this.player = player }}>
+            <Player fluid={false} width={"100%"} height={480} loop={false} poster={this.state.item.files[1]} ref={(player) => { this.player = player }}>
               <source src={"/api/movie/" + this.state.item._id} />
               <BigPlayButton position="center" />
               <ControlBar autoHide={true}>

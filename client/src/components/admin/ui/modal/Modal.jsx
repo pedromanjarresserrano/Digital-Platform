@@ -41,7 +41,7 @@ class Modal extends React.Component {
                         </button>
                     </div>
                     <div className="modal-body">
-                        {this.props.content}
+                        {this.props.content ? this.props.content : this.props.children}
                     </div>
                     <div className="modal-footer justify-content-between">
                         <button type="button" className={this.props.style && this.props.style.buttonCancel ? this.props.style.buttonCancel : "btn btn-default"} data-dismiss="modal" onClick={this.close}>Close</button>

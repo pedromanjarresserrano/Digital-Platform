@@ -74,12 +74,18 @@ class CrudView extends React.Component {
                         { headers }
                     )
                     .then(res => {
-                        this.loadPage(1);
+                        this.loadPage(this.state.activePage);
                         this.setState({
                             modal: false
                         })
 
                         toastr["success"]("Delete")
+
+                    }).catch(err => {
+                        this.setState({
+                            modal: false
+                        })
+                        toastr["warning"]("Error on delete")
 
                     }),
             onClose: () =>
@@ -107,7 +113,7 @@ class CrudView extends React.Component {
             name: { "$regex": ".*" + this.state.search + ".*", $options: 'i' }
         }
 
-        axios.post(this.props.baseUrl + '/all/' + page, find)
+        axios.post(this.props.baseUrl + '/all/' + page + (this.props.sortby ? '?' + this.props.sortby : ''), find)
             .then(response => {
                 this.setState({
                     items: response.data.itemsList,
@@ -132,6 +138,7 @@ class CrudView extends React.Component {
             search: '?search=' + this.state.search,
 
         })
+        this.setState({ activePage: 1 })
         this.loadPage(1);
 
     }
@@ -207,6 +214,7 @@ class CrudView extends React.Component {
                                 editClick={this.editClick}
                                 deleteClick={this.deleteClick}
                                 extraAcciones={this.props.extraAcciones}
+                                crudView={this}
 
                             />
                         }

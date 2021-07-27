@@ -1,24 +1,36 @@
 import React from 'react';
 import axios from 'axios';
 import Movie from '../public/movies/movie/Movie';
+import Pagination from 'react-js-pagination';
+import { Constants } from '../public/common/Constants';
 
 class Duplicates extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            list: []
+            data: {
+                items: [],
+                pagesize: 5,
+                count: 0
+            },
+            activePage: 1,
+
         }
         this.deletefull = this.deletefull.bind(this);
     }
     async componentDidMount() {
-        axios.get('/api/movies/duplicates')
+        this.loadPage(this.state.activePage);
+
+    }
+
+    loadPage(page) {
+        axios.get('/api/movies/duplicates?page=' + page)
             .then(response => {
                 console.log(response);
                 this.setState({
-                    list: response.data
+                    data: response.data
                 });
             }).catch(error => { console.log(error) });
-
     }
 
     async deletefull(item) {
@@ -42,17 +54,23 @@ class Duplicates extends React.Component {
 
     }
 
+    onPageChanged = pageNumber => {
+        pageNumber = parseInt(pageNumber)
+        this.setState({ activePage: pageNumber });
+        this.loadPage(pageNumber);
+    }
+
     render() {
 
         return (
             <div>
                 {
-                    this.state.list.map(item => (
+                    this.state.data.items.map(item => (
                         <div className="w-100 h-100 d-flex flex-column">
                             {item._id.duration}
-                            <div className=" d-flex flex-row"> {
+                            <div className=" d-flex flex-row flex-wrap"> {
                                 item.idsForDuplicatedDocs.map((item, index) =>
-                                    <div className="w-100 h-100 d-flex flex-column align-items-center">
+                                    <div className=" d-flex flex-column align-items-center  ">
                                         <Movie item={item} index={index} />
                                         <button className="btn btn-danger " onClick={() => {
                                             console.log("Click");
@@ -66,6 +84,13 @@ class Duplicates extends React.Component {
                         </div>
                     ))
                 }
+                <Pagination
+                    className="mb-2"
+                    activePage={this.state.activePage}
+                    totalItemsCount={this.state.data.count}
+                    itemsCountPerPage={this.state.data.pagesize}
+                    pageRangeDisplayed={Constants.PUBLIC.PAGE_VISIBLE_COUNT}
+                    onChange={this.onPageChanged} />
             </div>
         );
 

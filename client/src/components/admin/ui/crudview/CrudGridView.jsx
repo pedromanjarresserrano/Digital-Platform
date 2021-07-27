@@ -71,6 +71,7 @@ class CrudGridView extends CrudView {
                                 deleteClick={this.deleteClick}
                                 extraAcciones={this.props.extraAcciones}
                                 getItem={this.props.getItem}
+                                crudView={this}
 
                             />
                         }

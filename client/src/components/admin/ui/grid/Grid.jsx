@@ -14,6 +14,12 @@ class Grid extends React.Component {
         console.log(this)
     }
 
+    check(id) {
+        let chk = document.getElementById(id);
+
+        chk.checked = !chk.checked;
+    }
+
     render() {
         return (
 
@@ -30,7 +36,7 @@ class Grid extends React.Component {
                         <button key={Math.random() + "-id-button-commands"} type="button" title="Delete" className="btn btn-sm btn-danger" onClick={() => this.props.deleteClick(item)}><i className="fas fa-trash-alt"></i></button>
 
                         {this.props.extraAcciones && this.props.extraAcciones.length > 0 ? this.props.extraAcciones.map(accion =>
-                            <button key={Math.random() + "-id-button-commands"} type="button" className={accion.className} onClick={() => accion.onClick(item)}>{accion.name}</button>
+                            <button key={Math.random() + "-id-button-commands"} type="button" className={accion.className} onClick={() => accion.onClick(item, this.props.crudView)}>{accion.name}</button>
                         ) : ""}
                     </GridListTile>
                 ))}

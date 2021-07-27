@@ -580,17 +580,60 @@ export const Admin = ({ match, ...rest }) => {
                                     }
                                 }]}
                                 baseRoute={`${match.path}/movies/movie`}
+                                sortby={'sort=duration&sortdir=-1'}
                                 baseUrl={'/api/movies'}
                                 getItem={function (item) {
-                                    return (<Movie item={item} />)
+                                    return (<Movie item={item} extradata={true} />)
                                 }}
                                 extraAcciones={[
                                     {
-                                        name: "Rename File",
+                                        name: "Rename",
                                         className: "btn btn-sm btn-warning",
                                         onClick: function (data) {
                                             ShowInputTextModal("/api/movies/renamefile/" + data._id, "New name");
 
+                                        }
+                                    },
+                                    {
+                                        name: "Delete File",
+                                        className: "btn btn-sm bg-dark",
+                                        onClick: async function (data, crudview) {
+                                            let headers = {}
+                                            headers["x-access-token"] = localStorage.getItem("utoken");
+                                            await crudview.setState({
+                                                modal: true,
+                                                onOkClick: async () => {
+                                                    await Axios
+                                                        .delete('/api/movies/deletewithfile/' + data._id,
+                                                            { headers }
+                                                        )
+                                                        .then(res => {
+                                                            crudview.loadPage(crudview.state.activePage);
+                                                            crudview.setState({
+                                                                modal: false
+                                                            })
+
+                                                            toastr["success"]("Delete")
+                                                            Array.from(document.getElementsByClassName('checkboxcrud')).forEach(e => {
+                                                                e.checked = false;
+                                                            })
+                                                        }).catch(err => {
+                                                            crudview.setState({
+                                                                modal: false
+                                                            })
+                                                            toastr["warning"]("Error on delete")
+                                                            Array.from(document.getElementsByClassName('checkboxcrud')).forEach(e => {
+                                                                e.checked = false;
+                                                            })
+                                                        })
+                                                }
+                                                ,
+                                                onClose: () =>
+                                                    crudview.setState({
+                                                        modal: false
+                                                    })
+
+                                            });
                                         }
                                     }
                                 ]}

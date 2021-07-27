@@ -20,6 +20,8 @@ import BookDetails from './books/book-details/BookDetails';
 import ImagesetDetails from './imagesets/imageset-details/ImagesetDetails';
 import Imagesets from './imagesets/imagesets/Imagesets';
 import PlaylistViewer from './playlist/playlist-viewer/PlaylistViewer.jsx';
+import PlaylistViewerFour from './playlist/playlist-viewer-four/PlaylistViewerFour.jsx';
+import PlaylistViewerFourTime from './playlist/playlist-viewer-four-time/PlaylistViewerFourTime.jsx';
 export const Public = ({ match }) => (
     <React.Fragment>
         <Header />
@@ -67,6 +69,21 @@ export const Public = ({ match }) => (
                     return (<><Redirect to="/playlist/1"  {...props} /></>);
                 }} />
             <Route key="playlist" exact path="/playlist/:page" component={PlaylistViewer} />
+
+            <Route key="list-movies4" exact path="/playlist4"
+                render={(props) => {
+                    debugger
+                    return (<><Redirect to="/playlist4/1"  {...props} /></>);
+                }} />
+            <Route key="playlist4" exact path="/playlist4/:page" component={PlaylistViewerFour} />
+
+            <Route key="list-movies4t" exact path="/playlist4t"
+                render={(props) => {
+                    debugger
+                    return (<><Redirect to="/playlist4t/1"  {...props} /></>);
+                }} />
+            <Route key="playlist4t" exact path="/playlist4t/:page" component={PlaylistViewerFourTime} />
+
             <Route exact path="/index" component={Home} />
             <Route exact path="*" component={NotFound} />
         </Switch>

@@ -14,7 +14,7 @@ class SidebarAdmin extends React.Component {
         console.log(this)
     }
 
-    componentDidMount(){
+    componentDidMount() {
         $('[data-widget="treeview"]').Treeview('init');
     }
 
@@ -52,7 +52,7 @@ class SidebarAdmin extends React.Component {
                                     <i className="nav-icon fas fa-home"></i>
                                     <p>
                                         Home Admin
-                                </p>
+                                    </p>
                                 </Link>
                             </li>
                             <li className="nav-item has-treeview">
@@ -60,7 +60,7 @@ class SidebarAdmin extends React.Component {
                                     <i className="nav-icon far fa-circle"></i>
                                     <p>
                                         Public
-                                    <i className="right fas fa-angle-left"></i>
+                                        <i className="right fas fa-angle-left"></i>
                                     </p>
                                 </Link>
                                 <ul className="nav nav-treeview">
@@ -137,7 +137,15 @@ class SidebarAdmin extends React.Component {
                                 <Link className="nav-link " to="/admin/gridmovies" onClick={this.onClickHandler}>
                                     <i className="nav-icon fas fa-film"></i>
                                     <p>
-                                       Grid Movies
+                                        Grid Movies
+                                    </p>
+                                </Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link className="nav-link " to="/admin/movies/duplicates" onClick={this.onClickHandler}>
+                                    <i className="nav-icon fas fa-film"></i>
+                                    <p>
+                                        Duplicate Movies
                                     </p>
                                 </Link>
                             </li>

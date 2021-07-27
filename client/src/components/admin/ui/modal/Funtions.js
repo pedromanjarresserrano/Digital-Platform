@@ -16,7 +16,7 @@ export const ShowAddModal = (urlData, urlPost, data, title, multiple = true) => 
 };
 
 export const ShowInputTextModal = (urlPost, title) => {
-
+    debugger
     ReactDOM.render(< ModalInput
         urlPost={urlPost}
         title={title}
