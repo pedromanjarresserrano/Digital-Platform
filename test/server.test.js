@@ -21,7 +21,7 @@ var token;
 const server = app.listen(PORT)
 
 
-beforeAll(async() => {
+beforeAll(async () => {
     mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true })
     await moviemodel.deleteMany({});
     await actormodel.deleteMany({});
@@ -47,7 +47,7 @@ afterAll(done => {
 })
 
 
-test("POST /api/admin/signin", async() => {
+test("POST /api/admin/signin", async () => {
     await request(server)
         .post('/api/admin/signin')
         .send({ email: user.email })
@@ -80,7 +80,7 @@ test("POST /api/admin/signin", async() => {
 
 
 
-test("POST /api/admin/revalidsignin", async() => {
+test("POST /api/admin/revalidsignin", async () => {
     await request(server)
         .post('/api/admin/revalidsignin')
         .expect(401)
@@ -102,7 +102,7 @@ test("POST /api/admin/revalidsignin", async() => {
 
 
 
-test("GET /index", async() => {
+test("GET /index", async () => {
     await request(server)
         .get("/index")
         .expect(200).then((res) => {
@@ -111,8 +111,9 @@ test("GET /index", async() => {
 
 })
 
-test("POST /actores", async() => {
+test("POST /actores", async () => {
     jest.setTimeout(30000)
+
     await request(server)
         .post("/api/actores")
         .set('x-access-token', token)
@@ -134,7 +135,7 @@ test("POST /actores", async() => {
 })
 
 
-test("POST /categorias", async() => {
+test("POST /categorias", async () => {
     await request(server)
         .post("/api/categorias")
         .set('x-access-token', token)
@@ -150,7 +151,7 @@ test("POST /categorias", async() => {
 })
 
 
-test("POST /studios", async() => {
+test("POST /studios", async () => {
     await request(server)
         .post("/api/studios")
         .set('x-access-token', token)
@@ -166,7 +167,7 @@ test("POST /studios", async() => {
 }, maxtimeout)
 
 
-test("POST /books", async() => {
+test("POST /books", async () => {
 
     await request(server)
         .post("/api/books")
@@ -183,7 +184,7 @@ test("POST /books", async() => {
 })
 
 
-test("POST /movie", async() => {
+test("POST /movie", async () => {
 
     await request(server)
         .post("/api/movies")
@@ -202,7 +203,7 @@ test("POST /movie", async() => {
 
 
 
-test("POST /movie", async() => {
+test("POST /movie", async () => {
 
     await request(server)
         .post("/api/movies")
@@ -220,7 +221,7 @@ test("POST /movie", async() => {
 
 })
 
-test("GET /movie/all", async() => {
+test("GET /movie/all", async () => {
     await request(server)
         .get("/api/movies/all/-1")
         .expect(200)
@@ -259,11 +260,12 @@ test("GET /movie/all", async() => {
         })
 })
 
-test("POST /movie/all", async() => {
+test("POST /movie/all", async () => {
     await request(server)
         .post("/api/movies/all/-10000")
         .send({})
-        .expect(502)
+        .expect(200)
+
 
     await request(server)
         .post("/api/movies/all/-1")
@@ -306,12 +308,12 @@ test("POST /movie/all", async() => {
 })
 
 
-test("GET /movie/id", async() => {
+test("GET /movie/id", async () => {
     await request(server)
         .post("/api/movies/all/1")
         .send({})
         .expect(200)
-        .then(async(response) => {
+        .then(async (response) => {
             expect(Array.isArray(response.body.itemsList)).toBeTruthy();
             expect(response.body.itemsList.length).toEqual(1);
 
@@ -335,12 +337,12 @@ test("GET /movie/id", async() => {
 })
 
 
-test("POST /movie/fo", async() => {
+test("POST /movie/fo", async () => {
     await request(server)
         .post("/api/movies/all/1")
         .send({})
         .expect(200)
-        .then(async(response) => {
+        .then(async (response) => {
             expect(Array.isArray(response.body.itemsList)).toBeTruthy();
             expect(response.body.itemsList.length).toEqual(1);
 
@@ -365,12 +367,12 @@ test("POST /movie/fo", async() => {
 
 
 
-test("PUT /movie/fo", async() => {
+test("PUT /movie/fo", async () => {
     await request(server)
         .post("/api/movies/all/1")
         .send({})
         .expect(200)
-        .then(async(response) => {
+        .then(async (response) => {
             expect(Array.isArray(response.body.itemsList)).toBeTruthy();
             expect(response.body.itemsList.length).toEqual(1);
             let _id = response.body.itemsList[0]._id;
@@ -384,7 +386,7 @@ test("PUT /movie/fo", async() => {
                 .post("/api/movies/fo")
                 .send({ _id: _id })
                 .expect(200)
-                .then(async(response3) => {
+                .then(async (response3) => {
                     expect(response3.body.name).toBe("UPDATE NAME");
                 });
 
@@ -398,7 +400,7 @@ test("PUT /movie/fo", async() => {
                 .post("/api/movies/fo")
                 .send({ _id })
                 .expect(200)
-                .then(async(response5) => {
+                .then(async (response5) => {
                     expect(response5.body.name).toBe(movie.name);
 
                 });
@@ -410,12 +412,12 @@ test("PUT /movie/fo", async() => {
         })
 })
 
-test("POST /movie/_id/like", async() => {
+test("POST /movie/_id/like", async () => {
     await request(server)
         .post("/api/movies/all/1")
         .send({})
         .expect(200)
-        .then(async(response) => {
+        .then(async (response) => {
             expect(Array.isArray(response.body.itemsList)).toBeTruthy();
             expect(response.body.itemsList.length).toEqual(1);
             let _id = response.body.itemsList[0]._id;
@@ -423,7 +425,7 @@ test("POST /movie/_id/like", async() => {
                 .post("/api/movies/" + _id + "/like")
                 .send({})
                 .expect(200)
-                .then(async(response) => {
+                .then(async (response) => {
                     expect(response.body).toBeTruthy();
                     expect(response.body.like).toBe(movie.like + 1);
 
@@ -432,7 +434,7 @@ test("POST /movie/_id/like", async() => {
 
 })
 
-test("POST /movie/read", async() => {
+test("POST /movie/read", async () => {
     jest.setTimeout(30000)
 
     await request(server)
@@ -449,7 +451,7 @@ test("POST /movie/read", async() => {
 })
 
 
-test("POST /books/read", async() => {
+test("POST /books/read", async () => {
 
     await request(server)
         .post("/api/books/read")
@@ -465,7 +467,7 @@ test("POST /books/read", async() => {
 }, maxtimeout)
 
 
-test("GET /fixes/specialnames", async() => {
+test("GET /fixes/specialnames", async () => {
     await request(server)
         .get("/api/fixes/specialnames")
         .set('x-access-token', token)
@@ -480,7 +482,7 @@ test("GET /fixes/specialnames", async() => {
 })
 
 
-test("GET /fixes/fullfixes", async() => {
+test("GET /fixes/fullfixes", async () => {
     await request(server)
         .get("/api/fixes/fullfixes")
         .set('x-access-token', token)
@@ -496,7 +498,7 @@ test("GET /fixes/fullfixes", async() => {
 
 
 
-test("GET /dashboard/movies", async() => {
+test("GET /dashboard/movies", async () => {
 
 
     await request(server)
@@ -515,8 +517,15 @@ test("GET /dashboard/movies", async() => {
 
 
 
-test("GET /dashboard/actors", async() => {
-    jest.setTimeout(30000)
+test("GET /dashboard/actors", async () => {
+    await request(server)
+        .post('/api/admin/signin')
+        .send({ email: user.email, password: user.password })
+        .expect(200)
+        .then((res) => {
+            token = res.body.user.token;
+        });
+
     await request(server)
         .post("/api/actores")
         .set('x-access-token', token)
@@ -555,7 +564,7 @@ test("GET /dashboard/actors", async() => {
 
 
 
-test("GET /movie", async() => {
+test("GET /movie", async () => {
 
     await request(server)
         .get("/api/movie/" + 12345)
@@ -572,7 +581,7 @@ test("GET /movie", async() => {
         .post("/api/movies/all/1")
         .send({})
         .expect(200)
-        .then(async(response) => {
+        .then(async (response) => {
             expect(Array.isArray(response.body.itemsList)).toBeTruthy();
             expect(response.body.itemsList.length).toEqual(1);
             let _id = response.body.itemsList[0]._id;

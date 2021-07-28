@@ -11,5 +11,7 @@
         "regenerator": true
       }
     ]
-  ]
+  ],
+  "sourceMap": "inline",
+  "retainLines": true
 }
