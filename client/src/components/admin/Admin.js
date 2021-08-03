@@ -13,13 +13,13 @@ import ToastContainer from './ui/toastcontainer/ToastContainer';
 
 import FooterAdmin from './footer/FooterAdmin';
 import { kbToSize, segFormat, dateFormat } from '../../utils/Utils';
-
-import { ShowAddModal, ShowInputTextModal } from './ui/modal/Funtions';
-import { fixFull } from './movies/MoviesFunctions';
 import { AuthContext } from './auth/AuthContext';
 import Duplicates from './Duplicates';
 import CrudGridView from './ui/crudview/CrudGridView';
 import Movie from '../public/movies/movie/Movie';
+import { TableActions as TableActionsMovies, TopActions as TopActionsMovies } from './crudviews/movies/Actions';
+import { Headers as HeadersMovies } from './crudviews/movies/Headers';
+import { SortBy as SortByMovies } from './crudviews/movies/SortBy';
 
 toastr.options = {
     "closeButton": false,
@@ -530,314 +530,24 @@ export const Admin = ({ match, ...rest }) => {
                             <Route key="crud-grid-movies-1" exact path={`${match.path}/gridmovies`} render={(props) => (<Redirect to={`${match.path}/gridmovies/1`}   {...props} />)} />
 
                             <Route key="crud-grid-movies" exact path={`${match.path}/gridmovies/:page`} render={(props) => (<CrudGridView {...props}
-                                headers={[{
-                                    name: "name",
-                                    label: "Nombre"
-                                }, {
-                                    name: "visualname",
-                                    label: "Visual Name"
-                                }, {
-                                    name: "duration",
-                                    label: "Duration",
-                                    converter: function (value) {
-                                        return segFormat(value, false)
-                                    }
-                                }, {
-                                    name: "like",
-                                    label: "Like"
-                                }, {
-                                    name: "view",
-                                    label: "Views"
-                                }, {
-                                    name: "size",
-                                    label: "Size file",
-                                    converter: function (value) {
-                                        return kbToSize(value)
-                                    }
-                                }, {
-                                    name: "year",
-                                    label: "Year"
-                                }, {
-                                    name: "quality",
-                                    label: "Quality"
-                                }, {
-                                    name: "portada",
-                                    label: "Imagen portada"
-                                }, {
-                                    name: "url",
-                                    label: "Location"
-                                }, {
-                                    name: "created",
-                                    label: "Creado",
-                                    converter: function (value) {
-                                        return dateFormat(value)
-                                    }
-                                }, {
-                                    name: "updated",
-                                    label: "Actualizado",
-                                    converter: function (value) {
-                                        return dateFormat(value)
-                                    }
-                                }]}
+                                headers={HeadersMovies}
                                 baseRoute={`${match.path}/movies/movie`}
                                 sortByDefault={{ sortby: 'duration', sortdir: -1 }}
                                 baseUrl={'/api/movies'}
+                                sortBy={SortByMovies}
                                 getItem={function (item) {
                                     return (<Movie item={item} extradata={true} />)
                                 }}
-                                extraAcciones={[
-                                    {
-                                        name: "Rename",
-                                        className: "btn btn-sm btn-warning",
-                                        onClick: function (data) {
-                                            ShowInputTextModal("/api/movies/renamefile/" + data._id, "New name");
-
-                                        }
-                                    },
-                                    {
-                                        name: "Delete File",
-                                        className: "btn btn-sm bg-dark",
-                                        onClick: async function (data, crudview) {
-                                            let headers = {}
-                                            headers["x-access-token"] = localStorage.getItem("utoken");
-                                            await crudview.setState({
-                                                modal: true,
-                                                onOkClick: async () => {
-                                                    await Axios
-                                                        .delete('/api/movies/deletewithfile/' + data._id,
-                                                            { headers }
-                                                        )
-                                                        .then(res => {
-                                                            crudview.loadPage(crudview.state.activePage);
-                                                            crudview.setState({
-                                                                modal: false
-                                                            })
-
-                                                            toastr["success"]("Delete")
-                                                            Array.from(document.getElementsByClassName('checkboxcrud')).forEach(e => {
-                                                                e.checked = false;
-                                                            })
-                                                        }).catch(err => {
-                                                            crudview.setState({
-                                                                modal: false
-                                                            })
-                                                            toastr["warning"]("Error on delete")
-                                                            Array.from(document.getElementsByClassName('checkboxcrud')).forEach(e => {
-                                                                e.checked = false;
-                                                            })
-                                                        })
-                                                }
-                                                ,
-                                                onClose: () =>
-                                                    crudview.setState({
-                                                        modal: false
-                                                    })
-
-                                            });
-                                        }
-                                    }
-                                ]}
-                                extraTopAcciones={[
-                                    {
-                                        name: "Add Categories",
-                                        className: "btn btn-sm btn-info",
-                                        icon: 'fas fa-plus-square',
-                                        onClick: async function (data) {
-                                            ShowAddModal('/api/categorias/all/-1', '/api/movies/addcatgs', data, "Add Categories");
-                                            console.log(data);
-                                        }
-                                    }, {
-                                        name: "Add Actors",
-                                        className: "btn btn-sm btn-warning ",
-                                        icon: 'fas fa-plus-square',
-                                        onClick: async function (data) {
-                                            ShowAddModal('/api/actores/all/-1', '/api/movies/addacts', data, "Add Actors");
-                                        }
-                                    }, {
-                                        name: "Set Studio",
-                                        className: "btn btn-sm text-light bg-secondary border border-dark",
-                                        icon: 'fas fa-plus-square',
-                                        onClick: async function (data) {
-                                            ShowAddModal('/api/studios/all/-1', '/api/movies/addsts', data, "Studio", false);
-                                        }
-                                    }, {
-                                        name: "Check CurrentPage",
-                                        className: "btn btn-sm btn-dark",
-                                        icon: 'fas fa-check-square',
-                                        onClick: async function (data) {
-                                            Array.from(document.getElementsByClassName('checkboxcrud')).forEach(e => {
-                                                e.checked = !e.checked;
-                                            })
-                                        }
-                                    }, {
-                                        name: "Massive delete",
-                                        className: "btn btn-sm btn-dark",
-                                        icon: 'fas fa-check-square',
-                                        onClick: async function (data) {
-                                            let headers = {}
-                                            headers["x-access-token"] = '' + localStorage.getItem("utoken");
-                                            data.items.forEach(i => {
-                                                Axios
-                                                    .delete('/api/movies/' + i,
-                                                        { headers }
-                                                    )
-                                                    .then(res => {
-                                                        this.loadPage(1);
-                                                        this.setState({
-                                                            modal: false
-                                                        })
-
-                                                        toastr["success"]("Delete")
-
-                                                    })
-                                            })
-                                        }
-                                    }, {
-                                        name: "Full fixes",
-                                        className: "btn btn-sm btn-success",
-                                        icon: 'fas fa-check-square',
-                                        onClick: async function (data) {
-                                            fixFull()
-                                        }
-                                    }
-                                ]}
+                                extraAcciones={TableActionsMovies}
+                                extraTopAcciones={TopActionsMovies}
                             />)} />
 
                             <Route key="crud-movies" exact path={`${match.path}/movies/:page`} render={(props) => (<CrudView {...props}
-                                headers={[{
-                                    name: "name",
-                                    label: "Nombre"
-                                }, {
-                                    name: "visualname",
-                                    label: "Visual Name"
-                                }, {
-                                    name: "duration",
-                                    label: "Duration",
-                                    converter: function (value) {
-                                        return segFormat(value, false)
-                                    }
-                                }, {
-                                    name: "like",
-                                    label: "Like"
-                                }, {
-                                    name: "view",
-                                    label: "Views"
-                                }, {
-                                    name: "size",
-                                    label: "Size file",
-                                    converter: function (value) {
-                                        return kbToSize(value)
-                                    }
-                                }, {
-                                    name: "year",
-                                    label: "Year"
-                                }, {
-                                    name: "quality",
-                                    label: "Quality"
-                                }, {
-                                    name: "portada",
-                                    label: "Imagen portada"
-                                }, {
-                                    name: "url",
-                                    label: "Location"
-                                }, {
-                                    name: "created",
-                                    label: "Creado",
-                                    converter: function (value) {
-                                        return dateFormat(value)
-                                    }
-                                }, {
-                                    name: "updated",
-                                    label: "Actualizado",
-                                    converter: function (value) {
-                                        return dateFormat(value)
-                                    }
-                                }]}
-
-                                sortBy={[
-                                    {
-                                        label: "Name",
-                                        key: "name"
-                                    },
-                                    {
-                                        label: "Duration",
-                                        key: "duration"
-                                    },
-                                    {
-                                        label: "Size",
-                                        key: "size"
-                                    },
-                                    {
-                                        label: "Creation",
-                                        key: "created"
-                                    }
-                                ]}
+                                headers={HeadersMovies}
+                                sortBy={SortByMovies}
                                 baseRoute={`${match.path}/movies/movie`}
                                 baseUrl={'/api/movies'}
-                                extraTopAcciones={[
-                                    {
-                                        name: "Add Categories",
-                                        className: "btn btn-sm btn-info",
-                                        icon: 'fas fa-plus-square',
-                                        onClick: async function (data) {
-                                            ShowAddModal('/api/categorias/all/-1', '/api/movies/addcatgs', data, "Add Categories");
-                                            console.log(data);
-                                        }
-                                    }, {
-                                        name: "Add Actors",
-                                        className: "btn btn-sm btn-warning ",
-                                        icon: 'fas fa-plus-square',
-                                        onClick: async function (data) {
-                                            ShowAddModal('/api/actores/all/-1', '/api/movies/addacts', data, "Add Actors");
-                                        }
-                                    }, {
-                                        name: "Set Studio",
-                                        className: "btn btn-sm text-light bg-secondary border border-dark",
-                                        icon: 'fas fa-plus-square',
-                                        onClick: async function (data) {
-                                            ShowAddModal('/api/studios/all/-1', '/api/movies/addsts', data, "Studio", false);
-                                        }
-                                    }, {
-                                        name: "Check CurrentPage",
-                                        className: "btn btn-sm btn-dark",
-                                        icon: 'fas fa-check-square',
-                                        onClick: async function (data) {
-                                            Array.from(document.getElementsByClassName('checkboxcrud')).forEach(e => {
-                                                e.checked = !e.checked;
-                                            })
-                                        }
-                                    }, {
-                                        name: "Massive delete",
-                                        className: "btn btn-sm btn-dark",
-                                        icon: 'fas fa-check-square',
-                                        onClick: async function (data) {
-                                            let headers = {}
-                                            headers["x-access-token"] = '' + localStorage.getItem("utoken");
-                                            data.items.forEach(i => {
-                                                Axios
-                                                    .delete('/api/movies/' + i,
-                                                        { headers }
-                                                    )
-                                                    .then(res => {
-                                                        this.loadPage(1);
-                                                        this.setState({
-                                                            modal: false
-                                                        })
-
-                                                        toastr["success"]("Delete")
-
-                                                    })
-                                            })
-                                        }
-                                    }, {
-                                        name: "Full fixes",
-                                        className: "btn btn-sm btn-success",
-                                        icon: 'fas fa-check-square',
-                                        onClick: async function (data) {
-                                            fixFull()
-                                        }
-                                    }
-                                ]}
+                                extraTopAcciones={TopActionsMovies}
                             />)} />
                             <Route key="form-movies" exact path={`${match.path}/movies/movie/:action/:id`} render={(props) => (
                                 <Form {...props}

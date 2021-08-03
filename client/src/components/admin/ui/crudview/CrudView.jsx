@@ -24,9 +24,10 @@ class CrudView extends React.Component {
             onOkClick: null,
             search: '',
             sortby: this.props.sortByDefault ? this.props.sortByDefault.sortby : '',
-            direction: this.props.sortByDefault ? this.props.sortByDefault.direction : '1',
+            direction: this.props.sortByDefault ? this.props.sortByDefault.sortdir : '1',
             loading: true
         }
+        this.getToolBar = this.getToolBar.bind(this);
         this.deleteClick = this.deleteClick.bind(this);
 
         this.handleChange = this.handleChange.bind(this);
@@ -156,6 +157,52 @@ class CrudView extends React.Component {
         }
     }
 
+    getToolBar = () => {
+
+        return (<div className="col-12 py-1 bg-secondary d-flex flex-row justify-content-between">
+            <div>
+                <button title="New" onClick={this.newClick} className="btn btn-sm btn-primary"><i className="fas fa-plus-square"></i></button>
+
+                {this.props.extraTopAcciones && this.props.extraTopAcciones.length > 0 ? this.props.extraTopAcciones.map(accion =>
+                    <button key={Math.random() + "-id-button-crud-commands"} type="button" className={accion.className + ' ml-1'} onClick={() => accion.onClick({
+                        items: Array.from(document.querySelectorAll('input.checkboxcrud:checked')).map(e => e.value)
+                    })}><i className={accion.icon}></i> {accion.name}</button>
+                ) : ""}
+                {
+                    this.state.sortby ?
+                        <div className='d-flex row-flex'>
+                            <select value={this.state.sortby} id='sortby' onChange={this.handleChange}>
+                                <option disable value={null}>Select option</option>
+                                {this.props.sortBy.map((item) => (
+                                    <option value={item.key}>{item.label}</option>
+                                ))}
+                            </select>
+                            <select value={this.state.direction} id='direction' onChange={this.handleChange}>
+                                <option selected value="1">ASC</option>
+                                <option value="-1">DESC</option>
+                            </select>
+                        </div>
+                        : ''
+                }
+            </div>
+            <div>
+                <form onSubmit={this.handleSearch}>
+                    <div className="form-inline">
+                        <div className="input-group">
+                            <input type="text" className="form-control form-control-sm" onKeyDown={this._handleKeyDown} value={this.state.search} id='search' onChange={this.handleChange} />
+                            <div className="input-group-append">
+                                <button className="btn btn-sm btn-danger" type='submit' >Buscar </button>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>);
+    }
+
+
     render() {
 
         return (
@@ -175,44 +222,7 @@ class CrudView extends React.Component {
 
                 }
                 <div className="row m-2 shadow-sm">
-                    <div className="col-12 py-1 bg-secondary d-flex flex-row justify-content-between">
-                        <div>
-                            <button title="New" onClick={this.newClick} className="btn btn-sm btn-primary"><i className="fas fa-plus-square"></i></button>
-
-                            {this.props.extraTopAcciones && this.props.extraTopAcciones.length > 0 ? this.props.extraTopAcciones.map(accion =>
-                                <button key={Math.random() + "-id-button-crud-commands"} type="button" className={accion.className + ' ml-1'} onClick={() => accion.onClick({
-                                    items: Array.from(document.querySelectorAll('input.checkboxcrud:checked')).map(e => e.value)
-                                })}><i className={accion.icon}></i> {accion.name}</button>
-                            ) : ""}
-
-                            <div className='d-flex row-flex'>
-                                <select value={this.state.sortby} id='sortby' onChange={this.handleChange}>
-                                    <option disable value={null}>Select option</option>
-                                    {this.props.sortBy.map((item) => (
-                                        <option value={item.key}>{item.label}</option>
-                                    ))}
-                                </select>
-                                <select value={this.state.direction} id='direction' onChange={this.handleChange}>
-                                    <option selected value="1">ASC</option>
-                                    <option value="-1">DESC</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div>
-                            <form onSubmit={this.handleSearch}>
-                                <div className="form-inline">
-                                    <div className="input-group">
-                                        <input type="text" className="form-control form-control-sm" onKeyDown={this._handleKeyDown} value={this.state.search} id='search' onChange={this.handleChange} />
-                                        <div className="input-group-append">
-                                            <button className="btn btn-sm btn-danger" type='submit' >Buscar </button>
-
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </form>
-                        </div>
-                    </div>
+                    {this.getToolBar()}
                     <div className="table-responsive">
                         {(this.state.loading) ?
                             <div className="m-5 pb-5" style={{
