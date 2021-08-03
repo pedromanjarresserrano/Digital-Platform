@@ -19,8 +19,7 @@ export default class PrevButtom extends Component {
     }
 
     render() {
-        const { player, className } = this.props;
-        const { currentSrc } = player;
+        const { className } = this.props;
 
         return (
             <div className={classNames(className, "backbar ",
