@@ -580,7 +580,7 @@ export const Admin = ({ match, ...rest }) => {
                                     }
                                 }]}
                                 baseRoute={`${match.path}/movies/movie`}
-                                sortby={'sort=duration&sortdir=-1'}
+                                sortByDefault={{ sortby: 'duration', sortdir: -1 }}
                                 baseUrl={'/api/movies'}
                                 getItem={function (item) {
                                     return (<Movie item={item} extradata={true} />)
@@ -753,6 +753,25 @@ export const Admin = ({ match, ...rest }) => {
                                         return dateFormat(value)
                                     }
                                 }]}
+
+                                sortBy={[
+                                    {
+                                        label: "Name",
+                                        key: "name"
+                                    },
+                                    {
+                                        label: "Duration",
+                                        key: "duration"
+                                    },
+                                    {
+                                        label: "Size",
+                                        key: "size"
+                                    },
+                                    {
+                                        label: "Creation",
+                                        key: "created"
+                                    }
+                                ]}
                                 baseRoute={`${match.path}/movies/movie`}
                                 baseUrl={'/api/movies'}
                                 extraTopAcciones={[

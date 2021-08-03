@@ -23,6 +23,8 @@ class CrudView extends React.Component {
             modal: false,
             onOkClick: null,
             search: '',
+            sortby: this.props.sortByDefault ? this.props.sortByDefault.sortby : '',
+            direction: this.props.sortByDefault ? this.props.sortByDefault.direction : '1',
             loading: true
         }
         this.deleteClick = this.deleteClick.bind(this);
@@ -113,7 +115,7 @@ class CrudView extends React.Component {
             name: { "$regex": ".*" + this.state.search + ".*", $options: 'i' }
         }
 
-        axios.post(this.props.baseUrl + '/all/' + page + (this.props.sortby ? '?' + this.props.sortby : ''), find)
+        axios.post(this.props.baseUrl + '/all/' + page + (this.state.sortby ? '?sort=' + this.state.sortby + '&sortdir=' + this.state.direction : ''), find)
             .then(response => {
                 this.setState({
                     items: response.data.itemsList,
@@ -144,7 +146,7 @@ class CrudView extends React.Component {
     }
 
     handleChange(event) {
-        this.setState({ search: event.target.value });
+        this.setState({ [event.target.id]: event.target.value });
     }
 
     _handleKeyDown = (e) => {
@@ -182,12 +184,25 @@ class CrudView extends React.Component {
                                     items: Array.from(document.querySelectorAll('input.checkboxcrud:checked')).map(e => e.value)
                                 })}><i className={accion.icon}></i> {accion.name}</button>
                             ) : ""}
+
+                            <div className='d-flex row-flex'>
+                                <select value={this.state.sortby} id='sortby' onChange={this.handleChange}>
+                                    <option disable value={null}>Select option</option>
+                                    {this.props.sortBy.map((item) => (
+                                        <option value={item.key}>{item.label}</option>
+                                    ))}
+                                </select>
+                                <select value={this.state.direction} id='direction' onChange={this.handleChange}>
+                                    <option selected value="1">ASC</option>
+                                    <option value="-1">DESC</option>
+                                </select>
+                            </div>
                         </div>
                         <div>
                             <form onSubmit={this.handleSearch}>
                                 <div className="form-inline">
                                     <div className="input-group">
-                                        <input type="text" className="form-control form-control-sm" onKeyDown={this._handleKeyDown} value={this.state.search} onChange={this.handleChange} />
+                                        <input type="text" className="form-control form-control-sm" onKeyDown={this._handleKeyDown} value={this.state.search} id='search' onChange={this.handleChange} />
                                         <div className="input-group-append">
                                             <button className="btn btn-sm btn-danger" type='submit' >Buscar </button>
 
