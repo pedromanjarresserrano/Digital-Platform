@@ -15,13 +15,13 @@ router.post('/', loggerRequest, async function(req, res) {
             let files = getDirs(path.join(paths));
             await createBook(files, res);
         } else {
-            res.send({ msg: "Already running" })
+            return res.send({ msg: "Already running" })
         }
     } catch (error) {
         process = 0;
-        res.status(502).send(error);
+        return res.status(502).send(error);
     }
-    return;
+
 })
 
 router.get("/progress", (req, res) => {
@@ -95,7 +95,6 @@ async function createBook(files, res) {
                     });
             }
         } catch (error) {
-            //   console.log(error);
             continue
         }
     }
