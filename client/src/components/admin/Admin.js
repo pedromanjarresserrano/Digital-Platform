@@ -46,7 +46,6 @@ export const Admin = ({ match, ...rest }) => {
 
     const { user } = useContext(AuthContext);
 
-
     return (
         (!user.logged)
             ? <Redirect to="/admin/login" />

@@ -48,6 +48,23 @@ let movieSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
+    bitrate: {
+        type: String,
+        default: ""
+    },
+    r_frame_rate: {
+        type: String,
+        default: ""
+    },
+    nb_frames: {
+        type: String,
+        default: ""
+    },
+    avg_frame_rate: {
+        type: String,
+        default: ""
+    },
+
     year: {
         type: Number,
         default: 0

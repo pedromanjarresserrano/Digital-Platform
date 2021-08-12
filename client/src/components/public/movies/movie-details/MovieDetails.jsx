@@ -6,15 +6,15 @@ import {
   TimeDivider,
   VolumeMenuButton,
   BigPlayButton,
-  PlaybackRateMenuButton
+  PlaybackRateMenuButton,
+  ReplayControl,
+  ForwardControl
 } from 'video-react';
 import Axios from 'axios';
 import { Link } from 'react-router-dom'
 import Actor from '../../actors/actor/Actor';
 import { segFormat } from '../../../../utils/Utils';
-import PictureInPicture from '../../ui/pinp/PictureInPicture';
 import { Constants } from '../../common/Constants';
-
 class MovieDetails extends React.Component {
 
   constructor(props) {
@@ -73,6 +73,8 @@ class MovieDetails extends React.Component {
               <source src={"/api/movie/" + this.state.item._id} />
               <BigPlayButton position="center" />
               <ControlBar autoHide={true}>
+                <ReplayControl seconds={5} order={2.1} />
+                <ForwardControl seconds={5} order={3.1} />
                 <CurrentTimeDisplay order={4.1} />
                 <TimeDivider order={4.2} />
                 <VolumeMenuButton />
@@ -121,15 +123,15 @@ class MovieDetails extends React.Component {
                     <div className="watch padding-2">
                       <i className="fas fa-eye margin-right-1"></i>
                       {this.state.item.view ? this.state.item.view : 0} Visitas
-                      </div>
+                    </div>
                     <div className="like padding-2">
                       <i className="fas fa-heart margin-right-1"></i>
                       {this.state.item.like ? this.state.item.like : 0} Me gusta
-                      </div>
+                    </div>
                     <div className="comment padding-2">
                       <i className="fas fa fa-comments margin-right-1"></i>
-                        0 Comentarios
-                      </div>
+                      0 Comentarios
+                    </div>
                   </div>
                   <div className="info-gratitude margin-bottom-1 w-100">
                     <div className="directed w-100">
