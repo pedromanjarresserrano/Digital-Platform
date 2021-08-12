@@ -160,7 +160,7 @@ class CrudView extends React.Component {
     getToolBar = () => {
 
         return (<div className="col-12 py-1 bg-secondary d-flex flex-row justify-content-between">
-            <div>
+            <div className='d-flex row-flex'>
                 <button title="New" onClick={this.newClick} className="btn btn-sm btn-primary"><i className="fas fa-plus-square"></i></button>
 
                 {this.props.extraTopAcciones && this.props.extraTopAcciones.length > 0 ? this.props.extraTopAcciones.map(accion =>
