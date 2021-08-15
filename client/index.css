@@ -130,8 +130,23 @@ select.form-field {
     width: 33.3% !important;
 }
 
+
 .mw-80 {
+    max-width: 80% !important;
+}
+
+
+.mw-85 {
     max-width: 85% !important;
+}
+
+.mw-90 {
+    max-width: 90% !important;
+}
+
+
+.mw-95 {
+    max-width: 95% !important;
 }
 
 .mw-1200 {
