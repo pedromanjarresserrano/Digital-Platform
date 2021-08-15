@@ -15,6 +15,7 @@ import { Link } from 'react-router-dom'
 import Actor from '../../actors/actor/Actor';
 import { segFormat } from '../../../../utils/Utils';
 import { Constants } from '../../common/Constants';
+import PanoramicButtom from '../../ui/panoramicbutton/PanoramicButtom';
 class MovieDetails extends React.Component {
 
   constructor(props) {
@@ -26,6 +27,7 @@ class MovieDetails extends React.Component {
       muted: vol == 0,
       vol: vol
     }
+    this.panoramic = this.panoramic.bind(this);
   }
 
 
@@ -54,22 +56,25 @@ class MovieDetails extends React.Component {
   }
 
 
-  regresar = () => {
-    this.props.history.goBack();
+
+  panoramic = () => {
+    $('.c-player').toggleClass('container-md')
+    $('.c-player').toggleClass('mw-95')
+    window.scrollTo({
+      top: $('.c-player').position().top,
+      behavior: 'smooth'
+    })
   }
 
-
-
   render() {
-    /*    <button onClick={this.regresar}>Regresar </button>*/
     const { item } = this.state;
     if (!item._id)
       return null;
     return (
-      <div className="container-md container-fluid">
+      <div className="c-player container-md container-fluid">
         <div className="row">
           <div className="col-sm-12">
-            <Player fluid={false} width={"100%"} height={480} loop={false} poster={this.state.item.files[1]} ref={(player) => { this.player = player }}>
+            <Player fluid={true} width={"100%"} height={480} loop={false} poster={this.state.item.files[1]} ref={(player) => { this.player = player }}>
               <source src={"/api/movie/" + this.state.item._id} />
               <BigPlayButton position="center" />
               <ControlBar autoHide={true}>
@@ -79,7 +84,9 @@ class MovieDetails extends React.Component {
                 <TimeDivider order={4.2} />
                 <VolumeMenuButton />
                 <PlaybackRateMenuButton rates={Constants.PUBLIC.RATES} order={7.1} />
+                <PanoramicButtom order={8} onClick={this.panoramic} />
               </ControlBar>
+
             </Player>
           </div>
         </div>
