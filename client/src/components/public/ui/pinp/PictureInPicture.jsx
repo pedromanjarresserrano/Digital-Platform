@@ -29,7 +29,6 @@ export default class PictureInPicture extends Component {
 
     render() {
         const { player, className } = this.props;
-        const { currentSrc } = player;
 
         return (
             <a

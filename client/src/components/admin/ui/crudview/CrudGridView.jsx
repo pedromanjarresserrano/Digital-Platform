@@ -7,8 +7,15 @@ import CrudView from './CrudView';
 import Grid from '../grid/Grid';
 
 class CrudGridView extends CrudView {
-    constructor(props) { super(props); }
 
+    constructor(props) {
+        super(props);
+        document.body.classList.add('overflow-body');
+    }
+
+    componentWillUnmount() {
+        document.body.classList.remove('overflow-body');
+    }
 
     render() {
         return (
