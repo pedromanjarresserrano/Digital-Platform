@@ -1222,6 +1222,7 @@ export const Admin = ({ match, ...rest }) => {
                             <Route key="not-found-path" exact path={`${match.path}/*`} component={NotFound} />
                         </Switch>
                     </div>
+                    <FooterAdmin />
                     <ToastContainer />
                 </div>
             </div>);

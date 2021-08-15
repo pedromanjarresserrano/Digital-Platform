@@ -1,4 +1,7 @@
-export const SortBy = [{
+import { dateFormat, kbToSize, segFormat } from "../../../../utils/Utils";
+
+export const SortBy = [
+    {
         label: "Name",
         key: "name"
     },
