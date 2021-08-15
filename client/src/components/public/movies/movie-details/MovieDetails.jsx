@@ -6,7 +6,9 @@ import {
   TimeDivider,
   VolumeMenuButton,
   BigPlayButton,
-  PlaybackRateMenuButton
+  PlaybackRateMenuButton,
+  ReplayControl,
+  ForwardControl
 } from 'video-react';
 import Axios from 'axios';
 import { Link } from 'react-router-dom'
@@ -78,6 +80,8 @@ class MovieDetails extends React.Component {
               <source src={"/api/movie/" + this.state.item._id} />
               <BigPlayButton position="center" />
               <ControlBar autoHide={true}>
+                <ReplayControl seconds={5} order={2.1} />
+                <ForwardControl seconds={5} order={3.1} />
                 <CurrentTimeDisplay order={4.1} />
                 <TimeDivider order={4.2} />
                 <VolumeMenuButton />
