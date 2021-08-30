@@ -1,7 +1,10 @@
 body {
     /* background-color: #282929 !important;
   color: white;*/
-    margin: 0 !important;
+  background: #19191f;
+
+  height:100%;
+  margin: 0 !important;
 }
 
 .p-1 {
@@ -36,9 +39,6 @@ body {
     color: orange;
 }
 
-body {
-    background: #19191f;
-}
 
 .movie-content,
 .content,

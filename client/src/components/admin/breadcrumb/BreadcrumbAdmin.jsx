@@ -43,9 +43,9 @@ class BreadcrumbAdmin extends React.Component {
         const { routes } = this.state;
         return (
             <div className="container-fluid">
-                <div className="row mb-2">
+                <div className="row ">
                     <div className="col-sm-6 offset-6">
-                        <ol className="breadcrumb w-100 di-flex flow-row justify-content-end" >
+                        <ol className="breadcrumb w-100 di-flex flow-row justify-content-end mb-0" >
 
                             {
                                 routes.map((route, index) => {

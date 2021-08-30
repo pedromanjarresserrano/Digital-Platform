@@ -25,7 +25,8 @@ class CrudView extends React.Component {
             search: '',
             sortby: this.props.sortByDefault ? this.props.sortByDefault.sortby : '',
             direction: this.props.sortByDefault ? this.props.sortByDefault.sortdir : '1',
-            loading: true
+            loading: true,
+            chunk: 25
         }
         this.getToolBar = this.getToolBar.bind(this);
         this.deleteClick = this.deleteClick.bind(this);
@@ -116,7 +117,7 @@ class CrudView extends React.Component {
             name: { "$regex": ".*" + this.state.search + ".*", $options: 'i' }
         }
 
-        axios.post(this.props.baseUrl + '/all/' + page + (this.state.sortby ? '?sort=' + this.state.sortby + '&sortdir=' + this.state.direction : ''), find)
+        axios.post(this.props.baseUrl + '/all/' + page + '?chunk=' + this.state.chunk + (this.state.sortby ? 'sort=' + this.state.sortby + '&sortdir=' + this.state.direction : ''), find)
             .then(response => {
                 this.setState({
                     items: response.data.itemsList,
@@ -184,6 +185,23 @@ class CrudView extends React.Component {
                         </div>
                         : ''
                 }
+                <div className='d-flex row-flex'>
+                    <div className="col-12 col-md-2">
+                        <select value={this.state.chunk}
+                            id={'chunk'}
+                            onChange={this.handleChange}>
+                            <option disable value={null}>Page size</option>
+                            <option value="25">25</option>
+                            <option value="30">30</option>
+                            <option value="45">45</option>
+                            <option value="60">60</option>
+                            <option value="100">100</option>
+                            <option value="125">125</option>
+                            <option value="150">150</option>
+                        </select>
+                    </div>
+                </div>
+
             </div>
             <div>
                 <form onSubmit={this.handleSearch}>
@@ -221,7 +239,7 @@ class CrudView extends React.Component {
                         : ""
 
                 }
-                <div className="row m-2 shadow-sm">
+                <div className="row my-1 shadow-sm">
                     {this.getToolBar()}
                     <div className="table-responsive">
                         {(this.state.loading) ?

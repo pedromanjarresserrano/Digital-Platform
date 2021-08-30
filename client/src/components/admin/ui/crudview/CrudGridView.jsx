@@ -11,6 +11,14 @@ class CrudGridView extends CrudView {
     constructor(props) {
         super(props);
         document.body.classList.add('overflow-body');
+        window.onresize = (event) => {
+            const grid = document.getElementsByClassName('grid-table-fixed')[0];
+            grid.style.height = parseInt(window.innerHeight * 0.75) + 'px'
+        }
+    }
+
+    componentDidMount() {
+        document.getElementsByClassName('grid-table-fixed')[0].style.height = parseInt(window.innerHeight * 0.75) + 'px'
     }
 
     componentWillUnmount() {
@@ -34,14 +42,14 @@ class CrudGridView extends CrudView {
                         : ""
 
                 }
-                <div className="row m-2 shadow-sm">
+                <div className="row my-1 shadow-sm">
                     {this.getToolBar()}
-                    <div className="table-responsive fixed-table">
+                    <div className="table-responsive grid-table-fixed">
                         {(this.state.loading) ?
                             <div className="m-5 pb-5" style={{
                                 display: "block",
                                 position: "relative",
-                                width: "90%",
+                                width: "95%",
                                 minHeight: "800px"
                             }}>
                                 <CommonLoading size="small" />
