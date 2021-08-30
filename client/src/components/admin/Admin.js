@@ -20,6 +20,7 @@ import Movie from '../public/movies/movie/Movie';
 import { TableActions as TableActionsMovies, TopActions as TopActionsMovies } from './crudviews/movies/Actions';
 import { Headers as HeadersMovies } from './crudviews/movies/Headers';
 import { SortBy as SortByMovies } from './crudviews/movies/SortBy';
+import MovieItem from './crudviews/movies/ui/MovieItem';
 
 toastr.options = {
     "closeButton": false,
@@ -50,12 +51,12 @@ export const Admin = ({ match, ...rest }) => {
         (!user.logged)
             ? <Redirect to="/admin/login" />
             :
-            <div className="sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
+            <div className="sidebar-mini layout-fixed layout-navbar-fixed">
                 <div className="wrapper">
                     <nav className="main-header navbar navbar-expand navbar-white navbar-light"> <HeaderAdmin />
                     </nav>
                     <SidebarAdmin />
-                    <div className="content-wrapper">
+                    <div className="content-wrapper pb-0">
                         <BreadcrumbAdmin />
                         <Switch>
                             <Route exact path={`${match.path}/movies/duplicates`} component={Duplicates} />
@@ -149,67 +150,6 @@ export const Admin = ({ match, ...rest }) => {
                                 />)} />
 
                             <Route key="crud-genders-1" exact path={`${match.path}/genders`} render={(props) => (<Redirect to={`${match.path}/genders/1`}   {...props} />)} />
-
-                            <Route key="crud-genders" exact path={`${match.path}/genders/:page`} render={(props) => (<CrudView {...props}
-                                headers={[{
-                                    name: "name",
-                                    label: "Nombre"
-                                }, {
-                                    name: "created",
-                                    label: "Creado",
-                                    converter: function (value) {
-                                        return dateFormat(value)
-                                    }
-                                }, {
-                                    name: "updated",
-                                    label: "Actualizado",
-                                    converter: function (value) {
-                                        return dateFormat(value)
-                                    }
-                                }]}
-                                baseRoute={`${match.path}/genders/gender`}
-                                baseUrl={'/api/generos'}
-
-                            />)} />
-                            <Route key="form-genders" exact path={`${match.path}/genders/gender/:action/:id`} render={(props) => (
-                                <Form {...props}
-                                    formField={{
-                                        name: {
-                                            elementType: 'input',
-                                            elementConfig: {
-                                                type: 'text',
-                                                placeholder: 'Gender Name'
-                                            },
-                                            optConfig: {},
-                                            value: '',
-                                            validation: {
-                                                required: true
-                                            },
-                                            valid: false,
-                                            touched: false,
-                                            label: 'Nombre',
-                                            inline: true
-                                        },
-                                        image: {
-                                            elementType: 'file-image',
-                                            elementConfig: {
-                                                alt: 'Imagen genero'
-                                            },
-                                            optConfig: {},
-                                            value: '',
-                                            validation: {
-                                                required: false
-                                            },
-                                            valid: false,
-                                            touched: false,
-                                            label: '',
-                                            inline: false
-                                        }
-                                    }
-                                    }
-                                    baseUrl={'/api/generos'}
-                                    formTitle={'Gender data'}
-                                />)} />
 
                             <Route key="crud-categories-1" exact path={`${match.path}/categories`} render={(props) => (<Redirect to={`${match.path}/categories/1`}   {...props} />)} />
 
@@ -535,7 +475,7 @@ export const Admin = ({ match, ...rest }) => {
                                 baseUrl={'/api/movies'}
                                 sortBy={SortByMovies}
                                 getItem={function (item) {
-                                    return (<Movie item={item} extradata={true} />)
+                                    return (<MovieItem item={item} extradata={true} />)
                                 }}
                                 extraAcciones={TableActionsMovies}
                                 extraTopAcciones={TopActionsMovies}

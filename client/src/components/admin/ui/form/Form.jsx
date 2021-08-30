@@ -75,7 +75,7 @@ class Form extends React.Component {
             const pattern = /^\d+$/;
             isValid = pattern.test(value) && isValid
         }
-
+        console.log(rules);
         return isValid;
     }
     addOrRemove = (array, value) => {

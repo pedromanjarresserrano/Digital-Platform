@@ -48,7 +48,7 @@ class Input extends React.Component {
                     name={this.props.keyId}
                     {...this.props.elementConfig}
                     value={this.props.value}
-                    required
+                    required={this.props.validation ? this.props.validation.required : false}
                     onChange={this.props.changed} />);
 
             case ('textarea'):

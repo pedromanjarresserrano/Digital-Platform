@@ -4,7 +4,7 @@
 
 @media all and (min-width: 680px) {
     .fixed-table {
-        max-height: 67vh;
+        max-height: 75vh;
     }
     .overflow-body {
         overflow: hidden !important;
