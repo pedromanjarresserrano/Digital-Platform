@@ -21,6 +21,17 @@ import { TableActions as TableActionsMovies, TopActions as TopActionsMovies } fr
 import { Headers as HeadersMovies } from './crudviews/movies/Headers';
 import { SortBy as SortByMovies } from './crudviews/movies/SortBy';
 import MovieItem from './crudviews/movies/ui/MovieItem';
+import { FormFields as FormFieldsMovies } from './crudviews/movies/FormFields';
+import { FormFields as FormFieldsBooks } from './crudviews/books/FormFields';
+import { Headers as HeadersBooks } from './crudviews/books/Headers';
+import { FormFields as FormFieldsImageSets } from './crudviews/imagesets/FormFields';
+import { Headers as HeadersImageSets } from './crudviews/imagesets/Headers';
+import { Headers as HeadersActors } from './crudviews/actors/Headers';
+import { FormFields as FormFieldsActors } from './crudviews/actors/FormFields';
+import { FormFields as FormFieldsStudios } from './crudviews/studios/FormFields';
+import { Headers as HeadersStudios } from './crudviews/studios/Headers';
+import { FormFields as FormFieldsCategories } from './crudviews/categories/FormFields';
+import { Headers as HeadersCategories } from './crudviews/categories/Headers';
 
 toastr.options = {
     "closeButton": false,
@@ -154,22 +165,7 @@ export const Admin = ({ match, ...rest }) => {
                             <Route key="crud-categories-1" exact path={`${match.path}/categories`} render={(props) => (<Redirect to={`${match.path}/categories/1`}   {...props} />)} />
 
                             <Route key="crud-categories" exact path={`${match.path}/categories/:page`} render={(props) => (<CrudView {...props}
-                                headers={[{
-                                    name: "name",
-                                    label: "Nombre"
-                                }, {
-                                    name: "created",
-                                    label: "Creado",
-                                    converter: function (value) {
-                                        return dateFormat(value)
-                                    }
-                                }, {
-                                    name: "updated",
-                                    label: "Actualizado",
-                                    converter: function (value) {
-                                        return dateFormat(value)
-                                    }
-                                }]}
+                                headers={HeadersCategories}
                                 baseRoute={`${match.path}/categories/categorie`}
                                 baseUrl={'/api/categorias'}
 
@@ -178,54 +174,7 @@ export const Admin = ({ match, ...rest }) => {
 
                             <Route key="form-categories" exact path={`${match.path}/categories/categorie/:action/:id`} render={(props) => (
                                 <Form {...props}
-                                    formField={{
-                                        name: {
-                                            elementType: 'input',
-                                            elementConfig: {
-                                                type: 'text',
-                                                placeholder: 'Categoria Name'
-                                            },
-                                            optConfig: {},
-                                            value: '',
-                                            validation: {
-                                                required: true
-                                            },
-                                            valid: false,
-                                            touched: false,
-                                            label: 'Name',
-                                            inline: true
-                                        }, alias: {
-                                            elementType: 'input',
-                                            elementConfig: {
-                                                type: 'text',
-                                                placeholder: 'Categoria alias'
-                                            },
-                                            optConfig: {},
-                                            value: '',
-                                            validation: {
-                                                required: false
-                                            },
-                                            valid: false,
-                                            touched: false,
-                                            label: 'Alias',
-                                            inline: true
-                                        },
-                                        image: {
-                                            elementType: 'file-image',
-                                            elementConfig: {
-                                                alt: 'Imagen categoria'
-                                            },
-                                            optConfig: {},
-                                            value: '',
-                                            validation: {
-                                                required: false
-                                            },
-                                            valid: false,
-                                            touched: false,
-                                            label: '',
-                                            inline: false
-                                        }
-                                    }
+                                    formField={FormFieldsCategories
                                     }
                                     baseUrl={'/api/categorias'}
                                     formTitle={'Categorie data'}
@@ -236,76 +185,14 @@ export const Admin = ({ match, ...rest }) => {
 
 
                             <Route key="crud-studios" exact path={`${match.path}/studios/:page`} render={(props) => (<CrudView {...props}
-                                headers={[{
-                                    name: "name",
-                                    label: "Nombre"
-                                }, {
-                                    name: "created",
-                                    label: "Creado",
-                                    converter: function (value) {
-                                        return dateFormat(value)
-                                    }
-                                }, {
-                                    name: "updated",
-                                    label: "Actualizado",
-                                    converter: function (value) {
-                                        return dateFormat(value)
-                                    }
-                                }]}
+                                headers={HeadersStudios}
                                 baseRoute={`${match.path}/studios/studio`}
                                 baseUrl={'/api/studios'}
 
                             />)} />
                             <Route key="form-studios" exact path={`${match.path}/studios/studio/:action/:id`} render={(props) => (
                                 <Form {...props}
-                                    formField={{
-                                        name: {
-                                            elementType: 'input',
-                                            elementConfig: {
-                                                type: 'text',
-                                                placeholder: 'Studio Name'
-                                            },
-                                            optConfig: {},
-                                            value: '',
-                                            validation: {
-                                                required: true
-                                            },
-                                            valid: false,
-                                            touched: false,
-                                            label: 'Name',
-                                            inline: true
-                                        }, alias: {
-                                            elementType: 'input',
-                                            elementConfig: {
-                                                type: 'text',
-                                                placeholder: 'Categoria alias'
-                                            },
-                                            optConfig: {},
-                                            value: '',
-                                            validation: {
-                                                required: false
-                                            },
-                                            valid: false,
-                                            touched: false,
-                                            label: 'Alias',
-                                            inline: true
-                                        },
-                                        image: {
-                                            elementType: 'file-image',
-                                            elementConfig: {
-                                                alt: 'Imagen studio'
-                                            },
-                                            optConfig: {},
-                                            value: '',
-                                            validation: {
-                                                required: false
-                                            },
-                                            valid: false,
-                                            touched: false,
-                                            label: '',
-                                            inline: false
-                                        }
-                                    }
+                                    formField={FormFieldsStudios
                                     }
                                     baseUrl={'/api/studios'}
                                     formTitle={'Studio data'}
@@ -315,150 +202,14 @@ export const Admin = ({ match, ...rest }) => {
 
 
                             <Route key="crud-actores" exact path={`${match.path}/actores/:page`} render={(props) => (<CrudView {...props}
-                                headers={[{
-                                    name: "name",
-                                    label: "Nombre"
-                                }, {
-                                    name: "aka",
-                                    label: "Aka (Alias)"
-                                }, {
-                                    name: "edad",
-                                    label: "Edad"
-                                }, {
-                                    name: "imageAvatar",
-                                    label: "Imagen avatar"
-                                }, {
-                                    name: "created",
-                                    label: "Creado",
-                                    converter: function (value) {
-                                        return dateFormat(value)
-                                    }
-                                }, {
-                                    name: "updated",
-                                    label: "Actualizado",
-                                    converter: function (value) {
-                                        return dateFormat(value)
-                                    }
-                                }]}
+                                headers={HeadersActors}
                                 baseRoute={`${match.path}/actores/actor`}
                                 baseUrl={'/api/actores'}
 
                             />)} />
                             <Route key="form-actores" exact path={`${match.path}/actores/actor/:action/:id`} render={(props) => (
                                 <Form {...props}
-                                    formField={{
-                                        name: {
-                                            elementType: 'input',
-                                            elementConfig: {
-                                                type: 'text',
-                                                placeholder: 'Actor Name'
-                                            },
-                                            optConfig: {},
-                                            value: '',
-                                            validation: {
-                                                required: true
-                                            },
-                                            valid: false,
-                                            touched: false,
-                                            label: 'Name',
-                                            inline: true
-                                        },
-                                        aka: {
-                                            elementType: 'input',
-                                            elementConfig: {
-                                                type: 'text',
-                                                placeholder: 'Aka'
-                                            },
-                                            optConfig: {},
-                                            value: '',
-                                            validation: {
-                                                required: false
-                                            },
-                                            valid: false,
-                                            touched: false,
-                                            label: 'Aka (Alias)',
-                                            inline: true
-                                        },
-                                        edad: {
-                                            elementType: 'input',
-                                            elementConfig: {
-                                                type: 'number',
-                                                placeholder: 'Age'
-                                            },
-                                            optConfig: {},
-                                            value: '',
-                                            validation: {
-                                                required: false
-                                            },
-                                            valid: false,
-                                            touched: false,
-                                            label: 'Age',
-                                            inline: true
-                                        },
-                                        altura: {
-                                            elementType: 'input',
-                                            elementConfig: {
-                                                type: 'number',
-                                                placeholder: 'Height'
-                                            },
-                                            optConfig: {},
-                                            value: '',
-                                            validation: {
-                                                required: false
-                                            },
-                                            valid: false,
-                                            touched: false,
-                                            label: 'Height',
-                                            inline: true
-                                        },
-                                        /* genero: {
-                                             elementType: 'select-model',
-                                             elementConfig: {},
-                                             apiUrlModel: '/api/generos/all/-1',
-                                             optConfig: {},
-                                             value: '',
-                                             uiValue: {},
-                                             validation: {
-                                                 required: false
-                                             },
-                                             valid: false,
-                                             touched: false,
-                                             labelField: 'name',
-                                             label: 'Genero',
-                                             inline: true
-                                         },*/
-                                        bio: {
-                                            elementType: 'input',
-                                            elementConfig: {
-                                                type: 'text',
-                                                placeholder: 'bio'
-                                            },
-                                            optConfig: {},
-                                            value: '',
-                                            validation: {
-                                                required: false
-                                            },
-                                            valid: false,
-                                            touched: false,
-                                            label: 'Biography',
-                                            inline: true
-                                        },
-                                        imageAvatar: {
-                                            elementType: 'file-image',
-                                            elementConfig: {
-                                                alt: 'Imagen Actor'
-                                            },
-                                            optConfig: {},
-                                            value: '',
-                                            validation: {
-                                                required: false
-                                            },
-                                            valid: false,
-                                            touched: false,
-                                            label: '',
-                                            inline: false
-                                        }
-                                    }
+                                    formField={FormFieldsActors
                                     }
                                     baseUrl={'/api/actores'}
                                     formTitle={'Actor data'}
@@ -490,204 +241,7 @@ export const Admin = ({ match, ...rest }) => {
                             />)} />
                             <Route key="form-movies" exact path={`${match.path}/movies/movie/:action/:id`} render={(props) => (
                                 <Form {...props}
-                                    formField={{
-                                        name: {
-                                            elementType: 'input',
-                                            elementConfig: {
-                                                type: 'text',
-                                                placeholder: 'Movie Name'
-                                            },
-                                            optConfig: {},
-                                            value: '',
-                                            validation: {
-                                                required: true
-                                            },
-                                            valid: false,
-                                            touched: false,
-                                            label: 'Name',
-                                            inline: true
-                                        },
-                                        visualname: {
-                                            elementType: 'input',
-                                            elementConfig: {
-                                                type: 'text',
-                                                placeholder: 'Visualname Name'
-                                            },
-                                            optConfig: {},
-                                            value: '',
-                                            validation: {
-                                                required: false
-                                            },
-                                            valid: false,
-                                            touched: false,
-                                            label: 'Visual Name',
-                                            inline: true
-                                        },
-                                        url: {
-                                            elementType: 'input',
-                                            elementConfig: {
-                                                type: 'text',
-                                                placeholder: 'url of file'
-                                            },
-                                            optConfig: {},
-                                            value: '',
-                                            validation: {
-                                                required: true
-                                            },
-                                            valid: false,
-                                            touched: false,
-                                            label: 'File URL',
-                                            inline: true
-                                        },
-                                        duration: {
-                                            elementType: 'input',
-                                            elementConfig: {
-                                                type: 'number',
-                                                placeholder: 'Duration',
-                                                step: "any"
-                                            },
-                                            optConfig: {},
-                                            value: '',
-                                            validation: {
-                                                required: false
-                                            },
-                                            valid: false,
-                                            touched: false,
-                                            label: 'Duration',
-                                            inline: true
-                                        },
-                                        like: {
-                                            elementType: 'input',
-                                            elementConfig: {
-                                                type: 'number',
-                                                placeholder: 'Likes'
-                                            },
-                                            optConfig: {},
-                                            value: '',
-                                            validation: {
-                                                required: false
-                                            },
-                                            valid: false,
-                                            touched: false,
-                                            label: 'Likes',
-                                            inline: true
-                                        },
-                                        view: {
-                                            elementType: 'input',
-                                            elementConfig: {
-                                                type: 'number',
-                                                placeholder: 'View'
-                                            },
-                                            optConfig: {},
-                                            value: '',
-                                            validation: {
-                                                required: false
-                                            },
-                                            valid: false,
-                                            touched: false,
-                                            label: 'View',
-                                            inline: true
-                                        },
-                                        size: {
-                                            elementType: 'input',
-                                            elementConfig: {
-                                                type: 'number',
-                                                placeholder: 'Size file',
-                                                step: "any"
-                                            },
-                                            optConfig: {},
-                                            value: '',
-                                            validation: {
-                                                required: false
-                                            },
-                                            valid: false,
-                                            touched: false,
-                                            label: 'Size file',
-                                            inline: true
-                                        },
-                                        year: {
-                                            elementType: 'input',
-                                            elementConfig: {
-                                                type: 'number',
-                                                placeholder: 'Year'
-                                            },
-                                            optConfig: {},
-                                            value: '',
-                                            validation: {
-                                                required: false
-                                            },
-                                            valid: false,
-                                            touched: false,
-                                            label: 'Year',
-                                            inline: true
-                                        },
-                                        quality: {
-                                            elementType: 'input',
-                                            elementConfig: {
-                                                type: 'text',
-                                                placeholder: 'Quality'
-                                            },
-                                            optConfig: {},
-                                            value: '',
-                                            validation: {
-                                                required: false
-                                            },
-                                            valid: false,
-                                            touched: false,
-                                            label: 'Quality',
-                                            inline: true
-                                        },
-                                        reparto: {
-                                            elementType: 'select-model',
-                                            elementConfig: {},
-                                            optConfig: {
-                                                multiple: true
-                                            },
-                                            apiUrlModel: '/api/actores/all/-1',
-                                            value: [],
-                                            uiValue: {},
-                                            validation: {
-                                                required: false
-                                            },
-                                            valid: false,
-                                            touched: false,
-                                            labelField: 'name',
-                                            label: 'Reparto',
-                                            inline: true
-                                        },
-                                        categorias: {
-                                            elementType: 'select-model',
-                                            elementConfig: {},
-                                            optConfig: {
-                                                multiple: true
-                                            },
-                                            apiUrlModel: '/api/categorias/all/-1',
-                                            value: [],
-                                            uiValue: {},
-                                            validation: {
-                                                required: false
-                                            },
-                                            valid: false,
-                                            touched: false,
-                                            labelField: 'name',
-                                            label: 'Categorias',
-                                            inline: true
-                                        },
-                                        portada: {
-                                            elementType: 'file-image',
-                                            elementConfig: {
-                                                alt: 'Imagen portada'
-                                            },
-                                            value: '',
-                                            validation: {
-                                                required: false
-                                            },
-                                            valid: false,
-                                            touched: false,
-                                            label: '',
-                                            inline: false
-                                        }
-                                    }
+                                    formField={FormFieldsMovies
                                     }
                                     baseUrl={'/api/movies'}
                                     formTitle={'Video data'}
@@ -697,229 +251,14 @@ export const Admin = ({ match, ...rest }) => {
 
                             <Route key="crud-books"
                                 exact path={`${match.path}/books/:page`} render={(props) => (<CrudView {...props}
-                                    headers={[{
-                                        name: "name",
-                                        label: "Nombre"
-                                    }, {
-                                        name: "visualname",
-                                        label: "Visual Name"
-                                    }, {
-                                        name: "like",
-                                        label: "Like"
-                                    }, {
-                                        name: "view",
-                                        label: "Views"
-                                    }, {
-                                        name: "pages",
-                                        label: "Pages"
-                                    }, {
-                                        name: "year",
-                                        label: "Year"
-                                    }, {
-                                        name: "writer",
-                                        label: "Writer"
-                                    }, {
-                                        name: "portada",
-                                        label: "Imagen portada"
-                                    }, {
-                                        name: "created",
-                                        label: "Creado",
-                                        converter: function (value) {
-                                            return dateFormat(value)
-                                        }
-                                    }, {
-                                        name: "updated",
-                                        label: "Actualizado",
-                                        converter: function (value) {
-                                            return dateFormat(value)
-                                        }
-                                    }]}
+                                    headers={HeadersBooks}
                                     baseRoute={`${match.path}/books/book`}
                                     baseUrl={'/api/books'}
 
                                 />)} />
                             <Route key="form-books" exact path={`${match.path}/books/book/:action/:id`} render={(props) => (
                                 <Form {...props}
-                                    formField={{
-                                        name: {
-                                            elementType: 'input',
-                                            elementConfig: {
-                                                type: 'text',
-                                                placeholder: 'Movie Name'
-                                            },
-                                            optConfig: {},
-                                            value: '',
-                                            validation: {
-                                                required: true
-                                            },
-                                            valid: false,
-                                            touched: false,
-                                            label: 'Name',
-                                            inline: true
-                                        },
-                                        visualname: {
-                                            elementType: 'input',
-                                            elementConfig: {
-                                                type: 'text',
-                                                placeholder: 'Visualname Name'
-                                            },
-                                            optConfig: {},
-                                            value: '',
-                                            validation: {
-                                                required: false
-                                            },
-                                            valid: false,
-                                            touched: false,
-                                            label: 'Visual Name',
-                                            inline: true
-                                        },
-                                        url: {
-                                            elementType: 'input',
-                                            elementConfig: {
-                                                type: 'text',
-                                                placeholder: 'url of file'
-                                            },
-                                            optConfig: {},
-                                            value: '',
-                                            validation: {
-                                                required: true
-                                            },
-                                            valid: false,
-                                            touched: false,
-                                            label: 'File URL',
-                                            inline: true
-                                        },
-                                        duration: {
-                                            elementType: 'input',
-                                            elementConfig: {
-                                                type: 'number',
-                                                placeholder: 'Duration',
-                                                step: "any"
-                                            },
-                                            optConfig: {},
-                                            value: '',
-                                            validation: {
-                                                required: false
-                                            },
-                                            valid: false,
-                                            touched: false,
-                                            label: 'Duration',
-                                            inline: true
-                                        },
-                                        like: {
-                                            elementType: 'input',
-                                            elementConfig: {
-                                                type: 'number',
-                                                placeholder: 'Likes'
-                                            },
-                                            optConfig: {},
-                                            value: '',
-                                            validation: {
-                                                required: false
-                                            },
-                                            valid: false,
-                                            touched: false,
-                                            label: 'Likes',
-                                            inline: true
-                                        },
-                                        view: {
-                                            elementType: 'input',
-                                            elementConfig: {
-                                                type: 'number',
-                                                placeholder: 'View'
-                                            },
-                                            optConfig: {},
-                                            value: '',
-                                            validation: {
-                                                required: false
-                                            },
-                                            valid: false,
-                                            touched: false,
-                                            label: 'View',
-                                            inline: true
-                                        },
-                                        pages: {
-                                            elementType: 'input',
-                                            elementConfig: {
-                                                type: 'number',
-                                                placeholder: 'Pages',
-                                                step: "any"
-                                            },
-                                            optConfig: {},
-                                            value: '',
-                                            validation: {
-                                                required: false
-                                            },
-                                            valid: false,
-                                            touched: false,
-                                            label: 'Size file',
-                                            inline: true
-                                        },
-                                        year: {
-                                            elementType: 'input',
-                                            elementConfig: {
-                                                type: 'number',
-                                                placeholder: 'Year'
-                                            },
-                                            optConfig: {},
-                                            value: '',
-                                            validation: {
-                                                required: false
-                                            },
-                                            valid: false,
-                                            touched: false,
-                                            label: 'Year',
-                                            inline: true
-                                        },
-                                        writer: {
-                                            elementType: 'input',
-                                            elementConfig: {
-                                                type: 'text',
-                                                placeholder: 'Writer'
-                                            },
-                                            optConfig: {},
-                                            value: '',
-                                            validation: {
-                                                required: false
-                                            },
-                                            valid: false,
-                                            touched: false,
-                                            label: 'Quality',
-                                            inline: true
-                                        },
-                                        categorias: {
-                                            elementType: 'select-model',
-                                            elementConfig: {},
-                                            optConfig: {
-                                                multiple: true
-                                            },
-                                            apiUrlModel: '/api/categorias/all/-1',
-                                            value: [],
-                                            uiValue: {},
-                                            validation: {
-                                                required: false
-                                            },
-                                            valid: false,
-                                            touched: false,
-                                            labelField: 'name',
-                                            label: 'Categorias',
-                                            inline: true
-                                        },
-                                        portada: {
-                                            elementType: 'file-image',
-                                            elementConfig: {
-                                                alt: 'Imagen portada'
-                                            },
-                                            value: '',
-                                            validation: {
-                                                required: false
-                                            },
-                                            valid: false,
-                                            touched: false,
-                                            label: '',
-                                            inline: false
-                                        }
-                                    }
+                                    formField={FormFieldsBooks
                                     }
                                     baseUrl={'/api/books'}
                                     formTitle={'Book data'}
@@ -930,229 +269,14 @@ export const Admin = ({ match, ...rest }) => {
 
                             <Route key="crud-imagesets"
                                 exact path={`${match.path}/imagesets/:page`} render={(props) => (<CrudView {...props}
-                                    headers={[{
-                                        name: "name",
-                                        label: "Nombre"
-                                    }, {
-                                        name: "visualname",
-                                        label: "Visual Name"
-                                    }, {
-                                        name: "like",
-                                        label: "Like"
-                                    }, {
-                                        name: "view",
-                                        label: "Views"
-                                    }, {
-                                        name: "pages",
-                                        label: "Pages"
-                                    }, {
-                                        name: "year",
-                                        label: "Year"
-                                    }, {
-                                        name: "writer",
-                                        label: "Writer"
-                                    }, {
-                                        name: "portada",
-                                        label: "Imagen portada"
-                                    }, {
-                                        name: "created",
-                                        label: "Creado",
-                                        converter: function (value) {
-                                            return dateFormat(value)
-                                        }
-                                    }, {
-                                        name: "updated",
-                                        label: "Actualizado",
-                                        converter: function (value) {
-                                            return dateFormat(value)
-                                        }
-                                    }]}
+                                    headers={HeadersImageSets}
                                     baseRoute={`${match.path}/imagesets/imageset`}
                                     baseUrl={'/api/imagesets'}
 
                                 />)} />
                             <Route key="form-imagesets" exact path={`${match.path}/imagesets/imageset/:action/:id`} render={(props) => (
                                 <Form {...props}
-                                    formField={{
-                                        name: {
-                                            elementType: 'input',
-                                            elementConfig: {
-                                                type: 'text',
-                                                placeholder: 'Movie Name'
-                                            },
-                                            optConfig: {},
-                                            value: '',
-                                            validation: {
-                                                required: true
-                                            },
-                                            valid: false,
-                                            touched: false,
-                                            label: 'Name',
-                                            inline: true
-                                        },
-                                        visualname: {
-                                            elementType: 'input',
-                                            elementConfig: {
-                                                type: 'text',
-                                                placeholder: 'Visualname Name'
-                                            },
-                                            optConfig: {},
-                                            value: '',
-                                            validation: {
-                                                required: false
-                                            },
-                                            valid: false,
-                                            touched: false,
-                                            label: 'Visual Name',
-                                            inline: true
-                                        },
-                                        url: {
-                                            elementType: 'input',
-                                            elementConfig: {
-                                                type: 'text',
-                                                placeholder: 'url of file'
-                                            },
-                                            optConfig: {},
-                                            value: '',
-                                            validation: {
-                                                required: true
-                                            },
-                                            valid: false,
-                                            touched: false,
-                                            label: 'File URL',
-                                            inline: true
-                                        },
-                                        duration: {
-                                            elementType: 'input',
-                                            elementConfig: {
-                                                type: 'number',
-                                                placeholder: 'Duration',
-                                                step: "any"
-                                            },
-                                            optConfig: {},
-                                            value: '',
-                                            validation: {
-                                                required: false
-                                            },
-                                            valid: false,
-                                            touched: false,
-                                            label: 'Duration',
-                                            inline: true
-                                        },
-                                        like: {
-                                            elementType: 'input',
-                                            elementConfig: {
-                                                type: 'number',
-                                                placeholder: 'Likes'
-                                            },
-                                            optConfig: {},
-                                            value: '',
-                                            validation: {
-                                                required: false
-                                            },
-                                            valid: false,
-                                            touched: false,
-                                            label: 'Likes',
-                                            inline: true
-                                        },
-                                        view: {
-                                            elementType: 'input',
-                                            elementConfig: {
-                                                type: 'number',
-                                                placeholder: 'View'
-                                            },
-                                            optConfig: {},
-                                            value: '',
-                                            validation: {
-                                                required: false
-                                            },
-                                            valid: false,
-                                            touched: false,
-                                            label: 'View',
-                                            inline: true
-                                        },
-                                        pages: {
-                                            elementType: 'input',
-                                            elementConfig: {
-                                                type: 'number',
-                                                placeholder: 'Pages',
-                                                step: "any"
-                                            },
-                                            optConfig: {},
-                                            value: '',
-                                            validation: {
-                                                required: false
-                                            },
-                                            valid: false,
-                                            touched: false,
-                                            label: 'Size file',
-                                            inline: true
-                                        },
-                                        year: {
-                                            elementType: 'input',
-                                            elementConfig: {
-                                                type: 'number',
-                                                placeholder: 'Year'
-                                            },
-                                            optConfig: {},
-                                            value: '',
-                                            validation: {
-                                                required: false
-                                            },
-                                            valid: false,
-                                            touched: false,
-                                            label: 'Year',
-                                            inline: true
-                                        },
-                                        writer: {
-                                            elementType: 'input',
-                                            elementConfig: {
-                                                type: 'text',
-                                                placeholder: 'Writer'
-                                            },
-                                            optConfig: {},
-                                            value: '',
-                                            validation: {
-                                                required: false
-                                            },
-                                            valid: false,
-                                            touched: false,
-                                            label: 'Quality',
-                                            inline: true
-                                        },
-                                        categorias: {
-                                            elementType: 'select-model',
-                                            elementConfig: {},
-                                            optConfig: {
-                                                multiple: true
-                                            },
-                                            apiUrlModel: '/api/categorias/all/-1',
-                                            value: [],
-                                            uiValue: {},
-                                            validation: {
-                                                required: false
-                                            },
-                                            valid: false,
-                                            touched: false,
-                                            labelField: 'name',
-                                            label: 'Categorias',
-                                            inline: true
-                                        },
-                                        portada: {
-                                            elementType: 'file-image',
-                                            elementConfig: {
-                                                alt: 'Imagen portada'
-                                            },
-                                            value: '',
-                                            validation: {
-                                                required: false
-                                            },
-                                            valid: false,
-                                            touched: false,
-                                            label: '',
-                                            inline: false
-                                        }
-                                    }
+                                    formField={FormFieldsImageSets
                                     }
                                     baseUrl={'/api/imagesets'}
                                     formTitle={'Imageset data'}
