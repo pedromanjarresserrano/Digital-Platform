@@ -12,11 +12,10 @@ import NotFound from '../public/panels/notfound/NotFound';
 import ToastContainer from './ui/toastcontainer/ToastContainer';
 
 import FooterAdmin from './footer/FooterAdmin';
-import { kbToSize, segFormat, dateFormat } from '../../utils/Utils';
+import { dateFormat } from '../../utils/Utils';
 import { AuthContext } from './auth/AuthContext';
 import Duplicates from './Duplicates';
 import CrudGridView from './ui/crudview/CrudGridView';
-import Movie from '../public/movies/movie/Movie';
 import { TableActions as TableActionsMovies, TopActions as TopActionsMovies } from './crudviews/movies/Actions';
 import { Headers as HeadersMovies } from './crudviews/movies/Headers';
 import { SortBy as SortByMovies } from './crudviews/movies/SortBy';

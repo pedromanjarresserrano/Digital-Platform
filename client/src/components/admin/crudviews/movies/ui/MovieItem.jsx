@@ -43,7 +43,7 @@ export default class MovieItem extends React.Component {
   render() {
     const name = this.props.item.visualname ? this.props.item.visualname : this.props.item.name;
     return (
-      <div className="w-100 w-m-50 card-m" key={this.props.item._id} title={this.props.item.name} >
+      <div className="w-100 w-m-50 card-m-l" key={this.props.item._id} title={this.props.item.name} >
         <div className=" border  border-dark w-100 mb-2 mt-2" >
           {this.props.onClicked ? <div onClick={() => this.props.onClicked(this.props.item)} >
             {
