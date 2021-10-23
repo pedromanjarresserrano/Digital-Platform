@@ -75,6 +75,13 @@ export default class MovieItem extends React.Component {
               </div>
               : ''
           }
+          <div style={{ "font-size": "10px" }}>
+            url:<br />
+            {
+              this.props.item.url
+            }
+
+          </div>
         </div>
 
       </div >

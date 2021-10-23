@@ -42,6 +42,7 @@ const readMany = async (req, res, Collection, sortBy) => {
         } else {
             if (sortBy)
                 options.sort = sortBy;
+            console.log(JSON.stringify(query));
             let result = await Collection.paginate(query, options);
             res.send(result);
         }

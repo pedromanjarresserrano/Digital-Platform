@@ -33,7 +33,21 @@ class CrudView extends React.Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSearch = this.handleSearch.bind(this);
+        //   document.body.classList.add('overflow-body');
+        window.onresize = (event) => {
+            const table = document.getElementsByClassName('crud-table-fixed')[0];
+            //   table.style.height = parseInt(window.innerHeight * 0.83) + 'px'
+        }
     }
+
+    componentWillUnmount() {
+        document.body.classList.remove('overflow-body');
+    }
+
+    componentDidMount() {
+        //   document.getElementsByClassName('crud-table-fixed')[0].style.height = parseInt(window.innerHeight * 0.83) + 'px'
+    }
+
     async componentWillMount() {
         var user = localStorage.getItem("userInfo");
         if (!user) {
@@ -117,7 +131,7 @@ class CrudView extends React.Component {
             name: { "$regex": ".*" + this.state.search + ".*", $options: 'i' }
         }
 
-        axios.post(this.props.baseUrl + '/all/' + page + '?chunk=' + this.state.chunk + (this.state.sortby ? 'sort=' + this.state.sortby + '&sortdir=' + this.state.direction : ''), find)
+        axios.post(this.props.baseUrl + '/all/' + page + '?chunk=' + this.state.chunk + (this.state.sortby ? '&sort=' + this.state.sortby + '&sortdir=' + this.state.direction : ''), find)
             .then(response => {
                 this.setState({
                     items: response.data.itemsList,
@@ -239,9 +253,9 @@ class CrudView extends React.Component {
                         : ""
 
                 }
-                <div className="row my-1 shadow-sm">
+                <div className="row mt-1 shadow-sm">
                     {this.getToolBar()}
-                    <div className="table-responsive">
+                    <div className="table-responsive crud-table-fixed">
                         {(this.state.loading) ?
                             <div className="m-5 pb-5" style={{
                                 display: "block",
