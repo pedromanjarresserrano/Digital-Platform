@@ -390,7 +390,7 @@ class PlaylistViewerFourTime extends React.Component {
                 pageRangeDisplayed={Constants.PUBLIC.PAGE_VISIBLE_COUNT}
                 onChange={this.onPageChanged} />
             </div>
-            <div className="d-flex flex-row justify-content-center   mx-auto w-100 mw-1200">
+            <div className="d-flex flex-row justify-content-center   mx-auto w-100 mw-1300">
               <div className="display d-flex flex-row  justify-content-between flex-wrap w-100" >  {
 
                 this.state.items.map((m, index) =>
@@ -405,7 +405,7 @@ class PlaylistViewerFourTime extends React.Component {
                   (this.state.items ?
                     ([...Array(10).keys()]
                     ).map(() => {
-                      return (<div className="w-100 w-m-20 card-m d-md-block d-none" />)
+                      return (<div className="w-100 w-m-20 card-m-l d-md-block d-none" />)
                     })
                     : <div />)
                 }

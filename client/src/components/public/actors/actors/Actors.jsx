@@ -90,7 +90,7 @@ class Actors extends React.Component {
                                     <div className="m-5 pb-5">
                                         <RotateCircleLoading size="large" />
                                     </div>
-                                    : <div className="display d-flex flex-row  flex-warp px-5 row w-100 mw-1200" >
+                                    : <div className="display d-flex flex-row flex-warp px-5 row w-100 mw-1300" >
                                         {
                                             this.state.items.map(function (item) {
                                                 return (

@@ -201,7 +201,7 @@ class Books extends React.Component {
                                         <RotateCircleLoading size="large" />
                                     </div>
                                     :
-                                    <div className="d-flex justify-content-between flex-row flex-wrap p-1 mw-1200  w-100 mx-auto">                                    {
+                                    <div className="d-flex justify-content-between flex-row flex-wrap p-1 mw-1300 w-100 mx-auto">                                    {
                                         this.state.items.map((item, index) =>
                                             <Book item={item} index={index} />
                                             , this)

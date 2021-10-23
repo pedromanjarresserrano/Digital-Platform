@@ -181,6 +181,12 @@
 		min-width: 220px !important;
 		max-width: 220px !important;
 	}
+
+	.card-m-l{
+		min-width: 220px !important;
+		max-width: 254px !important;
+	}
+	
 	.figure {
 		height: 130px;
 	}
@@ -191,6 +197,13 @@
 		min-width: 220px !important;
 		max-width: 220px !important;
 	}
+
+	.card-m-l{
+		min-width: 220px !important;
+		max-width: 254px !important;
+	}
+
+
 	.figure {
 		height: 150px;
 	}

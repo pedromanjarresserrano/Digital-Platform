@@ -87,6 +87,8 @@ typings/
 # DynamoDB Local files
 .dynamodb/
 public/thumbnail/
+public/thumbnail-*/
+public/thumbnail-1/
 
 public/uploads/
 .idea/

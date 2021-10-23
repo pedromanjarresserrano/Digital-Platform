@@ -262,7 +262,7 @@ class Catalog extends React.Component {
                                         <RotateCircleLoading size="large" />
                                     </div>
                                     :
-                                    <div className="d-flex justify-content-between flex-row flex-wrap p-1 mw-1200  w-100 mx-auto">
+                                    <div className="d-flex justify-content-between flex-row flex-wrap p-1  w-100 mx-auto mw-1300">
                                         {
 
                                             this.state.items.map((item, index) =>
@@ -273,7 +273,7 @@ class Catalog extends React.Component {
                                             (this.state.items ?
                                                 ([...Array(10).keys()]
                                                 ).map((item, index) => {
-                                                    return (<div className="w-100 w-m-20 card-m d-md-block d-none" />)
+                                                    return (<div className="w-100 w-m-20 card-m-l d-md-block d-none" />)
                                                 })
                                                 : <div />)
                                         }

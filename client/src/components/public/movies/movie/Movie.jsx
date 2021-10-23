@@ -43,7 +43,7 @@ class Movie extends React.Component {
   render() {
     const name = this.props.item.visualname ? this.props.item.visualname : this.props.item.name;
     return (
-      <div className="w-100 w-m-20 card-m" key={this.props.item._id} title={this.props.item.name} >
+      <div className="w-100 w-m-20 card-m-l" key={this.props.item._id} title={this.props.item.name} >
         <div className=" border rounded bg-dark border-dark w-100 mb-2 mt-2" >
           {this.props.onClicked ? <div onClick={() => this.props.onClicked(this.props.item)} >
             {
@@ -65,7 +65,7 @@ class Movie extends React.Component {
             this.props.playing ?
               <div className="playing-overlay">
                 Now playing
-            </div>
+              </div>
               : ''
           }
           {

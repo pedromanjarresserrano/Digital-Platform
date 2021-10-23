@@ -9,7 +9,7 @@ var process = 0;
 const socketServer = require("../services/socket").serverIO;
 const { loggerRequest } = require('../controller/logger');
 
-router.post('/', loggerRequest, async function(req, res) {
+router.post('/', loggerRequest, async function (req, res) {
     try {
         let paths = req.body.path;
         if (process == 0) {
@@ -146,21 +146,12 @@ async function createMovie(files, paths, res) {
         errorlist,
         count: errorlist.length
     }
-    fs.writeFile("i:/test-" + new Date().getTime() + ".json", JSON.stringify(errorlist), function(err) {
+    fs.writeFile("i:/test-" + new Date().getTime() + ".json", JSON.stringify(errorlist), function (err) {
         if (err) {
             console.log(err);
         }
     });
 
-    errorlist.errorlist.forEach(filess => {
-        filess = filess.file
-        let n1 = filess.split("/");
-        let nameFiles = n1[n1.length - 1];
-        fs.rename(filess, "I:/moveds/" + nameFiles, function(err) {
-            if (err) console.log(err)
-            console.log('Successfully renamed - AKA moved!')
-        })
-    })
 
 
 }

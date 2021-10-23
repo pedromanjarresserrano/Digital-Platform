@@ -7,7 +7,7 @@ let router = express.Router();
 //
 //	Stream the movie
 //
-router.get('/:_id', loggerRequest, async function(req, res) {
+router.get('/:_id', loggerRequest, async function (req, res) {
     try {
         const { _id } = req.params;
         const movie = await models.moviemodel.findById(_id);
@@ -20,14 +20,17 @@ router.get('/:_id', loggerRequest, async function(req, res) {
         if (range) {
             var split = range.split(/[-=]/);
             const start = parseInt(split[1])
-            const end = split[2] ? +split[2] : fileSize - 1;
-            const chunksize = 1024 * 5000;
+            let end = split[2] ? split[2] : fileSize - 1;
+            const chunksize = 1024 * 50000;
             if (parseInt(start) >= fileSize || parseInt(end) >= fileSize) {
                 //Indicate the acceptable range.
                 res.status(416);
                 res.set("Content-Range", 'bytes */' + fileSize); // File size.
                 //Return the 416 'Requested Range Not Satisfiable'.
                 res.end();
+            }
+            if (!end) {
+                end = start + chunksize;
             }
             const file = fs.createReadStream(path, { start, end })
             const head = {

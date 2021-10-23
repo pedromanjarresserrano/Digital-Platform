@@ -110,9 +110,9 @@ class ActorDetails extends React.Component {
                 </div>
                 <button className="btn btn-success" onClick={this.playlist}>
                   Play as playlist
-          </button>
+                </button>
               </div>
-                <div className="d-flex flex-row justify-content-center   mx-auto w-100 mw-1200">
+                <div className="d-flex flex-row justify-content-center mx-auto w-100 mw-1300">
                   <div className="display d-flex flex-row  flex-wrap w-100" >
                     {
                       this.state.items.map(function (item) {

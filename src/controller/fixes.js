@@ -164,15 +164,15 @@ async function fullfixes(req, res) {
             }
 
             let listMTemp = await Movies.aggregate([{
-                    $project: {
-                        visualname: 1,
-                        reparto: 1
+                $project: {
+                    visualname: 1,
+                    reparto: 1
 
-                    }
-                },
-                {
-                    "$match": find
                 }
+            },
+            {
+                "$match": find
+            }
             ]);
 
 
@@ -211,15 +211,15 @@ async function fullfixes(req, res) {
 
         let listC = await Categories.find({});
         let listMTemp = await Movies.aggregate([{
-                $project: {
-                    visualname: 1,
-                    categorias: 1
+            $project: {
+                visualname: 1,
+                categorias: 1
 
-                }
-            },
-            {
-                "$match": find
             }
+        },
+        {
+            "$match": find
+        }
         ]);
         let update = listMTemp.map((movie) => {
             return ({
@@ -233,15 +233,15 @@ async function fullfixes(req, res) {
 
         await Movies.bulkWrite(update)
         listMTemp = await Movies.aggregate([{
-                $project: {
-                    visualname: 1,
-                    categorias: 1
+            $project: {
+                visualname: 1,
+                categorias: 1
 
-                }
-            },
-            {
-                "$match": find
             }
+        },
+        {
+            "$match": find
+        }
         ]);
         for (let i = 0; i < listC.length; i++) {
             const c = listC[i];
@@ -304,15 +304,15 @@ async function fullfixes(req, res) {
             }
 
             let listMTemp = await Movies.aggregate([{
-                    $project: {
-                        visualname: 1,
-                        categorias: 1
+                $project: {
+                    visualname: 1,
+                    categorias: 1
 
-                    }
-                },
-                {
-                    "$match": find
                 }
+            },
+            {
+                "$match": find
+            }
             ]);
 
 
@@ -400,6 +400,28 @@ async function fullfixes(req, res) {
                 find["$and"][0]["$or"][11] = {
                     "name": { $regex: '.*' + s.alias.toLowerCase().replace(/\s/g, '.') + '.*', $options: 'si' }
                 }
+                if (s.alias && s.alias.trim().length > 0) {
+                    let aliases = s.alias.split(',')
+                    if (aliases.length > 1) {
+                        aliases.forEach(element => {
+                            find["$and"][0]["$or"].push({
+                                "visualname": { $regex: '.*' + element.toLowerCase() + '.*', $options: 'si' }
+                            });
+                            find["$and"][0]["$or"].push({
+                                "name": { $regex: '.*' + element.toLowerCase() + '.*', $options: 'si' }
+                            });
+                        });
+
+                    } else {
+                        find["$and"][0]["$or"][6] = {
+                            "visualname": { $regex: '.*' + c.alias.toLowerCase() + '.*', $options: 'si' }
+                        }
+
+                        find["$and"][0]["$or"][7] = {
+                            "name": { $regex: '.*' + c.alias.toLowerCase() + '.*', $options: 'si' }
+                        }
+                    }
+                }
 
             }
 
@@ -411,15 +433,15 @@ async function fullfixes(req, res) {
 
 
             let listMTemp = await Movies.aggregate([{
-                    $project: {
-                        visualname: 1,
-                        studio: 1
+                $project: {
+                    visualname: 1,
+                    studio: 1
 
-                    }
-                },
-                {
-                    "$match": find
                 }
+            },
+            {
+                "$match": find
+            }
             ]);
 
 

@@ -48,9 +48,7 @@ class Table extends React.Component {
 
             this.props.data.map((data, i) => {
                 return (
-                    <tr key={Math.random() + "-id-tr-" + data._id} onClick={() => {
-                        this.check(data._id + 'checkbox');
-                    }}>
+                    <tr key={Math.random() + "-id-tr-" + data._id}>
                         <td>
                             <input type="checkbox" id={data._id + 'checkbox'} name={data._id + '-n-checkbox'} className='checkboxcrud' value={data._id} onClick={() => {
                                 this.check(data._id + 'checkbox');

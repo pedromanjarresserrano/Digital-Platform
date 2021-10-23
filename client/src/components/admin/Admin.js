@@ -1,8 +1,9 @@
 import React, { useContext } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom'
-
+import './Admin.css'
 import Axios from 'axios';
 import HomeAdmin from './home/HomeAdmin';
+import FooterAdmin from './footer/FooterAdmin';
 import SidebarAdmin from './sidebar/SidebarAdmin';
 import BreadcrumbAdmin from './breadcrumb/BreadcrumbAdmin';
 import Form from './ui/form/Form';
@@ -11,12 +12,10 @@ import HeaderAdmin from './header/HeaderAdmin';
 import NotFound from '../public/panels/notfound/NotFound';
 import ToastContainer from './ui/toastcontainer/ToastContainer';
 
-import FooterAdmin from './footer/FooterAdmin';
-import { kbToSize, segFormat, dateFormat } from '../../utils/Utils';
+import { dateFormat } from '../../utils/Utils';
 import { AuthContext } from './auth/AuthContext';
 import Duplicates from './Duplicates';
 import CrudGridView from './ui/crudview/CrudGridView';
-import Movie from '../public/movies/movie/Movie';
 import { TableActions as TableActionsMovies, TopActions as TopActionsMovies } from './crudviews/movies/Actions';
 import { Headers as HeadersMovies } from './crudviews/movies/Headers';
 import { SortBy as SortByMovies } from './crudviews/movies/SortBy';
@@ -67,7 +66,7 @@ export const Admin = ({ match, ...rest }) => {
                     <nav className="main-header navbar navbar-expand navbar-white navbar-light"> <HeaderAdmin />
                     </nav>
                     <SidebarAdmin />
-                    <div className="content-wrapper pb-0">
+                    <div className="content-wrapper pb-0" style={{}}>
                         <BreadcrumbAdmin />
                         <Switch>
                             <Route exact path={`${match.path}/movies/duplicates`} component={Duplicates} />
@@ -225,6 +224,7 @@ export const Admin = ({ match, ...rest }) => {
                                 sortByDefault={{ sortby: 'duration', sortdir: -1 }}
                                 baseUrl={'/api/movies'}
                                 sortBy={SortByMovies}
+                                itemHeight={330}
                                 getItem={function (item) {
                                     return (<MovieItem item={item} extradata={true} />)
                                 }}
@@ -286,6 +286,7 @@ export const Admin = ({ match, ...rest }) => {
                             <Route key="not-found-path" exact path={`${match.path}/*`} component={NotFound} />
                         </Switch>
                     </div>
+                    <FooterAdmin />
                     <ToastContainer />
                 </div>
             </div>);

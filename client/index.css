@@ -153,6 +153,14 @@ select.form-field {
     max-width: 1200px !important;
 }
 
+.mw-1300 {
+    max-width: 1300px !important;
+}
+
+.mw-1400 {
+    max-width: 1400px !important;
+}
+
 .px-100 {
     padding-left: 100px !important;
     padding-right: 100px !important;

@@ -23,7 +23,7 @@ class Grid extends React.Component {
     render() {
         return (
 
-            <GridList cellHeight={220} cols={5}>
+            <GridList cellHeight={this.props.itemHeight ? this.props.itemHeight : 240} cols={5}>
                 {this.props.data.map((item) => (
                     <GridListTile cols={1} onClick={() => {
                         this.check(item._id + 'checkbox');

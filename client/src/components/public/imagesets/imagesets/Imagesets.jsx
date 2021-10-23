@@ -201,7 +201,7 @@ class Imagesets extends React.Component {
                                         <RotateCircleLoading size="large" />
                                     </div>
                                     :
-                                    <div className="d-flex justify-content-between flex-row flex-wrap p-1 mw-1200  w-100 mx-auto">                                    {
+                                    <div className="d-flex justify-content-between flex-row flex-wrap p-1 w-100 mx-auto mw-1300">                                    {
                                         this.state.items.map((item, index) =>
                                             <Imageset item={item} index={index} />
                                             , this)
