@@ -15,7 +15,7 @@ async function generatePreviews(params) {
 
     for (let porcent = 1; porcent <= 100; porcent += 10) {
         let nameFile = params.name + "-thumbnail-" + porcent + ".png";
-        if (!fs.existsSync(__dirname + "/../public/thumbnail" + nameFile)) {
+        if (!fs.existsSync(__dirname + "/../public/" + (process.env.DIRTHUMBNAIL ? process.env.DIRTHUMBNAIL : "thumbnail") + nameFile)) {
             await getScreenShot(params.url, nameFile, porcent, width, height)
             images.push(nameFile)
         } else {
@@ -32,19 +32,19 @@ async function generatePreviews(params) {
 const getScreenShot = (url, nameFile, porcent, width, height) => {
     return new Promise((resolve, reject) => {
         return ffmpeg({ source: url, nolog: true, timeout: 1 })
-            .on('error', async function(err) {
+            .on('error', async function (err) {
                 console.log('an error happened: ' + err.message);
                 return reject(err.message);
             })
-            .on('end', async function(d) {
+            .on('end', async function (d) {
                 return resolve(d)
 
             }).takeScreenshots({
                 timestamps: [porcent + '%'],
                 filename: nameFile,
-                folder: __dirname + "/../../public/thumbnail",
+                folder: __dirname + "/../../public/" + (process.env.DIRTHUMBNAIL ? process.env.DIRTHUMBNAIL : "thumbnail"),
                 size: width + 'x' + height
-            }, __dirname + "/../../public/thumbnail", function(err, filenames) {
+            }, __dirname + "/../../public/" + (process.env.DIRTHUMBNAIL ? process.env.DIRTHUMBNAIL : "thumbnail"), function (err, filenames) {
                 if (err)
                     return reject(err.message);
 

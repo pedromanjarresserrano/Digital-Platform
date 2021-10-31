@@ -4,7 +4,7 @@ const app = new express();
 const path = require('path');
 const bodyParser = require('body-parser');
 var cors = require('cors')
-
+require('dotenv').config({ path: __dirname + '../.env' })
 app.use(cors())
 
 app.use(session({
@@ -21,7 +21,7 @@ require('./routes')(app);
 require('./services/socket').init(app);
 
 
-app.get('*', function(req, res) {
+app.get('*', function (req, res) {
     return res.sendFile('index.html', { root: path.join(__dirname, "/../public") });
 })
 

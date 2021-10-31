@@ -166,7 +166,7 @@ async function generatefiles(newvideo, ratio) {
             ratio: ratio
         })
         newvideo.files = [];
-        list.map(e => "/thumbnail/" + e).forEach(i => newvideo.files.push(i));
+        list.map(e => "/" + (process.env && process.env.DIRTHUMBNAIL ? process.env.DIRTHUMBNAIL : "thumbnail") + "/" + e).forEach(i => newvideo.files.push(i));
     }
     await models.moviemodel.updateOne({ _id: newvideo._id }, newvideo);
 

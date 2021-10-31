@@ -26,7 +26,7 @@ class CrudView extends React.Component {
             sortby: this.props.sortByDefault ? this.props.sortByDefault.sortby : '',
             direction: this.props.sortByDefault ? this.props.sortByDefault.sortdir : '1',
             loading: true,
-            chunk: 25
+            chunk: this.props.chunk ? this.props.chunk : 25
         }
         this.getToolBar = this.getToolBar.bind(this);
         this.deleteClick = this.deleteClick.bind(this);

@@ -59,7 +59,7 @@ class MovieDetails extends React.Component {
 
   panoramic = () => {
     $('.c-player').toggleClass('container-md')
-    $('.c-player').toggleClass('mw-95')
+    $('.c-player').toggleClass('mw-85')
     window.scrollTo({
       top: $('.c-player').position().top,
       behavior: 'smooth'

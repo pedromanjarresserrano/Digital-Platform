@@ -31,6 +31,7 @@ import { FormFields as FormFieldsStudios } from './crudviews/studios/FormFields'
 import { Headers as HeadersStudios } from './crudviews/studios/Headers';
 import { FormFields as FormFieldsCategories } from './crudviews/categories/FormFields';
 import { Headers as HeadersCategories } from './crudviews/categories/Headers';
+import ActorItem from './crudviews/actors/actor/ActorItem';
 
 toastr.options = {
     "closeButton": false,
@@ -213,7 +214,26 @@ export const Admin = ({ match, ...rest }) => {
                                     baseUrl={'/api/actores'}
                                     formTitle={'Actor data'}
                                 />)} />
+                            <Route key="form-actores" exact path={`${match.path}/actores-grid/actor/:action/:id`} render={(props) => (
+                                <Form {...props}
+                                    formField={FormFieldsActors
+                                    }
+                                    baseUrl={'/api/actores'}
+                                    formTitle={'Actor data'}
+                                />)} />
 
+                            <Route key="grid-actores-1" exact path={`${match.path}/actores-grid`} render={(props) => (<Redirect to={`${match.path}/actores-grid/1`}   {...props} />)} />
+
+                            <Route key="grid-actores" exact path={`${match.path}/actores-grid/:page`} render={(props) => (<CrudGridView {...props}
+                                headers={HeadersActors}
+                                itemHeight={360}
+                                getItem={function (item) {
+                                    return (<ActorItem item={item} />)
+                                }} baseRoute={`${match.path}/actores/actor`}
+                                chunk={150}
+                                baseUrl={'/api/actores'}
+
+                            />)} />
 
                             <Route key="crud-movies-1" exact path={`${match.path}/movies`} render={(props) => (<Redirect to={`${match.path}/movies/1`}   {...props} />)} />
                             <Route key="crud-grid-movies-1" exact path={`${match.path}/gridmovies`} render={(props) => (<Redirect to={`${match.path}/gridmovies/1`}   {...props} />)} />
@@ -224,7 +244,7 @@ export const Admin = ({ match, ...rest }) => {
                                 sortByDefault={{ sortby: 'duration', sortdir: -1 }}
                                 baseUrl={'/api/movies'}
                                 sortBy={SortByMovies}
-                                itemHeight={330}
+                                itemHeight={450}
                                 getItem={function (item) {
                                     return (<MovieItem item={item} extradata={true} />)
                                 }}
