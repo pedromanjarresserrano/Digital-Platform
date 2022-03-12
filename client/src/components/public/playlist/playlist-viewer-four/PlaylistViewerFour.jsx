@@ -7,7 +7,7 @@ import {
   VolumeMenuButton,
   BigPlayButton,
   PlaybackRateMenuButton
-} from 'video-react';
+  } from 'video-react';
 import axios from 'axios';
 import Actor from '../../actors/actor/Actor';
 import Movie from '../../movies/movie/Movie';

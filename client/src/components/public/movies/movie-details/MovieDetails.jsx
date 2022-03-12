@@ -16,7 +16,7 @@ import Actor from '../../actors/actor/Actor';
 import { segFormat } from '../../../../utils/Utils';
 import { Constants } from '../../common/Constants';
 import PanoramicButtom from '../../ui/panoramicbutton/PanoramicButtom';
-
+import PlayerN from '../../ui/player/PlayerN';
 class MovieDetails extends React.Component {
 
   constructor(props) {
@@ -59,7 +59,7 @@ class MovieDetails extends React.Component {
 
   panoramic = () => {
     $('.c-player').toggleClass('container-md')
-    $('.c-player').toggleClass('mw-95')
+    $('.c-player').toggleClass('mw-85')
     window.scrollTo({
       top: $('.c-player').position().top,
       behavior: 'smooth'
@@ -76,7 +76,10 @@ class MovieDetails extends React.Component {
       <div className="container-md container-fluid c-player">
         <div className="row">
           <div className="col-sm-12 ">
-            <Player fluid={true} width={"100%"} height={480} loop={false} poster={this.state.item.files[1]} ref={(player) => { this.player = player }}>
+
+            <PlayerN src={"/api/movie/" + this.state.item._id}
+              poster={this.state.item.files[1]} />
+            {/* <Player fluid={true} width={"100%"} height={480} loop={false} poster={this.state.item.files[1]} ref={(player) => { this.player = player }}>
               <source src={"/api/movie/" + this.state.item._id} />
               <BigPlayButton position="center" />
               <ControlBar autoHide={true}>
@@ -88,7 +91,7 @@ class MovieDetails extends React.Component {
                 <PlaybackRateMenuButton rates={Constants.PUBLIC.RATES} order={7.1} />
                 <PanoramicButtom order={8} onClick={this.panoramic} />
               </ControlBar>
-            </Player>
+            </Player> */}
           </div>
         </div>
         <div className="row content padding-top-1">

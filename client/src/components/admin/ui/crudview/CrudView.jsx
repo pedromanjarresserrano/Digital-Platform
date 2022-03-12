@@ -26,7 +26,7 @@ class CrudView extends React.Component {
             sortby: this.props.sortByDefault ? this.props.sortByDefault.sortby : '',
             direction: this.props.sortByDefault ? this.props.sortByDefault.sortdir : '1',
             loading: true,
-            chunk: 25
+            chunk: this.props.chunk ? this.props.chunk : 25
         }
         this.getToolBar = this.getToolBar.bind(this);
         this.deleteClick = this.deleteClick.bind(this);
@@ -128,9 +128,13 @@ class CrudView extends React.Component {
 
     async loadPage(page) {
         let find = {
-            name: { "$regex": ".*" + this.state.search + ".*", $options: 'i' }
+            $or: [{
+                name: { "$regex": ".*" + this.state.search + ".*", $options: 'i' }
+            }
+                , {
+                url: { "$regex": ".*" + this.state.search + ".*", $options: 'i' }
+            }]
         }
-
         axios.post(this.props.baseUrl + '/all/' + page + '?chunk=' + this.state.chunk + (this.state.sortby ? '&sort=' + this.state.sortby + '&sortdir=' + this.state.direction : ''), find)
             .then(response => {
                 this.setState({
@@ -212,6 +216,8 @@ class CrudView extends React.Component {
                             <option value="100">100</option>
                             <option value="125">125</option>
                             <option value="150">150</option>
+                            <option value="250">250</option>
+                            <option value="350">350</option>
                         </select>
                     </div>
                 </div>
