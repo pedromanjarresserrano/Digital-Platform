@@ -16,6 +16,7 @@ app.use(session({
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+
 app.use(express.static(__dirname + "/../public"));
 require('./routes')(app);
 require('./services/socket').init(app);
@@ -24,6 +25,7 @@ require('./services/socket').init(app);
 app.get('*', function (req, res) {
     return res.sendFile('index.html', { root: path.join(__dirname, "/../public") });
 })
+
 
 
 module.exports = app;

@@ -28,6 +28,7 @@ class Catalog extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSelect = this.handleSelect.bind(this);
         this.handleSearch = this.handleSearch.bind(this);
+        this.handleSort = this.handleSort.bind(this);
         this.load = this.load.bind(this);
 
     }
@@ -144,7 +145,7 @@ class Catalog extends React.Component {
         if (cats.length > 0)
             find.$and[1].categorias = cats.map(e => e._id);
 
-        axios.post('/api/movies/all/' + page + '?chunk=' + this.state.chunk, find)
+        axios.post('/api/movies/all/' + page + '?chunk=' + this.state.chunk + (this.state.sort ? "&sort=" + this.state.sort + "&sortdir=-1" : ""), find)
             .then(response => {
                 this.setState({
                     items: response.data.itemsList,
@@ -199,6 +200,11 @@ class Catalog extends React.Component {
         this.loadPage(this.state.activePage)
     }
 
+    handleSort(event) {
+        debugger
+        this.setState({ sort: event.target.value });
+        this.loadPage(this.state.activePage)
+    }
 
     render() {
 
@@ -221,13 +227,22 @@ class Catalog extends React.Component {
 
                                 </div>
                             </div>
-                            <div className="col-12 col-md-2">
+                            <div className="col-12 col-md-1">
                                 <select value={this.state.chunk} onChange={this.handleSelect}>
                                     <option value="25">25</option>
                                     <option value="30">30</option>
                                     <option value="45">45</option>
                                     <option value="60">60</option>
                                     <option value="100">100</option>
+                                </select>
+                            </div>
+                            <div className="col-12 col-md-1">
+                                Sort
+                                <select value={this.state.sort} onChange={this.handleSort}>
+                                    <option value="name">Name</option>
+                                    <option value="created">Create date</option>
+                                    <option value="duration">Duration</option>
+                                    <option value="size">Size</option>
                                 </select>
                             </div>
                             <div className="col-12 col-md-3 offset-md-3">

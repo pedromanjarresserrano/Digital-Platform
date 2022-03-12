@@ -19,10 +19,19 @@ router.get('/:_id', loggerRequest, async function (req, res) {
         const range = req.headers.range
         if (range) {
             var split = range.split(/[-=]/);
-            const start = parseInt(split[1])
-            let end = split[2] ? split[2] : fileSize - 1;
-            const chunksize = 1024 * 50000;
-            if (parseInt(start) >= fileSize || parseInt(end) >= fileSize) {
+            const start = split[1] ? parseInt(split[1]) : 0;
+            const base = (fileSize / 100000000);
+            let end;
+            const chunksize = 1024 * 1024 * (base < 1 ? 1 : (parseInt(base) + 5));
+            if (chunksize > fileSize) {
+                chunksize = fileSize;
+            }
+            if (start + chunksize > fileSize) {
+                end = fileSize;
+            } else {
+                end = split[2] ? split[2] : start + chunksize;
+            }
+            if (parseInt(start) > fileSize || parseInt(end) > fileSize) {
                 //Indicate the acceptable range.
                 res.status(416);
                 res.set("Content-Range", 'bytes */' + fileSize); // File size.
@@ -32,9 +41,9 @@ router.get('/:_id', loggerRequest, async function (req, res) {
             if (!end) {
                 end = start + chunksize;
             }
+            end-=1;
             const file = fs.createReadStream(path, { start, end })
             const head = {
-                'Connection': 'keep-alive',
                 'Content-Range': `bytes ${start}-${end}/${fileSize}`,
                 'Accept-Ranges': 'bytes',
                 'Content-Length': chunksize,
@@ -50,10 +59,9 @@ router.get('/:_id', loggerRequest, async function (req, res) {
             res.writeHead(200, head)
             fs.createReadStream(path).pipe(res)
         }
-        movie.unique_views.push(req.sessionID)
-        movie.view = movie.unique_views.length;
-        movie.save();
-        return;
+      //  movie.unique_views.push(req.sessionID)
+      //  movie.view = movie.unique_views.length;
+      //  movie.save();
 
     } catch (error) {
         res.status(502).send({ msg: "error", error })
