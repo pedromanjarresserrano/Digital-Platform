@@ -149,11 +149,11 @@ class PlayerN extends React.Component {
         document.addEventListener("keyup", (event) => {
             event.stopPropagation();
             if (event.code === "Space") {
-                playPause();
+                playPause(event);
             }
 
             if (event.code === "KeyM") {
-                toggleMute();
+                toggleMute(event);
             }
 
             if (event.code === "KeyF") {
@@ -210,7 +210,11 @@ class PlayerN extends React.Component {
 
         playPauseButton.addEventListener("click", playPause);
 
-        video.addEventListener("click", playPause);
+        video.addEventListener("click", (event) => {
+            if (controlsContainer.style.opacity == "1") {
+                playPause(event);
+            }
+        });
 
         video.addEventListener("ended", (event) => {
             event.stopPropagation();
@@ -222,7 +226,11 @@ class PlayerN extends React.Component {
 
         progresscontrols.addEventListener("click", stopPropagation);
 
-        controlsContainer.addEventListener("click", playPause);
+        controlsContainer.addEventListener("click", (event) => {
+            if (controlsContainer.style.opacity == "1") {
+                playPause(event);
+            }
+        });
 
         volumeButton.addEventListener("click", toggleMute);
 
@@ -241,6 +249,67 @@ class PlayerN extends React.Component {
                 console.log(`> Argh! ${error}`);
             }
         });
+
+        var timeDrag = false;   /* Drag status */
+        let down = async (event) => {
+            timeDrag = true;
+            updatebar(event.pageX);
+        }
+        let up = async (event) => {
+            if (timeDrag) {
+                timeDrag = false;
+                updatebar(event.pageX);
+            }
+        }
+        let move = async (event) => {
+            if (timeDrag) {
+                updatebar(event.pageX);
+            }
+        }
+        playhead.addEventListener("mousedown", down);
+        progressBar.addEventListener("mousedown", down);
+        document.addEventListener("mouseup", up);
+        document.addEventListener("mousemove", move);
+
+        playhead.addEventListener("touchstart", down);
+        progressBar.addEventListener("touchstart", down);
+        document.addEventListener("touchend", up);
+        document.addEventListener("touchmove", move);
+
+
+
+
+        var updatebar = function (x) {
+            var maxduration = video.duration; //Video duraiton
+            var position = x - findPos(progressBar).curleft; //Click pos
+            var percentage = 100 * position / progressBar.offsetWidth;
+
+            //Check within range
+            if (percentage > 100) {
+                percentage = 100;
+            }
+            if (percentage < 0) {
+                percentage = 0;
+            }
+
+            //Update progress bar and video currenttime
+            watchedBar.style.width = percentage + "%";
+
+            video.currentTime = maxduration * percentage / 100;
+        };
+
+        function findPos(obj) {
+            var curleft = 0, curtop = 0;
+            if (obj.offsetParent) {
+                do {
+                    curleft += obj.offsetLeft;
+                    curtop += obj.offsetTop;
+
+                } while (obj = obj.offsetParent);
+                return { curleft, curtop };
+            }
+
+        }
     }
 
     render() {

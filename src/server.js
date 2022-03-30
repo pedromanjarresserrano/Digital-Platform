@@ -4,7 +4,7 @@ const app = new express();
 const path = require('path');
 const bodyParser = require('body-parser');
 var cors = require('cors')
-require('dotenv').config({ path: __dirname + '../.env' })
+require('dotenv').config({ path: path.join(__dirname, '../.env') })
 app.use(cors())
 
 app.use(session({

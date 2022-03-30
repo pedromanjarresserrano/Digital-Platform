@@ -5,15 +5,15 @@ const fs = require('fs');
 const models = require('../models');
 const ffmpeg = require('fluent-ffmpeg');
 const service = require('../services/movie');
-var process = 0;
+var processbar = 0;
 const socketServer = require("../services/socket").serverIO;
 const { loggerRequest } = require('../controller/logger');
 
 router.post('/', loggerRequest, async function (req, res) {
     try {
         let paths = req.body.path;
-        if (process == 0) {
-            process++;
+        if (processbar == 0) {
+            processbar++;
             let files = getFiles(path.join(paths));
             files = files.filter(e => e.endsWith(".mp4"));
             await createMovie(files, paths, res);
@@ -21,14 +21,14 @@ router.post('/', loggerRequest, async function (req, res) {
             return res.send({ msg: "Already running" })
         }
     } catch (error) {
-        process = 0;
+        processbar = 0;
         console.log(error)
         return res.status(502).send(error);
     }
 })
 
 router.get("/progress", (req, res) => {
-    res.status(200).send({ process });
+    res.status(200).send({ process: processbar });
 })
 
 function getFiles(dir, files_) {
@@ -83,8 +83,8 @@ async function createMovie(files, paths, res) {
                 ]
             });
             try {
-                process = Math.floor((i + 1) * 100 / (size), 0)
-                socketServer.io.emit("RMF", { id: "processlocation", process, name: nameFile })
+                processbar = Math.floor((i + 1) * 100 / (size), 0)
+                socketServer.io.emit("RMF", { id: "processlocation", process: processbar, name: nameFile })
             } catch (error) {
                 console.log(error);
             }
@@ -134,10 +134,10 @@ async function createMovie(files, paths, res) {
     list.forEach(async e => {
         await models.moviemodel.deleteOne({ _id: e._id })
     })
-    process = 0;
+    processbar = 0;
 
     try {
-        socketServer.io.emit("RMF", { id: "processlocation", process, name: '' })
+        socketServer.io.emit("RMF", { id: "processlocation", process: processbar, name: '' })
     } catch (error) {
         console.log(error);
     }
@@ -166,7 +166,8 @@ async function generatefiles(newvideo, ratio) {
             ratio: ratio
         })
         newvideo.files = [];
-        list.map(e => "/" + (process.env && process.env.DIRTHUMBNAIL ? process.env.DIRTHUMBNAIL : "thumbnail") + "/" + e).forEach(i => newvideo.files.push(i));
+        list.map(e => "/" + (process.env.DIRTHUMBNAIL ? process.env.DIRTHUMBNAIL : "thumbnail") + "/" + e).forEach(i => newvideo.files.push(i));
+        console.log(newvideo.files)
     }
     await models.moviemodel.updateOne({ _id: newvideo._id }, newvideo);
 
