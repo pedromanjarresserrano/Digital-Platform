@@ -1,192 +1,254 @@
-  .video-container {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .video-container video {
-    width: 100%;
-    height: 100%;
-  }
-  
-  .video-container .controls-container {
-    position: absolute;
-    bottom: 0px;
-    width: calc(100% - 15px);
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    min-height: 40vh;
-    /* Thanks to theArtifacts */
-    background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.9));
-    transition: opacity 0.5s linear;
-    
-
-  }
-  
-  .video-container .progress-controls {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    padding-left: 10px;
-    padding-right: 10px;
-  }
-  
-  .video-container .progress-controls .time-remaining {
-    margin: 1vw;
-    width: 4vw;
-    font-size: 0.75em;
-  }
-  
-  .video-container .progress-controls .progress-bar-video {
-    width: 83vw;
-    height: 1vw;
-    max-height: 7px;
-    background: #5b5b5b;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-  }
-  
-  .video-container .progress-controls .progress-bar-video .watched-bar,
-  .video-container .progress-controls .progress-bar-video .playhead::before  {
-    background: #e31221;
-    display: inline-block;
-    transition: all 0.2s;
-    content: '';
-  }
-  
-  .video-container .progress-controls .progress-bar-video .watched-bar {
-    height: 110%;
-    width: 20%;
-    pointer-events: none;
-  }
-  
-  .video-container .progress-controls .progress-bar-video .playhead::before {
-    height: 3vw;
-    width: 3vw;
-    max-height: 25px;
-    max-width: 25px;
-    border-radius: 50%;
-    margin-left: -12px;
-    margin-top: 5px;
-    content: '';
-    display: inline-block;
-    background: #e31221;
-    pointer-events: none;
-  }
-  .video-container .progress-controls .progress-bar-video .playhead {
-    pointer-events: none;
-  }
-  .video-container .controls {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-bottom: 4px;
-    margin-top: -3px;
+.video-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-  
-  .video-container .controls button {
-    background: none;
-    outline: none;
-    box-shadow: none;
-    border: none;
-    width: 5vw;
-    height: 5vw;
+
+.video-container video {
+  width: 100%;
+  height: 100%;
+}
+
+.controls>div {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.video-container .controls-container {
+  position: absolute;
+  bottom: 0px;
+  width: calc(100% - 15px);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 40vh;
+  /* Thanks to theArtifacts */
+  background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.9));
+  transition: opacity 0.5s linear;
+
+
+}
+
+.volumebox {
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: none;
+  outline: none;
+  box-shadow: none;
+  border: none;
+  height: 5vw;
+  max-height: 50px;
+  margin: 0px;
+  transform: scale(0.9);
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.volumebox input[type=range] {
+  display: none;
+}
+
+
+
+.volumebox .bar-hoverbox {
+  padding: 10px 15px;
+  opacity: 0.7;
+  transition: opacity .2s;
+}
+
+.volumebox .bar-hoverbox:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+
+
+.volumebox .bar {
+  background: #999;
+  height: 7px;
+  width: 120px;
+  border-radius: 15px;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.volumebox .bar .bar-fill {
+  background: #FFF;
+  width: 0%;
+  height: 100%;
+  background-clip: border-box;
+  pointer-events: none;
+}
+
+
+
+.video-container .progress-controls {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  padding-left: 10px;
+}
+
+.video-container .progress-controls .time-remaining {
+  margin: 1vw .5vw  1vw  1vw;
+  width: 4vw;
+  font-size: 0.75em;
+}
+
+.video-container .progress-controls .progress-bar-video {
+  width: 83vw;
+  height: 1vw;
+  max-height: 7px;
+  background: #5b5b5b;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.video-container .progress-controls .progress-bar-video .watched-bar,
+.video-container .progress-controls .progress-bar-video .playhead::before {
+  background: #e31221;
+  display: inline-block;
+  transition: all 0.2s;
+  content: '';
+}
+
+.video-container .progress-controls .progress-bar-video .watched-bar {
+  height: 110%;
+  width: 20%;
+  pointer-events: none;
+}
+
+.video-container .progress-controls .progress-bar-video .playhead::before {
+  height: 3vw;
+  width: 3vw;
+  max-height: 25px;
+  max-width: 25px;
+  border-radius: 50%;
+  margin-left: -12px;
+  margin-top: 5px;
+  content: '';
+  display: inline-block;
+  background: #e31221;
+  pointer-events: none;
+}
+
+.video-container .progress-controls .progress-bar-video .playhead {
+  pointer-events: none;
+}
+
+.video-container .controls {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 4px;
+  margin-top: -3px;
+}
+
+.video-container .controls button {
+  background: none;
+  outline: none;
+  box-shadow: none;
+  border: none;
+  width: 5vw;
+  height: 5vw;
+  max-width: 50px;
+  max-height: 50px;
+  margin: 0px 1vw;
+  opacity: 0.4;
+  transform: scale(0.9);
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.video-container .controls button:hover {
+  opacity: 1;
+  transform: scale(1.2);
+}
+
+.video-container .controls button svg {
+  fill: white;
+  stroke: white;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  width: 100%;
+  height: 100%;
+}
+
+.video-container .controls button.volume svg path,
+.video-container .controls button.help svg,
+.video-container .controls button.episodes svg,
+.video-container .controls button.full-screen svg,
+.video-container .controls button.volume svg path,
+.video-container .controls button.cast svg {
+  fill: none;
+}
+
+.video-container .controls button.rewind svg,
+.video-container .controls button.fast-forward svg {
+  stroke: none;
+}
+
+.video-container .controls button.captions svg {
+  stroke: none;
+}
+
+.video-container .controls .title {
+  font-size: 2vw;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.video-container .controls .title .series {
+  color: #fefefe;
+  font-weight: bold;
+  font-size: 1em;
+}
+
+.video-container .controls .title .episode {
+  color: #a1a1a1;
+  font-size: 0.75em;
+  padding-left: 1vw;
+}
+
+
+@media only screen and (max-width: 768px) {
+  .video-container .controls .title {
+    display: none;
+  }
+
+  .video-container .controls div button {
+    width: 3rem;
+    height: 3rem;
     max-width: 50px;
     max-height: 50px;
-    margin: 0px 1vw;
-    opacity: 0.4;
-    transform: scale(0.9);
-    transition: all 0.2s ease-in-out;
-    cursor: pointer;
-  }
-  
-  .video-container .controls button:hover {
-    opacity: 1;
-    transform: scale(1.2);
-  }
-  
-  .video-container .controls button svg {
-    fill: white;
-    stroke: white;
-    stroke-width: 2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    width: 100%;
-    height: 100%;
-  }
-  
-  .video-container .controls button.volume svg path,
-  .video-container .controls button.help svg,
-  .video-container .controls button.episodes svg,
-  .video-container .controls button.full-screen svg,
-  .video-container .controls button.volume svg path,
-  .video-container .controls button.cast svg {
-    fill: none;
-  }
-  
-  .video-container .controls button.rewind svg,
-  .video-container .controls button.fast-forward svg {
-    stroke: none;
-  }
-  
-  .video-container .controls button.captions svg {
-    stroke: none;
-  }
-  
-  .video-container .controls .title {
-    font-size: 2vw;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
   }
 
-  .video-container .controls .title .series {
-    color: #fefefe;
-    font-weight: bold;
-    font-size: 1em;
+  .video-container .progress-controls .progress-bar-video {
+    width: 75vw;
   }
-  
-  .video-container .controls .title .episode {
-    color: #a1a1a1;
-    font-size: 0.75em;
-    padding-left: 1vw;
-  }
-  
-    
-  @media only screen and (max-width: 768px) {
-    .video-container .controls .title {
-      display: none;
-    }
-    .video-container .controls div button {
-      width: 3rem;
-      height: 3rem;
-      max-width: 50px;
-      max-height: 50px;
-    }
-    .video-container .progress-controls .progress-bar-video {
-      width: 75vw;
-    }
-    .video-container .progress-controls {
-      padding-left: 0px;
-    }
-  }
-  
 
-    
-  @media only screen and (max-width: 480px) {
-
-    .video-container .controls div button {
-      width: 2.5rem;
-      height: 2.5rem;
-    }
+  .video-container .progress-controls {
+    padding-left: 0px;
   }
-  
+}
+
+
+
+@media only screen and (max-width: 480px) {
+
+  .video-container .controls div button {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+}

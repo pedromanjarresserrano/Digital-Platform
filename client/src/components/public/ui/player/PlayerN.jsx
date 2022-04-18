@@ -194,7 +194,7 @@ class PlayerN extends React.Component {
                     event.offsetX /
                     progressBar.offsetWidth;
                 video.currentTime = pos * video.duration;
-                console.log(pos);
+              // console.log(pos);
             }
         });
 
@@ -246,35 +246,48 @@ class PlayerN extends React.Component {
                     pauseButton.style.display = "none";
                 }
             } catch (error) {
-                console.log(`> Argh! ${error}`);
+               // console.log(`> Argh! ${error}`);
             }
         });
 
-        var timeDrag = false;   /* Drag status */
+        var timeDrag = false;
         let down = async (event) => {
             timeDrag = true;
             updatebar(event.pageX);
         }
-        let up = async (event) => {
+
+        playhead.addEventListener("mousedown", down);
+        progressBar.addEventListener("mousedown", down);
+        document.addEventListener("mouseup", async (event) => {
             if (timeDrag) {
                 timeDrag = false;
                 updatebar(event.pageX);
             }
-        }
-        let move = async (event) => {
+        });
+        document.addEventListener("mousemove", async (event) => {
             if (timeDrag) {
                 updatebar(event.pageX);
             }
-        }
-        playhead.addEventListener("mousedown", down);
-        progressBar.addEventListener("mousedown", down);
-        document.addEventListener("mouseup", up);
-        document.addEventListener("mousemove", move);
+        });
 
-        playhead.addEventListener("touchstart", down);
-        progressBar.addEventListener("touchstart", down);
-        document.addEventListener("touchend", up);
-        document.addEventListener("touchmove", move);
+        let downTouch = async (event) => {
+            timeDrag = true;
+            updatebar(event.touches[0].pageX);
+        }
+        playhead.addEventListener("touchstart", downTouch);
+        progressBar.addEventListener("touchstart", downTouch);
+        document.addEventListener("touchend", async (event) => {
+            if (timeDrag) {
+                timeDrag = false;
+                updatebar(event.touches[0].pageX);
+            }
+        });
+        document.addEventListener("touchmove", async (event) => {
+            if (timeDrag) {
+                updatebar(event.touches[0].pageX);
+                displayControls()
+            }
+        });
 
 
 
@@ -310,37 +323,119 @@ class PlayerN extends React.Component {
             }
 
         }
+
+        const range = document.querySelector(".volumebox input[type=range]");
+
+        const barHoverBox = document.querySelector(".volumebox .bar-hoverbox");
+        const fill = document.querySelector(".volumebox .bar .bar-fill");
+
+        range.addEventListener("change", (e) => {
+            video.volume = e.target.value / 100;
+        });
+
+        const setValue = (value) => {
+            fill.style.width = value + "%";
+            range.setAttribute("value", value)
+            range.dispatchEvent(new Event("change"))
+        }
+        setValue(video.volume * 100);
+
+        const calculateFill = (e) => {
+            let offsetX = e.offsetX
+
+            if (e.type === "touchmove") {
+                offsetX = e.touches[0].pageX - e.touches[0].target.offsetLeft
+            }
+
+            const width = e.target.offsetWidth - 30;
+
+            setValue(
+                Math.max(
+                    Math.min(
+                        (offsetX - 15) / width * 100.0,
+                        100.0
+                    ),
+                    0
+                )
+            );
+        }
+
+        let barStillDown = false;
+
+        barHoverBox.addEventListener("touchstart", (e) => {
+            barStillDown = true;
+
+            calculateFill(e);
+        }, true);
+
+        barHoverBox.addEventListener("touchmove", (e) => {
+            if (barStillDown) {
+                calculateFill(e);
+            }
+        }, true);
+
+        barHoverBox.addEventListener("mousedown", (e) => {
+            barStillDown = true;
+
+            calculateFill(e);
+        }, true);
+
+        barHoverBox.addEventListener("mousemove", (e) => {
+            if (barStillDown) {
+                calculateFill(e);
+            }
+        });
+
+        barHoverBox.addEventListener("wheel", (e) => {
+            const newValue = +range.value + e.deltaY * 0.5;
+
+            setValue(Math.max(
+                Math.min(
+                    newValue,
+                    100.0
+                ),
+                0
+            ))
+        });
+
+        document.addEventListener("mouseup", (e) => {
+            barStillDown = false;
+        }, true);
+
+        document.addEventListener("touchend", (e) => {
+            barStillDown = false;
+        }, true);
     }
 
     render() {
         return (
-            <div class="video-container">
+            <div className="video-container">
                 <video src={this.props.src} poster={this.props.poster}></video>
 
-                <div class="controls-container">
-                    <div class="progress-controls">
-                        <div id="progress-bar-video" class="progress-bar-video">
-                            <div class="watched-bar"></div>
-                            <div class="playhead"></div>
+                <div className="controls-container">
+                    <div className="progress-controls">
+                        <div id="progress-bar-video" className="progress-bar-video">
+                            <div className="watched-bar"></div>
+                            <div className="playhead"></div>
                         </div>
-                        <div class="time-remaining">00:00</div>
+                        <div className="time-remaining">00:00</div>
                     </div>
-                    <div class="controls">
+                    <div className="controls">
                         <div>
-                            <button class="play-pause">
+                            <button className="play-pause">
                                 <svg
-                                    class="playing"
+                                    className="playing"
                                     xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 24 24"
                                 >
                                     <polygon points="5 3 19 12 5 21 5 3"></polygon>
                                 </svg>
-                                <svg class="paused" viewBox="0 0 24 24">
+                                <svg className="paused" viewBox="0 0 24 24">
                                     <rect x="6" y="4" width="4" height="16"></rect>
                                     <rect x="14" y="4" width="4" height="16"></rect>
                                 </svg>
                             </button>
-                            <button class="rewind">
+                            <button className="rewind">
                                 <svg viewBox="0 0 24 24">
                                     <path
                                         fill="#ffffff"
@@ -348,7 +443,7 @@ class PlayerN extends React.Component {
                                     />
                                 </svg>
                             </button>
-                            <button class="fast-forward">
+                            <button className="fast-forward">
                                 <svg viewBox="0 0 24 24">
                                     <path
                                         fill="#ffffff"
@@ -356,50 +451,58 @@ class PlayerN extends React.Component {
                                     />
                                 </svg>
                             </button>
-                            <button class="volume">
-                                <svg class="full-volume" viewBox="0 0 24 24">
-                                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-                                    <path
-                                        d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"
-                                    ></path>
-                                </svg>
-                                <svg class="muted" viewBox="0 0 24 24">
-                                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-                                    <line x1="23" y1="9" x2="17" y2="15"></line>
-                                    <line x1="17" y1="9" x2="23" y2="15"></line>
-                                </svg>
-                            </button>
+                            <div className="volumebox">
+                                <button className="volume">
+                                    <svg className="full-volume" viewBox="0 0 24 24">
+                                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                                        <path
+                                            d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"
+                                        ></path>
+                                    </svg>
+                                    <svg className="muted" viewBox="0 0 24 24">
+                                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                                        <line x1="23" y1="9" x2="17" y2="15"></line>
+                                        <line x1="17" y1="9" x2="23" y2="15"></line>
+                                    </svg>
+                                </button> <input type="range" min="0" max="100" value="50" className="volume-range" />
 
+                                <div className="bar-hoverbox">
+                                    <div className="bar">
+                                        <div className="bar-fill"></div>
+                                    </div>
+                                </div>
+
+                            </div>
                         </div>
                         <div>
-                            {/* <button class="help">
+                            {/* <button className="help">
                             <svg viewBox="0 0 24 24">
                                 <circle cx="12" cy="12" r="10"></circle>
                                 <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
                                 <line x1="12" y1="17" x2="12.01" y2="17"></line>
                             </svg>
                         </button> 
-                        <button class="next">
+                        <button className="next">
                             <svg viewBox="0 0 24 24">
                                 <polygon points="5 4 15 12 5 20 5 4"></polygon>
                                 <line x1="19" y1="5" x2="19" y2="19"></line>
                             </svg>
                         </button>
-                        <button class="episodes">
+                        <button className="episodes">
                             <svg viewBox="0 0 24 24">
                                 <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
                                 <polyline points="2 17 12 22 22 17"></polyline>
                                 <polyline points="2 12 12 17 22 12"></polyline>
                             </svg>
                         </button>*/}
-                            <button class="captions">
+                            <button className="captions">
                                 <svg viewBox="0 0 20 20">
                                     <path
                                         d="M17 0H3a3 3 0 00-3 3v10a3 3 0 003 3h11.59l3.7 3.71A1 1 0 0019 20a.84.84 0 00.38-.08A1 1 0 0020 19V3a3 3 0 00-3-3zM3.05 9.13h2a.75.75 0 010 1.5h-2a.75.75 0 110-1.5zm3.89 4.44H3.05a.75.75 0 010-1.5h3.89a.75.75 0 110 1.5zm5 0H10a.75.75 0 010-1.5h2a.75.75 0 010 1.5zm0-2.94H8.08a.75.75 0 010-1.5H12a.75.75 0 010 1.5zm5 0H15a.75.75 0 010-1.5h2a.75.75 0 010 1.5z"
                                     />
                                 </svg>
                             </button>
-                            <button class="cast">
+                            <button className="cast">
                                 <svg viewBox="0 0 24 24">
                                     <path
                                         d="M2 16.1A5 5 0 0 1 5.9 20M2 12.05A9 9 0 0 1 9.95 20M2 8V6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-6"
@@ -407,13 +510,13 @@ class PlayerN extends React.Component {
                                     <line x1="2" y1="20" x2="2.01" y2="20"></line>
                                 </svg>
                             </button>
-                            <button class="full-screen">
-                                <svg class="maximize" viewBox="0 0 24 24">
+                            <button className="full-screen">
+                                <svg className="maximize" viewBox="0 0 24 24">
                                     <path
                                         d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"
                                     ></path>
                                 </svg>
-                                <svg class="minimize" viewBox="0 0 24 24">
+                                <svg className="minimize" viewBox="0 0 24 24">
                                     <path
                                         d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"
                                     ></path>

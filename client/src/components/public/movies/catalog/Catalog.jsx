@@ -22,7 +22,7 @@ class Catalog extends React.Component {
             timerange: [0, 5000],
             loading: true,
             navbar_height: 0,
-            chunk: 25
+            chunk: 30
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -229,11 +229,11 @@ class Catalog extends React.Component {
                             </div>
                             <div className="col-12 col-md-1">
                                 <select value={this.state.chunk} onChange={this.handleSelect}>
-                                    <option value="25">25</option>
                                     <option value="30">30</option>
                                     <option value="45">45</option>
                                     <option value="60">60</option>
                                     <option value="100">100</option>
+                                    <option value="150">150</option>
                                 </select>
                             </div>
                             <div className="col-12 col-md-1">
@@ -288,7 +288,7 @@ class Catalog extends React.Component {
                                             (this.state.items ?
                                                 ([...Array(10).keys()]
                                                 ).map((item, index) => {
-                                                    return (<div className="w-100 w-m-20 card-m-l d-md-block d-none" />)
+                                                    return (<div className="w-100 w-m-20 mw-220 pd-1px d-md-block d-none" />)
                                                 })
                                                 : <div />)
                                         }

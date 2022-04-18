@@ -262,7 +262,7 @@ class PlaylistViewerFour extends React.Component {
                   (this.state.items ?
                     ([...Array(10).keys()]
                     ).map(() => {
-                      return (<div className="w-100 w-m-20 card-m-l d-md-block d-none" />)
+                      return (<div className="w-100 w-m-20 mw-220 pd-1px d-md-block d-none" />)
                     })
                     : <div />)
                 }
