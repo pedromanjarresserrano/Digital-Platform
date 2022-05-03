@@ -247,7 +247,7 @@ class PlaylistViewerFour extends React.Component {
                 pageRangeDisplayed={Constants.PUBLIC.PAGE_VISIBLE_COUNT}
                 onChange={this.onPageChanged} />
             </div>
-            <div className="d-flex flex-row justify-content-center   mx-auto w-100 mw-1300">
+            <div className="d-flex flex-row justify-content-center   mx-auto w-100 mw-1500">
               <div className="display d-flex flex-row  justify-content-between flex-wrap w-100" >  {
 
                 this.state.items.map((m, index) =>

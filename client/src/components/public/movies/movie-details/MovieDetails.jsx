@@ -17,6 +17,7 @@ import { segFormat } from '../../../../utils/Utils';
 import { Constants } from '../../common/Constants';
 import PanoramicButtom from '../../ui/panoramicbutton/PanoramicButtom';
 import PlayerN from '../../ui/player/PlayerN';
+import Movie from '../movie/Movie';
 class MovieDetails extends React.Component {
 
   constructor(props) {
@@ -28,6 +29,8 @@ class MovieDetails extends React.Component {
       muted: vol == 0,
       vol: vol
     }
+   
+    this.handleChange = this.handleChange.bind(this);
     this.panoramic = this.panoramic.bind(this);
   }
 
@@ -35,21 +38,27 @@ class MovieDetails extends React.Component {
   //--------------------------------------------------------------
   componentWillMount() {
     let id = (this.props.location.state) ? this.props.location.state.item._id : this.props.match.params.id;
-    Axios.get("/api/movies/" + id).then(function (response) {
-      this.setState({
-        item: response.data
-      })
-      this.video = this.player.video.video;
-      this.video.addEventListener("volumechange", e => {
-        if (e.srcElement.muted)
-          localStorage.setItem("volumen", 0)
-        else
-          localStorage.setItem("volumen", e.srcElement.volume)
-      })
-      this.video.muted = this.state.muted
-      this.video.volume = parseFloat(isNaN(this.state.vol) ? 0 : this.state.vol);
+    Axios.get("/api/movies/" + id).then(async function (response) {
+
+      //  this.video = this.player.video.video;
+
+      //this.video.addEventListener("volumechange", e => {
+      //     if (e.srcElement.muted)
+      //       localStorage.setItem("volumen", 0)
+      //      else
+      //        localStorage.setItem("volumen", e.srcElement.volume)
+      //    })
+      // this.video.muted = this.state.muted
+      // this.video.volume = parseFloat(isNaN(this.state.vol) ? 0 : this.state.vol);
 
       document.title = "Digital Plaform - " + (this.state.item.visualname ? this.state.item.visualname : this.state.item.name);
+
+      let saga = await Axios.post("/api/sagas/fo", { parts: id });
+      console.log(saga);
+      this.setState({
+        item: response.data,
+        saga: saga ? saga.data.parts : []
+      })
     }.bind(this)).catch((error) => {
       console.log(error);
     });
@@ -64,6 +73,17 @@ class MovieDetails extends React.Component {
       top: $('.c-player').position().top,
       behavior: 'smooth'
     })
+
+  }
+  handleChange(item) {
+    this.setState({
+      item: item
+    })
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
 
   }
 
@@ -178,6 +198,14 @@ class MovieDetails extends React.Component {
             </div>
           )) : ''}
         </div>
+
+        <h4 className="text-white">Saga</h4>
+        <div className="row ">
+          {this.state.saga ? this.state.saga.map((m, index) => (
+            <Movie item={m} index={index} onClicked={this.handleChange} playing={m == this.state.item} />
+          )) : ''}
+        </div>
+
       </div>
     );
   }

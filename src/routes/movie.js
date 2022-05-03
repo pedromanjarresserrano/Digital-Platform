@@ -22,7 +22,7 @@ router.get('/:_id', loggerRequest, async function (req, res) {
             const start = split[1] ? parseInt(split[1]) : 0;
             const base = (fileSize / 100000000);
             let end;
-            const chunksize = 1024 * 1024 * (base < 1 ? 1 : (parseInt(base) + 5));
+            const chunksize = 1024 * 1024 * (base < 1 ? 1 : (parseInt(base) + 4));
             if (chunksize > fileSize) {
                 chunksize = fileSize;
             }

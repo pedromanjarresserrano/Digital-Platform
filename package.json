@@ -6,14 +6,15 @@
     "scripts": {
         "dev": "npm-run-all --parallel watch:server watch:build",
         "dev-front": "npm-run-all --parallel start-front watch:build",
-        "dev-front-jp": "npm-run-all --parallel start-front watch:build",
+        "dev-front-jp": "npm-run-all --parallel start-front-jp watch:build",
         "watch:build": "webpack  --watch ./client/",
         "watch:server": "nodemon -r dotenv/config --inspect src/app.js",
         "building": "./node_modules/.bin/webpack -p",
         "test": "jest --forceExit",
         "coverage": "jest --coverage --collectCoverage=true --forceExit",
         "start": "node src/app.js ",
-        "start-front": "node -r dotenv/config --inspect src/app.js "
+        "start-front": "node -r dotenv/config --inspect src/app.js ",
+        "start-front-jp": "node -r dotenv/config --inspect src/app.js dotenv_config_path=./.env.jp"
     },
     "author": "Pedrioko",
     "license": "MIT",

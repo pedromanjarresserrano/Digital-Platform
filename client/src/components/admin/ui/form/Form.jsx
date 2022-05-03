@@ -43,6 +43,7 @@ class Form extends React.Component {
                 }
                 this.setState({ dataForm, formIsValid: true });
             }).catch(err => {
+                console.log(err);
                 alert(JSON.stringify(err));
             })
         }

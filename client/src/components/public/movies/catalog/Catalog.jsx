@@ -120,6 +120,35 @@ class Catalog extends React.Component {
             state: find
         })
     }
+
+    playlist4 = () => {
+        let find = {
+            $and: [
+                {
+                    $or: [
+                        {
+                            name: { "$regex": ".*" + this.state.search + ".*", $options: 'i' },
+                        },
+                        {
+                            visualname: { "$regex": ".*" + this.state.search + ".*", $options: 'i' },
+                        },
+                    ]
+                },
+                {
+
+                }
+            ]
+        }
+        let cats = this.state.categorias.filter(e => e.isChecked);
+        if (cats.length > 0)
+            find.$and[1].categorias = cats.map(e => e._id);
+        localStorage.setItem("fils", JSON.stringify(find));
+        this.props.history.push({
+            pathname: '/playlist4',
+            state: find
+        })
+    }
+
     async loadPage(page) {
         await this.setState({
             loading: true
@@ -257,6 +286,10 @@ class Catalog extends React.Component {
                                 <button className="btn btn-success" onClick={this.playlist}>
                                     Play as playlist
                                 </button>
+
+                                <button className="btn btn-success" onClick={this.playlist4}>
+                                    Play as playlist4
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -277,7 +310,7 @@ class Catalog extends React.Component {
                                         <RotateCircleLoading size="large" />
                                     </div>
                                     :
-                                    <div className="d-flex justify-content-between flex-row flex-wrap p-1  w-100 mx-auto mw-1300">
+                                    <div className="d-flex justify-content-between flex-row flex-wrap p-1  w-100 mx-auto mw-1500">
                                         {
 
                                             this.state.items.map((item, index) =>

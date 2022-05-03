@@ -17,6 +17,14 @@ export const TopActions = [{
     onClick: async function(data) {
         ShowAddModal('/api/actores/all/-1', '/api/movies/addacts', data, "Add Actors");
     }
+}
+, {
+    name: "Add to Saga",
+    className: "btn btn-sm btn-warning ",
+    icon: 'fas fa-plus-square',
+    onClick: async function(data) {
+        ShowAddModal('/api/saga/all/-1', '/api/movies/addtosaga', data, "Add to Saga");
+    }
 }, {
     name: "Set Studio",
     className: "btn btn-sm text-light bg-secondary border border-dark",

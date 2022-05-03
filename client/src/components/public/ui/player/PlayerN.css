@@ -11,6 +11,35 @@
   height: 100%;
 }
 
+.video-container .center-button-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+}
+
+.video-container .center-button-container .center-button {
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.9);
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  transition: opacity 0.5s linear;
+}
+
+.video-container .center-button-container .center-button .playing {
+  padding-left: 0.4rem;
+}
+
+.video-container .center-button-container .center-button .paused {
+  display: none;
+}
+
 .controls>div {
   display: flex;
   flex-flow: row wrap;
@@ -95,7 +124,7 @@
 }
 
 .video-container .progress-controls .time-remaining {
-  margin: 1vw .5vw  1vw  1vw;
+  margin: 1vw .5vw 1vw 1vw;
   width: 4vw;
   font-size: 0.75em;
 }
@@ -127,8 +156,8 @@
 .video-container .progress-controls .progress-bar-video .playhead::before {
   height: 3vw;
   width: 3vw;
-  max-height: 25px;
-  max-width: 25px;
+  max-height: 15px;
+  max-width: 15px;
   border-radius: 50%;
   margin-left: -12px;
   margin-top: 5px;
@@ -151,7 +180,8 @@
   margin-top: -3px;
 }
 
-.video-container .controls button {
+.video-container .controls button,
+.video-container .center-button-container {
   background: none;
   outline: none;
   box-shadow: none;
@@ -167,12 +197,14 @@
   cursor: pointer;
 }
 
-.video-container .controls button:hover {
+.video-container .controls button:hover,
+.video-container .center-button-container .center-button:hover {
   opacity: 1;
   transform: scale(1.2);
 }
 
-.video-container .controls button svg {
+.video-container .controls button svg,
+.video-container .center-button-container .center-button svg {
   fill: white;
   stroke: white;
   stroke-width: 2;
@@ -247,8 +279,35 @@
 
 @media only screen and (max-width: 480px) {
 
+  .video-container .center-button-container .center-button {
+    width: 4rem;
+    height: 4rem;
+    margin-top: -2rem;
+  }
+
   .video-container .controls div button {
     width: 2.5rem;
     height: 2.5rem;
   }
+
+  .volumebox {
+    width: 3.5rem;
+    height: 100%;
+    margin: 0px;
+    max-width: 100px;
+    max-height: 100px;
+    background: none;
+    outline: none;
+    box-shadow: none;
+    border: none;
+    transform: scale(0.9);
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+  }
+
+
+  .volumebox .bar-hoverbox {
+    display: none;
+  }
+
 }

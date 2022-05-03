@@ -14,8 +14,9 @@ class PlayerN extends React.Component {
 
     componentDidMount() {
         const videoContainer = document.querySelector(".video-container");
+        const centerContainer = document.querySelector(".video-container .center-button-container .center-button");
         const video = document.querySelector(".video-container video");
-
+        let showingcontrol = false;
         const controlsContainer = document.querySelector(
             ".video-container .controls-container"
         );
@@ -40,8 +41,8 @@ class PlayerN extends React.Component {
         const fullScreenButton = document.querySelector(
             ".video-container .controls button.full-screen"
         );
-        const playButton = playPauseButton.querySelector(".playing");
-        const pauseButton = playPauseButton.querySelector(".paused");
+        const playButton = videoContainer.querySelectorAll(".playing");
+        const pauseButton = videoContainer.querySelectorAll(".paused");
         const fullVolumeButton = volumeButton.querySelector(".full-volume");
         const RangeVolumeButton = volumeButton.querySelector(".range");
         const mutedButton = volumeButton.querySelector(".muted");
@@ -80,25 +81,30 @@ class PlayerN extends React.Component {
         }
         const displayControls = () => {
             controlsContainer.style.opacity = "1";
+            centerContainer.style.opacity = "1";
+             showingcontrol = true;
             document.body.style.cursor = "initial";
+
             if (controlsTimeout) {
                 clearTimeout(controlsTimeout);
             }
             controlsTimeout = setTimeout(() => {
                 controlsContainer.style.opacity = "0";
-                document.body.style.cursor = "none";
+                centerContainer.style.opacity = "0";
+                showingcontrol = false;
             }, 2500);
         };
         const playPause = (event) => {
             event.stopPropagation();
+            console.log("here")
             if (video.paused) {
                 video.play();
-                playButton.style.display = "none";
-                pauseButton.style.display = "";
+                playButton.forEach(e => e.style.display = "none")
+                pauseButton.forEach(e => e.style.display = "block")
             } else {
                 video.pause();
-                playButton.style.display = "";
-                pauseButton.style.display = "none";
+                playButton.forEach(e => e.style.display = "block")
+                pauseButton.forEach(e => e.style.display = "none")
             }
         };
         const toggleMute = (event) => {
@@ -107,19 +113,22 @@ class PlayerN extends React.Component {
             video.volume = 1;
             tm();
         };
+        const aux = controlsContainer.style;
         const toggleFullScreen = (event) => {
             event.preventDefault();
-
             if (!document.fullscreenElement) {
                 videoContainer.requestFullscreen();
+                controlsContainer.style.width = "100%"
             } else {
+                controlsContainer.style = aux;
                 document.exitFullscreen();
             }
-        }; mutedButton.style.display = "none";
+        };
+        mutedButton.style.display = "none";
         let controlsTimeout;
         controlsContainer.style.opacity = "0";
         watchedBar.style.width = "0px";
-        pauseButton.style.display = "none";
+        pauseButton.forEach(e => e.style.display = "none")
         minimizeButton.style.display = "none";
 
         video.addEventListener("volumechange", e => {
@@ -163,11 +172,18 @@ class PlayerN extends React.Component {
             displayControls();
         });
 
-        document.addEventListener("mousemove", (event) => {
+        videoContainer.addEventListener("click", (event) => {
             event.stopPropagation();
             displayControls();
         });
-
+        playhead.addEventListener("mousemove", (event) => {
+            event.stopPropagation();
+            displayControls();
+        });
+        progressBar.addEventListener("mousemove", (event) => {
+            event.stopPropagation();
+            displayControls();
+        });
         video.addEventListener("timeupdate", (event) => {
             event.stopPropagation();
             watchedBar.style.width = (video.currentTime / video.duration) * 100 + "%";
@@ -194,7 +210,7 @@ class PlayerN extends React.Component {
                     event.offsetX /
                     progressBar.offsetWidth;
                 video.currentTime = pos * video.duration;
-              // console.log(pos);
+                // console.log(pos);
             }
         });
 
@@ -211,15 +227,15 @@ class PlayerN extends React.Component {
         playPauseButton.addEventListener("click", playPause);
 
         video.addEventListener("click", (event) => {
-            if (controlsContainer.style.opacity == "1") {
+            if (showingcontrol) {
                 playPause(event);
             }
         });
 
         video.addEventListener("ended", (event) => {
             event.stopPropagation();
-            playButton.style.display = "";
-            pauseButton.style.display = "none";
+            playButton.forEach(e => e.style.display = "")
+            pauseButton.forEach(e => e.style.display = "none")
         });
 
         controls.addEventListener("click", stopPropagation);
@@ -227,7 +243,7 @@ class PlayerN extends React.Component {
         progresscontrols.addEventListener("click", stopPropagation);
 
         controlsContainer.addEventListener("click", (event) => {
-            if (controlsContainer.style.opacity == "1") {
+            if (showingcontrol) {
                 playPause(event);
             }
         });
@@ -242,11 +258,11 @@ class PlayerN extends React.Component {
                     await video.requestPictureInPicture();
                 } else {
                     await document.exitPictureInPicture();
-                    playButton.style.display = "";
-                    pauseButton.style.display = "none";
+                    playButton.forEach(e => e.style.display = "")
+                    pauseButton.forEach(e => e.style.display = "none")
                 }
             } catch (error) {
-               // console.log(`> Argh! ${error}`);
+                // console.log(`> Argh! ${error}`);
             }
         });
 
@@ -411,7 +427,21 @@ class PlayerN extends React.Component {
         return (
             <div className="video-container">
                 <video src={this.props.src} poster={this.props.poster}></video>
-
+                <div className='center-button-container' >
+                    <div className='center-button'>
+                        <svg
+                            className="playing"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                        >
+                            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                        </svg>
+                        <svg className="paused" viewBox="0 0 24 24">
+                            <rect x="6" y="4" width="4" height="16"></rect>
+                            <rect x="14" y="4" width="4" height="16"></rect>
+                        </svg>
+                    </div>
+                </div>
                 <div className="controls-container">
                     <div className="progress-controls">
                         <div id="progress-bar-video" className="progress-bar-video">

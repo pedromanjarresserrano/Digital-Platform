@@ -77,10 +77,7 @@ async function createMovie(files, paths, res) {
             let n = file.split("/");
             let nameFile = n[n.length - 1].split(".mp4")[0];
             let movie = await models.moviemodel.findOne({
-                $or: [
-                    { name: nameFile.trim() },
-                    { url: { "$regex": nameFile, "$options": "i" } }
-                ]
+                name: { $eq: nameFile.trim() }
             });
             try {
                 processbar = Math.floor((i + 1) * 100 / (size), 0)
