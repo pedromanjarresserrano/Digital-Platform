@@ -93,9 +93,13 @@ class Input extends React.Component {
                                 return (
                                     <div className={'chips'}>
                                         {
-                                            this.props.value.map(value => (
-                                                <Chip key={value} label={this.state.items.find(x => x._id === value).name} className={'chip'} />
-                                            ))
+                                            this.props.value.map(value => {
+                                                let first = this.state.items.find(x => x._id === value);
+
+                                                return (
+                                                    <Chip key={value} label={first ? first.name : ''} className={'chip'} />
+                                                )
+                                            })
                                         }
                                     </div>
                                 );
