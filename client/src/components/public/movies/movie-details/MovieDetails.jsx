@@ -51,14 +51,14 @@ class MovieDetails extends React.Component {
       // this.video.muted = this.state.muted
       // this.video.volume = parseFloat(isNaN(this.state.vol) ? 0 : this.state.vol);
 
-      document.title = "Digital Plaform - " + (this.state.item.visualname ? this.state.item.visualname : this.state.item.name);
-
       let saga = await Axios.post("/api/sagas/fo", { parts: id });
       console.log(saga);
       this.setState({
         item: response.data,
         saga: saga ? saga.data.parts : []
       })
+      document.title = "Digital Plaform - " + (this.state.item.visualname ? this.state.item.visualname : this.state.item.name);
+
     }.bind(this)).catch((error) => {
       console.log(error);
     });

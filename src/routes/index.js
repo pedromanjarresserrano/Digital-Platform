@@ -15,6 +15,7 @@ module.exports = (app) => {
     app.use('/api/categorias', require('./crud')(models.categoriamodel, { name: "asc" }));
     app.use('/api/usuario', require('./crud')(models.usuariomodel, { name: "asc" }));
     app.use('/api/location', require('./crud')(models.locationmodel, { name: "asc" }));
+    app.use('/api/sagas', require('./routesfile')(models.sagamodel, 'portada', 'name'));
     app.use('/api/sagas', require('./crud')(models.sagamodel, { name: "asc" }));
     app.use('/api/movies/read', require('./movies'));
     app.use('/api/books/read', require('./books'));

@@ -13,7 +13,8 @@ class Database {
         mongoose.connect(process.env.MONGODB_URI_FULL || (`mongodb://${process.env.MONGODB_URI || "127.0.0.1:27017"}/${process.env.MONGODB_NAME || "movies-api"}`), {
             useCreateIndex: true,
             useUnifiedTopology: true,
-            useNewUrlParser: true
+            useNewUrlParser: true,
+            useFindAndModify: false
         })
             .then(async (db) => {
                 console.log('Database connection successful')

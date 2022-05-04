@@ -96,13 +96,10 @@ class Form extends React.Component {
         const updatedFormElement = {
             ...updateddataForm[inputIdentifier]
         };
-        if (updatedFormElement.optConfig && updatedFormElement.optConfig.multiple) {
+        if (event.target.type == 'file')
+            updatedFormElement.value = event.target.files[0];
+        else
             updatedFormElement.value = event.target.value;
-        } else
-            if (event.target.type == 'file')
-                updatedFormElement.value = event.target.files[0];
-            else
-                updatedFormElement.value = event.target.value;
         updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
         updatedFormElement.touched = true;
         updateddataForm[inputIdentifier] = updatedFormElement;
@@ -136,6 +133,9 @@ class Form extends React.Component {
             for (let formElementIdentifier in this.state.dataForm) {
                 data[formElementIdentifier] = this.state.dataForm[formElementIdentifier].value;
             }
+        }
+        if (this.props.match.params.action === "edit") {
+            data._id = this.props.match.params.id;
         }
         return data;
     }

@@ -4,6 +4,8 @@ import Select from '@material-ui/core/Select';
 import Chip from '@material-ui/core/Chip';
 import MenuItem from '@material-ui/core/MenuItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import TextField from '@material-ui/core/TextField';
+import { Autocomplete } from '@material-ui/lab';
 
 class Input extends React.Component {
 
@@ -34,6 +36,7 @@ class Input extends React.Component {
                             );
                         }, this);
                         this.setState({
+                            dataItems: items,
                             opts: options
                         });
                     }
@@ -81,34 +84,56 @@ class Input extends React.Component {
                 );
             case ('select-model'):
                 return (
-                    <Select
+
+                    <Autocomplete
+                        multiple
                         className={(this.props.optConfig.multiple ? '' : "form-field") + 'select-field'}
+                        options={this.state.dataItems ? this.state.dataItems.map(e => e._id) : []}
+                        getOptionLabel={(option) => {
+                            let first = this.state.items.find(x => x._id === option);
+                            return first ? first.name : ''
+                        }}
+                        id={this.props.keyId}
                         name={this.props.keyId}
                         value={this.props.value}
-                        onChange={this.props.changed}
-                        renderValue={selected => {
-                            if (!this.props.optConfig.multiple)
-                                return this.props.value;
-                            else
-                                return (
-                                    <div className={'chips'}>
-                                        {
-                                            this.props.value.map(value => {
-                                                let first = this.state.items.find(x => x._id === value);
+                        onChange={(event, value) => { this.props.changed({ target: { value } }) }}
+                        renderInput={(params) => (
+                            <TextField
+                                {...params}
+                                variant="standard"
+                                label={this.props.label ? this.props.label : ''}
+                                placeholder={this.props.placeholder ? this.props.placeholder : ''}
+                            />
+                        )}
+                    />
+                    // <Select
+                    //     className={(this.props.optConfig.multiple ? '' : "form-field") + 'select-field'}
+                    //     name={this.props.keyId}
+                    //     value={this.props.value}
+                    //     onChange={this.props.changed}
+                    //     renderValue={selected => {
+                    //         if (!this.props.optConfig.multiple)
+                    //             return this.props.value;
+                    //         else
+                    //             return (
+                    //                 <div className={'chips'}>
+                    //                     {
+                    //                         this.props.value.map(value => {
+                    //                             let first = this.state.items.find(x => x._id === value);
 
-                                                return (
-                                                    <Chip key={value} label={first ? first.name : ''} className={'chip'} />
-                                                )
-                                            })
-                                        }
-                                    </div>
-                                );
-                        }}
+                    //                             return (
+                    //                                 <Chip key={value} label={first ? first.name : ''} className={'chip'} />
+                    //                             )
+                    //                         })
+                    //                     }
+                    //                 </div>
+                    //             );
+                    //     }}
 
-                        {...this.props.optConfig}
-                    >
-                        {this.state.opts}
-                    </Select>
+                    //     {...this.props.optConfig}
+                    // >
+                    //     {this.state.opts}
+                    // </Select>
                 );
             case ('file-image'):
                 return (
