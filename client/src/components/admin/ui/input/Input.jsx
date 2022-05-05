@@ -17,11 +17,18 @@ class Input extends React.Component {
             opts: [],
             items: []
         };
-
+        this.getDataList = this.getDataList.bind(this);
     }
+
     componentDidMount() {
+        this.getDataList();
+    }
+
+    getDataList(name = '') {
         if (this.props.apiUrlModel)
-            Axios.get(this.props.apiUrlModel)
+            Axios.post(this.props.apiUrlModel + '?chunk=30', {
+                name: { "$regex": ".*" + name + ".*", $options: 'i' },
+            })
                 .then(function (response) {
                     const items = response.data;
                     if (items) {
@@ -88,7 +95,7 @@ class Input extends React.Component {
                     <Autocomplete
                         multiple
                         className={(this.props.optConfig.multiple ? '' : "form-field") + 'select-field'}
-                        options={this.state.dataItems ? this.state.dataItems.map(e => e._id) : []}
+                        options={this.state.dataItems ? this.state.dataItems.slice(0, 30).map(e => e._id) : []}
                         getOptionLabel={(option) => {
                             let first = this.state.items.find(x => x._id === option);
                             return first ? first.name : ''
@@ -96,12 +103,13 @@ class Input extends React.Component {
                         id={this.props.keyId}
                         name={this.props.keyId}
                         value={this.props.value}
-                        onChange={(event, value) => { this.props.changed({ target: { value } }) }}
+                        onChange={(event, value) => { this.props.changed({ target: { value } }); }}
                         renderInput={(params) => (
                             <TextField
                                 {...params}
                                 variant="standard"
                                 label={this.props.label ? this.props.label : ''}
+                                onChange={(event) => { this.getDataList(event.target.value) }}
                                 placeholder={this.props.placeholder ? this.props.placeholder : ''}
                             />
                         )}

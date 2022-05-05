@@ -43,6 +43,7 @@ class PlayerN extends React.Component {
         );
         const playButton = videoContainer.querySelectorAll(".playing");
         const pauseButton = videoContainer.querySelectorAll(".paused");
+        const loading = videoContainer.querySelectorAll(".loading");
         const fullVolumeButton = volumeButton.querySelector(".full-volume");
         const RangeVolumeButton = volumeButton.querySelector(".range");
         const mutedButton = volumeButton.querySelector(".muted");
@@ -82,7 +83,7 @@ class PlayerN extends React.Component {
         const displayControls = () => {
             controlsContainer.style.opacity = "1";
             centerContainer.style.opacity = "1";
-             showingcontrol = true;
+            showingcontrol = true;
             document.body.style.cursor = "initial";
 
             if (controlsTimeout) {
@@ -94,17 +95,29 @@ class PlayerN extends React.Component {
                 showingcontrol = false;
             }, 2500);
         };
+        video.addEventListener('canplay', function () {
+            //  loading.forEach(e => e.style.display = "none")
+            //   pauseButton.forEach(e => e.style.display = "block")
+        });
+
+        video.addEventListener('play', function () {
+            loading.forEach(e => e.style.display = "none")
+            pauseButton.forEach(e => e.style.display = "block")
+        });
+
         const playPause = (event) => {
             event.stopPropagation();
             console.log("here")
             if (video.paused) {
                 video.play();
                 playButton.forEach(e => e.style.display = "none")
-                pauseButton.forEach(e => e.style.display = "block")
+                loading.forEach(e => e.style.display = "block")
+
             } else {
                 video.pause();
                 playButton.forEach(e => e.style.display = "block")
                 pauseButton.forEach(e => e.style.display = "none")
+                loading.forEach(e => e.style.display = "none")
             }
         };
         const toggleMute = (event) => {
@@ -194,13 +207,13 @@ class PlayerN extends React.Component {
             let hours = null;
 
             if (totalSecondsRemaining >= 3600) {
-                hours = ((totalSecondsRemaining / 3600) >> 0).toString().padStart(2, "0");
+                hours = ((totalSecondsRemaining / 3600) >> 0).toString()
             }
 
             let minutes = time.getMinutes().toString().padStart(2, "0");
             let seconds = time.getSeconds().toString().padStart(2, "0");
 
-            timeLeft.textContent = `${hours ? hours + ":" : "00:"}${minutes}:${seconds}`;
+            timeLeft.textContent = `${hours && hours > 1 ? hours.padStart(2, "0") + ":" : ""}${minutes}:${seconds}`;
         });
 
         progressBar.addEventListener("click", (event) => {
@@ -440,6 +453,7 @@ class PlayerN extends React.Component {
                             <rect x="6" y="4" width="4" height="16"></rect>
                             <rect x="14" y="4" width="4" height="16"></rect>
                         </svg>
+                        <div class="loading lds-ring"><div></div><div></div><div></div><div></div></div>
                     </div>
                 </div>
                 <div className="controls-container">

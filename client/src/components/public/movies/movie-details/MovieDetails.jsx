@@ -202,7 +202,7 @@ class MovieDetails extends React.Component {
         <h4 className="text-white">Saga</h4>
         <div className="row ">
           {this.state.saga ? this.state.saga.map((m, index) => (
-            <Movie item={m} index={index} onClicked={this.handleChange} playing={m == this.state.item} />
+            <Movie item={m} index={index} onClicked={this.handleChange} playing={m._id == this.state.item._id} />
           )) : ''}
         </div>
 
