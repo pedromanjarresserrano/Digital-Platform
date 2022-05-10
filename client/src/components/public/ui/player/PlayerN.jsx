@@ -1,5 +1,6 @@
 import React from 'react';
 import './PlayerN.css';
+
 class PlayerN extends React.Component {
 
     constructor(props) {
@@ -8,14 +9,17 @@ class PlayerN extends React.Component {
         this.state = {
             item: {},
             muted: vol == 0,
-            vol: vol
+            vol: vol,
+            rates: [4, 3, 2, 1.5, 1, 0.75, 0.5]
         }
+        this.setPlayrate = this.setPlayrate.bind(this);
     }
 
     componentDidMount() {
         const videoContainer = document.querySelector(".video-container");
         const centerContainer = document.querySelector(".video-container .center-button-container .center-button");
         const video = document.querySelector(".video-container video");
+
         let showingcontrol = false;
         const controlsContainer = document.querySelector(
             ".video-container .controls-container"
@@ -27,6 +31,9 @@ class PlayerN extends React.Component {
 
         const castButton = document.querySelector(
             ".video-container .controls button.cast"
+        );
+        const playPauseButtonCenter = document.querySelector(
+            ".video-container .center-button-container .center-button"
         );
 
         const rewindButton = document.querySelector(
@@ -41,6 +48,10 @@ class PlayerN extends React.Component {
         const fullScreenButton = document.querySelector(
             ".video-container .controls button.full-screen"
         );
+        const itemrates = document.querySelectorAll(
+            ".playbackrates .list .item-rate"
+        );
+
         const playButton = videoContainer.querySelectorAll(".playing");
         const pauseButton = videoContainer.querySelectorAll(".paused");
         const loading = videoContainer.querySelectorAll(".loading");
@@ -104,6 +115,12 @@ class PlayerN extends React.Component {
             loading.forEach(e => e.style.display = "none")
             pauseButton.forEach(e => e.style.display = "block")
         });
+
+
+        itemrates.forEach(e => e.addEventListener('click', function (event) {
+            event.stopPropagation()
+            this.setPlayrate(e.dataset.value, event);
+        }.bind(this)))
 
         const playPause = (event) => {
             event.stopPropagation();
@@ -212,8 +229,7 @@ class PlayerN extends React.Component {
 
             let minutes = time.getMinutes().toString().padStart(2, "0");
             let seconds = time.getSeconds().toString().padStart(2, "0");
-
-            timeLeft.textContent = `${hours && hours > 1 ? hours.padStart(2, "0") + ":" : ""}${minutes}:${seconds}`;
+            timeLeft.textContent = `${hours && parseInt(hours) >= 1 ? hours.padStart(2, "0") + ":" : ""}${minutes}:${seconds}`;
         });
 
         progressBar.addEventListener("click", (event) => {
@@ -238,6 +254,7 @@ class PlayerN extends React.Component {
         });
 
         playPauseButton.addEventListener("click", playPause);
+        playPauseButtonCenter.addEventListener("click", playPause);
 
         video.addEventListener("click", (event) => {
             if (showingcontrol) {
@@ -434,6 +451,14 @@ class PlayerN extends React.Component {
         document.addEventListener("touchend", (e) => {
             barStillDown = false;
         }, true);
+
+    }
+
+    setPlayrate(e, event) {
+        debugger
+        event.stopPropagation()
+        const video = document.querySelector(".video-container video");
+        video.playbackRate = e * 1.0;
     }
 
     render() {
@@ -454,6 +479,12 @@ class PlayerN extends React.Component {
                             <rect x="14" y="4" width="4" height="16"></rect>
                         </svg>
                         <div class="loading lds-ring"><div></div><div></div><div></div><div></div></div>
+                    </div>
+                    <div className='playbackrates' >
+                        <div className='list'>
+                            {this.state.rates.map(e => <div className='item-rate' data-value={e} onClick={this.setPlayrate}>{e}x</div>)}
+
+                        </div>
                     </div>
                 </div>
                 <div className="controls-container">
@@ -540,6 +571,7 @@ class PlayerN extends React.Component {
                             </svg>
                         </button>*/}
                             <button className="captions">
+
                                 <svg viewBox="0 0 20 20">
                                     <path
                                         d="M17 0H3a3 3 0 00-3 3v10a3 3 0 003 3h11.59l3.7 3.71A1 1 0 0019 20a.84.84 0 00.38-.08A1 1 0 0020 19V3a3 3 0 00-3-3zM3.05 9.13h2a.75.75 0 010 1.5h-2a.75.75 0 110-1.5zm3.89 4.44H3.05a.75.75 0 010-1.5h3.89a.75.75 0 110 1.5zm5 0H10a.75.75 0 010-1.5h2a.75.75 0 010 1.5zm0-2.94H8.08a.75.75 0 010-1.5H12a.75.75 0 010 1.5zm5 0H15a.75.75 0 010-1.5h2a.75.75 0 010 1.5z"

@@ -11,12 +11,35 @@
   height: 100%;
 }
 
+.playbackrates {
+  color: white;
+  display: none;
+  background-color: rgba(0, 0, 0, 0.99);
+  z-index: 1000;
+  margin-top: -8rem;
+
+}
+
+.playbackrates .list {
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  margin: 0px;
+}
+
+.playbackrates .list .item-rate {
+  margin: 10px;
+  font-size: 1.8rem;
+}
+
 .video-container .center-button-container {
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   position: absolute;
+
 }
 
 .video-container .center-button-container .center-button {
@@ -320,6 +343,10 @@
 
 
 @media only screen and (max-width: 480px) {
+
+  .video-container .controls-container{
+    min-height: 26vh;
+  }
 
   .video-container .center-button-container .center-button {
     width: 4rem;
