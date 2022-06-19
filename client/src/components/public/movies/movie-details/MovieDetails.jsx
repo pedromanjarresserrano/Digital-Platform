@@ -29,7 +29,7 @@ class MovieDetails extends React.Component {
       muted: vol == 0,
       vol: vol
     }
-   
+
     this.handleChange = this.handleChange.bind(this);
     this.panoramic = this.panoramic.bind(this);
   }
@@ -190,22 +190,27 @@ class MovieDetails extends React.Component {
             </div>
           </div>
         </div>
-        <h4 className="text-white">Reparto</h4>
-        <div className="row ">
-          {this.state.item.reparto ? this.state.item.reparto.map(reparto => (
-            <div className="w-20">
-              <Actor item={reparto} />
-            </div>
-          )) : ''}
-        </div>
-
-        <h4 className="text-white">Saga</h4>
-        <div className="row ">
-          {this.state.saga ? this.state.saga.map((m, index) => (
-            <Movie item={m} index={index} onClicked={this.handleChange} playing={m._id == this.state.item._id} />
-          )) : ''}
-        </div>
-
+        {this.state.item.reparto ? <><h4 className="text-white">Reparto</h4>
+          <div className="row ">
+            {this.state.item.reparto ? this.state.item.reparto.map(reparto => (
+              <div className="w-20">
+                <Actor item={reparto} />
+              </div>
+            )) : ''}
+          </div>
+        </>
+          : ''
+        }
+        {this.state.saga ? <>
+          <h4 className="text-white">Saga</h4>
+          <div className="row ">
+            {this.state.saga ? this.state.saga.map((m, index) => (
+              <Movie item={m} index={index} onClicked={this.handleChange} playing={m._id == this.state.item._id} />
+            )) : ''}
+          </div>
+        </>
+          : ''
+        }
       </div>
     );
   }

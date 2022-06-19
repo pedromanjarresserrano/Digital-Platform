@@ -10,7 +10,7 @@ class PlayerN extends React.Component {
             item: {},
             muted: vol == 0,
             vol: vol,
-            rates: [4, 3, 2, 1.5, 1, 0.75, 0.5]
+            rates: [12, 10, 8,  4, 2, 1.5, 1, 0.75, 0.5, 0.25, 0.15]
         }
         this.setPlayrate = this.setPlayrate.bind(this);
     }
@@ -32,6 +32,11 @@ class PlayerN extends React.Component {
         const castButton = document.querySelector(
             ".video-container .controls button.cast"
         );
+
+
+        const captionButton = document.querySelector(
+            ".video-container .controls button.captions"
+        );
         const playPauseButtonCenter = document.querySelector(
             ".video-container .center-button-container .center-button"
         );
@@ -49,7 +54,11 @@ class PlayerN extends React.Component {
             ".video-container .controls button.full-screen"
         );
         const itemrates = document.querySelectorAll(
-            ".playbackrates .list .item-rate"
+            ".item-rate"
+        );
+
+        const playbackrates = document.querySelector(
+            ".playbackrates"
         );
 
         const playButton = videoContainer.querySelectorAll(".playing");
@@ -116,11 +125,27 @@ class PlayerN extends React.Component {
             pauseButton.forEach(e => e.style.display = "block")
         });
 
-
         itemrates.forEach(e => e.addEventListener('click', function (event) {
             event.stopPropagation()
+            let item = document.getElementsByClassName("drop-up-item-parent")[0];
+            item.classList.toggle("drop-up-item-show");
             this.setPlayrate(e.dataset.value, event);
         }.bind(this)))
+        let showRates = false;
+        itemrates.forEach(e => e.addEventListener('mouseover', function (event) {
+            event.stopPropagation();
+            displayControls();
+        }));
+
+        captionButton.addEventListener('click', function (event) {
+            if (!showRates) {
+                showRates = true;
+            } else {
+                showRates = false;
+            }
+            let item = document.getElementsByClassName("drop-up-item-parent")[0];
+            item.classList.toggle("drop-up-item-show");
+        });
 
         const playPause = (event) => {
             event.stopPropagation();
@@ -455,7 +480,6 @@ class PlayerN extends React.Component {
     }
 
     setPlayrate(e, event) {
-        debugger
         event.stopPropagation()
         const video = document.querySelector(".video-container video");
         video.playbackRate = e * 1.0;
@@ -571,7 +595,18 @@ class PlayerN extends React.Component {
                             </svg>
                         </button>*/}
                             <button className="captions">
-
+                                <span className="drop-up">
+                                    <span className="drop-up-item-parent">
+                                        <span className="drop-up-sub-nav">
+                                            {
+                                                this.state.rates.map(e =>
+                                                    <span className="drop-up-item">
+                                                        <button className='item-rate' type="button" data-value={e} onClick={this.setPlayrate}>{e}x</button>
+                                                    </span>)
+                                            }
+                                        </span>
+                                    </span>
+                                </span>
                                 <svg viewBox="0 0 20 20">
                                     <path
                                         d="M17 0H3a3 3 0 00-3 3v10a3 3 0 003 3h11.59l3.7 3.71A1 1 0 0019 20a.84.84 0 00.38-.08A1 1 0 0020 19V3a3 3 0 00-3-3zM3.05 9.13h2a.75.75 0 010 1.5h-2a.75.75 0 110-1.5zm3.89 4.44H3.05a.75.75 0 010-1.5h3.89a.75.75 0 110 1.5zm5 0H10a.75.75 0 010-1.5h2a.75.75 0 010 1.5zm0-2.94H8.08a.75.75 0 010-1.5H12a.75.75 0 010 1.5zm5 0H15a.75.75 0 010-1.5h2a.75.75 0 010 1.5z"
