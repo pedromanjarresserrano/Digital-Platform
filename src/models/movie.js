@@ -24,6 +24,10 @@ let movieSchema = new mongoose.Schema({
         type: String,
         default: ""
     },
+    subtitleurl: {
+        type: String,
+        default: ""
+    },
     duration: {
         type: Number,
         default: 0

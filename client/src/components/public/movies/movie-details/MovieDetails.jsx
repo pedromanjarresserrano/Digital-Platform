@@ -97,7 +97,7 @@ class MovieDetails extends React.Component {
         <div className="row">
           <div className="col-sm-12 ">
 
-            <PlayerN src={"/api/movie/" + this.state.item._id}
+            <PlayerN srcid={this.state.item._id} src={"/api/movie/" + this.state.item._id}
               poster={this.state.item.files[1]} />
             {/* <Player fluid={true} width={"100%"} height={480} loop={false} poster={this.state.item.files[1]} ref={(player) => { this.player = player }}>
               <source src={"/api/movie/" + this.state.item._id} />

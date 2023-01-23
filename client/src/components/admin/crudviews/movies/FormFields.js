@@ -182,6 +182,24 @@ export const FormFields = {
         label: 'Categorias',
         inline: true
     },
+    studio: {
+        elementType: 'select-model',
+        elementConfig: {},
+        optConfig: {
+            multiple: false
+        },
+        apiUrlModel: '/api/studios/all/-1',
+        value: [],
+        uiValue: {},
+        validation: {
+            required: false
+        },
+        valid: false,
+        touched: false,
+        labelField: 'name',
+        label: 'Studio',
+        inline: true
+    },
     portada: {
         elementType: 'file-image',
         elementConfig: {

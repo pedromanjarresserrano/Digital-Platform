@@ -4,6 +4,7 @@ const models = require('../models');
 module.exports = (app) => {
     app.use('/api/movie', require('./movie'));
     app.use('/api/movies', require('./routesmovies'));
+    app.use('/api/movies/sub', require('./movie-subtitles'));
     app.use('/api/movies', require('./crud')(models.moviemodel, { created: -1 }));
     app.use('/api/books', require('./crud')(models.bookmodel, { created: -1 }));
     app.use('/api/imagesets', require('./crud')(models.imagesetmodel, { created: -1 }));

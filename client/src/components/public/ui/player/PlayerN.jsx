@@ -10,7 +10,7 @@ class PlayerN extends React.Component {
             item: {},
             muted: vol == 0,
             vol: vol,
-            rates: [12, 10, 8,  4, 2, 1.5, 1, 0.75, 0.5, 0.25, 0.15]
+            rates: [12, 10, 8, 4, 2, 1.5, 1, 0.75, 0.5, 0.25, 0.15]
         }
         this.setPlayrate = this.setPlayrate.bind(this);
     }
@@ -60,6 +60,7 @@ class PlayerN extends React.Component {
         const playbackrates = document.querySelector(
             ".playbackrates"
         );
+        const track = document.getElementsByTagName('track')[0].track;
 
         const playButton = videoContainer.querySelectorAll(".playing");
         const pauseButton = videoContainer.querySelectorAll(".paused");
@@ -154,7 +155,7 @@ class PlayerN extends React.Component {
                 video.play();
                 playButton.forEach(e => e.style.display = "none")
                 loading.forEach(e => e.style.display = "block")
-
+                // Move the cue up 3 lines to make room for video controls
             } else {
                 video.pause();
                 playButton.forEach(e => e.style.display = "block")
@@ -173,6 +174,7 @@ class PlayerN extends React.Component {
             event.preventDefault();
             if (!document.fullscreenElement) {
                 videoContainer.requestFullscreen();
+                screen.orientation.lock("landscape-primary");
                 controlsContainer.style.width = "100%"
             } else {
                 controlsContainer.style = aux;
@@ -255,6 +257,9 @@ class PlayerN extends React.Component {
             let minutes = time.getMinutes().toString().padStart(2, "0");
             let seconds = time.getSeconds().toString().padStart(2, "0");
             timeLeft.textContent = `${hours && parseInt(hours) >= 1 ? hours.padStart(2, "0") + ":" : ""}${minutes}:${seconds}`;
+            if (track.activeCues && track.activeCues[0]) {
+  
+            }
         });
 
         progressBar.addEventListener("click", (event) => {
@@ -477,6 +482,7 @@ class PlayerN extends React.Component {
             barStillDown = false;
         }, true);
 
+
     }
 
     setPlayrate(e, event) {
@@ -488,7 +494,10 @@ class PlayerN extends React.Component {
     render() {
         return (
             <div className="video-container">
-                <video src={this.props.src} poster={this.props.poster}></video>
+                <video src={this.props.src} poster={this.props.poster}>
+                    <track label="English" kind="subtitles" srclang="en" src={"/api/movies/sub?id=" + this.props.srcid} default />
+
+                </video>
                 <div className='center-button-container' >
                     <div className='center-button'>
                         <svg

@@ -19,6 +19,9 @@ async function specialName(req, res) {
             } else {
                 if (e.name) {
                     if (!e.visualname || req.query.remake) {
+
+                        e.subtitleurl = e.url.split("mp4")[0] + "vtt";
+                        await Movies.findByIdAndUpdate({ _id: e._id }, { $set: e });
                         let count = (e.name.match(/\./g) || []).length;
                         if (count >= 4) {
                             let splitted = e.name.split(".");
@@ -423,11 +426,11 @@ async function fullfixes(req, res) {
 
                     } else {
                         find["$and"][0]["$or"][6] = {
-                            "visualname": { $regex: '.*' + c.alias.toLowerCase() + '.*', $options: 'si' }
+                            "visualname": { $regex: '.*' + aliases[0].toLowerCase() + '.*', $options: 'si' }
                         }
 
                         find["$and"][0]["$or"][7] = {
-                            "name": { $regex: '.*' + c.alias.toLowerCase() + '.*', $options: 'si' }
+                            "name": { $regex: '.*' + aliases[0].toLowerCase() + '.*', $options: 'si' }
                         }
                     }
                 }
