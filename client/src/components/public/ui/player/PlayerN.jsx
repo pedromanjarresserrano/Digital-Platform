@@ -37,6 +37,10 @@ class PlayerN extends React.Component {
         const captionButton = document.querySelector(
             ".video-container .controls button.captions"
         );
+
+        const blurButton = document.querySelector(
+            ".video-container .controls button.blur-btn"
+        ); 
         const playPauseButtonCenter = document.querySelector(
             ".video-container .center-button-container .center-button"
         );
@@ -309,7 +313,10 @@ class PlayerN extends React.Component {
         });
 
         volumeButton.addEventListener("click", toggleMute);
-
+        blurButton.addEventListener("click", async (event) => {
+            event.stopPropagation();
+            video.classList.toggle("blur")
+        });
         fullScreenButton.addEventListener("click", toggleFullScreen);
         castButton.addEventListener("click", async (event) => {
             event.stopPropagation();
@@ -623,6 +630,15 @@ class PlayerN extends React.Component {
                                 </svg>
                             </button>
                             <button className="cast">
+                                <svg viewBox="0 0 24 24">
+                                    <path
+                                        d="M2 16.1A5 5 0 0 1 5.9 20M2 12.05A9 9 0 0 1 9.95 20M2 8V6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-6"
+                                    ></path>
+                                    <line x1="2" y1="20" x2="2.01" y2="20"></line>
+                                </svg>
+                            </button>
+
+                            <button className="blur-btn">
                                 <svg viewBox="0 0 24 24">
                                     <path
                                         d="M2 16.1A5 5 0 0 1 5.9 20M2 12.05A9 9 0 0 1 9.95 20M2 8V6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-6"

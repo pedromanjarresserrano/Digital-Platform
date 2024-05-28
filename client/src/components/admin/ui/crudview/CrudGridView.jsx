@@ -32,6 +32,14 @@ class CrudGridView extends CrudView {
                 }
                 <div className="row mt-1 shadow-sm">
                     {this.getToolBar()}
+                    {this.props.topPaginator ? <div className="col-12" >
+                        <Pagination
+                            activePage={this.state.activePage}
+                            totalItemsCount={this.state.itemCount}
+                            itemsCountPerPage={this.state.pageSize}
+                            pageRangeDisplayed={9}
+                            onChange={this.onPageChanged} />
+                    </div> : <></>}
                     <div className="table-responsive crud-table-fixed">
                         {(this.state.loading) ?
                             <div className="m-5 pb-5" style={{

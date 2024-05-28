@@ -10,6 +10,10 @@ export const kbToSize = (kb, decimals = 2) => {
     return parseFloat((kb / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
 }
 
+export const bitrateFormat = (bt, decimals = 2) => {
+    return bt ? Number(bt).toLocaleString("en-US") : 'NA';
+}
+
 export const capitalizeFirstLetter = (string) => {
     return string && string.length > 0 ? string.charAt(0).toUpperCase() + string.slice(1) : "";
 }

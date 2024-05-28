@@ -255,6 +255,7 @@ export const Admin = ({ match, ...rest }) => {
                                 }}
                                 extraAcciones={TableActionsMovies}
                                 extraTopAcciones={TopActionsMovies}
+                                topPaginator={true}
                             />)} />
 
                             <Route key="crud-movies" exact path={`${match.path}/movies/:page`} render={(props) => (<CrudView {...props}

@@ -64,13 +64,13 @@ async function createMovie(files, paths, res) {
     let errorlist = [];
     const size = files.length;
     res.send({ length: size });
-    console.log("Length -----------" + size);
-    let list1 = await models.moviemodel.find({})
-    list1 = list1.map(e => e.url);
-    console.log(list1.length);
-    console.log(files.length);
-    let list2 = files.filter(e => !list1.includes(e))
-    console.log(list2.length);
+ //   console.log("Length -----------" + size);
+//let list1 = await models.moviemodel.find({})
+  //  list1 = list1.map(e => e.url);
+  //  console.log(list1.length);
+ //   console.log(files.length);
+   // let list2 = files.filter(e => !list1.includes(e))
+   // console.log(list2.length);
     for (let i = 0; i < size; i++) {
         try {
             let file = files[i].replace('\\', '/');

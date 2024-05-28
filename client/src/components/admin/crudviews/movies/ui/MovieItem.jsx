@@ -1,7 +1,7 @@
 import React from 'react';
 import './MovieItem.css';
 import { Link } from 'react-router-dom'
-import { kbToSize } from '../../../../../utils/Utils';
+import { bitrateFormat, kbToSize } from '../../../../../utils/Utils';
 import HoverSlider from '../../../../public/ui/hoverslider/HoverSlider';
 
 
@@ -65,13 +65,20 @@ export default class MovieItem extends React.Component {
             this.props.extradata ?
               <div style={{ "font-size": "10px" }}>
                 Size:
-                {
-                  kbToSize(this.props.item.size)
-                }
-                bitrate:
-                {
-                  this.props.item.bitrate
-                }
+                <span style={{
+                  fontWeight: 'bold'
+                }}>{
+                    ' ' + kbToSize(this.props.item.size) + ' '
+                  }
+                </span>
+                - Bitrate:
+                <span style={{
+                  fontWeight: 'bold'
+                }}>
+                  {
+                    ' ' + bitrateFormat(this.props.item.bitrate)
+                  }
+                </span>
               </div>
               : ''
           }
