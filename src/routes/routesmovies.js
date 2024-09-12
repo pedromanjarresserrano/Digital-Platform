@@ -218,7 +218,7 @@ const duplicates = async (req, res) => {
 
 
         for (const i of dura) {
-            let dupe = await Collection.find({ "duration": { $gte: i.duration - 60, $lte: i.duration + 60 } })
+            let dupe = await Collection.find({ "duration": { $gte: i.duration, $lte: i.duration } })
             if (dupe.length > 1)
                 response.items.push({
                     _id: i,

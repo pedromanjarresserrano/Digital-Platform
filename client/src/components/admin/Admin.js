@@ -249,7 +249,7 @@ export const Admin = ({ match, ...rest }) => {
                                 sortByDefault={{ sortby: 'duration', sortdir: -1 }}
                                 baseUrl={'/api/movies'}
                                 sortBy={SortByMovies}
-                                itemHeight={450}
+                                itemHeight={"auto"}
                                 getItem={function (item) {
                                     return (<MovieItem item={item} extradata={true} />)
                                 }}

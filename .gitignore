@@ -102,3 +102,10 @@ package-lock.json
 .env.jp
 ./public/main.js
 public/main.js
+
+#python
+*.wav
+./gensrt/env
+./gensrt/env/*
+gensrt/env
+gensrt/env/*

@@ -18,8 +18,10 @@ transition : filter 500ms ease-in-out
 
 }
 
-.blur {
-  filter: blur(5px)
+
+
+.blur-2 {
+  filter: blur(2px)
 }
 
 .playbackrates {
@@ -207,8 +209,8 @@ transition : filter 500ms ease-in-out
 
 .video-container .progress-controls .progress-bar-video {
   width: 83vw;
-  height: 1vw;
-  max-height: 7px;
+  height: 3vw;
+  max-height: 10px;
   background: #5b5b5b;
   display: flex;
   align-items: center;

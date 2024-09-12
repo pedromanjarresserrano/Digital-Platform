@@ -10,7 +10,8 @@ class PlayerN extends React.Component {
             item: {},
             muted: vol == 0,
             vol: vol,
-            rates: [12, 10, 8, 4, 2, 1.5, 1, 0.75, 0.5, 0.25, 0.15]
+            rates: [12, 10, 8, 4, 2, 1.5, 1, 0.75, 0.5, 0.25, 0.15],
+            blurs: [0, 2, 4, 6, 8, 10, 20,30,40,50]
         }
         this.setPlayrate = this.setPlayrate.bind(this);
     }
@@ -38,6 +39,10 @@ class PlayerN extends React.Component {
             ".video-container .controls button.captions"
         );
 
+        const blursButton = document.querySelector(
+            ".video-container .controls button.blur-btn"
+        );
+
         const blurButton = document.querySelector(
             ".video-container .controls button.blur-btn"
         ); 
@@ -59,6 +64,10 @@ class PlayerN extends React.Component {
         );
         const itemrates = document.querySelectorAll(
             ".item-rate"
+        );
+
+        const itemblurs = document.querySelectorAll(
+            ".item-blur"
         );
 
         const playbackrates = document.querySelector(
@@ -142,13 +151,29 @@ class PlayerN extends React.Component {
             displayControls();
         }));
 
+        itemblurs.forEach(e => e.addEventListener('click', function (event) {
+            event.stopPropagation()
+            let item = document.querySelectorAll(".blur-btn .drop-up-item-parent")[0];
+            item.classList.toggle("drop-up-item-show");
+            this.setBlur(e.dataset.value, event);
+        }.bind(this)))
+        let showblurs = false;
+        itemblurs.forEach(e => e.addEventListener('mouseover', function (event) {
+            event.stopPropagation();
+            displayControls();
+        })); 
+
+        
+
         captionButton.addEventListener('click', function (event) {
-            if (!showRates) {
-                showRates = true;
-            } else {
-                showRates = false;
-            }
-            let item = document.getElementsByClassName("drop-up-item-parent")[0];
+            showRates = !showRates;
+            let item = document.querySelectorAll(".captions .drop-up-item-parent")[0];
+            item.classList.toggle("drop-up-item-show");
+        });
+
+        blursButton.addEventListener('click', function (event) {
+            showblurs = !showblurs;
+            let item = document.querySelectorAll(".blur-btn .drop-up-item-parent")[0];
             item.classList.toggle("drop-up-item-show");
         });
 
@@ -496,6 +521,12 @@ class PlayerN extends React.Component {
         event.stopPropagation()
         const video = document.querySelector(".video-container video");
         video.playbackRate = e * 1.0;
+    }   
+
+    setBlur(e, event) {
+        event.stopPropagation()
+        const video = document.querySelector(".video-container video");
+        video.style.filter=`blur(${e}px)`
     }
 
     render() {
@@ -639,6 +670,18 @@ class PlayerN extends React.Component {
                             </button>
 
                             <button className="blur-btn">
+                                <span className="drop-up">
+                                    <span className="drop-up-item-parent">
+                                        <span className="drop-up-sub-nav">
+                                            {
+                                                this.state.blurs.map(e =>
+                                                    <span className="drop-up-item">
+                                                        <button className='item-blur' type="button" data-value={e} onClick={this.setBlur}>{e}px</button>
+                                                    </span>)
+                                            }
+                                        </span>
+                                    </span>
+                                </span>
                                 <svg viewBox="0 0 24 24">
                                     <path
                                         d="M2 16.1A5 5 0 0 1 5.9 20M2 12.05A9 9 0 0 1 9.95 20M2 8V6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-6"

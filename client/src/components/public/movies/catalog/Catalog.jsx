@@ -231,8 +231,10 @@ class Catalog extends React.Component {
 
     handleSort(event) {
         debugger
-        this.setState({ sort: event.target.value });
-        this.loadPage(this.state.activePage)
+        if (event.target.value) {
+            this.setState({ sort: event.target.value });
+            this.loadPage(this.state.activePage)
+        }
     }
 
     render() {
@@ -244,7 +246,7 @@ class Catalog extends React.Component {
                     <div className="col-12  p-5 sticky-top-scroll" >
                         <div className="row mb-2">
 
-                            <div className="col-12 col-md-4 ">
+                            <div className="col-12 col-md-4 mt-1 mb-1">
                                 <div className="form-inline">
                                     <div className="input-group">
                                         <input type="text" className="form-control" onKeyDown={this._handleKeyDown} value={this.state.search} onChange={this.handleChange} />
@@ -256,8 +258,8 @@ class Catalog extends React.Component {
 
                                 </div>
                             </div>
-                            <div className="col-12 col-md-1">
-                                <select value={this.state.chunk} onChange={this.handleSelect}>
+                            <div className="col-12 col-md-1 mt-1 mb-1">
+                                <select className="w-100" value={this.state.chunk} onChange={this.handleSelect}>
                                     <option value="30">30</option>
                                     <option value="45">45</option>
                                     <option value="60">60</option>
@@ -265,16 +267,17 @@ class Catalog extends React.Component {
                                     <option value="150">150</option>
                                 </select>
                             </div>
-                            <div className="col-12 col-md-1">
-                                Sort
+                            <div className="col-12 col-md-1 mt-1 mb-1">
+
                                 <select value={this.state.sort} onChange={this.handleSort}>
+                                    <option>Sort by</option>
                                     <option value="name">Name</option>
                                     <option value="created">Create date</option>
                                     <option value="duration">Duration</option>
                                     <option value="size">Size</option>
                                 </select>
                             </div>
-                            <div className="col-12 col-md-3 offset-md-3">
+                            <div className="col-12 col-md-3 offset-md-3 mt-1 mb-1">
                                 <select className="form-control w-100" onChange={this.handleCheckChieldElement}  >
                                     <option value="Disabled" >Categorie</option>
                                     {
@@ -283,12 +286,12 @@ class Catalog extends React.Component {
                                         })
                                     }
                                 </select>
-                                <button className="btn btn-success" onClick={this.playlist}>
-                                    Play as playlist
+                                <button className="btn btn-success  col-12 col-sm-6 mt-1 mb-1" onClick={this.playlist}>
+                                    Playlist
                                 </button>
 
-                                <button className="btn btn-success" onClick={this.playlist4}>
-                                    Play as playlist4
+                                <button className="btn btn-success  col-12 col-sm-6  mt-1 mb-1" onClick={this.playlist4}>
+                                    Playlist4
                                 </button>
                             </div>
                         </div>

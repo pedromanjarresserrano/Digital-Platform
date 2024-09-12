@@ -20,7 +20,7 @@ async function specialName(req, res) {
                 if (e.name) {
                     if (!e.visualname || req.query.remake) {
 
-                        e.subtitleurl = e.url.split("mp4")[0] + "vtt";
+                        e.subtitleurl = e.url.split("mp4")[0] + "en.vtt";
                         await Movies.findByIdAndUpdate({ _id: e._id }, { $set: e });
                         let count = (e.name.match(/\./g) || []).length;
                         if (count >= 4) {

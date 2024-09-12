@@ -7,6 +7,7 @@ import './CrudView.css';
 import { CommonLoading } from 'react-loadingg';
 import queryString from 'query-string'
 import { generatePath } from 'react-router-dom';
+import { Button, ListItemIcon, Menu, MenuItem, Typography } from '@material-ui/core';
 
 class CrudView extends React.Component {
 
@@ -23,11 +24,15 @@ class CrudView extends React.Component {
             modal: false,
             onOkClick: null,
             search: '',
-            sortby: this.props.sortByDefault ? this.props.sortByDefault.sortby : '',
-            direction: this.props.sortByDefault ? this.props.sortByDefault.sortdir : '1',
+            sortby: this.props.sortByDefault ? this.props.sortByDefault.sortby : this.getParams().sortby ? this.getParams().sortby : '',
+            direction: this.props.sortByDefault ? this.props.sortByDefault.sortdir : this.getParams().direction ? this.getParams().direction : '1',
             loading: true,
-            chunk: this.props.chunk ? this.props.chunk : 25
+            chunk: this.props.chunk ? this.props.chunk : this.getParams().chunk ? this.getParams().chunk : 25,
+            anchorEl: false,
+            open: false
         }
+
+
         this.getToolBar = this.getToolBar.bind(this);
         this.deleteClick = this.deleteClick.bind(this);
 
@@ -48,17 +53,23 @@ class CrudView extends React.Component {
         //   document.getElementsByClassName('crud-table-fixed')[0].style.height = parseInt(window.innerHeight * 0.83) + 'px'
     }
 
+    getCurrentPage() {
+        let page = this.props.match.params.page;
+        return page ? parseInt(page) : 1;
+    }
+
+    getParams() {
+        return queryString.parse(this.props.location.search);
+    }
+
     async componentWillMount() {
         var user = localStorage.getItem("userInfo");
         if (!user) {
             this.props.history.push('/admin/login');
-
         }
-        const values = queryString.parse(this.props.location.search);
+        const values = this.getParams();
 
-        let page = this.props.match.params.page;
-
-        page = page ? parseInt(page) : 1;
+        let page = this.getCurrentPage();
 
         var statesVal = { activePage: page }
         if (values && values.search) {
@@ -155,9 +166,12 @@ class CrudView extends React.Component {
 
     handleSearch(event) {
         event.preventDefault();
+        let search = this.createQueryString({ ...this.getParams(), "search": this.state.search });
+        debugger
+
         this.props.history.push({
             pathname: generatePath(this.props.match.path, { page: 1 }),
-            search: '?search=' + this.state.search,
+            search: search
 
         })
         this.setState({ activePage: 1 })
@@ -167,6 +181,11 @@ class CrudView extends React.Component {
 
     handleChange(event) {
         this.setState({ [event.target.id]: event.target.value });
+        this.props.history.push({
+            pathname: generatePath(this.props.match.path, { page: this.state.activePage }),
+            search: this.createQueryString({ ...this.getParams(), [event.target.id]: event.target.value }),
+
+        })
     }
 
     _handleKeyDown = (e) => {
@@ -176,52 +195,114 @@ class CrudView extends React.Component {
         }
     }
 
+    handleClick = (event) => {
+        //setAnchorEl(event.currentTarget);
+        this.setState({
+            anchorEl: event.currentTarget,
+            open: true
+        })
+        debugger
+    };
+    handleClose = () => {
+        // setAnchorEl(null);
+        this.setState({
+            anchorEl: null,
+            open: false
+        })
+    };
+    createQueryString(queryObject = {}) {
+        let queryString = Object.keys(queryObject)
+            .filter((key) => queryObject[key] && !(Array.isArray(queryObject[key]) && !queryObject[key].length))
+            .map((key) => {
+                return Array.isArray(queryObject[key]) ? queryObject[key].map(item => `${encodeURIComponent(key)}=${encodeURIComponent(item)}`).join('&') : `${encodeURIComponent(key)}=${encodeURIComponent(queryObject[key])}`;
+            }).join('&');
+        return queryString ? `?${queryString}` : "";
+    };
+
     getToolBar = () => {
 
         return (<div className="col-12 py-1 bg-secondary d-flex flex-row justify-content-between">
-            <div className='d-flex row-flex'>
-                <button title="New" onClick={this.newClick} className="btn btn-sm btn-primary"><i className="fas fa-plus-square"></i></button>
+            <div className='d-flex flex-sm-row flex-column'>
+                <Button
+                    id="basic-button"
+                    aria-controls={this.state.open ? 'basic-menu' : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={this.state.open ? 'true' : undefined}
+                    onClick={this.handleClick}
+                    className='btn btn-sm bg-primary my-0'
+                >
+                    Menu
+                </Button>
+                <Menu
+                    id="basic-menu"
+                    anchorEl={this.state.anchorEl}
+                    open={this.state.open}
+                    elevation={0}
+                    onClose={this.handleClose}
+                    MenuListProps={{
+                        'aria-labelledby': 'basic-button',
+                    }}
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'left',
+                    }}
+                    transformOrigin={{
+                        vertical: 'top',
+                        horizontal: 'left',
+                    }}
+                >
+                    {this.props.extraTopAcciones && this.props.extraTopAcciones.length > 0 ? this.props.extraTopAcciones.map(accion =>
+                        <button key={Math.random() + "-id-button-crud-commands"} type="button" className={accion.className + ' w-100 mb-1 py-2'} onClick={() => accion.onClick({
+                            items: Array.from(document.querySelectorAll('input.checkboxcrud:checked')).map(e => e.value)
+                        })}><i className={accion.icon}></i> {accion.name}</button>
+                    ) : ""}
+                </Menu>
+                <div id='normal-menu' className='d-flex flex-row'>
+                    <button title="New" onClick={this.newClick} className="btn btn-sm btn-primary"><i className="fas fa-plus-square"></i></button>
 
-                {this.props.extraTopAcciones && this.props.extraTopAcciones.length > 0 ? this.props.extraTopAcciones.map(accion =>
-                    <button key={Math.random() + "-id-button-crud-commands"} type="button" className={accion.className + ' ml-1'} onClick={() => accion.onClick({
-                        items: Array.from(document.querySelectorAll('input.checkboxcrud:checked')).map(e => e.value)
-                    })}><i className={accion.icon}></i> {accion.name}</button>
-                ) : ""}
-                {
-                    this.state.sortby ?
-                        <div className='d-flex row-flex'>
-                            <select value={this.state.sortby} id='sortby' onChange={this.handleChange}>
-                                <option disable value={null}>Select option</option>
-                                {this.props.sortBy.map((item) => (
-                                    <option value={item.key}>{item.label}</option>
-                                ))}
-                            </select>
-                            <select value={this.state.direction} id='direction' onChange={this.handleChange}>
-                                <option selected value="1">ASC</option>
-                                <option value="-1">DESC</option>
+                    {this.props.extraTopAcciones && this.props.extraTopAcciones.length > 0 ? this.props.extraTopAcciones.map(accion =>
+                        <button key={Math.random() + "-id-button-crud-commands"} type="button" className={accion.className + ' ml-1 '} onClick={() => accion.onClick({
+                            items: Array.from(document.querySelectorAll('input.checkboxcrud:checked')).map(e => e.value)
+                        })}><i className={accion.icon}></i> {accion.name}</button>
+                    ) : ""}
+                    {
+                        this.state.sortby ?
+                            <div className='d-flex row-flex'>
+                                <select value={this.state.sortby} id='sortby'  className='w-100'
+                                onChange={this.handleChange}>
+                                    <option disable value={null}>Select option</option>
+                                    {this.props.sortBy.map((item) => (
+                                        <option value={item.key}>{item.label}</option>
+                                    ))}
+                                </select>
+                                <select value={this.state.direction} id='direction'  className='w-100'
+                                onChange={this.handleChange}>
+                                    <option selected value="1">ASC</option>
+                                    <option value="-1">DESC</option>
+                                </select>
+                            </div>
+                            : ''
+                    }
+                    <div className='d-flex row-flex'>
+                        <div className="col-12">
+                            <select value={this.state.chunk}
+                                className='w-100 h-100'
+                                id={'chunk'}
+                                onChange={this.handleChange}>
+                                <option disable value={null}>Page size</option>
+                                <option value="25">25</option>
+                                <option value="30">30</option>
+                                <option value="45">45</option>
+                                <option value="60">60</option>
+                                <option value="100">100</option>
+                                <option value="125">125</option>
+                                <option value="150">150</option>
+                                <option value="250">250</option>
+                                <option value="350">350</option>
                             </select>
                         </div>
-                        : ''
-                }
-                <div className='d-flex row-flex'>
-                    <div className="col-12 col-md-2">
-                        <select value={this.state.chunk}
-                            id={'chunk'}
-                            onChange={this.handleChange}>
-                            <option disable value={null}>Page size</option>
-                            <option value="25">25</option>
-                            <option value="30">30</option>
-                            <option value="45">45</option>
-                            <option value="60">60</option>
-                            <option value="100">100</option>
-                            <option value="125">125</option>
-                            <option value="150">150</option>
-                            <option value="250">250</option>
-                            <option value="350">350</option>
-                        </select>
                     </div>
                 </div>
-
             </div>
             <div>
                 <form onSubmit={this.handleSearch}>
@@ -287,7 +368,7 @@ class CrudView extends React.Component {
                             activePage={this.state.activePage}
                             totalItemsCount={this.state.itemCount}
                             itemsCountPerPage={this.state.pageSize}
-                            pageRangeDisplayed={9}
+                            pageRangeDisplayed={7}
                             onChange={this.onPageChanged} />
                     </div>
                 </div>

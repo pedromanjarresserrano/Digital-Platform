@@ -37,7 +37,7 @@ class CrudGridView extends CrudView {
                             activePage={this.state.activePage}
                             totalItemsCount={this.state.itemCount}
                             itemsCountPerPage={this.state.pageSize}
-                            pageRangeDisplayed={9}
+                            pageRangeDisplayed={7}
                             onChange={this.onPageChanged} />
                     </div> : <></>}
                     <div className="table-responsive crud-table-fixed">
@@ -67,7 +67,7 @@ class CrudGridView extends CrudView {
                             activePage={this.state.activePage}
                             totalItemsCount={this.state.itemCount}
                             itemsCountPerPage={this.state.pageSize}
-                            pageRangeDisplayed={9}
+                            pageRangeDisplayed={7}
                             onChange={this.onPageChanged} />
                     </div>
                 </div>

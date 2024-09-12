@@ -1,3 +1,53 @@
 .MuiGridList-root {
     margin: 0px !important;
+
+}
+
+.table-responsive.crud-table-fixed>.MuiGridList-root {
+    overflow: scroll;
+    height: 90vh;
+}
+
+li.item-grid .item-container{
+    min-height: 230px !important;
+}
+
+
+@media (min-width: 1301px ) {
+
+    li.item-grid .item-container{
+        min-height: unset !important;
+    }
+}
+
+@media (min-width: 1201px) {
+    li.item-grid {
+        width: 20% !important;
+    }
+    li.item-grid .item-container{
+        min-height: 290px !important;
+    }
+}
+
+@media (max-width: 1200px) {
+    li.item-grid {
+        width: 25% !important;
+    }
+  
+}
+
+
+@media (max-width: 975px) {
+    li.item-grid {
+        width: 33% !important;
+    }
+   
+}
+
+@media(max-width: 575px) {
+    li.item-grid {
+        width: 100% !important;
+    }
+
+    
 }

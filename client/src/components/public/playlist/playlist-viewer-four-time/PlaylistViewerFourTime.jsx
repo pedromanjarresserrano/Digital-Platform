@@ -371,7 +371,11 @@ class PlaylistViewerFourTime extends React.Component {
               <div className="col-12 col-md-4 ">
                 <div className="form-inline">
                   <div className="input-group">
-                    <input type="text" className="form-control" onKeyDown={this._handleKeyDown} value={this.state.search} onChange={this.handleSearchChange} />
+                    <input type="text" className="form-control" onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        this.handleSearch(e);
+                      } else { this._handleKeyDown(e) }
+                    }} value={this.state.search} onChange={this.handleSearchChange} />
                     <div className="input-group-append">
                       <button className="btn btn-danger " onClick={this.handleSearch} >Buscar </button>
 
