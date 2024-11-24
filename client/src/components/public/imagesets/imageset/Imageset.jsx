@@ -18,7 +18,7 @@ class Imageset extends React.Component {
 
   render() {
     return (
-      <div className="w-100 w-m-20 card-m-l" key={this.props.item._id} title={this.props.item.name} >
+      <div className="w-100 w-m-20 mw-220 pd-1px" key={this.props.item._id} title={this.props.item.name} >
         <div className=" border rounded bg-dark border-dark w-100 mb-2 mt-2" >
           <Link to={"/imagesets/imageset/" + this.props.item._id} className="w-100">
             <div className="p-1 d-flex flex-column justify-content-center" >

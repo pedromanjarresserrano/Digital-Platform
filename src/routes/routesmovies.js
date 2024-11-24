@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const ObjectID = require('mongodb').ObjectID;
 const Collection = require('../models').moviemodel;
+const SagaCollection = require('../models').sagamodel;
 const config = require("../config/index")
 const attrname = "portada";
 const { saveFile } = require('../services/files');
@@ -133,6 +134,20 @@ const addacts = async function (req, res) {
     }
 }
 
+const addtosaga = async function (req, res) {
+    try {
+        console.log(req.body);
+        let list = await Collection.find({ _id: { $in: req.body.items } });
+        let saga = await SagaCollection.findOne({ _id: item._id });
+        saga.parts.add(list)
+        console.log(list);
+        await SagaCollection.findOneAndUpdate({ _id: item._id }, { $set: saga }, { upsert: true, new: true, setDefaultsOnInsert: true, fields: '-__v' })
+        res.json({ message: 'All OK' })
+    } catch (error) {
+        console.log(error)
+        res.status(500).send({ message: 'Error making post ' + error });
+    }
+}
 
 const addsts = async function (req, res) {
     try {
@@ -203,7 +218,7 @@ const duplicates = async (req, res) => {
 
 
         for (const i of dura) {
-            let dupe = await Collection.find({ "duration": { $gte: i.duration - 60, $lte: i.duration + 60 } })
+            let dupe = await Collection.find({ "duration": { $gte: i.duration, $lte: i.duration } })
             if (dupe.length > 1)
                 response.items.push({
                     _id: i,
@@ -344,6 +359,7 @@ router.post('/:_id/like', loggerRequest, likedOne);
 router.put('/:_id', loggerRequest, tokenValidator, update);
 router.post('/addcatgs', loggerRequest, tokenValidator, addcatgs);
 router.post('/addacts', loggerRequest, tokenValidator, addacts);
+router.post('/addtosaga', loggerRequest, tokenValidator, addtosaga);
 router.post('/addsts', loggerRequest, tokenValidator, addsts);
 router.delete('/:_id', loggerRequest, tokenValidator, remove);
 router.delete('/deletewithfile/:_id', loggerRequest, tokenValidator, removeWithFile);

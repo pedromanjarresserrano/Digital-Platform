@@ -70,13 +70,13 @@ class Duplicates extends React.Component {
                             {item._id.duration}
                             <div className=" d-flex flex-row flex-wrap"> {
                                 item.idsForDuplicatedDocs.map((item, index) =>
-                                    <div className=" d-flex flex-column align-items-center  ">
+                                    <>
                                         <Movie item={item} index={index} />
                                         <button className="btn btn-danger " onClick={() => {
                                             console.log("Click");
                                             this.deletefull(item)
                                         }} >{"Delete"}</button>
-                                    </div>
+                                    </>
 
                                     , this)
                             }

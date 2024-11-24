@@ -4,6 +4,8 @@ import Select from '@material-ui/core/Select';
 import Chip from '@material-ui/core/Chip';
 import MenuItem from '@material-ui/core/MenuItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import TextField from '@material-ui/core/TextField';
+import { Autocomplete } from '@material-ui/lab';
 
 class Input extends React.Component {
 
@@ -15,11 +17,18 @@ class Input extends React.Component {
             opts: [],
             items: []
         };
-
+        this.getDataList = this.getDataList.bind(this);
     }
+
     componentDidMount() {
+        this.getDataList();
+    }
+
+    getDataList(name = '') {
         if (this.props.apiUrlModel)
-            Axios.get(this.props.apiUrlModel)
+            Axios.post(this.props.apiUrlModel + '?chunk=30', {
+                name: { "$regex": ".*" + name + ".*", $options: 'i' },
+            })
                 .then(function (response) {
                     const items = response.data;
                     if (items) {
@@ -34,6 +43,7 @@ class Input extends React.Component {
                             );
                         }, this);
                         this.setState({
+                            dataItems: items,
                             opts: options
                         });
                     }
@@ -81,30 +91,57 @@ class Input extends React.Component {
                 );
             case ('select-model'):
                 return (
-                    <Select
+
+                    <Autocomplete
+                        multiple
                         className={(this.props.optConfig.multiple ? '' : "form-field") + 'select-field'}
+                        options={this.state.dataItems ? this.state.dataItems.slice(0, 30).map(e => e._id) : []}
+                        getOptionLabel={(option) => {
+                            let first = this.state.items.find(x => x._id === option);
+                            return first ? first.name : ''
+                        }}
+                        id={this.props.keyId}
                         name={this.props.keyId}
                         value={this.props.value}
-                        onChange={this.props.changed}
-                        renderValue={selected => {
-                            if (!this.props.optConfig.multiple)
-                                return this.props.value;
-                            else
-                                return (
-                                    <div className={'chips'}>
-                                        {
-                                            this.props.value.map(value => (
-                                                <Chip key={value} label={this.state.items.find(x => x._id === value).name} className={'chip'} />
-                                            ))
-                                        }
-                                    </div>
-                                );
-                        }}
+                        onChange={(event, value) => { this.props.changed({ target: { value } }); }}
+                        renderInput={(params) => (
+                            <TextField
+                                {...params}
+                                variant="standard"
+                                label={this.props.label ? this.props.label : ''}
+                                onChange={(event) => { this.getDataList(event.target.value) }}
+                                placeholder={this.props.placeholder ? this.props.placeholder : ''}
+                            />
+                        )}
+                    />
+                    // <Select
+                    //     className={(this.props.optConfig.multiple ? '' : "form-field") + 'select-field'}
+                    //     name={this.props.keyId}
+                    //     value={this.props.value}
+                    //     onChange={this.props.changed}
+                    //     renderValue={selected => {
+                    //         if (!this.props.optConfig.multiple)
+                    //             return this.props.value;
+                    //         else
+                    //             return (
+                    //                 <div className={'chips'}>
+                    //                     {
+                    //                         this.props.value.map(value => {
+                    //                             let first = this.state.items.find(x => x._id === value);
 
-                        {...this.props.optConfig}
-                    >
-                        {this.state.opts}
-                    </Select>
+                    //                             return (
+                    //                                 <Chip key={value} label={first ? first.name : ''} className={'chip'} />
+                    //                             )
+                    //                         })
+                    //                     }
+                    //                 </div>
+                    //             );
+                    //     }}
+
+                    //     {...this.props.optConfig}
+                    // >
+                    //     {this.state.opts}
+                    // </Select>
                 );
             case ('file-image'):
                 return (

@@ -4,6 +4,7 @@ const models = require('../models');
 module.exports = (app) => {
     app.use('/api/movie', require('./movie'));
     app.use('/api/movies', require('./routesmovies'));
+    app.use('/api/movies/sub', require('./movie-subtitles'));
     app.use('/api/movies', require('./crud')(models.moviemodel, { created: -1 }));
     app.use('/api/books', require('./crud')(models.bookmodel, { created: -1 }));
     app.use('/api/imagesets', require('./crud')(models.imagesetmodel, { created: -1 }));
@@ -15,6 +16,8 @@ module.exports = (app) => {
     app.use('/api/categorias', require('./crud')(models.categoriamodel, { name: "asc" }));
     app.use('/api/usuario', require('./crud')(models.usuariomodel, { name: "asc" }));
     app.use('/api/location', require('./crud')(models.locationmodel, { name: "asc" }));
+    app.use('/api/sagas', require('./routesfile')(models.sagamodel, 'portada', 'name'));
+    app.use('/api/sagas', require('./crud')(models.sagamodel, { name: "asc" }));
     app.use('/api/movies/read', require('./movies'));
     app.use('/api/books/read', require('./books'));
     app.use('/api/imageset/read', require('./imageset'));

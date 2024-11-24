@@ -161,6 +161,17 @@ select.form-field {
     max-width: 1400px !important;
 }
 
+.mw-1500 {
+    max-width: 1500px !important;
+}
+
+.mw-220 pd-1px{
+    min-width: 220px !important;
+}
+
+.pd-1px{
+    padding: 1px;
+}
 .px-100 {
     padding-left: 100px !important;
     padding-right: 100px !important;

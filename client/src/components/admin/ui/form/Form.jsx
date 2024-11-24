@@ -43,6 +43,7 @@ class Form extends React.Component {
                 }
                 this.setState({ dataForm, formIsValid: true });
             }).catch(err => {
+                console.log(err);
                 alert(JSON.stringify(err));
             })
         }
@@ -75,7 +76,6 @@ class Form extends React.Component {
             const pattern = /^\d+$/;
             isValid = pattern.test(value) && isValid
         }
-        console.log(rules);
         return isValid;
     }
     addOrRemove = (array, value) => {
@@ -95,13 +95,10 @@ class Form extends React.Component {
         const updatedFormElement = {
             ...updateddataForm[inputIdentifier]
         };
-        if (updatedFormElement.optConfig && updatedFormElement.optConfig.multiple) {
+        if (event.target.type == 'file')
+            updatedFormElement.value = event.target.files[0];
+        else
             updatedFormElement.value = event.target.value;
-        } else
-            if (event.target.type == 'file')
-                updatedFormElement.value = event.target.files[0];
-            else
-                updatedFormElement.value = event.target.value;
         updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
         updatedFormElement.touched = true;
         updateddataForm[inputIdentifier] = updatedFormElement;
@@ -136,6 +133,9 @@ class Form extends React.Component {
                 data[formElementIdentifier] = this.state.dataForm[formElementIdentifier].value;
             }
         }
+        if (this.props.match.params.action === "edit") {
+            data._id = this.props.match.params.id;
+        }
         return data;
     }
 
@@ -148,6 +148,7 @@ class Form extends React.Component {
     }
 
     saveAndNew = () => {
+        debugger
         let data = this.captureData();
         this.sendForm(data);
         document.getElementsByTagName('form')[0].reset();

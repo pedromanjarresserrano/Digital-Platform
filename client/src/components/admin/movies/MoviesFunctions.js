@@ -7,7 +7,7 @@ export async function fixFull(props) {
         let headers = {}
         headers["x-access-token"] = '' + localStorage.getItem("utoken");
 
-        await axios.get("/api/fixes/specialnames", {
+        await axios.get("/api/fixes/specialnames?remake=true", {
             headers: headers
         })
 

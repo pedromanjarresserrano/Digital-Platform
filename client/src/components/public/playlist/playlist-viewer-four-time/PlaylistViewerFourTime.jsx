@@ -24,13 +24,18 @@ class PlaylistViewerFourTime extends React.Component {
   constructor(props) {
     super(props)
     let vol = parseFloat(localStorage.getItem("volumen"))
-    localStorage.setItem("state", JSON.stringify(null))
     let states = JSON.parse(localStorage.getItem("state"))
-    if (states)
+    debugger
+     if (states){
+      
+      delete states.vol
+      delete states.muted
       this.state = {
         ...states,
-        open: false
-      }
+        open: false,
+        vol: !isNaN(vol) ? vol : 1.0,
+        muted: vol == 0,
+      }}
     else
       this.state = {
         items: [],
@@ -156,7 +161,7 @@ class PlaylistViewerFourTime extends React.Component {
   async componentDidMount() {
     await this.load();
     if (this.state.items && this.state.items.length > 0) {
-
+      debugger
       let list1 = this.state.list1;
       let list2 = this.state.list2;
       let list3 = this.state.list3;
@@ -239,6 +244,8 @@ class PlaylistViewerFourTime extends React.Component {
     })
     this.video.muted = this.state.muted
     this.video.volume = parseFloat(this.state.vol)
+    this.video.pause();
+    this.video.currentTime = 0;
   }
 
   regresar = () => {
@@ -268,6 +275,7 @@ class PlaylistViewerFourTime extends React.Component {
     this.setState({
       [listname]: list
     })
+    localStorage.setItem("state", JSON.stringify(this.state))
   }
 
   render() {
@@ -369,7 +377,11 @@ class PlaylistViewerFourTime extends React.Component {
               <div className="col-12 col-md-4 ">
                 <div className="form-inline">
                   <div className="input-group">
-                    <input type="text" className="form-control" onKeyDown={this._handleKeyDown} value={this.state.search} onChange={this.handleSearchChange} />
+                    <input type="text" className="form-control" onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        this.handleSearch(e);
+                      } else { this._handleKeyDown(e) }
+                    }} value={this.state.search} onChange={this.handleSearchChange} />
                     <div className="input-group-append">
                       <button className="btn btn-danger " onClick={this.handleSearch} >Buscar </button>
 
@@ -390,7 +402,7 @@ class PlaylistViewerFourTime extends React.Component {
                 pageRangeDisplayed={Constants.PUBLIC.PAGE_VISIBLE_COUNT}
                 onChange={this.onPageChanged} />
             </div>
-            <div className="d-flex flex-row justify-content-center   mx-auto w-100 mw-1300">
+            <div className="d-flex flex-row justify-content-center   mx-auto w-100 mw-1500">
               <div className="display d-flex flex-row  justify-content-between flex-wrap w-100" >  {
 
                 this.state.items.map((m, index) =>
@@ -405,7 +417,7 @@ class PlaylistViewerFourTime extends React.Component {
                   (this.state.items ?
                     ([...Array(10).keys()]
                     ).map(() => {
-                      return (<div className="w-100 w-m-20 card-m-l d-md-block d-none" />)
+                      return (<div className="w-100 w-m-20 mw-220 pd-1px d-md-block d-none" />)
                     })
                     : <div />)
                 }

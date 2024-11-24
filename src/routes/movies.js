@@ -64,23 +64,20 @@ async function createMovie(files, paths, res) {
     let errorlist = [];
     const size = files.length;
     res.send({ length: size });
-    console.log("Length -----------" + size);
-    let list1 = await models.moviemodel.find({})
-    list1 = list1.map(e => e.url);
-    console.log(list1.length);
-    console.log(files.length);
-    let list2 = files.filter(e => !list1.includes(e))
-    console.log(list2.length);
+ //   console.log("Length -----------" + size);
+//let list1 = await models.moviemodel.find({})
+  //  list1 = list1.map(e => e.url);
+  //  console.log(list1.length);
+ //   console.log(files.length);
+   // let list2 = files.filter(e => !list1.includes(e))
+   // console.log(list2.length);
     for (let i = 0; i < size; i++) {
         try {
             let file = files[i].replace('\\', '/');
             let n = file.split("/");
             let nameFile = n[n.length - 1].split(".mp4")[0];
             let movie = await models.moviemodel.findOne({
-                $or: [
-                    { name: nameFile.trim() },
-                    { url: { "$regex": nameFile, "$options": "i" } }
-                ]
+                name: { $eq: nameFile.trim() }
             });
             try {
                 processbar = Math.floor((i + 1) * 100 / (size), 0)
@@ -160,13 +157,14 @@ async function createMovie(files, paths, res) {
 
 async function generatefiles(newvideo, ratio) {
     if (newvideo.files.length < 10) {
+        const _id = newvideo._id;
         var list = await service.generatePreviews({
-            name: newvideo._id,
+            name: _id,
             url: newvideo.url,
             ratio: ratio
         })
         newvideo.files = [];
-        list.map(e => "/" + (process.env.DIRTHUMBNAIL ? process.env.DIRTHUMBNAIL : "thumbnail") + "/" + e).forEach(i => newvideo.files.push(i));
+        list.map(e => "/" + (process.env.DIRTHUMBNAIL ? process.env.DIRTHUMBNAIL : "thumbnail") + "/" + _id + "/" + e).forEach(i => newvideo.files.push(i));
         console.log(newvideo.files)
     }
     await models.moviemodel.updateOne({ _id: newvideo._id }, newvideo);

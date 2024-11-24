@@ -1,7 +1,7 @@
 import React from 'react';
 import './MovieItem.css';
 import { Link } from 'react-router-dom'
-import { kbToSize } from '../../../../../utils/Utils';
+import { bitrateFormat, kbToSize } from '../../../../../utils/Utils';
 import HoverSlider from '../../../../public/ui/hoverslider/HoverSlider';
 
 
@@ -43,8 +43,8 @@ export default class MovieItem extends React.Component {
   render() {
     const name = this.props.item.visualname ? this.props.item.visualname : this.props.item.name;
     return (
-      <div className="w-100 w-m-50 card-m-l" key={this.props.item._id} title={this.props.item.name} >
-        <div className=" border  border-dark w-100 mb-2 mt-2" >
+      <div className="w-100 w-m-50 mw-220 pd-1px" key={this.props.item._id} title={this.props.item.name} >
+        <div className=" border  border-dark w-100 mb-2 mt-2 item-container" >
           {this.props.onClicked ? <div onClick={() => this.props.onClicked(this.props.item)} >
             {
               this.getPreview()
@@ -63,19 +63,33 @@ export default class MovieItem extends React.Component {
           }
           {
             this.props.extradata ?
-              <div style={{ "font-size": "10px" }}>
+              <div style={{
+                "font-size": "10px",
+              }}>
                 Size:
-                {
-                  kbToSize(this.props.item.size)
-                }
-                bitrate:
-                {
-                  this.props.item.bitrate
-                }
+                <span style={{
+                  fontWeight: 'bold'
+                }}>{
+                    ' ' + kbToSize(this.props.item.size) + ' '
+                  }
+                </span>
+                - Bitrate:
+                <span style={{
+                  fontWeight: 'bold'
+                }}>
+                  {
+                    ' ' + bitrateFormat(this.props.item.bitrate)
+                  }
+                </span>
               </div>
               : ''
           }
-          <div style={{ "font-size": "10px" }}>
+          <div style={{
+            "font-size": "10px",
+            "text-overflow": "ellipsis",
+            "max-height": "45px",
+            "overflow": "hidden",
+          }}>
             url:<br />
             {
               this.props.item.url

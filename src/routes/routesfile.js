@@ -26,6 +26,7 @@ module.exports = (Collection, attrname, uniqueattrname) => {
                 doc[attrname] = '/uploads/' + doc._id + '.' + mime.extension(req.file.mimetype);
                 saveFile(req.file, doc, Collection);
             }
+            await Collection.findByIdAndUpdate({ _id: doc._id }, { $set: doc }, { upsert: true, 'new': true })
             return res.status(200).send({ message: "Ok", doc });
         } catch (error) {
             console.log(error)

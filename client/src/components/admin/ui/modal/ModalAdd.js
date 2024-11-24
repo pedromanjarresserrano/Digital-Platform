@@ -78,6 +78,7 @@ export default function ModalAdd(props) {
                 })
                     .then((res => {
                         toastr["success"]("Saved");
+                        data.items.length = 0;
                         close();
                     }).bind(this))
                     .catch(error => {

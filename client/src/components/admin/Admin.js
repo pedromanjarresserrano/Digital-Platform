@@ -31,6 +31,11 @@ import { FormFields as FormFieldsStudios } from './crudviews/studios/FormFields'
 import { Headers as HeadersStudios } from './crudviews/studios/Headers';
 import { FormFields as FormFieldsCategories } from './crudviews/categories/FormFields';
 import { Headers as HeadersCategories } from './crudviews/categories/Headers';
+import { FormFields as FormFieldsSagas } from './crudviews/sagas/FormFields';
+import { Headers as HeadersSagas } from './crudviews/sagas/Headers';
+import { SortBy as SortBySagas } from './crudviews/sagas/SortBy';
+import { TopActions as TopActionsSagas } from './crudviews/sagas/Actions';
+
 import ActorItem from './crudviews/actors/actor/ActorItem';
 
 toastr.options = {
@@ -244,12 +249,13 @@ export const Admin = ({ match, ...rest }) => {
                                 sortByDefault={{ sortby: 'duration', sortdir: -1 }}
                                 baseUrl={'/api/movies'}
                                 sortBy={SortByMovies}
-                                itemHeight={450}
+                                itemHeight={"auto"}
                                 getItem={function (item) {
                                     return (<MovieItem item={item} extradata={true} />)
                                 }}
                                 extraAcciones={TableActionsMovies}
                                 extraTopAcciones={TopActionsMovies}
+                                topPaginator={true}
                             />)} />
 
                             <Route key="crud-movies" exact path={`${match.path}/movies/:page`} render={(props) => (<CrudView {...props}
@@ -265,6 +271,22 @@ export const Admin = ({ match, ...rest }) => {
                                     }
                                     baseUrl={'/api/movies'}
                                     formTitle={'Video data'}
+                                />)} />
+                            <Route key="crud-sagas-1" exact path={`${match.path}/sagas`} render={(props) => (<Redirect to={`${match.path}/sagas/1`}   {...props} />)} />
+
+                            <Route key="crud-sagas" exact path={`${match.path}/sagas/:page`} render={(props) => (<CrudView {...props}
+                                headers={HeadersSagas}
+                                sortBy={SortBySagas}
+                                baseRoute={`${match.path}/sagas/saga`}
+                                baseUrl={'/api/sagas'}
+                                extraTopAcciones={TopActionsSagas}
+                            />)} />
+                            <Route key="form-sagas" exact path={`${match.path}/sagas/saga/:action/:id`} render={(props) => (
+                                <Form {...props}
+                                    formField={FormFieldsSagas
+                                    }
+                                    baseUrl={'/api/sagas'}
+                                    formTitle={'Saga data'}
                                 />)} />
 
                             <Route key="crud-books-1" exact path={`${match.path}/books`} render={(props) => (<Redirect to={`${match.path}/books/1`}   {...props} />)} />

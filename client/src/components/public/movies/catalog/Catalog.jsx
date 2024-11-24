@@ -22,7 +22,7 @@ class Catalog extends React.Component {
             timerange: [0, 5000],
             loading: true,
             navbar_height: 0,
-            chunk: 25
+            chunk: 30
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -120,6 +120,35 @@ class Catalog extends React.Component {
             state: find
         })
     }
+
+    playlist4 = () => {
+        let find = {
+            $and: [
+                {
+                    $or: [
+                        {
+                            name: { "$regex": ".*" + this.state.search + ".*", $options: 'i' },
+                        },
+                        {
+                            visualname: { "$regex": ".*" + this.state.search + ".*", $options: 'i' },
+                        },
+                    ]
+                },
+                {
+
+                }
+            ]
+        }
+        let cats = this.state.categorias.filter(e => e.isChecked);
+        if (cats.length > 0)
+            find.$and[1].categorias = cats.map(e => e._id);
+        localStorage.setItem("fils", JSON.stringify(find));
+        this.props.history.push({
+            pathname: '/playlist4',
+            state: find
+        })
+    }
+
     async loadPage(page) {
         await this.setState({
             loading: true
@@ -202,8 +231,10 @@ class Catalog extends React.Component {
 
     handleSort(event) {
         debugger
-        this.setState({ sort: event.target.value });
-        this.loadPage(this.state.activePage)
+        if (event.target.value) {
+            this.setState({ sort: event.target.value });
+            this.loadPage(this.state.activePage)
+        }
     }
 
     render() {
@@ -215,7 +246,7 @@ class Catalog extends React.Component {
                     <div className="col-12  p-5 sticky-top-scroll" >
                         <div className="row mb-2">
 
-                            <div className="col-12 col-md-4 ">
+                            <div className="col-12 col-md-4 mt-1 mb-1">
                                 <div className="form-inline">
                                     <div className="input-group">
                                         <input type="text" className="form-control" onKeyDown={this._handleKeyDown} value={this.state.search} onChange={this.handleChange} />
@@ -227,25 +258,26 @@ class Catalog extends React.Component {
 
                                 </div>
                             </div>
-                            <div className="col-12 col-md-1">
-                                <select value={this.state.chunk} onChange={this.handleSelect}>
-                                    <option value="25">25</option>
+                            <div className="col-12 col-md-1 mt-1 mb-1">
+                                <select className="w-100" value={this.state.chunk} onChange={this.handleSelect}>
                                     <option value="30">30</option>
                                     <option value="45">45</option>
                                     <option value="60">60</option>
                                     <option value="100">100</option>
+                                    <option value="150">150</option>
                                 </select>
                             </div>
-                            <div className="col-12 col-md-1">
-                                Sort
+                            <div className="col-12 col-md-1 mt-1 mb-1">
+
                                 <select value={this.state.sort} onChange={this.handleSort}>
+                                    <option>Sort by</option>
                                     <option value="name">Name</option>
                                     <option value="created">Create date</option>
                                     <option value="duration">Duration</option>
                                     <option value="size">Size</option>
                                 </select>
                             </div>
-                            <div className="col-12 col-md-3 offset-md-3">
+                            <div className="col-12 col-md-3 offset-md-3 mt-1 mb-1">
                                 <select className="form-control w-100" onChange={this.handleCheckChieldElement}  >
                                     <option value="Disabled" >Categorie</option>
                                     {
@@ -254,8 +286,12 @@ class Catalog extends React.Component {
                                         })
                                     }
                                 </select>
-                                <button className="btn btn-success" onClick={this.playlist}>
-                                    Play as playlist
+                                <button className="btn btn-success  col-12 col-sm-6 mt-1 mb-1" onClick={this.playlist}>
+                                    Playlist
+                                </button>
+
+                                <button className="btn btn-success  col-12 col-sm-6  mt-1 mb-1" onClick={this.playlist4}>
+                                    Playlist4
                                 </button>
                             </div>
                         </div>
@@ -277,7 +313,7 @@ class Catalog extends React.Component {
                                         <RotateCircleLoading size="large" />
                                     </div>
                                     :
-                                    <div className="d-flex justify-content-between flex-row flex-wrap p-1  w-100 mx-auto mw-1300">
+                                    <div className="d-flex justify-content-between flex-row flex-wrap p-1  w-100 mx-auto mw-1500">
                                         {
 
                                             this.state.items.map((item, index) =>
@@ -288,7 +324,7 @@ class Catalog extends React.Component {
                                             (this.state.items ?
                                                 ([...Array(10).keys()]
                                                 ).map((item, index) => {
-                                                    return (<div className="w-100 w-m-20 card-m-l d-md-block d-none" />)
+                                                    return (<div className="w-100 w-m-20 mw-220 pd-1px d-md-block d-none" />)
                                                 })
                                                 : <div />)
                                         }

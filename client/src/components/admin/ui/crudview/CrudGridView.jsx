@@ -10,8 +10,14 @@ class CrudGridView extends CrudView {
 
     constructor(props) {
         super(props);
+        this.bottonChangePage = this.bottonChangePage.bind(this);
     }
 
+    bottonChangePage(event) {
+        this.onPageChanged(event);
+        document.getElementsByClassName('MuiGridList-root')[0].scrollTo(0, 0)
+        window.scrollTo(0, 0)
+    }
 
     render() {
         return (
@@ -32,6 +38,14 @@ class CrudGridView extends CrudView {
                 }
                 <div className="row mt-1 shadow-sm">
                     {this.getToolBar()}
+                    {this.props.topPaginator ? <div className="col-12" >
+                        <Pagination
+                            activePage={this.state.activePage}
+                            totalItemsCount={this.state.itemCount}
+                            itemsCountPerPage={this.state.pageSize}
+                            pageRangeDisplayed={7}
+                            onChange={this.onPageChanged} />
+                    </div> : <></>}
                     <div className="table-responsive crud-table-fixed">
                         {(this.state.loading) ?
                             <div className="m-5 pb-5" style={{
@@ -59,8 +73,8 @@ class CrudGridView extends CrudView {
                             activePage={this.state.activePage}
                             totalItemsCount={this.state.itemCount}
                             itemsCountPerPage={this.state.pageSize}
-                            pageRangeDisplayed={9}
-                            onChange={this.onPageChanged} />
+                            pageRangeDisplayed={7}
+                            onChange={this.bottonChangePage} />
                     </div>
                 </div>
             </div >

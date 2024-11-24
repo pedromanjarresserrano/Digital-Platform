@@ -2,11 +2,31 @@
     min-height: 500px;
 }
 
+#basic-button {
+    display: none;
+}
+#normal-menu {
+    display: flex;
+}
+
+#basic-menu {
+    margin-top: 50px;
+}
 @media all and (min-width: 680px) {
     .fixed-table {
         max-height: 75vh;
     }
+
     .overflow-body {
         overflow: hidden !important;
+    }
+}
+
+@media all and (max-width: 574px) {
+    #basic-button {
+        display: block;
+    }
+    #normal-menu {
+        display: none !important;
     }
 }

@@ -5,6 +5,7 @@ const Movies = models.moviemodel;
 const Categories = models.categoriamodel;
 const Studios = models.studioSchema;
 const socketServer = require("../services/socket").socketServer
+const fs = require('fs')
 
 async function specialName(req, res) {
     let list = await Movies.find({});
@@ -12,74 +13,85 @@ async function specialName(req, res) {
     const size = list.length;
     for (let i = 0; i < size; i++) {
         const e = list[i];
+        try {
+            if (!fs.existsSync(e.url)) {
+                await Movies.deleteOne({ _id: e._id })
+            } else {
+                if (e.name) {
+                    if (!e.visualname || req.query.remake) {
 
-        if (e.name) {
-            if (!e.visualname || req.query.remake) {
-                let count = (e.name.match(/\./g) || []).length;
-                if (count >= 4) {
-                    let splitted = e.name.split(".");
-                    if (!isNaN(parseInt(splitted[1]))) {
-                        let actor = {};
-                        actor = await Actors.findOne({ name: splitted[4] });
-                        if (actor)
-                            e.reparto.push(actor)
-
-                        if (splitted[5]) {
-                            splitted[5] = capitalizeFirstLetter(splitted[5]);
-                            splitted[4] = capitalizeFirstLetter(splitted[4]);
-                            actor = await Actors.findOne({ name: splitted[4] + " " + splitted[5] });
-                            if (actor)
-                                e.reparto.push(actor)
-                        }
-                        e.reparto = []
-                        for (let j = 0; j < splitted.length; j++) {
-                            if (splitted[j] == "and") {
-                                splitted[j - 1] = capitalizeFirstLetter(splitted[j - 1]);
-                                splitted[j - 2] = capitalizeFirstLetter(splitted[j - 2]);
-                                actor = await Actors.findOne({ name: splitted[j - 1] });
-                                if (!actor) {
-                                    actor = await Actors.findOne({ name: splitted[j - 2] + " " + splitted[j - 1] })
-                                }
-                                if (actor)
-                                    e.reparto.push(actor)
-                                if (splitted[j + 1]) {
-                                    splitted[j + 1] = capitalizeFirstLetter(splitted[j + 1]);
-                                    actor = await Actors.findOne({ name: splitted[j + 1] });
-                                }
-                                if (actor)
-                                    e.reparto.push(actor)
-
-                                if (splitted[j + 2]) {
-                                    splitted[j + 2] = capitalizeFirstLetter(splitted[j + 2]);
-                                    actor = await Actors.findOne({ name: splitted[j + 1] + " " + splitted[j + 2] });
-                                }
-                                if (actor)
-                                    e.reparto.push(actor)
-
-                            }
-
-                        }
-                        e.visualname = capitalizeFirstLetter(splitted[0]) + " - " + capitalizeFirstLetter(splitted.slice(4).join(" "));
-                        e.year = parseInt("20" + splitted[1])
-                        e.studio = capitalizeFirstLetter(splitted[0])
+                        e.subtitleurl = e.url.split("mp4")[0] + "en.vtt";
                         await Movies.findByIdAndUpdate({ _id: e._id }, { $set: e });
-                    }
-                } else {
-                    count = 0;
-                }
+                        let count = (e.name.match(/\./g) || []).length;
+                        if (count >= 4) {
+                            let splitted = e.name.split(".");
+                            if (!isNaN(parseInt(splitted[1]))) {
+                                let actor = {};
+                                actor = await Actors.findOne({ name: splitted[4] });
+                                if (actor)
+                                    e.reparto.push(actor)
 
-                if (count == 0) {
-                    e.visualname = e.name.replace(/\./g, " ");
-                    await Movies.findByIdAndUpdate({ _id: e._id }, { $set: e });
+                                if (splitted[5]) {
+                                    splitted[5] = capitalizeFirstLetter(splitted[5]);
+                                    splitted[4] = capitalizeFirstLetter(splitted[4]);
+                                    actor = await Actors.findOne({ name: splitted[4] + " " + splitted[5] });
+                                    if (actor)
+                                        e.reparto.push(actor)
+                                }
+                                e.reparto = []
+                                for (let j = 0; j < splitted.length; j++) {
+                                    if (splitted[j] == "and") {
+                                        splitted[j - 1] = capitalizeFirstLetter(splitted[j - 1]);
+                                        splitted[j - 2] = capitalizeFirstLetter(splitted[j - 2]);
+                                        actor = await Actors.findOne({ name: splitted[j - 1] });
+                                        if (!actor) {
+                                            actor = await Actors.findOne({ name: splitted[j - 2] + " " + splitted[j - 1] })
+                                        }
+                                        if (actor)
+                                            e.reparto.push(actor)
+                                        if (splitted[j + 1]) {
+                                            splitted[j + 1] = capitalizeFirstLetter(splitted[j + 1]);
+                                            actor = await Actors.findOne({ name: splitted[j + 1] });
+                                        }
+                                        if (actor)
+                                            e.reparto.push(actor)
+
+                                        if (splitted[j + 2]) {
+                                            splitted[j + 2] = capitalizeFirstLetter(splitted[j + 2]);
+                                            actor = await Actors.findOne({ name: splitted[j + 1] + " " + splitted[j + 2] });
+                                        }
+                                        if (actor)
+                                            e.reparto.push(actor)
+
+                                    }
+
+                                }
+                                e.visualname = capitalizeFirstLetter(splitted[0]) + " - " + capitalizeFirstLetter(splitted.slice(4).join(" "));
+                                e.year = parseInt("20" + splitted[1])
+                                e.studio = capitalizeFirstLetter(splitted[0])
+                                await Movies.findByIdAndUpdate({ _id: e._id }, { $set: e });
+                            }
+                        } else {
+                            count = 0;
+                        }
+
+                        if (count == 0) {
+                            e.visualname = e.name.replace(/\./g, " ");
+                            await Movies.findByIdAndUpdate({ _id: e._id }, { $set: e });
+                        }
+                    }
+                }
+                try {
+                    process = Math.floor((i + 1) * 100 / (size), 0)
+                    if (socketServer.socket)
+                        socketServer.socket.emit("RMF", { id: "processnames", process, name: e.name })
+                } catch (error) {
+                    console.log(error);
                 }
             }
-        }
-        try {
-            process = Math.floor((i + 1) * 100 / (size), 0)
-            if (socketServer.socket)
-                socketServer.socket.emit("RMF", { id: "processnames", process, name: e.name })
-        } catch (error) {
-            console.log(error);
+
+        } catch (err) {
+            console.log(err)
         }
     }
     res.send({ msg: "ok" })
@@ -414,11 +426,11 @@ async function fullfixes(req, res) {
 
                     } else {
                         find["$and"][0]["$or"][6] = {
-                            "visualname": { $regex: '.*' + c.alias.toLowerCase() + '.*', $options: 'si' }
+                            "visualname": { $regex: '.*' + aliases[0].toLowerCase() + '.*', $options: 'si' }
                         }
 
                         find["$and"][0]["$or"][7] = {
-                            "name": { $regex: '.*' + c.alias.toLowerCase() + '.*', $options: 'si' }
+                            "name": { $regex: '.*' + aliases[0].toLowerCase() + '.*', $options: 'si' }
                         }
                     }
                 }

@@ -1,192 +1,459 @@
-  .video-container {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .video-container video {
-    width: 100%;
-    height: 100%;
-  }
-  
-  .video-container .controls-container {
-    position: absolute;
-    bottom: 0px;
-    width: calc(100% - 15px);
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    min-height: 40vh;
-    /* Thanks to theArtifacts */
-    background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.9));
-    transition: opacity 0.5s linear;
-    
-
-  }
-  
-  .video-container .progress-controls {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    padding-left: 10px;
-    padding-right: 10px;
-  }
-  
-  .video-container .progress-controls .time-remaining {
-    margin: 1vw;
-    width: 4vw;
-    font-size: 0.75em;
-  }
-  
-  .video-container .progress-controls .progress-bar-video {
-    width: 83vw;
-    height: 1vw;
-    max-height: 7px;
-    background: #5b5b5b;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-  }
-  
-  .video-container .progress-controls .progress-bar-video .watched-bar,
-  .video-container .progress-controls .progress-bar-video .playhead::before  {
-    background: #e31221;
-    display: inline-block;
-    transition: all 0.2s;
-    content: '';
-  }
-  
-  .video-container .progress-controls .progress-bar-video .watched-bar {
-    height: 110%;
-    width: 20%;
-    pointer-events: none;
-  }
-  
-  .video-container .progress-controls .progress-bar-video .playhead::before {
-    height: 3vw;
-    width: 3vw;
-    max-height: 25px;
-    max-width: 25px;
-    border-radius: 50%;
-    margin-left: -12px;
-    margin-top: 5px;
-    content: '';
-    display: inline-block;
-    background: #e31221;
-    pointer-events: none;
-  }
-  .video-container .progress-controls .progress-bar-video .playhead {
-    pointer-events: none;
-  }
-  .video-container .controls {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-bottom: 4px;
-    margin-top: -3px;
+.video-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
+::cue{
+  margin-bottom: 20%;
+}
+.video-container video {
+  width: 100%;
+  height: 100%;
   
-  .video-container .controls button {
+  padding: 90px 0px;
+  background-color: black;
+transition : filter 500ms ease-in-out
+
+}
+
+
+
+.blur-2 {
+  filter: blur(2px)
+}
+
+.playbackrates {
+  color: white;
+  display: none;
+  background-color: rgba(0, 0, 0, 0.99);
+  z-index: 10000;
+  margin-top: -5rem;
+
+}
+
+.playbackrates .list {
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  margin: 0px;
+}
+
+.playbackrates .list .item-rate {
+  margin: 10px;
+  font-size: 1.8rem;
+}
+
+.video-container .center-button-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+
+}
+
+.video-container .center-button-container .center-button {
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.9);
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  transition: opacity 0.5s linear;
+}
+
+.lds-ring {
+  display: none;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+
+.lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border: 8px solid #fff;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #fff transparent transparent transparent;
+}
+
+.lds-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+
+.lds-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+
+.lds-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.video-container .center-button-container .center-button .playing {
+  padding-left: 0.4rem;
+}
+
+.video-container .center-button-container .center-button .paused {
+  display: none;
+}
+
+.controls>div {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.video-container .controls-container {
+  position: absolute;
+  bottom: 0px;
+  width: calc(100% - 15px);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 40vh;
+  /* Thanks to theArtifacts */
+  background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.9));
+  transition: opacity 0.5s linear;
+
+
+}
+
+.volumebox {
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: none;
+  outline: none;
+  box-shadow: none;
+  border: none;
+  height: 5vw;
+  max-height: 50px;
+  margin: 0px;
+  transform: scale(0.9);
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.volumebox input[type=range] {
+  display: none;
+}
+
+
+
+.volumebox .bar-hoverbox {
+  padding: 10px 15px;
+  opacity: 0.7;
+  transition: opacity .2s;
+}
+
+.volumebox .bar-hoverbox:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+
+
+.volumebox .bar {
+  background: #999;
+  height: 7px;
+  width: 120px;
+  border-radius: 15px;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.volumebox .bar .bar-fill {
+  background: #FFF;
+  width: 0%;
+  height: 100%;
+  background-clip: border-box;
+  pointer-events: none;
+}
+
+
+
+.video-container .progress-controls {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  padding-left: 10px;
+}
+
+.video-container .progress-controls .time-remaining {
+  margin: 1vw .5vw 1vw 1vw;
+  width: 4vw;
+  font-size: 0.75em;
+}
+
+.video-container .progress-controls .progress-bar-video {
+  width: 83vw;
+  height: 3vw;
+  max-height: 10px;
+  background: #5b5b5b;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.video-container .progress-controls .progress-bar-video .watched-bar,
+.video-container .progress-controls .progress-bar-video .playhead::before {
+  background: #e31221;
+  display: inline-block;
+  transition: all 0.2s;
+  content: '';
+}
+
+.video-container .progress-controls .progress-bar-video .watched-bar {
+  height: 110%;
+  width: 20%;
+  pointer-events: none;
+}
+
+.video-container .progress-controls .progress-bar-video .playhead::before {
+  height: 3vw;
+  width: 3vw;
+  max-height: 15px;
+  max-width: 15px;
+  border-radius: 50%;
+  margin-left: -12px;
+  margin-top: 5px;
+  content: '';
+  display: inline-block;
+  background: #e31221;
+  pointer-events: none;
+}
+
+.video-container .progress-controls .progress-bar-video .playhead {
+  pointer-events: none;
+}
+
+.video-container .controls {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 4px;
+  margin-top: -3px;
+}
+
+.video-container .controls button,
+.video-container .center-button-container {
+  background: none;
+  outline: none;
+  box-shadow: none;
+  border: none;
+  width: 5vw;
+  height: 5vw;
+  max-width: 50px;
+  max-height: 50px;
+  margin: 0px 1vw;
+  opacity: 0.4;
+  transform: scale(0.9);
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.video-container .controls button:hover,
+.video-container .center-button-container .center-button:hover {
+  opacity: 1;
+  transform: scale(1.2);
+}
+
+.video-container .controls button svg,
+.video-container .center-button-container .center-button svg {
+  fill: white;
+  stroke: white;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  width: 100%;
+  height: 100%;
+}
+
+.video-container .controls button.volume svg path,
+.video-container .controls button.help svg,
+.video-container .controls button.episodes svg,
+.video-container .controls button.full-screen svg,
+.video-container .controls button.volume svg path,
+.video-container .controls button.cast svg {
+  fill: none;
+}
+
+.video-container .controls button.rewind svg,
+.video-container .controls button.fast-forward svg {
+  stroke: none;
+}
+
+.video-container .controls button.captions svg {
+  stroke: none;
+}
+
+.video-container .controls .title {
+  font-size: 2vw;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.video-container .controls .title .series {
+  color: #fefefe;
+  font-weight: bold;
+  font-size: 1em;
+}
+
+.video-container .controls .title .episode {
+  color: #a1a1a1;
+  font-size: 0.75em;
+  padding-left: 1vw;
+}
+
+
+@media only screen and (max-width: 768px) {
+  .video-container .controls .title {
+    display: none;
+  }
+
+  .video-container .controls div button {
+    width: 3rem;
+    height: 3rem;
+    max-width: 50px;
+    max-height: 50px;
+  }
+
+  .video-container .progress-controls .progress-bar-video {
+    width: 75vw;
+  }
+
+  .video-container .progress-controls {
+    padding-left: 0px;
+  }
+}
+
+
+
+@media only screen and (max-width: 480px) {
+
+  .video-container .controls-container {
+    min-height: 26vh;
+  }
+
+  .video-container .center-button-container .center-button {
+    width: 4rem;
+    height: 4rem;
+    margin-top: -2rem;
+  }
+
+  .video-container .controls div button {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .volumebox {
+    width: 3.5rem;
+    height: 100%;
+    margin: 0px;
+    max-width: 100px;
+    max-height: 100px;
     background: none;
     outline: none;
     box-shadow: none;
     border: none;
-    width: 5vw;
-    height: 5vw;
-    max-width: 50px;
-    max-height: 50px;
-    margin: 0px 1vw;
-    opacity: 0.4;
     transform: scale(0.9);
     transition: all 0.2s ease-in-out;
     cursor: pointer;
   }
-  
-  .video-container .controls button:hover {
-    opacity: 1;
-    transform: scale(1.2);
-  }
-  
-  .video-container .controls button svg {
-    fill: white;
-    stroke: white;
-    stroke-width: 2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    width: 100%;
-    height: 100%;
-  }
-  
-  .video-container .controls button.volume svg path,
-  .video-container .controls button.help svg,
-  .video-container .controls button.episodes svg,
-  .video-container .controls button.full-screen svg,
-  .video-container .controls button.volume svg path,
-  .video-container .controls button.cast svg {
-    fill: none;
-  }
-  
-  .video-container .controls button.rewind svg,
-  .video-container .controls button.fast-forward svg {
-    stroke: none;
-  }
-  
-  .video-container .controls button.captions svg {
-    stroke: none;
-  }
-  
-  .video-container .controls .title {
-    font-size: 2vw;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
+
+
+  .volumebox .bar-hoverbox {
+    display: none;
   }
 
-  .video-container .controls .title .series {
-    color: #fefefe;
-    font-weight: bold;
-    font-size: 1em;
-  }
-  
-  .video-container .controls .title .episode {
-    color: #a1a1a1;
-    font-size: 0.75em;
-    padding-left: 1vw;
-  }
-  
-    
-  @media only screen and (max-width: 768px) {
-    .video-container .controls .title {
-      display: none;
-    }
-    .video-container .controls div button {
-      width: 3rem;
-      height: 3rem;
-      max-width: 50px;
-      max-height: 50px;
-    }
-    .video-container .progress-controls .progress-bar-video {
-      width: 75vw;
-    }
-    .video-container .progress-controls {
-      padding-left: 0px;
-    }
-  }
-  
+}
 
-    
-  @media only screen and (max-width: 480px) {
 
-    .video-container .controls div button {
-      width: 2.5rem;
-      height: 2.5rem;
-    }
-  }
-  
+/* drop up buttons menu */
+.drop-up {
+  list-style: none;
+  z-index: 25;
+}
+
+.drop-up button {
+  background-color: rgba(0, 0, 0, 0.9);
+
+  width: 100%;
+  height: 100%;
+}
+
+.drop-up .drop-up-item {
+  text-align: center;
+  margin: 0 auto;
+  width: 120px;
+  height: 30px;
+  position: relative;
+  text-decoration: none;
+  font-size: 1rem;
+  z-index: 25;
+}
+
+/* subnav layer */
+.drop-up-sub-nav {
+  padding: 0px;
+  margin: 0px;
+  text-align: center;
+  list-style: none;
+  position: absolute;
+  display: none;
+  opacity: 0;
+  z-index: 30;
+  border: 0.1px solid #5f5e5e;
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+.drop-up-sub-nav .drop-up-item {
+  display: block;
+  width: 100%;
+  text-align: center;
+  z-index: 30;
+}
+
+.drop-up-sub-nav .drop-up-item button {
+  color: #cbcbcb;
+  border: none;
+  padding: 0px !important;
+  margin: 0px !important;
+  height: 100% !important;
+}
+
+.drop-up-item-show .drop-up-sub-nav {
+  display: block;
+  opacity: 1;
+  left: -10px;
+  bottom: 3rem;
+  width: 100%;
+  text-align: center;
+}

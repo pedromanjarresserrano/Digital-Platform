@@ -6,6 +6,7 @@ const locationmodel = require('./location');
 const studioSchema = require('./studio');
 const bookmodel = require('./book');
 const imagesetmodel = require('./imageset');
+const sagamodel = require('./saga');
 const models = {
     moviemodel,
     actormodel,
@@ -14,7 +15,8 @@ const models = {
     usuariomodel,
     locationmodel,
     bookmodel,
-    imagesetmodel
+    imagesetmodel,
+    sagamodel
 }
 
 module.exports = models;

@@ -65,6 +65,7 @@ typings/
 # dotenv environment variables file
 .env
 .env.test
+.env.*
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
@@ -98,3 +99,13 @@ client/.vscode/
 ./package-lock.json
 
 package-lock.json
+.env.jp
+./public/main.js
+public/main.js
+
+#python
+*.wav
+./gensrt/env
+./gensrt/env/*
+gensrt/env
+gensrt/env/*
