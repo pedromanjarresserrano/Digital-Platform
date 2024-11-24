@@ -1,13 +1,15 @@
-from flask import Flask, jsonify, request, make_response
 import time
 import math
 import ffmpeg
+import logging
+import uuid
+import os
 
 from multiprocessing import Process
 from flask_cors import CORS,cross_origin
 from faster_whisper import WhisperModel
 from srt_to_vtt import srt_to_vtt
-import logging
+from flask import Flask, jsonify, request, make_response
 
 logging.basicConfig(filename='MyLog.log',level=logging.DEBUG)
 
@@ -39,8 +41,8 @@ def format_time(seconds):
 
 
 # %%
-def extract_audio(input_video, input_video_name):
-    extracted_audio = f"audio-temp.wav"
+def extract_audio(input_video, uuid_temp):
+    extracted_audio = f"{uuid_temp}-audio-temp.wav"
     stream = ffmpeg.input(input_video)
     stream = ffmpeg.output(stream, extracted_audio)
     ffmpeg.run(stream, overwrite_output=True)
@@ -54,7 +56,7 @@ def extract_audio(input_video, input_video_name):
 # %%
 def transcribe(audio,input_video_name,path):
     try:
-        model = WhisperModel("medium")
+        model = WhisperModel("small")
         segments, info = model.transcribe(audio,language="en")
         language = info[0]
         print("Transcription language", info[0])
@@ -77,7 +79,8 @@ def transcribe(audio,input_video_name,path):
         f.write(text)
         f.close()
         srt_to_vtt(subtitle_file, subtitle_filevtt_vtt)
-        print("Finnished")
+        print(f"Finnished {audio}")
+        os.remove(audio)
     except Exception as e:
         logging.info(e)
 
@@ -115,13 +118,14 @@ def gensrtReq():
         return _build_cors_preflight_response()
     elif request.method == "POST":
         try:
+            uuid_temp = uuid.uuid4()
             req = request.get_json()
             split = req["path"].split("\\")
             split.pop()
             path = "\\".join(split)
             input_video = req["path"]
             input_video_name = split[-1]
-            extracted_audio = extract_audio(input_video, input_video_name)
+            extracted_audio = extract_audio(input_video, uuid_temp)
             thread = Process(target = transcribe, args = (extracted_audio,input_video_name, path))
             thread.start()
             return _corsify_actual_response(jsonify({"status":'Processing'}))

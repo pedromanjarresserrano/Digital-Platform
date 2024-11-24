@@ -24,13 +24,18 @@ class PlaylistViewerFourTime extends React.Component {
   constructor(props) {
     super(props)
     let vol = parseFloat(localStorage.getItem("volumen"))
-    localStorage.setItem("state", JSON.stringify(null))
     let states = JSON.parse(localStorage.getItem("state"))
-    if (states)
+    debugger
+     if (states){
+      
+      delete states.vol
+      delete states.muted
       this.state = {
         ...states,
-        open: false
-      }
+        open: false,
+        vol: !isNaN(vol) ? vol : 1.0,
+        muted: vol == 0,
+      }}
     else
       this.state = {
         items: [],
@@ -156,7 +161,7 @@ class PlaylistViewerFourTime extends React.Component {
   async componentDidMount() {
     await this.load();
     if (this.state.items && this.state.items.length > 0) {
-
+      debugger
       let list1 = this.state.list1;
       let list2 = this.state.list2;
       let list3 = this.state.list3;
@@ -270,6 +275,7 @@ class PlaylistViewerFourTime extends React.Component {
     this.setState({
       [listname]: list
     })
+    localStorage.setItem("state", JSON.stringify(this.state))
   }
 
   render() {

@@ -157,13 +157,14 @@ async function createMovie(files, paths, res) {
 
 async function generatefiles(newvideo, ratio) {
     if (newvideo.files.length < 10) {
+        const _id = newvideo._id;
         var list = await service.generatePreviews({
-            name: newvideo._id,
+            name: _id,
             url: newvideo.url,
             ratio: ratio
         })
         newvideo.files = [];
-        list.map(e => "/" + (process.env.DIRTHUMBNAIL ? process.env.DIRTHUMBNAIL : "thumbnail") + "/" + e).forEach(i => newvideo.files.push(i));
+        list.map(e => "/" + (process.env.DIRTHUMBNAIL ? process.env.DIRTHUMBNAIL : "thumbnail") + "/" + _id + "/" + e).forEach(i => newvideo.files.push(i));
         console.log(newvideo.files)
     }
     await models.moviemodel.updateOne({ _id: newvideo._id }, newvideo);

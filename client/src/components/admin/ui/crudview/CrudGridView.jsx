@@ -10,8 +10,14 @@ class CrudGridView extends CrudView {
 
     constructor(props) {
         super(props);
+        this.bottonChangePage = this.bottonChangePage.bind(this);
     }
 
+    bottonChangePage(event) {
+        this.onPageChanged(event);
+        document.getElementsByClassName('MuiGridList-root')[0].scrollTo(0, 0)
+        window.scrollTo(0, 0)
+    }
 
     render() {
         return (
@@ -68,7 +74,7 @@ class CrudGridView extends CrudView {
                             totalItemsCount={this.state.itemCount}
                             itemsCountPerPage={this.state.pageSize}
                             pageRangeDisplayed={7}
-                            onChange={this.onPageChanged} />
+                            onChange={this.bottonChangePage} />
                     </div>
                 </div>
             </div >

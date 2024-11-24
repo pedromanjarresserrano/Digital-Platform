@@ -3,6 +3,7 @@ let express = require('express');
 const models = require('../models');
 const { loggerRequest } = require('../controller/logger');
 let router = express.Router();
+const ffmpeg = require('fluent-ffmpeg');
 
 //
 //	Stream the movie
@@ -43,6 +44,7 @@ router.get('/:_id', loggerRequest, async function (req, res) {
             }
             end-=1;
             const file = fs.createReadStream(path, { start, end })
+        
             const head = {
                 'Content-Range': `bytes ${start}-${end}/${fileSize}`,
                 'Accept-Ranges': 'bytes',
@@ -51,6 +53,16 @@ router.get('/:_id', loggerRequest, async function (req, res) {
             }
             res.writeHead(206, head);
             file.pipe(res);
+
+            /*ffmpeg(file)
+                .videoFilters([
+                   {
+                       filter: 'pixeliz0r',
+                       options: 'filter_params=0.02|0.02'
+                   }
+             ])
+             .pipe(res, { end: true });
+*/ 
         } else {
             const head = {
                 'Content-Length': fileSize,

@@ -14,9 +14,10 @@ async function generatePreviews(params) {
         width = 450
 
     for (let porcent = 1; porcent <= 100; porcent += 10) {
-        let nameFile = params.name + "-thumbnail-" + porcent + ".png";
-        if (!fs.existsSync(__dirname + "/../public/" + (process.env.DIRTHUMBNAIL ? process.env.DIRTHUMBNAIL : "thumbnail") + nameFile)) {
-            await getScreenShot(params.url, nameFile, porcent, width, height)
+       // let nameFile = params.name +params.name + "-thumbnail-" + porcent + ".png";
+        let nameFile =`${params.name}-thumbnail-${porcent}.png`        
+        if (!fs.existsSync(__dirname + "/../public/" + (process.env.DIRTHUMBNAIL ? process.env.DIRTHUMBNAIL : "thumbnail/") + nameFile)) {
+            await getScreenShot(params.url, params.name, nameFile, porcent, width, height)
             images.push(nameFile)
         } else {
             images.push(nameFile)
@@ -29,8 +30,12 @@ async function generatePreviews(params) {
 }
 
 
-const getScreenShot = (url, nameFile, porcent, width, height) => {
+const getScreenShot = (url,folder, nameFile, porcent, width, height) => {
     return new Promise((resolve, reject) => {
+        const dd = __dirname + "/../../public/" + (process.env.DIRTHUMBNAIL ? process.env.DIRTHUMBNAIL : "thumbnail") + "/" + folder
+        if (!fs.existsSync(dd)) {
+            fs.mkdirSync(dd);
+        }
         return ffmpeg({ source: url, nolog: true, timeout: 1 })
             .on('error', async function (err) {
                 console.log('an error happened: ' + err.message);
@@ -42,9 +47,9 @@ const getScreenShot = (url, nameFile, porcent, width, height) => {
             }).takeScreenshots({
                 timestamps: [porcent + '%'],
                 filename: nameFile,
-                folder: __dirname + "/../../public/" + (process.env.DIRTHUMBNAIL ? process.env.DIRTHUMBNAIL : "thumbnail"),
+                folder: dd,
                 size: width + 'x' + height
-            }, __dirname + "/../../public/" + (process.env.DIRTHUMBNAIL ? process.env.DIRTHUMBNAIL : "thumbnail"), function (err, filenames) {
+            }, dd, function (err, filenames) {
                 if (err)
                     return reject(err.message);
 

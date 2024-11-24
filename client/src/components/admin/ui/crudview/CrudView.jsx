@@ -50,6 +50,7 @@ class CrudView extends React.Component {
     }
 
     componentDidMount() {
+        this.loadPage(this.state.activePage);
         //   document.getElementsByClassName('crud-table-fixed')[0].style.height = parseInt(window.innerHeight * 0.83) + 'px'
     }
 
@@ -78,7 +79,6 @@ class CrudView extends React.Component {
 
         await this.setState(statesVal);
 
-        this.loadPage(page);
     }
 
     editClick = (item) => {
@@ -137,7 +137,7 @@ class CrudView extends React.Component {
         });
     }
 
-    async loadPage(page) {
+    async loadPage(page = 1) {
         let find = {
             $or: [{
                 name: { "$regex": ".*" + this.state.search + ".*", $options: 'i' }
@@ -157,6 +157,8 @@ class CrudView extends React.Component {
                 });
             });
     }
+
+    loadPageArrow = (e = {}) => { this.loadPage() } 
 
     newClick = (item) => {
         this.props.history.push({
