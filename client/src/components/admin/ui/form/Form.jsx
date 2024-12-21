@@ -35,9 +35,12 @@ class Form extends React.Component {
                         if (dataForm[formElementIdentifier].optConfig.multiple) {
                             dataForm[formElementIdentifier].value = response.data[formElementIdentifier].map(item => item._id);
                         } else {
-                            dataForm[formElementIdentifier].value = response.data[formElementIdentifier]._id;
-                            const newLocal = response.data[formElementIdentifier][dataForm[formElementIdentifier].labelField];
-                            dataForm[formElementIdentifier].uiValue = { value: response.data[formElementIdentifier]._id, label: newLocal }
+                            let value = response.data[formElementIdentifier];
+                            if (value) {
+                                dataForm[formElementIdentifier].value = response.data[formElementIdentifier]._id;
+                                const newLocal = response.data[formElementIdentifier][dataForm[formElementIdentifier].labelField];
+                                dataForm[formElementIdentifier].uiValue = { value: response.data[formElementIdentifier]._id, label: newLocal }
+                            }
                         }
                     }
                 }

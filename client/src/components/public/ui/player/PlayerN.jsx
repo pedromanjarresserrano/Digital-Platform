@@ -205,9 +205,12 @@ class PlayerN extends React.Component {
                 videoContainer.requestFullscreen();
                 screen.orientation.lock("landscape-primary");
                 controlsContainer.style.width = "100%"
+                video.classList.toggle("p-0")
             } else {
                 controlsContainer.style = aux;
                 document.exitFullscreen();
+                video.classList.toggle("p-0")
+
             }
         };
         mutedButton.style.display = "none";
