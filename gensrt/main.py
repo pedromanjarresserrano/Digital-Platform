@@ -56,7 +56,7 @@ def extract_audio(input_video, uuid_temp):
 # %%
 def transcribe(audio,input_video_name,path):
     try:
-        model = WhisperModel("small")
+        model = WhisperModel("medium")
         segments, info = model.transcribe(audio,language="en")
         language = info[0]
         print("Transcription language", info[0])
@@ -135,5 +135,5 @@ def gensrtReq():
 
 
 if __name__ == "__main__":
-    app.run(debug=True,host='127.0.0.1', port=5000)
+    app.run(debug=True,host='0.0.0.0', port=5000)
 # %%

@@ -8,6 +8,7 @@ const service = require('../services/movie');
 var processbar = 0;
 const socketServer = require("../services/socket").serverIO;
 const { loggerRequest } = require('../controller/logger');
+const { json } = require('body-parser');
 
 router.post('/', loggerRequest, async function (req, res) {
     try {
@@ -77,8 +78,12 @@ async function createMovie(files, paths, res) {
             let n = file.split("/");
             let nameFile = n[n.length - 1].split(".mp4")[0];
             let movie = await models.moviemodel.findOne({
-                name: { $eq: nameFile.trim() }
+                url: { $eq: file }
             });
+            
+
+            console.log(JSON.stringify(movie));
+            
             try {
                 processbar = Math.floor((i + 1) * 100 / (size), 0)
                 socketServer.io.emit("RMF", { id: "processlocation", process: processbar, name: nameFile })
@@ -114,7 +119,7 @@ async function createMovie(files, paths, res) {
 
 
             await generatefiles(movie, [metadata.width, metadata.height]);
-
+        
         } catch (error) {
             let filess = files[i].replace('\\', '/');
             errorlist.push({

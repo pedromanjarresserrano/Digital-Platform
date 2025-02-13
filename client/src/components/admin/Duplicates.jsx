@@ -3,6 +3,7 @@ import axios from 'axios';
 import Movie from '../public/movies/movie/Movie';
 import Pagination from 'react-js-pagination';
 import { Constants } from '../public/common/Constants';
+import { kbToSize } from '../../utils/Utils';
 
 class Duplicates extends React.Component {
     constructor(props) {
@@ -72,6 +73,7 @@ class Duplicates extends React.Component {
                                 item.idsForDuplicatedDocs.map((item, index) =>
                                     <>
                                         <Movie item={item} index={index} />
+                                        {kbToSize( item.size)}
                                         <button className="btn btn-danger " onClick={() => {
                                             console.log("Click");
                                             this.deletefull(item)

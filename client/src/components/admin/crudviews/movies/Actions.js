@@ -76,7 +76,7 @@ export const TableActions = [{
     name: "GS",
     className: "btn btn-sm btn-primary",
     onClick: function (data) {
-        fetch("http://192.168.0.100:5000/gensrt", {
+        fetch("http://192.168.20.100:5000/gensrt", {
             method: "POST",
             body: JSON.stringify({
               path: data.url.replaceAll('/','\\')
