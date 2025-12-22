@@ -57,7 +57,7 @@ def extract_audio(input_video, uuid_temp):
 def transcribe(audio,input_video_name,path):
     try:
         model = WhisperModel("medium")
-        segments, info = model.transcribe(audio,language="en")
+        segments, info = model.transcribe(audio,language="es")
         language = info[0]
         print("Transcription language", info[0])
         segments = list(segments)
@@ -125,6 +125,10 @@ def gensrtReq():
             path = "\\".join(split)
             input_video = req["path"]
             input_video_name = split[-1]
+            print("path ", req["path"])
+            print("path ", split.pop())
+            print("input_video ", input_video)
+            print("input_video_name ", input_video_name)
             extracted_audio = extract_audio(input_video, uuid_temp)
             thread = Process(target = transcribe, args = (extracted_audio,input_video_name, path))
             thread.start()
